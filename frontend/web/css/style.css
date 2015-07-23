@@ -16,16 +16,15 @@ body.ZSYFCEditor_link_moving{
 	padding: 3px 5px;
 	width: 90%;
 	margin: 0 auto;
+	color: #000;
 }
 .ZSYFCEditor-btnbar{
 	padding: 0;
 	margin: 0; 
-	height: 38px;
-	line-height: 38px;
-	background-color: #efefef;
+	height: 39px;
+	line-height: 38px; 
 	width: 1000px; 
-	box-sizing: border-box;
-	padding-top: 5px;
+	box-sizing: border-box; 
 }
 .ZSYFCEditor-btnbar span.btn{
 	display: inline-block;
@@ -36,6 +35,7 @@ body.ZSYFCEditor_link_moving{
 	cursor: pointer; 
 	overflow: hidden;
 	border: 1px solid #efefef;
+	padding: 0;
 }
 .ZSYFCEditor-btnbar span.btn img{ 
 	-webkit-transform: scale(0.8);

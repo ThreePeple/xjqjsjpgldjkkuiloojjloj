@@ -1,8 +1,8 @@
 function renderHub(dataUrl,containerId,detailUrl){
-    var radius = 600 / 2; // SVG radius
+    var radius = 800 / 2; // SVG radius
 
     var cluster = d3.layout.cluster()
-        .size([260, radius - 120]);
+        .size([360, radius - 250]);
 
     var diagonal = d3.svg.diagonal.radial()
         .projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });

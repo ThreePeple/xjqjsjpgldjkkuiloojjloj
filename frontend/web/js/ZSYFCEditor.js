@@ -19,7 +19,7 @@
     var ZSYFCEditor = {};
 
     // Shape-maker factory
-    var shapeMaker_ = window["FCShapeMaker"];
+    var shapeMaker_; // = window["FCShapeMaker"]( resourceConfig_ );
 
     var ID_ELEMENTINDEX = 0,
         ID_KEY = "__id__";
@@ -152,6 +152,10 @@
         return false;
     };
 
+	var getSvgOffset_ = function(){
+		return $('svg.ZSYFCEditor').offset();
+	};
+
     var events_ = {
         "dragProxy": function() {
             return d3.behavior.drag()
@@ -164,8 +168,9 @@
                     var mouseX = (this.__originXY__[0] += 0),
                         mouseY = (this.__originXY__[1] += 0);
                     var shape = objectCollector_.get(d);
-                    shape.cx(mouseX - shape.rx() + document.body.scrollLeft);
-                    shape.cy(mouseY - 2 * shape.ry() + document.body.scrollTop);
+					var svgOffset_ = getSvgOffset_();
+                    shape.cx(mouseX - shape.rx() + document.body.scrollLeft - svgOffset_.left);
+                    shape.cy(mouseY - 2 * shape.ry() + document.body.scrollTop- svgOffset_.top);
                     repaint_();
                 })
                 .on("drag", function(d) {
@@ -176,8 +181,9 @@
                     var mouseX = (this.__originXY__[0] += d3.event.dx),
                         mouseY = (this.__originXY__[1] += d3.event.dy);
                     var shape = objectCollector_.get(d);
-                    shape.cx(mouseX - shape.rx() + document.body.scrollLeft);
-                    shape.cy(mouseY - 2 * shape.ry() + document.body.scrollTop);
+					var svgOffset_ = getSvgOffset_();
+                    shape.cx(mouseX - shape.rx() + document.body.scrollLeft - svgOffset_.left);
+                    shape.cy(mouseY - 2 * shape.ry() + document.body.scrollTop - svgOffset_.top);
                     repaint_();
                 })
                 .on("dragend", function(d) {
@@ -187,6 +193,7 @@
                     }
                     d3.select(document.body).classed("ZSYFCEditor_shape_moving", false);
                     this.__originXY__ = null;
+					var svgOffset_ = getSvgOffset_();
                     shapeFactory_["position"] && shapeFactory_["position"](d,
                         shape.cx(),
                         shape.cy());
@@ -235,7 +242,7 @@
                     }
                     this.__originXY__ = null;
                     d3.select(document.body).classed("ZSYFCEditor_link_moving", false);
-                    gLinkHelperPath_.classed("on", false).attr("d", null);
+                    gLinkHelperPath_.classed("on", false).attr("d", "M0,0");
                 });
         },
         "shapeSelectedClickEvent": function(d) {
@@ -699,6 +706,9 @@
     }
 
     // Relative fn with ZSYFCEditor
+	exportLabel_("config", function(resourceConfig_){
+		shapeMaker_ = window["FCShapeMaker"]( resourceConfig_ );
+	});
     exportLabel_("init", initPage_);
     exportLabel_('addShape', insertShape_);
     exportLabel_('getData', dataJsonEncode_);

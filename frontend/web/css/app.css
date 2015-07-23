@@ -34,13 +34,18 @@ html,body{
 	fill: red;
 }
 
+.switch_chart text{
+	font-family: Verdana !important;
+	font-size: 14px;
+}
+
 .switch_chart g.node g.box {  
 	-webkit-transform: scale(1);  
 	-webkit-transition: transform 0.1s;
 	cursor: pointer;
 } 
 .switch_chart g.node:hover g.box {
-	-webkit-transform: scale(2);
+	-webkit-transform: scale(1.5);
 	stroke: #555;
 	stroke-width: 0px;
 } 
