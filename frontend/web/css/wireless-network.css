@@ -1,0 +1,37 @@
+html,body{
+	margin: 0;
+	padding: 0;
+	font-size: 12px; 
+	background-color: rgb(37,37,37);
+}
+
+.wireless-network{
+	position:relative;
+	left: -100px;
+	bottom: 0; 
+	width: 1077px;
+	height: 606px;
+	overflow: hidden;
+	background: url(../images/wireless-network-error.png) 0 0 no-repeat;
+} 
+.wireless-network .device-slot{ 
+	position: absolute;
+	left: 200px;
+	top: 100px;
+	width: 80px;
+	height: 50px;
+	cursor: pointer;
+}
+
+.wireless-network .error{
+	left: 690px;
+	top: 218px;
+	height: 38px;
+	width: 50px;
+}
+.wireless-network .normal{ 
+	left: 595px;
+	top: 209px;
+	width: 52px;
+	height: 50px;
+}
