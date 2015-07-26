@@ -7,6 +7,9 @@
             DEBUG_ && window.console && window.console.log.apply(window.console, arguments);
         }
     };
+
+    var document = window.document;
+
     // Object has owner property ?
     var hasOwnProp_ = function(o, p) {
         return Object.prototype.hasOwnProperty.call(o, p);
@@ -49,6 +52,10 @@
     function exportLabel_(key, value) {
         ZSYFCEditor[key] = value;
     }
+
+	var getSvgOffset_ = function(){
+		return $('svg.ZSYFCEditor').offset();
+	};
 
     var makeCloseBtn_ = function(g) {
         g.append("line")
@@ -152,52 +159,56 @@
         return false;
     };
 
-	var getSvgOffset_ = function(){
-		return $('svg.ZSYFCEditor').offset();
-	};
+    var dragRepaint_ = function() {
+        var timer = null;
+        return function() {
+            if (timer) {
+                window.clearTimeout(timer);
+                timer = null;
+            }
+            timer = setTimeout(repaint_, 0);
+        };
+    }();
 
     var events_ = {
         "dragProxy": function() {
             return d3.behavior.drag()
                 .on("dragstart", function(d) {
-                    if (d3.event.sourceEvent.which != 1) {
+                    if (d3.event.sourceEvent.which != 1 ||
+                        (d3.event.dx == 0 && d3.event.dy == 0)) {
+                        console.log("Invalid drag.");
                         return;
                     }
-                    d3.select(document.body).classed("ZSYFCEditor_shape_moving", true);
-                    this.__originXY__ = [d.cx, d.cy];
-                    var mouseX = (this.__originXY__[0] += 0),
-                        mouseY = (this.__originXY__[1] += 0);
-                    var shape = objectCollector_.get(d);
-					var svgOffset_ = getSvgOffset_();
-                    shape.cx(mouseX - shape.rx() + document.body.scrollLeft - svgOffset_.left);
-                    shape.cy(mouseY - 2 * shape.ry() + document.body.scrollTop- svgOffset_.top);
-                    repaint_();
+                    d3.select(document.body).classed("ZSYFCEditor_shape_moving", true); 
                 })
-                .on("drag", function(d) {
-                    if (d3.event.sourceEvent.which != 1) {
-                        return;
-                    }
+                .on("drag", function(d) { 
+                	var x = d3.event.sourceEvent.clientX,
+                		y = d3.event.sourceEvent.clientY;  
 
-                    var mouseX = (this.__originXY__[0] += d3.event.dx),
-                        mouseY = (this.__originXY__[1] += d3.event.dy);
-                    var shape = objectCollector_.get(d);
-					var svgOffset_ = getSvgOffset_();
-                    shape.cx(mouseX - shape.rx() + document.body.scrollLeft - svgOffset_.left);
-                    shape.cy(mouseY - 2 * shape.ry() + document.body.scrollTop - svgOffset_.top);
-                    repaint_();
+                    if (d3.event.sourceEvent.which != 1 ||
+                        (d3.event.dx == 0 && d3.event.dy == 0)) {
+                        console.log("Invalid drag.");
+                        return;
+                    } 
+
+                    var shape = objectCollector_.get(d); 
+                    var svgOffset_ = getSvgOffset_();
+                    shape.cx(x - svgOffset_.left + document.body.scrollLeft );
+                    shape.cy(y - svgOffset_.top + document.body.scrollTop );
+                    dragRepaint_();
                 })
                 .on("dragend", function(d) {
-                    var shape = objectCollector_.get(d);
-                    if (d3.event.sourceEvent.which != 1) {
+                    if (d3.event.sourceEvent.which != 1 ||
+                        (d3.event.dx == 0 && d3.event.dy == 0)) {
+                        console.log("Invalid drag.");
                         return;
                     }
-                    d3.select(document.body).classed("ZSYFCEditor_shape_moving", false);
-                    this.__originXY__ = null;
-					var svgOffset_ = getSvgOffset_();
+                    var shape = objectCollector_.get(d);
+                    d3.select(document.body).classed("ZSYFCEditor_shape_moving", false); 
                     shapeFactory_["position"] && shapeFactory_["position"](d,
                         shape.cx(),
                         shape.cy());
-                    repaint_();
+                    dragRepaint_();
                 });
         },
         "linkDragProxy": function() {
@@ -436,6 +447,7 @@
         }
     };
 
+    // For: shape can drop\new one\position\re-render\...
     var shapeFactory_ = {
         "accept": function(d) {
             return true;
@@ -495,7 +507,7 @@
     };
 
     // Init svg painter
-    function initPage_(d, config) {
+    function exportFn_InitPage_(d, config) {
         var svg = config.svg
             .attr("class", "ZSYFCEditor")
             .attr("width", config.width)
@@ -585,7 +597,8 @@
             links: links
         };
     }
-    // Lin path function.
+
+    // Link path handler.
     function linePathData_(d) {
         var points = [{
             x: d.source.cy,
@@ -603,6 +616,7 @@
             })(points);
     }
 
+    // Generate center-part path data.
     function fixCenterData_(source, target) {
         if (target.cx == source.cx || target.cy == source.cy)
             return '';
@@ -619,7 +633,7 @@
             if ((source.linkPoint == 't' || source.linkPoint == 'b') && (target.linkPoint == 't' || target.linkPoint == 'b') && Math.abs(target.cy - source.cy) < target.ry) {
                 if (v1 || v2) {
                     return 'L' + source.cy + ',' + (source.cx + target.cx) / 2 +
-                        'L' + target.cy  + ',' + (source.cx + target.cx) / 2;
+                        'L' + target.cy + ',' + (source.cx + target.cx) / 2;
                 }
             }
         }
@@ -691,8 +705,9 @@
         // Render svg elements.
         renderSVG_();
     }
-    // Do insert shape
-    function insertShape_(shapeType) {
+
+    // Add new shape
+    function exportFn_AddNewShape_(shapeType) {
         if (hasOwnProp_(shapeMaker_, shapeType)) {
             dataFactory_["addNew"](shapeType);
             repaint_();
@@ -700,18 +715,20 @@
             console.log("unsupported shape type(:" + shapeType + ").");
         }
     }
-    // Do get data-json-string
-    function dataJsonEncode_() {
+
+    // Get data-json-string
+    function exportFn_toDataJson_() {
         return dataFactory_['stringify']();
     }
 
+    // --------------------------------------------
+    // Export fn(s) for external invoking
+    // --------------------------------------------
     // Relative fn with ZSYFCEditor
-	exportLabel_("config", function(resourceConfig_){
-		shapeMaker_ = window["FCShapeMaker"]( resourceConfig_ );
-	});
-    exportLabel_("init", initPage_);
-    exportLabel_('addShape', insertShape_);
-    exportLabel_('getData', dataJsonEncode_);
+    exportLabel_("init", exportFn_InitPage_);
+    exportLabel_('addShape', exportFn_AddNewShape_);
+    exportLabel_('getData', exportFn_toDataJson_);
+
     //---------------------------------------------
     // Export object.
     //---------------------------------------------
