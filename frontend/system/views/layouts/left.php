@@ -43,7 +43,15 @@ use yii\helpers\Url;
         ?>
 
         <ul class="sidebar-menu">
-            <li><a href="<?=Url::toRoute('/system/template/index')?>"><span class="fa fa-circle-o"></span> 模板管理</a>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-circle-o"></i> <span>模板管理</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="/system/template/index"><span class="fa fa-circle-o"></span> 大楼模板</a> </li>
+                </ul>
+            </li>
             <li><a href="<?=Url::toRoute('/system/user/index')?>"><span class="fa fa-circle-o"></span> 用户管理</a>
             <li class="treeview">
                 <a href="#">
