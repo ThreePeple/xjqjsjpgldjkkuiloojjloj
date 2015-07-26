@@ -725,6 +725,9 @@
     // Export fn(s) for external invoking
     // --------------------------------------------
     // Relative fn with ZSYFCEditor
+    exportLabel_("config", function(resourceConfig_){
+        shapeMaker_ = window["FCShapeMaker"]( resourceConfig_ );
+    }); 
     exportLabel_("init", exportFn_InitPage_);
     exportLabel_('addShape', exportFn_AddNewShape_);
     exportLabel_('getData', exportFn_toDataJson_);
