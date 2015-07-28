@@ -14,7 +14,7 @@ use yii\helpers\Html;
  
 $js=<<<JS
 
-	var data = {}; 
+	var data = $selected;
 
  /* // demo data.
     var data = {
@@ -65,6 +65,24 @@ $js=<<<JS
 
      $("#addDevice").click(function(){
         removeOption();
+     })
+     $("#saveTemplate").click(function(){
+        var data = {};
+        data["type"] = $("#dataType").val();
+        data["data"] = ZSYFCEditor.getData();
+        $.ajax({
+            url:'/system/template/save',
+            type: 'post',
+            data: data,
+            dataType:"json",
+            success:function(res){
+                if(res.status){
+                    alert("操作成功")
+                }else{
+                    alert("操作作失败")
+                }
+            }
+        })
      })
 JS;
 
@@ -131,6 +149,8 @@ function removeOption() {
         alert("请先选择设备");
         return false;
     }
+    var current = $("#select-device option:selected");
+    ZSYFCEditor.addShape('switch',{id:current.attr('value'),label:current.text()})
     $("#select-device").find("option")
         // .filter(function(){ return this.value === e.params.data.id; }).prop({disabled:true}).end()
         .filter(":selected").remove().end()
@@ -149,8 +169,10 @@ function addOption(obj){
         .append('<option value="'+obj.id+'">'+obj.text+'</option>').end()
         .select2({theme:'krajee',placeholder: "请选择设备",allowClear:true});
 }
+
 </script>
     <div class="row">
+        <?=Html::hiddenInput("dataType",$type,["id"=>"dataType"])?>
         <div class="col-md-6">
             <?=Select2::widget([
                 'name' => 'select-device',
