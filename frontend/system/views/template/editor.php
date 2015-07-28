@@ -4,8 +4,13 @@
  * Author: Shengjun
  * CreateTime: 15-7-23.上午1:17
  * Description:
- */ 
- 
+ */
+
+use kartik\widgets\Select2;
+use yii\web\JsExpression;
+use kartik\widgets\ActiveForm;
+use yii\helpers\Html;
+
 $js=<<<JS
 var data = {
         "1": {
@@ -87,6 +92,9 @@ var data = {
             width: 900,
             height: 560
         } );
+     $("#addDevice").click(function(){
+        removeOption();
+     })
 JS;
 
 $this->registerJs($js);
@@ -105,6 +113,7 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 
 $this->registerCssFile('/css/popuppanel.css');
 $this->registerCssFile('/css/style.css');
+
 ?>
 <script>
 var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
@@ -144,8 +153,75 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
         }
     }
 
-};    
+};
+
+function removeOption() {
+    if($("#select-device").val()== '') {
+        alert("请先选择设备");
+        return false;
+    }
+    $("#select-device").find("option")
+       // .filter(function(){ return this.value === e.params.data.id; }).prop({disabled:true}).end()
+        .filter(":selected").remove().end()
+        .end()
+        .select2({theme:"krajee",placeholder: "请选择设备",allowClear:true});
+    /*
+    * s2.find("option")
+     .filter(function(){ return this.value === e.params.data.id; }).prop({disabled:true}).end()
+     .filter(":enabled:first").prop({selected:true}).end()
+     .end()
+     .select2("refresh");
+    * */
+}
+function addOption(obj){
+    $("#select-device")
+        .append('<option value="'+obj.id+'">'+obj.text+'</option>').end()
+        .select2({theme:'krajee',placeholder: "请选择设备",allowClear:true});
+}
 </script>
+
+<div class="row">
+    <div class="col-md-6">
+        <?=Select2::widget([
+            'name' => 'select-device',
+            "id" => "select-device",
+            'data' => $lists,
+            'options' => ['placeholder' => '请选择添加设备'],
+
+            'pluginOptions' => [
+                'allowClear' => true,
+                /*
+                'minimumInputLength' => 1,
+                'ajax' => [
+                    'url' => '/system/template/ajax-items',
+                    'dataType' => 'json',
+                    'data' => new JsExpression('function(params) { return {q:params.term}; }')
+                ],
+
+                'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+                'templateResult' => new JsExpression('function(city) { return city.text; }'),
+                'templateSelection' => new JsExpression('function (city) {console.log(city); return city.text; }'),
+                */
+            ],
+
+            /*
+            "pluginEvents" => [
+                //  "change" => "function() { console.log('change'); }",
+                //  "select2:open" => "function(e) { console.log($(e.target).find('option')[0].attr('disabled')); }",
+                // "select2:closing" => "function() { console.log('close'); }",
+                // "select2:close" => "function() { console.log('close'); }",
+                //  "select2:selecting" => "function() { console.log('selecting'); }",
+                "select2:select" => "function(e) { console.log('selected'); }",
+                //  "select2:unselecting" => "function() { console.log('unselecting'); }",
+                "select2:unselect" => "function() { console.log('unselect'); }"
+            ]
+            */
+        ]);?>
+    </div>
+    <?=Html::button("添加设备",["class"=>"btn btn-info","id"=>"addDevice"])?>
+    <?=Html::button("保存模板",["class"=>"btn btn-info","id"=>"saveTemplate"])?>
+</div>
+
 <div style="width: 900px;height:620px; margin: 0; padding: 0;">
 	<div class="ZSYFCEditor-btnbar" id="FCEditorBtnbar">
 		<span class="btn modeSwitch dragMode" data-mode="drag" title="默认">&nbsp;</span>

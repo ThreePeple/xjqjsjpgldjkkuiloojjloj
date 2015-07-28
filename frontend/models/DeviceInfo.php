@@ -156,4 +156,18 @@ class DeviceInfo extends \yii\db\ActiveRecord
             ->andFilterWhere(['like', 'ip', $this->ip]);
         return $dataProvider;
     }
+
+    public static function getSelect2List($type=null,$q=null,$selected=[]){
+        $query = self::find();
+        $query->andFilterWhere(["categoryId"=>$type]);
+        $query->andFilterWhere(["like","label",$q]);
+        $query->select(["id"=>"id","text"=>"label"]);
+        $rows = $query->asArray()->all();
+        array_walk($rows,function(&$item,$k,$seleceted){
+            if(in_array($item["id"],$seleceted)){
+                $item["disabled"] = true;
+            }
+        },$selected);
+        return $rows;
+    }
 }
