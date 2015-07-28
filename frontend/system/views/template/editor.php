@@ -1,52 +1,22 @@
 <?php
+
+$this->registerCssFile('/css/building-editor.css',['depends'=>'frontend\assets\AppAsset']);
+
+?>
+
+<?php
 /**
  * Created by PhpStorm.
  * Author: Shengjun
  * CreateTime: 15-7-23.上午1:17
  * Description:
- */
-
-use kartik\widgets\Select2;
-use yii\web\JsExpression;
-use kartik\widgets\ActiveForm;
-use yii\helpers\Html;
-
-$js=<<<JS
-var data = {
-        "1": {
-            "attributes":{
-                "type": "circle",
-                "title": "abc",
-                "cx": 100,
-                "cy": 100,
-                "r": 20
-            },
-            "links":[ "2" ]
-        },
-        "2": {
-            "attributes": {
-                "type": "ellipse",
-                "title": "",
-                "cx": 160,
-                "cy": 180,
-                "rx": 20,
-                "ry": 30
-            }
-        },
-        "3": {
-            "attributes": {
-                "type": "ellipse",
-                "title": "",
-                "cx": 260,
-                "cy": 280,
-                "rx": 20,
-                "ry": 30
-            }
-        }
-    };
-    // Prev server-saved-data.
-	var data = {}; 
+ */ 
  
+$js=<<<JS
+
+	var data = {}; 
+
+ /* // demo data.
     var data = {
             "2":{
                 "attributes":{"type":"switch","title":"aaa","cx":266,"cy":274,"rx":25,"ry":15,"__id__":"2"},
@@ -83,18 +53,15 @@ var data = {
                 "data":{"id":2,"label":"DDDD"}
             }
     }; 
- 
+ */
     //try{ 
 	ZSYFCEditor.init(
         data,
         {
             svg: d3.select("svg.ZSYFCEditor"),
-            width: 900,
-            height: 560
+            width: 1011,
+            height: 676
         } );
-     $("#addDevice").click(function(){
-        removeOption();
-     })
 JS;
 
 $this->registerJs($js);
@@ -113,7 +80,6 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 
 $this->registerCssFile('/css/popuppanel.css');
 $this->registerCssFile('/css/style.css');
-
 ?>
 <script>
 var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
@@ -153,82 +119,20 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
         }
     }
 
-};
-
-function removeOption() {
-    if($("#select-device").val()== '') {
-        alert("请先选择设备");
-        return false;
-    }
-    $("#select-device").find("option")
-       // .filter(function(){ return this.value === e.params.data.id; }).prop({disabled:true}).end()
-        .filter(":selected").remove().end()
-        .end()
-        .select2({theme:"krajee",placeholder: "请选择设备",allowClear:true});
-    /*
-    * s2.find("option")
-     .filter(function(){ return this.value === e.params.data.id; }).prop({disabled:true}).end()
-     .filter(":enabled:first").prop({selected:true}).end()
-     .end()
-     .select2("refresh");
-    * */
-}
-function addOption(obj){
-    $("#select-device")
-        .append('<option value="'+obj.id+'">'+obj.text+'</option>').end()
-        .select2({theme:'krajee',placeholder: "请选择设备",allowClear:true});
-}
+};    
 </script>
+<div style="margin: 0; padding: 0; background-color: #353535; border: 1px solid #a0a0a0;width: 1011px; height: 676px; box-sizing:border-box">
 
-<div class="row">
-    <div class="col-md-6">
-        <?=Select2::widget([
-            'name' => 'select-device',
-            "id" => "select-device",
-            'data' => $lists,
-            'options' => ['placeholder' => '请选择添加设备'],
-
-            'pluginOptions' => [
-                'allowClear' => true,
-                /*
-                'minimumInputLength' => 1,
-                'ajax' => [
-                    'url' => '/system/template/ajax-items',
-                    'dataType' => 'json',
-                    'data' => new JsExpression('function(params) { return {q:params.term}; }')
-                ],
-
-                'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-                'templateResult' => new JsExpression('function(city) { return city.text; }'),
-                'templateSelection' => new JsExpression('function (city) {console.log(city); return city.text; }'),
-                */
-            ],
-
-            /*
-            "pluginEvents" => [
-                //  "change" => "function() { console.log('change'); }",
-                //  "select2:open" => "function(e) { console.log($(e.target).find('option')[0].attr('disabled')); }",
-                // "select2:closing" => "function() { console.log('close'); }",
-                // "select2:close" => "function() { console.log('close'); }",
-                //  "select2:selecting" => "function() { console.log('selecting'); }",
-                "select2:select" => "function(e) { console.log('selected'); }",
-                //  "select2:unselecting" => "function() { console.log('unselecting'); }",
-                "select2:unselect" => "function() { console.log('unselect'); }"
-            ]
-            */
-        ]);?>
-    </div>
-    <?=Html::button("添加设备",["class"=>"btn btn-info","id"=>"addDevice"])?>
-    <?=Html::button("保存模板",["class"=>"btn btn-info","id"=>"saveTemplate"])?>
-</div>
-
-<div style="width: 900px;height:620px; margin: 0; padding: 0;">
+<?php 
+/*
 	<div class="ZSYFCEditor-btnbar" id="FCEditorBtnbar">
 		<span class="btn modeSwitch dragMode" data-mode="drag" title="默认">&nbsp;</span>
         <span class="btn modeSwitch lineMode" data-mode="line" title="智能连线">&nbsp;</span>
         <span class="btn modeSwitch polylineMode" data-mode="polyline" title="折线连线">&nbsp;</span>
 
 	</div>
+*/ 
+?>
 	<svg class="ZSYFCEditor" oncontextmenu="return false;" >
 		<defs>
 			<marker id="ZSYFCEditor_MarkerArrow" markerWidth="13" markerHeight="13" refx="9" refy="6" orient="auto">
