@@ -1,5 +1,6 @@
 <?php
 
+$this->registerCssFile('/css/stcombobox.css' ); 
 $this->registerCssFile('/css/building-editor.css',['depends'=>'frontend\assets\AppAsset']);
 
 ?>
@@ -66,6 +67,8 @@ JS;
 
 $this->registerJs($js);
 
+$this->registerJsFile('/js/stcombobox.js',['depends'=>'frontend\assets\AppAsset'] ); 
+
 $this->registerJsFile('/js/d3.min.js',['depends'=>'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/popuppanel.js',['depends'=>'frontend\assets\AppAsset']);
 
@@ -121,8 +124,12 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
 
 };    
 </script>
-<div style="margin: 0; padding: 0; background-color: #353535; border: 1px solid #a0a0a0;width: 1011px; height: 676px; box-sizing:border-box">
-
+<div class="buidling-editor-toolbar">
+    <label for="switchcombo-ddi" id="addSwitchLabel">选择设备</label><span id="switchcombo"></span>
+    <button type="button" class="addSwitchBtn" id="addSwitchBtn">添加设备</button>
+    <button type="button" class="saveTplDataBtn" id="saveTplDataBtn">保存模版</button>
+</div> 
+<div class="buidling-editor-container"> 
 <?php 
 /*
 	<div class="ZSYFCEditor-btnbar" id="FCEditorBtnbar">
@@ -144,18 +151,101 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
 </div> 
 
 <?php
-$btnbar = <<<abc
 
+$switchList = <<<abc
+[
+    { id: 'a1', label: '交换机1' },
+    { id: 'a2', label: '交换机2' },
+    { id: 'a3', label: '交换机3' },
+    { id: 'a4', label: '交换机4' },
+    { id: 'a5', label: '交换机5' }
+]
+abc;
+
+
+$btnBarJS = <<<abc
+!function(switchList){
 $(function(){
     $('#FCEditorBtnbar .modeSwitch').click( function () {
         var mode = $(this).data('mode');
         $(this).parent().find(".modeSwitch").removeClass("active");
         $(this).addClass("active");
         ZSYFCEditor.switchMode(mode);
-    } ).eq(0).trigger('click');
+    } ).eq(0).trigger('click'); 
+    
+    // Init combo component
+    var combo = new STComboBox();
+    var filterList,
+        selectedData_;
+
+    combo.Init('switchcombo');
+    
+    function _getHasSetIdsMap(){
+        var data = {};
+        var lst = ZSYFCEditor.getData();
+        var keys = Object.keys( lst );
+        for( var i = 0, len = keys.length; i < len ; i++ ){
+            data[ lst[keys[i]]["data"]["id"] ]  = 1;
+        }
+        return data;
+    }
+    
+    function _buildList(){
+        var data = []; 
+        filterList = function(){
+            var map = _getHasSetIdsMap();
+            return switchList.filter( function ( itm, i ){
+                if( map[itm['id']] == undefined )
+                    return true;
+            } );
+        }(); 
+
+        filterList.forEach( function(v, i){
+            data.push({
+              id: i,
+              text:  filterList[i]["label"],
+              data: filterList[i]
+            }); 
+        });
+        if( data.length == 0 ){
+            $('#addSwitchBtn').attr("disabled", "disabled");
+        } else {
+            $('#addSwitchBtn').removeAttr("disabled");
+        }
+        combo.populateList(data);
+    }
+
+    combo.onSelect = function(e, v, selectedData){
+        selectedData_ = selectedData;
+    };
+
+    $('#addSwitchBtn').click( function() {
+       if(filterList && selectedData_){
+            console.log("Button: Add switch.");
+            ZSYFCEditor.addShape("switch", selectedData_["data"]);
+            combo.filterAndResetSelected();
+            _buildList();
+            selectedData_ = null;
+       } 
+    });
+    
+    $("#saveTplDataBtn").click( function () {
+        // Ajax save data here.
+        alert( ZSYFCEditor.getData(true) );
+    } );
+    
+    // Refresh combo list.
+    _buildList();
+        
+    // If remove switch node, will call updateCallback.
+    ZSYFCEditor.updateCallback( function () {
+        _buildList();
+    }); 
+
 });
+}($switchList);
 abc;
 
-$this->registerJs($btnbar);
+$this->registerJs($btnBarJS);
 
 ?>

@@ -14,6 +14,7 @@
     };
 
     var ZSYFCEditor = {};
+    var refreshCallback_;
 
     // Import libs.
     // Data Factory
@@ -657,6 +658,8 @@
             .attr("d", function(d) {
                 return d;
             });
+        if( refreshCallback_ )
+            refreshCallback_();
     }
     // Repaint
     function repaint_() {
@@ -683,8 +686,11 @@
     }
 
     // Get data-json-string
-    function exportFn_toDataJson_() {
-        return dataFactory_['stringify']();
+    function exportFn_toDataJson_(stringify) {
+        var stringifyData = dataFactory_['stringify']();
+        if(stringify)
+            return stringifyData;
+        return JSON.parse( stringifyData );
     }
 
     function exportFn_switchMode_(mode) {
@@ -708,7 +714,8 @@
     exportLabel_("init", exportFn_InitPage_);
     exportLabel_('addShape', exportFn_AddNewShape_);
     exportLabel_('getData', exportFn_toDataJson_);
-    exportLabel_('switchMode', exportFn_switchMode_)
+    exportLabel_('switchMode', exportFn_switchMode_);
+    exportLabel_("updateCallback", function(fn){ refreshCallback_ = fn });
 
     //---------------------------------------------
     // Export object.

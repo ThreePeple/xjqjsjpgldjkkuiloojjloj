@@ -1,4 +1,23 @@
-svg.ZSYFCEditor{
+.buidling-editor-toolbar label#addSwitchLabel {
+	vertical-align: bottom;
+}
+.buidling-editor-toolbar span#switchcombo {
+	display: inline-block;
+	vertical-align: middle;
+}
+.buidling-editor-container {
+	margin: 0;
+	padding: 0;
+	background-color: #353535;
+	border: 1px solid #a0a0a0;
+	width: 1011px;
+	height: 676px;
+	box-sizing: border-box
+}
+svg.ZSYFCEditor {
 	background: url(../images/building.png);
 	border: none;
+}
+.buidling-editor-container text.title{
+	fill: #fff;
 }
