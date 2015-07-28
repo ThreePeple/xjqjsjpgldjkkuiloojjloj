@@ -1,4 +1,10 @@
 <?php
+
+$this->registerCssFile('/css/building-editor.css',['depends'=>'frontend\assets\AppAsset']);
+
+?>
+
+<?php
 /**
  * Created by PhpStorm.
  * Author: Shengjun
@@ -7,41 +13,10 @@
  */ 
  
 $js=<<<JS
-var data = {
-        "1": {
-            "attributes":{
-                "type": "circle",
-                "title": "abc",
-                "cx": 100,
-                "cy": 100,
-                "r": 20
-            },
-            "links":[ "2" ]
-        },
-        "2": {
-            "attributes": {
-                "type": "ellipse",
-                "title": "",
-                "cx": 160,
-                "cy": 180,
-                "rx": 20,
-                "ry": 30
-            }
-        },
-        "3": {
-            "attributes": {
-                "type": "ellipse",
-                "title": "",
-                "cx": 260,
-                "cy": 280,
-                "rx": 20,
-                "ry": 30
-            }
-        }
-    };
-    // Prev server-saved-data.
+
 	var data = {}; 
- 
+
+ /* // demo data.
     var data = {
             "2":{
                 "attributes":{"type":"switch","title":"aaa","cx":266,"cy":274,"rx":25,"ry":15,"__id__":"2"},
@@ -78,14 +53,14 @@ var data = {
                 "data":{"id":2,"label":"DDDD"}
             }
     }; 
- 
+ */
     //try{ 
 	ZSYFCEditor.init(
         data,
         {
             svg: d3.select("svg.ZSYFCEditor"),
-            width: 900,
-            height: 560
+            width: 1011,
+            height: 676
         } );
 JS;
 
@@ -146,13 +121,18 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
 
 };    
 </script>
-<div style="width: 900px;height:620px; margin: 0; padding: 0;">
+<div style="margin: 0; padding: 0; background-color: #353535; border: 1px solid #a0a0a0;width: 1011px; height: 676px; box-sizing:border-box">
+
+<?php 
+/*
 	<div class="ZSYFCEditor-btnbar" id="FCEditorBtnbar">
 		<span class="btn modeSwitch dragMode" data-mode="drag" title="默认">&nbsp;</span>
         <span class="btn modeSwitch lineMode" data-mode="line" title="智能连线">&nbsp;</span>
         <span class="btn modeSwitch polylineMode" data-mode="polyline" title="折线连线">&nbsp;</span>
 
 	</div>
+*/ 
+?>
 	<svg class="ZSYFCEditor" oncontextmenu="return false;" >
 		<defs>
 			<marker id="ZSYFCEditor_MarkerArrow" markerWidth="13" markerHeight="13" refx="9" refy="6" orient="auto">
