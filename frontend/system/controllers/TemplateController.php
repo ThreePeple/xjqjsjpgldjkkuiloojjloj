@@ -16,7 +16,7 @@ class TemplateController extends \yii\web\Controller
         $lists = DeviceInfo::getSelect2List(ViewTemplate::TYPE_BUILD);
         $selected = ViewTemplate::getTempateSet(ViewTemplate::TYPE_BUILD);
         $lists = ArrayHelper::map($lists,'id','text');
-        return $this->render('editor',["lists"=>$lists,"selected"=>Json::encode($selected),"type"=>ViewTemplate::TYPE_BUILD]);
+        return $this->render('editor',["lists"=>$lists,"selected"=>Json::encode($selected, JSON_FORCE_OBJECT),"type"=>ViewTemplate::TYPE_BUILD]);
     }
 
     public function actionAjaxItems($q=null){

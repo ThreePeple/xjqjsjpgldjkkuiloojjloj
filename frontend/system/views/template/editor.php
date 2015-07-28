@@ -1,5 +1,6 @@
 <?php
- 
+use yii\helpers\Html; 
+
 $this->registerCssFile('/css/stcombobox.css' ); 
 $this->registerCssFile('/css/building-editor.css',['depends'=>'frontend\assets\AppAsset']);
 
@@ -81,7 +82,7 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
 }; 
 
 </script>
- 
+ <?=Html::hiddenInput("dataType",$type,["id"=>"dataType"])?>
 <div class="buidling-editor-toolbar">
     <label for="switchcombo-ddi" id="addSwitchLabel">选择设备</label><span id="switchcombo"></span> 
     <?=Html::button("添加设备",["class"=>"btn btn-info","id"=>"addSwitchBtn"])?>
@@ -177,12 +178,13 @@ $(function(){
        } 
     });
     
-    $("#saveTplDataBtn").click( function () { 
+    $("#saveTplDataBtn").click( function () {
         $.ajax({
             url:'/system/template/save',
             type: 'post',
             data: {
-                "data": ZSYFCEditor.getData(true)
+                "data": ZSYFCEditor.getData(true),
+                "dataType": $type
             },
             dataType:"json",
             success:function(res){

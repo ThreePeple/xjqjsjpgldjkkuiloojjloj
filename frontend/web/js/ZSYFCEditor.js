@@ -240,6 +240,9 @@
             },
             "stringify": function() {
                 return JSON.stringify(gData_.getData());
+            },
+            "toData": function (){
+                return gData_.getData();
             }
         };
     }();
@@ -690,7 +693,7 @@
         var stringifyData = dataFactory_['stringify']();
         if(stringify)
             return stringifyData;
-        return JSON.parse( stringifyData );
+        return dataFactory_['toData']();
     }
 
     function exportFn_switchMode_(mode) {
