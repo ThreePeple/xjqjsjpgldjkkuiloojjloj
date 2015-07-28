@@ -1,11 +1,12 @@
 ! function(_exportName_) {
 
+    var console = ZSYFCEditorUtil.console;
 /**
   *
   * Some resource location.
   *
  **/
-	var config_ = { imagesWhereUrl:  '.' };
+	var config_ = ZSYFCEditorConfig["shape"];
 
     var MAP_ = {
         "title_": "title",
@@ -101,6 +102,11 @@
         this.bindData_ = d;
         return this;
     };
+    base_.prototype.getBindData = function (){
+        if( this.bindData_ )
+            return JSON.parse( JSON.stringify(this.bindData_) ); // Clone object.
+        return null;
+    };
     base_.prototype.fromData = function(d) {
         if (typeof d != 'object') {
             throw "Invalid parameter.";
@@ -192,12 +198,13 @@
             .attr("r", shape.r()); 
     };
     circle_.newOne = function (title, x, y){
-        return new circle_(title, x, y, 20);
+        return new circle_(title, x, y, config_["circle"]["r"]);
     };
 
     var rect_ = constructor_("rect");
     rect_.prototype = new base_();
     rect_.prototype.constructor = rect_;
+
     // TODO: render & newOne.
 
     var ellipse_ = constructor_("ellipse");
@@ -213,7 +220,7 @@
             .attr("ry", shape.ry());            
     };
     ellipse_.newOne = function (title, x, y){
-        return new ellipse_(title, x, y, 20, 30);
+        return new ellipse_(title, x, y, config_["ellipse"]["rx"], config_["ellipse"]["ry"]);
     };
 
     var mainSwitch_  = constructor_("mainSwitch");
@@ -227,10 +234,10 @@
             .attr("y", shape.cy() - shape.ry())
             .attr("width", 2 * shape.rx())
             .attr("height",2 * shape.ry())
-            .attr("xlink:href", config_["imagesWhereUrl"] + "/images/icons/switch1.png");            
+            .attr("xlink:href", config_["mainSwitch"]["imgSrc"]);            
     };
     mainSwitch_.newOne = function (title, x, y){
-        return new mainSwitch_(title, x, y, 30, 18);
+        return new mainSwitch_(title, x, y, config_["mainSwitch"]["rx"], config_["mainSwitch"]["ry"]);
     }; 
 
     var switch_  = constructor_("switch");
@@ -244,10 +251,10 @@
             .attr("y", shape.cy() - shape.ry())
             .attr("width", 2 * shape.rx())
             .attr("height",2 * shape.ry())
-            .attr("xlink:href", config_["imagesWhereUrl"] + "/images/icons/switch2.png");            
+            .attr("xlink:href", config_["switch"]["imgSrc"]);            
     };
     switch_.newOne = function (title, x, y){
-        return new switch_(title, x, y, 25, 15);
+        return new switch_(title, x, y, config_["switch"]["rx"], config_["switch"]["ry"]);
     }; 
 
     var server_  = constructor_("server");
@@ -261,10 +268,10 @@
             .attr("y", shape.cy() - shape.ry())
             .attr("width", 2 * shape.rx())
             .attr("height",2 * shape.ry())
-            .attr("xlink:href", config_["imagesWhereUrl"] + "/images/icons/server.png");            
+            .attr("xlink:href", config_["server"]["imgSrc"]);            
     };
     server_.newOne = function (title, x, y){
-        return new server_(title, x, y, 17, 25);
+        return new server_(title, x, y, config_["server"]["rx"], config_["server"]["ry"]);
     }; 
 
     var db_  = constructor_("db");
@@ -278,10 +285,10 @@
             .attr("y", shape.cy() - shape.ry())
             .attr("width", 2 * shape.rx())
             .attr("height",2 * shape.ry())
-            .attr("xlink:href", config_["imagesWhereUrl"] + "/images/icons/db.png");            
+            .attr("xlink:href",config_["db"]["imgSrc"]);            
     };
     db_.newOne = function (title, x, y){
-        return new db_(title, x, y, 19, 13);
+        return new db_(title, x, y, config_["db"]["rx"], config_["db"]["ry"]);
     }; 
 
     var firewall_  = constructor_("firewall");
@@ -295,28 +302,23 @@
             .attr("y", shape.cy() - shape.ry())
             .attr("width", 2 * shape.rx())
             .attr("height",2 * shape.ry())
-            .attr("xlink:href", config_["imagesWhereUrl"] + "/images/icons/firewall.png");            
+            .attr("xlink:href", config_["firewall"]["imgSrc"]);            
     };
     firewall_.newOne = function (title, x, y){
-        return new firewall_(title, x, y, 19, 18);
+        return new firewall_(title, x, y, config_["firewall"]["rx"], config_["firewall"]["ry"]);
     };         
     
 
     // Exports
-    window[_exportName_] = function( config ){
-		if( config )
-			config_ = config;
-
-		return {
-			"circle": circle_,
-			"rect": rect_,
-			"ellipse": ellipse_,
-			"mainSwitch": mainSwitch_,
-			"switch": switch_,
-			"server": server_,
-			"db": db_,
-			"firewall": firewall_
-		}; 
+    window[_exportName_] = {
+    	"circle": circle_,
+    	"rect": rect_,
+    	"ellipse": ellipse_,
+    	"mainSwitch": mainSwitch_,
+    	"switch": switch_,
+    	"server": server_,
+    	"db": db_,
+    	"firewall": firewall_ 
 	};
 
 }("FCShapeMaker")

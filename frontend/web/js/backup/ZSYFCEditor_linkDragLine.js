@@ -1,6 +1,12 @@
 ! function(ns) {
-    
-    var console = ZSYFCEditorUtil.console;
+    // Debug mode.
+    var DEBUG_ = true;
+    // Console wrapper.
+    var console = {
+        "log": function() {
+            DEBUG_ && window.console && window.console.log.apply(window.console, arguments);
+        }
+    };
 
     var document = window.document;
 
@@ -15,24 +21,14 @@
 
     var ZSYFCEditor = {};
 
-    // Import libs.
-    // Data Factory
-    var gData_ = window["FCNodeData"];
-    // Shape Maker factory
-    var shapeMaker_ = window["FCShapeMaker"];
-    // Object Collector factory
-    var objectCollector_ = window["FCObjectCollector"];
-    // Helper Position factory.
-    var helperPosition_ = window['FCHelperPosition'];
-    // Line Path Position
-    var linePathPosition_ = window["FCLinePathPosition"];
-    // Link line
-    var linkLine_ = window["FCLinkline"];
+    // Shape-maker factory
+    var shapeMaker_; // = window["FCShapeMaker"]( resourceConfig_ );
 
     var ID_ELEMENTINDEX = 0,
-        ID_KEY = ZSYFCEditorConfig["ID_KEY"];
+        ID_KEY = "__id__";
 
-    var closeSquareD_ = 8; // close btn 直径
+    var helperSquareD_ = 6, // 四边节点直径（接连线）
+        closeSquareD_ = 8; // close btn 直径
 
     var titleFontSize_ = 12; // 标题字体大小，定位text位置
 
@@ -40,7 +36,7 @@
         gLinkDragPathHelper_,
         gNodeEnter_, gNodeUpdate_, gNodeExit_;
 
-    var gBindData_, gLinkData_,
+    var gData_, gBindData_, gLinkData_,
         gMode_, // Drag, link line/polyline mode.
         gSVGWidth_, gSVGHeight_, gCurrentSelectedData_,
         gLinkHelperPath_;
@@ -78,92 +74,7 @@
             .attr("y2", closeSquareD_);
     };
 
-    var pointValue_ = function(v, radius) {
-        radius = radius || 10;
-        v = parseInt(v, radius);
-        if (isNaN(v)) {
-            throw "point value: invalid value.";
-        }
-        return v;
-    };
 
-    var linkPathPusher_ = {
-        "startD_": null,
-        "endD_": null,
-        "points_": [],
-        "clear": function() {
-            this["startD_"] = null;
-            this["endD_"] = null;
-            this["points_"].length = 0;
-        },
-        "push": function(point) {
-            // TODO: check point forward( eg: D Or array[x, y] ).
-            // Node data.
-            if (point && typeof point == 'object' && hasOwnProp_(point, ID_KEY)) {
-                if (this["startD_"] == null) {
-                    this["startD_"] = point;
-                } else {
-                    if (this["startD_"] != point) {
-                        this["endD_"] = point;
-                        this["completeChoosen_"]();
-                    }
-                }
-            } else {
-                // Has chosen startD, then point ...
-                if (this["startD_"] && Array.isArray(point)) { // Normal point(x,y)
-                    this["points_"].push(point);
-                }
-            }
-        },
-        "drawChoosenTrackingPoints": function(x, y) {
-            if (this["startD_"]) {// Has chosen startD
-                x = pointValue_(x);
-                y = pointValue_(y);
-                var path_ = [],
-                    x_, y_;
-                gLinkHelperPath_.classed("on", true);
-                path_.push("M" + this["startD_"]["cx"] + "," + this["startD_"]["cy"]);
-                if( gMode_ == 'polyline' ){
-                    this["points_"].forEach(function(point) {
-                        x_ = pointValue_(point[0]);
-                        y_ = pointValue_(point[1]);
-                        path_.push("L" + x_ + "," + y_);
-                    }); 
-                }
-                path_.push("L" + x + "," + y);
-                gLinkHelperPath_.attr("d", path_.join(""));
-                return true;
-            }
-            console.log("Link line pusher: choose start point firstly.");
-            return false;
-        },
-        "completeChoosen_": function() {
-            var line;
-            switch (gMode_) {
-                case "line":
-                    line = new linkLine_["base"]["Line"]();
-                    line.startD(this["startD_"]);
-                    line.endD(this["endD_"]);
-                    gLinkHelperPath_.classed("on", false).attr("d", "M0,0");
-                    dataFactory_.makeLink( this["startD_"], this["endD_"], line.toPlainData() );
-                    repaint_();
-                    this.clear();
-                    break;
-                case "polyline":
-                    line = new linkLine_["base"]["Polyline"]();
-                    line.startD(this["startD_"]);
-                    this["points_"].forEach(function(point) {
-                        line.linkPoints(point);
-                    });
-                    line.endD(this["endD_"]);
-                    gLinkHelperPath_.classed("on", false).attr("d", "M0,0");
-                    dataFactory_.makeLink( this["startD_"], this["endD_"], line.toPlainData() );
-                    repaint_();
-                    this.clear();
-                    break;
-            }
-        }
-    };
 
     var dataFactory_ = function() {
         var cursor_ = 0;
@@ -181,64 +92,35 @@
                 // New id.
                 return String(cursor_);
             },
-            "removeItem": function( d ){
-                var delKey = d[ID_KEY]; 
-                gData_.removeItem(delKey);
-
-                // Remove relative links.
-                var data = gData_.getData();
-                var keys = Object.keys( data ), itm, link, key;
-                for( var i = 0, len = keys.length ; i < len; i++ ){
-                    key  = keys[i];
-                    itm = data[key];
-                    if( itm["links"] ){
-                       len1 = itm["links"].length;
-                       while( --len1 > -1 ){
-                            link = itm["links"][ len1 ];
-                            if( link["data"]["from"] == delKey || link["data"]["to"] == delKey ){
-                                itm["links"].splice( len1, 1 );
-                            }
-                       }
-                    }
-                }
-            },
-            "makeLink": function(d, tgDatum, linkData) {
-                var _key = this.getId(tgDatum);
-                var ownerKey = this.getId(d);
-                var data = gData_.getItem(ownerKey);
-                
-                var from = linkData["data"]["from"],
-                    to = linkData["data"]["to"];
-
-                if (data && gData_.hasItem(_key) && from == ownerKey ) {
+            "makeLink": function(d, tgDatum) {
+                var _key = dataFactory_.getId(tgDatum);
+                var data = gData_[dataFactory_.getId(d)];
+                if (data && gData_[_key]) {
                     data["links"] = data["links"] || [];
                     var found = false;
-                    data["links"].forEach(function(link) {
-                        if (link["data"]["from"] == from && link["data"]["to"] == to ) {
+                    data["links"].forEach(function(v, i) {
+                        if (v == _key) {
                             found = true;
                         }
                     });
-                    console.log( "Make link: found = ", found );
                     if (found === false)
-                        data["links"].push(linkData);
-                } else {
-                    console.log( "Make link failure.", data, gData_.hasItem(_key), from, ownerKey );
+                        data["links"].push(_key);
                 }
             },
             "addNew": function(shapeType, data) {
                 if (shapeFactory_["newOne"]) {
-                    var id = this['getId']();
+                    var id = dataFactory_['getId']();
                     var one = shapeFactory_["newOne"](shapeType, data && data["label"]);
                     var d = one.toData();
                     one.bindData(d); // Relative.
-                    gData_.setItem(id, {
+                    gData_[id] = {
                         "attributes": d,
                         "data": data ? data : undefined
-                    });
+                    };
                 }
             },
             "stringify": function() {
-                return JSON.stringify(gData_.getData());
+                return JSON.stringify(gData_);
             }
         };
     }();
@@ -288,21 +170,21 @@
             }
             timer = setTimeout(repaint_, 0);
         };
-    }();
+    }(); 
 
     var dragFactory_ = {
         "drag": {
-            "start": function(d) {
+            "start": function( d ){
                 console.log("drag mode: start");
                 if (d3.event.sourceEvent.which != 1 ||
                     (d3.event.dx == 0 && d3.event.dy == 0)) {
                     console.log("Invalid drag.");
                     return;
                 }
-                d3.select(document.body).classed("ZSYFCEditor_shape_moving", true);
+                d3.select(document.body).classed("ZSYFCEditor_shape_moving", true); 
             },
-            "drag": function(d) {
-                console.log("drag mode: drag");
+            "drag": function( d ){
+                console.log("drag mode: drag"); 
                 var x = d3.event.sourceEvent.clientX,
                     y = d3.event.sourceEvent.clientY;
 
@@ -318,8 +200,8 @@
                 shape.cy(y - svgOffset_.top + document.body.scrollTop);
                 dragRepaint_();
             },
-            "end": function(d) {
-                console.log("drag mode: end");
+            "end": function( d ){
+                console.log("drag mode: end"); 
                 if (d3.event.sourceEvent.which != 1 ||
                     (d3.event.dx == 0 && d3.event.dy == 0)) {
                     console.log("Invalid drag.");
@@ -333,33 +215,81 @@
                 dragRepaint_();
             },
         }
+ /*   ,"line": {
+            "start": function( d ){
+                console.log("line mode: start");
+                if (d3.event.sourceEvent.which != 1) {
+                    return;
+                }
+                this.__originXY__ = [d.cx, d.cy];
+                d3.select(document.body).classed("ZSYFCEditor_link_moving", true);
+                gLinkHelperPath_.classed("on", true); 
+            },
+            "drag": function ( d ){
+                    console.log("line mode: drag");
+                    if (d3.event.sourceEvent.which != 1) {
+                        return;
+                    }
+                    var data = [{
+                        source: {
+                            cy: this.__originXY__[0],
+                            cx: this.__originXY__[1]
+                        },
+                        target: {
+                            cx: d3.event.y - 2,
+                            cy: d3.event.x - 2
+                        }
+                    }];
+                    gLinkHelperPath_.data(data).attr("d", linePathData_); 
+            }, 
+            "end": function ( d ){
+                console.log("line mode: end");
+                if (d3.event.sourceEvent.which != 1) {
+                    return;
+                }
+                if (d3.event.sourceEvent.target) {
+                    var tgDatum = d3.select(d3.event.sourceEvent.target).datum();
+                    if (tgDatum && tgDatum != d) {
+                        console.log("Drag-Drop end:", d, tgDatum);
+                        if (shapeFactory_.accept && shapeFactory_.accept(tgDatum)) {
+                            dataFactory_["makeLink"](d, tgDatum);
+                            repaint_();
+                        }
+                    }
+                }
+                this.__originXY__ = null;
+                d3.select(document.body).classed("ZSYFCEditor_link_moving", false);
+                gLinkHelperPath_.classed("on", false).attr("d", "M0,0"); 
+            }
+        }
+*/
     };
 
     var events_ = {
         "dragProxy": function() {
             return d3.behavior.drag()
                 .on("dragstart", function(d) {
-                    switch (gMode_) {
-                        case 'drag':
+                    switch( gMode_ ){
+                        case 'drag':  
                             dragFactory_[gMode_]["start"](d);
                             break;
                     }
                 })
                 .on("drag", function(d) {
-                    switch (gMode_) {
-                        case 'drag':
+                    switch( gMode_ ){
+                        case 'drag':  
                             dragFactory_[gMode_]["drag"](d);
                             break;
 
-                    }
+                    } 
                 })
                 .on("dragend", function(d) {
-                    switch (gMode_) {
-                        case 'drag':
+                    switch( gMode_ ){
+                        case 'drag':  
                             dragFactory_[gMode_]["end"](d);
                             break;
 
-                    }
+                    } 
                 });
         },
         "shapeSelectedClickEvent": function(d) {
@@ -382,7 +312,7 @@
             }
         },
         "shapeRemoveClickEvent": function(d) {
-            dataFactory_.removeItem( d );
+            delete gData_[d[ID_KEY]];
             repaint_();
         },
         "shapeTitleClickEvent": function(d) {
@@ -402,7 +332,7 @@
                                 if (e.keyCode == 13) {
                                     var shape = objectCollector_.get(d);
                                     shape.title($(this).val());
-                                    var data = gData_.getItem(dataFactory_.getId(d));
+                                    var data = gData_[dataFactory_.getId(d)];
                                     // Sync title <=> label value.
                                     if (data && data["data"]) {
                                         data["data"]["label"] = shape.title();
@@ -418,6 +348,143 @@
                 },
                 "modify_title"
             );
+        }
+    };
+
+    var linePathPosition_ = {
+        "findHelper": function(sourceD, targetD) {
+            var sourceShape = objectCollector_.get(sourceD),
+                targetShape = objectCollector_.get(targetD);
+            var sourceHelperPos = helperPosition_.get(sourceD),
+                targetHelperPos = helperPosition_.get(targetD);
+
+            var which = ['l', 'b'];
+
+            /**
+             * 		target location:
+             *
+             *                   |
+             *      top-left     |     top-right
+             *                   |
+             *     ---------------------------------
+             *     				 |
+             * 		bottom-left  |	   bottom-right
+             * 					 |
+             *
+             *
+             */
+
+            // Fixed locatioin
+            // -- source >>
+            if (sourceShape.cx() > targetShape.cx()) {
+                which[0] = 'l';
+            } else {
+                if (sourceShape.cx() <= targetShape.cx() + targetShape.rx() && sourceShape.cx() >= targetShape.cx() - targetShape.rx()) {
+                    which[0] = 't';
+                    if (sourceShape.cy() < targetShape.cy()) {
+                        which[0] = 'b';
+                    }
+                } else {
+                    which[0] = 'r';
+                }
+            }
+
+            // -- target >>
+            if (sourceShape.cy() > targetShape.cy()) {
+                which[1] = 'b';
+            } else {
+                if (sourceShape.cy() <= targetShape.cy() + targetShape.ry() && sourceShape.cy() >= targetShape.cy() - targetShape.ry()) {
+                    which[1] = 'l';
+                    if (sourceShape.cx() > targetShape.cx()) {
+                        which[1] = 'r';
+                    }
+                } else {
+                    which[1] = 't';
+                }
+            }
+            console.log('|> Link Points: ', which);
+            return which;
+        }
+    };
+
+    // 4 rect(s) helper( for generating {x,y,w,h,cx,cy} ) 
+    var helperPosition_ = {
+        "cache_": {},
+        "get": function(d) {
+            var key = d[ID_KEY];
+            if (key !== undefined) {
+                if (this["cache_"][key] == undefined) {
+                    var shape = objectCollector_.get(d);
+                    var posMap = {};
+                    //x,y,w,h,cx,cy
+                    // top
+                    posMap["t"] = [
+                        shape.cx() - helperSquareD_ / 2,
+                        shape.cy() - shape.ry() - helperSquareD_ / 2,
+                        helperSquareD_,
+                        helperSquareD_,
+                        shape.cx(),
+                        shape.cy() - shape.ry()
+                    ];
+                    // right
+                    posMap["r"] = [
+                        shape.cx() + shape.rx() - helperSquareD_ / 2,
+                        shape.cy() - helperSquareD_ / 2,
+                        helperSquareD_,
+                        helperSquareD_,
+                        shape.cx() + shape.rx(),
+                        shape.cy()
+                    ];
+
+                    // bottom
+                    posMap["b"] = [
+                        shape.cx() - helperSquareD_ / 2,
+                        shape.cy() + shape.ry() - helperSquareD_ / 2,
+                        helperSquareD_,
+                        helperSquareD_,
+                        shape.cx(),
+                        shape.cy() + shape.ry()
+                    ];
+                    // left
+                    posMap["l"] = [
+                        shape.cx() - shape.rx() - helperSquareD_ / 2,
+                        shape.cy() - helperSquareD_ / 2,
+                        helperSquareD_,
+                        helperSquareD_,
+                        shape.cx() - shape.rx(),
+                        shape.cy()
+                    ];
+                    this["cache_"][key] = posMap;
+                    posMap = null;
+                    console.log("!> Helper position: new.")
+                } else {
+                    console.log("|> Helper posiiton: From cache.")
+                }
+                return this["cache_"][key];
+            }
+            throw "Invalid parameter.";
+        },
+        "clear": function() {
+            this["cache_"] = null;
+            this["cache_"] = {};
+        }
+    };
+
+    var objectCollector_ = {
+        "collector_": {},
+        "get": function(d) {
+            var key = d[ID_KEY];
+            if (key !== undefined) {
+                if (this["collector_"][key] == undefined) {
+                    this["collector_"][key] = (new shapeMaker_[d.type]()).bindData(d).fromData(d);
+                }
+                return this["collector_"][key];
+            }
+            throw "Invalid parameter.";
+        },
+        "clear": function() {
+            this["collector_"] = null;
+            this["collector_"] = {};
         }
     };
 
@@ -442,7 +509,6 @@
             var shape = objectCollector_.get(d);
 
             var g = container;
-
             g.append("text")
                 .attr("class", function(d) {
                     return shape["title"]() ? "title" : "title none";
@@ -465,7 +531,7 @@
                         .attr("x", hPos[p][0])
                         .attr("y", hPos[p][1])
                         .attr("width", hPos[p][2])
-                        .attr("height", hPos[p][3]);
+                        .attr("height", hPos[p][3]); 
                 }
             }
 
@@ -480,46 +546,6 @@
         }
     };
 
-    function bindEvents_(svg) {
-        svg.on("click", function() {
-            if (gMode_ != "drag") { // line or polyline mode
-                var event = d3.event,
-                    target = event.target,
-                    data;
-                var x, y;
-                var svgLT = getSvgOffset_();
-                x = event.x - svgLT.left;
-                y = event.y - svgLT.top;
-                // Fixed: scroll left or top.
-                x += document.body.scrollLeft;
-                y += document.body.scrollTop;
-
-                var element = $(target).closest("g.element")[0];
-                if (element) {
-                    data = d3.select(element).datum();
-                    linkPathPusher_.push(data);
-                } else {
-                    linkPathPusher_.push([x, y]);
-                }
-                console.log("svg click: ", x, y, target, element, data);
-            }
-        }).on("mousemove", function() {
-            var event = d3.event,
-                target = event.target,
-                data;
-            var x, y;
-            var svgLT = getSvgOffset_();
-            x = event.x - svgLT.left;
-            y = event.y - svgLT.top;
-            // Fixed: scroll left or top.
-            x += document.body.scrollLeft;
-            y += document.body.scrollTop;
-            if (gMode_ != "drag") { // line or polyline mode
-                linkPathPusher_.drawChoosenTrackingPoints( x,  y);
-            }
-        });
-    }
-
     // Init svg painter
     function exportFn_InitPage_(d, config) {
         var svg = config.svg
@@ -529,13 +555,12 @@
         // Init helper( with path element )
         gLinkHelperPath_ = svg.append("path")
             .attr("class", "link_drag_helper");
-        bindEvents_(svg);
         // Append some or not elements in SVG.
         svg = prepareSVG_(svg);
 
         // Init closure variables.
-        gData_.setData(d);
-        d = parseData_(gData_.getData());
+        gData_ = d;
+        d = parseData_(gData_);
 
         gSVGWidth_ = config.width;
         gSVGHeight_ = config.height;
@@ -550,7 +575,7 @@
     }
     // Add something
     function prepareSVG_(svg) {
-        return svg.select("g.svg-container");
+        return svg.select("g.container");
     }
     // Retrieve nodes and links( For shapes and paths ).
     function parseData_(data) {
@@ -565,29 +590,43 @@
 
         keys.forEach(function(k, i) {
             _ids.push(+(k));
+
             d = data[k];
             // Extend ID_KEY attribute.
             d["attributes"][ID_KEY] = k;
             nodes.push(d["attributes"]);
-        });
-        var pathData_, from, to;
-        keys.forEach(function(k, i) {
-            d = data[k];
+
             d.links && d.links.forEach(function(c, i) {
-                from = c["data"]["from"];
-                to = c["data"]["to"];
-                if( gData_.hasItem( to ) ){
-                    pathData_ = linkLine_.getPathData(c);
-                    if (pathData_) {
-                        links.push(pathData_);
-                    } else {
-                        console.log("parse data: unknown link-value.", c, k);
-                    } 
+                if (data[c]) {
+                    // Extend ID_KEY attribute.
+                    data[c]["attributes"][ID_KEY] = c;
+                    c = data[c];
+                    which = linePathPosition_.findHelper(d["attributes"], c["attributes"]);
+                    sourcePos = helperPosition_.get(d["attributes"]);
+                    targetPos = helperPosition_.get(c["attributes"]);
+                    sourceShape = objectCollector_.get(d["attributes"]);
+                    targetShape = objectCollector_.get(c["attributes"]);
+                    a = {
+                        cx: targetPos[which[1]][5],
+                        cy: targetPos[which[1]][4],
+                        linkPoint: which[1],
+                        rx: sourceShape.rx(),
+                        ry: sourceShape.ry()
+                    };
+                    b = {
+                        cx: sourcePos[which[0]][5],
+                        cy: sourcePos[which[0]][4],
+                        linkPoint: which[0],
+                        rx: targetShape.rx(),
+                        ry: targetShape.ry()
+                    };
+                    links.push({
+                        source: b,
+                        target: a
+                    });
                 }
             });
         });
-
-
         // Find max key-value.
         var _max = _ids.sort().pop();
         // Init some constants
@@ -619,9 +658,48 @@
             })(points);
     }
 
+    // Generate center-part path data.
+    function fixCenterData_(source, target) {
+        if (target.cx == source.cx || target.cy == source.cy)
+            return '';
+        var v1, v2;
+        v1 = target.cy - source.cy;
+        v2 = target.cx - source.cx;
+
+        if ((source.linkPoint == 'l' || source.linkPoint == 'r') && (target.linkPoint == 'l' || target.linkPoint == 'r') && Math.abs(target.cx - source.cx) < target.rx) {
+            if (v1 || v2) {
+                return 'L' + (source.cy + target.cy) / 2 + ',' + source.cx +
+                    'L' + (source.cy + target.cy) / 2 + ',' + target.cx;
+            }
+        } else {
+            if ((source.linkPoint == 't' || source.linkPoint == 'b') && (target.linkPoint == 't' || target.linkPoint == 'b') && Math.abs(target.cy - source.cy) < target.ry) {
+                if (v1 || v2) {
+                    return 'L' + source.cy + ',' + (source.cx + target.cx) / 2 +
+                        'L' + target.cy + ',' + (source.cx + target.cx) / 2;
+                }
+            }
+        }
+
+        return 'L' + target.cy + ',' + source.cx;
+    }
+
+    // polyline path function.
+    function polylineData_(d) {
+        var source = d.source,
+            target = d.target;
+
+        //M216,484L893,686
+        var path = [
+            'M' + source.cy + ',' + source.cx,
+            fixCenterData_(source, target),
+            'L' + target.cy + ',' + target.cx
+        ];
+        return path.join('');
+    }
+
     // Render elements in SVG.
     function renderSVG_() {
-        d = parseData_(gData_.getData());
+        d = parseData_(gData_);
         gBindData_ = d["nodes"];
         gLinkData_ = d["links"];
         var arr = gBindData_;
@@ -650,13 +728,11 @@
 
         gNodeExit_.transition().remove();
 
-        gSVG_.selectAll(".node_link")
+        var link = gSVG_.selectAll(".node_link")
             .data(gLinkData_)
             .enter().append("path")
             .attr("class", "node_link")
-            .attr("d", function(d) {
-                return d;
-            });
+            .attr("d", polylineData_);
     }
     // Repaint
     function repaint_() {
@@ -687,8 +763,8 @@
         return dataFactory_['stringify']();
     }
 
-    function exportFn_switchMode_(mode) {
-        switch (mode) {
+    function exportFn_switchMode_( mode ){
+        switch( mode ){
             case 'drag':
             case 'line':
             case 'polyline':
@@ -705,6 +781,9 @@
     // Export fn(s) for external invoking
     // --------------------------------------------
     // Relative fn with ZSYFCEditor
+    exportLabel_("config", function(resourceConfig_) {
+        shapeMaker_ = window["FCShapeMaker"](resourceConfig_);
+    });
     exportLabel_("init", exportFn_InitPage_);
     exportLabel_('addShape', exportFn_AddNewShape_);
     exportLabel_('getData', exportFn_toDataJson_);
