@@ -6,7 +6,7 @@
 .stc-button {
     cursor: pointer;
     width: 20px;
-    background: #DECCA6 url(stcombo_triangle.png) no-repeat center;
+    background: #DECCA6 url(../images/stcombo_triangle.png) no-repeat center;
 }
 
 .stc-table {

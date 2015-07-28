@@ -1,5 +1,9 @@
+.buidling-editor-toolbar{
+	height: 39px;
+}
 .buidling-editor-toolbar label#addSwitchLabel {
 	vertical-align: bottom;
+	line-height: 38px;
 }
 .buidling-editor-toolbar span#switchcombo {
 	display: inline-block;
@@ -18,6 +22,26 @@ svg.ZSYFCEditor {
 	background: url(../images/building.png);
 	border: none;
 }
-.buidling-editor-container text.title{
+.buidling-editor-container text.title {
 	fill: #fff;
+}
+.buidling-editor-toolbar > *{
+	float: left;
+	margin: 0 5px;
+}
+.buidling-editor-toolbar .stc-box {
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	color: #555555;
+	font-size: 14px;
+	outline: 0;
+}
+.buidling-editor-toolbar .stc-button {
+	border: none;
+	border-left: 1px solid #aaa;
+}
+.buidling-editor-toolbar .stc-input { 
+  padding: 6px 5px;
 }
