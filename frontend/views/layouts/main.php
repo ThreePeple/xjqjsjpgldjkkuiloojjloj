@@ -8,15 +8,7 @@ use frontend\widgets\Alert;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
-$css = <<<css
 
-.logo{
-    width: 50px;
-    height: 50px;
-    background: url('/images/logo.png') no-repeat center center;
-}
-css;
-$this->registerCss($css);
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>

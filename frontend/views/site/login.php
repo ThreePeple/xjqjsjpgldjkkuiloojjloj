@@ -21,7 +21,7 @@ $fieldOptions2 = [
 
 <div class="login-box">
     <div class="login-logo">
-        <a href="#"><span class="logo"><img src="/images/logo.png"/></span>中石油网管系统</a>
+        <a href="#"><span class="logo"><img src="/images/logo_80.png"/></span>  中石油网管系统</a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
