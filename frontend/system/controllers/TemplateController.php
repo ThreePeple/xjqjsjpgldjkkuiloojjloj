@@ -28,7 +28,7 @@ class TemplateController extends \yii\web\Controller
      * 保存模板
      */
     public function actionSave(){
-        $type = Yii::$app->request->post("type",0);
+        $type = Yii::$app->request->post("dataType",0);
         $data = Yii::$app->request->post("data");
         $result = ["status"=> 0,'msg'=>''];
         $transaction = Yii::$app->db->beginTransaction();
