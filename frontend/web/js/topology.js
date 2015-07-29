@@ -252,7 +252,7 @@
                     if( data[key] ){
                         var id = data[key]["data"]["id"];
                         console.log( "Load page", "http://www.cnpc.com/?id=" + id );
-                        window.open( "http://www.cnpc.com/?id=" + id );
+                        window.open( "/stat/device/detail?id=" + id );
                     }
                 }
             }
@@ -266,7 +266,7 @@
                 ZSYFCEditor.callFN("shape", id, function (){
                     s = data[id]['data'] ? data[id]['data']["status"] ? data[id]['data']['status'] : '-1' : '-1';
                     imgSrc = switchStatusImg[s] ? switchStatusImg[s] : switchStatusImg['-1'];
-                    alert(imgSrc);
+                    //alert(imgSrc);
                     this.attr( "href", imgSrc );
                 });
             });
