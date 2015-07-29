@@ -100,6 +100,7 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
 
 <?php
 
+/*
 $switchList = <<<abc
 [
     { id: 'a1', label: '交换机1' },
@@ -109,7 +110,8 @@ $switchList = <<<abc
     { id: 'a5', label: '交换机5' }
 ]
 abc;
-
+*/
+$switchList = json_encode($lists);
 
 $btnBarJS = <<<abc
 !function(switchList){
