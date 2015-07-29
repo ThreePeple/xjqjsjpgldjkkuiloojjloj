@@ -251,6 +251,21 @@
         ZSYFCEditor.updateCallback( function(){
             // TODO: update switch status here.
         } );
+
+        var refreshData = function(){
+            $.ajax({
+                url:'/topology/dashboard/ajax-refresh',
+                type:"post",
+                dataType:'json',
+                success:function(res){
+                    if(res.build){
+                        ZSYFCEditor.updateData(res.build)
+                    }
+                    setTimeout(refreshData,30000);
+                }
+            });
+        }
+        refreshData();
     });
 
 } )();
