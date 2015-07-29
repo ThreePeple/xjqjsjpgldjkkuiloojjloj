@@ -20,7 +20,7 @@ $this->registerCssFile("/css/h_collapse.css",["depends"=>'frontend\assets\AppAss
             <ul>
                 <li class="li1" id="li1" style="width: 880px;">
                     <div class="fold" style="display: none;">
-                        <!--<span class="img"></span>-->
+                        <span class="img"></span>
                         <span class="txt">设备详细信息</span>
                     </div>
                     <div class="unfold" style="display: block;">
@@ -31,7 +31,7 @@ $this->registerCssFile("/css/h_collapse.css",["depends"=>'frontend\assets\AppAss
                 </li>
                 <li class="li2" style="width: 100px;">
                     <div class="fold" style="display: block;">
-                        <!--<span class="img"></span>-->
+                        <span class="img"></span>
                         <span class="txt">设备性能指标</span>
                     </div>
                     <div class="unfold" style="display: none;">
@@ -42,7 +42,7 @@ $this->registerCssFile("/css/h_collapse.css",["depends"=>'frontend\assets\AppAss
                 </li>
                 <li class="li3" style="width: 100px;">
                     <div class="fold" style="display: block;">
-                        <!--<span class="img"></span>-->
+                        <span class="img"></span>
                         <span class="txt">设备告警信息</span>
                     </div>
                     <div class="unfold" style="display: none;">
@@ -53,7 +53,7 @@ $this->registerCssFile("/css/h_collapse.css",["depends"=>'frontend\assets\AppAss
                 </li>
                 <li class="li4" style="width: 100px;">
                     <div class="fold" style="display: block;">
-                        <!--<span class="img"></span>-->
+                        <span class="img"></span>
                         <span class="txt">设备接口信息</span>
                     </div>
                     <div class="unfold" style="display: none;">
