@@ -138,8 +138,14 @@ class DeviceController extends Controller
     }
 
     public function actionDetail($id){
+        $this->layout = '//main';
         $model = $this->findModel($id);
-
+        $perfModel = DeviceTask::find()->where(["devId"=>$id])->orderBy('update_time desc')->one();
+        return $this->render("detail",[
+            'id'=>$id,
+            "model"=>$model,
+            "perfModel" => $perfModel
+        ]);
     }
 
 
