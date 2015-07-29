@@ -41,6 +41,9 @@ $css = <<<CSS
     right: 0;
     top: 120px;
 }
+.buidling-editor-container text.title {
+    display: none;
+}
 CSS;
 $this->registerCss($css);
 ?>
