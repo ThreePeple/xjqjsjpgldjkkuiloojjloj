@@ -3,14 +3,24 @@
  */
 ( function () { 
 
+    var switchStatusImg = {
+        '-1': "/images/building_switch_status/s-1.png",
+        '0': "/images/building_switch_status/s0.png",
+        '1': "/images/building_switch_status/s1.png",
+        '2': "/images/building_switch_status/s2.png",
+        '3': "/images/building_switch_status/s3.png",
+        '4': "/images/building_switch_status/s4.png",
+        '5': "/images/building_switch_status/s5.png"
+    };
+
     var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
         "ID_KEY": "__id__",
         "singleMode": true,
         "shape": { 
             "switch": {
-                "rx": 25,
-                "ry": 15,
-                "imgSrc": "/images/icons/switch2.png"
+                "rx": 15,
+                "ry": 6.5,
+                "imgSrc": "/images/building_switch_status/s-1.png"
             }
         }
 
@@ -249,7 +259,18 @@
         });
 
         ZSYFCEditor.updateCallback( function(){
-            // TODO: update switch status here.
+            // Update switch status.
+            var data = ZSYFCEditor.getData();
+            var keys = Object.keys( data ), s, imgSrc; 
+            keys.forEach( function ( id ){
+                ZSYFCEditor.callFN("shape", id, function (){
+                    s = data[id]['data'] ? data[id]['data']["status"] ? data[id]['data']['status'] : '-1' : '-1';
+                    imgSrc = switchStatusImg[s] ? switchStatusImg[s] : switchStatusImg['-1'];
+                    alert(imgSrc);
+                    this.attr( "href", imgSrc );
+                });
+            });
+            
         } );
 
         var refreshData = function(){
@@ -259,12 +280,12 @@
                 dataType:'json',
                 success:function(res){
                     if(res.build){
-                        ZSYFCEditor.updateData(res.build)
+                        ZSYFCEditor.updateData(res.build);
                     }
                     setTimeout(refreshData,30000);
                 }
             });
-        }
+        };
         refreshData();
     });
 

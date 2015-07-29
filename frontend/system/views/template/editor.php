@@ -51,39 +51,12 @@ $this->registerCssFile('/css/building-editor.css',['depends'=>'frontend\assets\A
 ?> 
 var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
     "ID_KEY": "__id__",
-    "shape": {
-        "circle": {
-            "r": 20
-        },
-        "ellipse": {
-            "rx": 30,
-            "ry": 20,
-        },
-        "mainSwitch": {
-            "rx": 39,
-            "ry": 18,
-            "imgSrc": "/images/icons/switch1.png"
-        },
+    "shape": { 
         "switch": {
-            "rx": 25,
-            "ry": 15,
-            "imgSrc": "/images/icons/switch2.png"
-        },
-        "server": {
-            "rx": 17,
-            "ry": 25,
-            "imgSrc": "/images/icons/server.png"
-        },
-        "db": {
-            "rx": 19,
-            "ry": 13,
-            "imgSrc": "/images/icons/db.png"
-        },
-        "firewall": {
-            "rx": 19,
-            "ry": 18,
-            "imgSrc": "/images/icons/firewall.png"
-        }
+            "rx": 15,
+            "ry": 6.5,
+            "imgSrc": "/images/building_switch_status/s-1.png"
+        } 
     }
 
 }; 

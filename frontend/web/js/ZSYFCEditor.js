@@ -733,6 +733,27 @@
 
     }
 
+    function exportFn_getDom_( nodeType, id ){
+        switch( nodeType ){
+            case "shape":
+                return d3.select('#' + elementID_["generate"](id) + ' .shape' ).node(); 
+                break;
+        }
+        return null;
+    }
+
+    function exportFn_applyFn_( nodeType, id, applyFn ){
+        if( !applyFn )
+            return false;
+        switch( nodeType ){
+            case "shape":
+                d3.select('#' + elementID_["generate"](id) + ' .shape' ).call( applyFn ); 
+                return true;
+            default:
+                return false;
+        }
+    }   
+
     // --------------------------------------------
     // Export fn(s) for external invoking
     // --------------------------------------------
@@ -741,6 +762,8 @@
     exportLabel_("updateData", exportFn_updateData_);
     exportLabel_('getData', exportFn_toDataJson_);
     exportLabel_("updateCallback", function(fn){ refreshCallback_ = fn });
+    exportLabel_("getDOM", exportFn_getDom_);
+    exportLabel_("callFN", exportFn_applyFn_ );
 
     // Only for edit mode.
     if(!ZSYFCEditorConfig["singleMode"]){
