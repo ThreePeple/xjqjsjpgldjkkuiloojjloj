@@ -170,8 +170,8 @@ class DeviceController extends Controller
 
 
     public function actionTest(){
-        for($i=10 ; $i<20 ; $i++){
-            $sql = "INSERT INTO `device_interface` VALUES ('$i', 6, '$i', '136', 'L3IPVLAN', 'Vlan-interface{$i}', '1', 'Up', '1', 'Up', '-2', null, '0', '0', 'Vlan-interface{$i} Interface', '00:0f:e2:e1:ca:be', '1500', '51天11小时23分钟53秒860毫秒', '10.153.146.$i', '255.255.255.0', null, '2015-07-22 17:52:29');";
+        for($i=30 ; $i<40 ; $i++){
+            $sql = "INSERT INTO `device_interface` VALUES ('$i', 9, '$i', '136', 'L3IPVLAN', 'Vlan-interface{$i}', '1', 'Up', '1', 'Up', '-2', null, '0', '0', 'Vlan-interface{$i} Interface', '00:0f:e2:e1:ca:be', '1500', '51天11小时23分钟53秒860毫秒', '10.153.146.$i', '255.255.255.0', null, '2015-07-22 17:52:29');";
             Yii::$app->db->createCommand($sql)->execute();
         }
     }
