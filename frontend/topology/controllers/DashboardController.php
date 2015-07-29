@@ -5,8 +5,10 @@ namespace app\topology\controllers;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use app\models\ViewTemplate;
+use yii\helpers\Json;
 
-class DefaultController extends Controller
+class DashboardController extends Controller
 {
     /**
      * @inheritdoc
@@ -16,6 +18,7 @@ class DefaultController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
+                'only' => ['index'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -34,5 +37,15 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    /**
+     * 刷新面板数据
+     */
+    public function actionAjaxRefresh(){
+        $data = [];
+        $selected = ViewTemplate::getTempateSet(ViewTemplate::TYPE_BUILD);
+        $data["build"] = $selected;
+        return Json::encode($data);
     }
 }

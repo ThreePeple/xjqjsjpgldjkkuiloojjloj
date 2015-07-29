@@ -1,7 +1,7 @@
 /**
  * Created by Shengjun on 15-7-9.
  */
-( function () { 
+( function () {
 
     var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
         "ID_KEY": "__id__",
@@ -55,7 +55,7 @@
         }]
     };
 
-    // Dom Ready 
+    // Dom Ready
     $(function(){ 
 
         $('#events_type').highcharts({
@@ -229,8 +229,23 @@
                 svg: d3.select("svg.ZSYFCEditor"),
                 width: 1011,
                 height: 676
-            } 
+            }
         );
+
+        var refreshData = function(){
+            $.ajax({
+                url:'/topology/dashboard/ajax-refresh',
+                type:"post",
+                dataType:'json',
+                success:function(res){
+                    if(res.build){
+                        ZSYFCEditor.updateData(res.build)
+                    }
+                    setTimeout(refreshData,30000);
+                }
+            });
+        }
+        refreshData();
     });
 
 } )();

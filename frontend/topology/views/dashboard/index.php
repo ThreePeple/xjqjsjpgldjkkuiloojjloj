@@ -19,8 +19,6 @@ $this->registerJsFile('/js/ZSYFCLinkline.js',['depends'=>'frontend\assets\AppAss
 $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset']);
 
 
-$this->registerJsFile('/js/topology.js',['depends'=>'frontend\assets\AppAsset']); 
-
 $css = <<<CSS
 .box{
   color: #fff;

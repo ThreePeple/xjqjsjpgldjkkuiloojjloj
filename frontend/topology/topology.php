@@ -6,6 +6,8 @@ class topology extends \yii\base\Module
 {
     public $controllerNamespace = 'app\topology\controllers';
 
+    public $defaultRoute = 'dashboard';
+
     public function init()
     {
         parent::init();
