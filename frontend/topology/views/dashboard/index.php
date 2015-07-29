@@ -1,6 +1,7 @@
 <?php
 
 $this->registerCssFile('/css/popuppanel.css'); 
+$this->registerCssFile('/css/style.css');
 $this->registerCssFile('/css/building-editor.css',['depends'=>'frontend\assets\AppAsset']);
 
 $this->registerJsFile('/js/popuppanel.js',['depends'=>'frontend\assets\AppAsset']); 
