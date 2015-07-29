@@ -20,6 +20,7 @@ use app\models\DeviceInfo;
         GridView::widget([
             "dataProvider"=>$dataProvider,
             "columns" => [
+                "id",
                 "alarmLevelDesc",
                 "alarmCategoryDesc",
                 "faultTimeDesc",
