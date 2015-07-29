@@ -12,6 +12,9 @@ use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use app\models\DeviceInterfaceTask;
 use app\models\DeviceTask;
+use app\models\DeviceAlarm;
+use yii\data\ActiveDataProvider;
+
 /**
  * DeviceController implements the CRUD actions for DeviceInfo model.
  */
@@ -125,6 +128,9 @@ class DeviceController extends Controller
         return Json::encode($data);
     }
 
+    /**
+     * 接口详情
+     */
     public function actionGetDetail(){
         $id = Yii::$app->request->get("node");
         $data = DeviceInterface::find()->where(["id"=>$id])->asArray()->one();
@@ -141,10 +147,16 @@ class DeviceController extends Controller
         $this->layout = '//main';
         $model = $this->findModel($id);
         $perfModel = DeviceTask::find()->where(["devId"=>$id])->orderBy('update_time desc')->one();
+        $query = DeviceAlarm::find();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        $query->where(["deviceId"=>$id])->orderBy("faultTime desc")->limit(5);
         return $this->render("detail",[
             'id'=>$id,
             "model"=>$model,
-            "perfModel" => $perfModel
+            "perfModel" => $perfModel,
+            "alarmProvider" =>$dataProvider
         ]);
     }
 

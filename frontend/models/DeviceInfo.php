@@ -112,6 +112,9 @@ class DeviceInfo extends \yii\db\ActiveRecord
             'interfaces' => Yii::t('app', 'Interfaces'),
             'category' => Yii::t('app', 'Category'),
             'update_time' => Yii::t('app', 'Update Time'),
+            'series_name' => Yii::t('app', '设备系列'),
+            'model_name' => Yii::t('app', '设备型号'),
+
         ];
     }
 
@@ -176,5 +179,26 @@ class DeviceInfo extends \yii\db\ActiveRecord
             }
         },$selected);
         return $rows;
+    }
+
+    public function getStatusShow(){
+        switch($this->status){
+            case self::STATUS_UNMANAGED:
+                return '<span style="color:#808080">未管理</span>';
+            case self::STATUS_UNKNOWN:
+                return '<span style="color:#00F">未知</span>';
+            case self::STATUS_NORMAL:
+                return '<span style="color:#008000">正常</span>';
+            case self::STATUS_WARNING:
+                return '<span style="color:#0FF">警告</span>';
+            case self::STATUS_MINOR:
+                return '<span style="color:#FF0">次要</span>';
+            case self::STATUS_IMPORTANT:
+                return '<span style="color:#FFA500">重要</span>';
+            case self::STATUS_SERIOUS:
+                return '<span style="color:#F00">严重</span>';
+            default:
+                return '<span style="color:#00F">未知</span>';
+        }
     }
 }

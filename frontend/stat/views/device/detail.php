@@ -46,8 +46,8 @@ $this->registerCssFile("/css/h_collapse.css",["depends"=>'frontend\assets\AppAss
                         <span class="txt">设备告警信息</span>
                     </div>
                     <div class="unfold" style="display: none;">
-                        <?=$this->render("perf",[
-                            "model" => $perfModel
+                        <?=$this->render("alarm",[
+                            "dataProvider" => $alarmProvider
                         ])?>
                     </div>
                 </li>
