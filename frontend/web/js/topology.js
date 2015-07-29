@@ -231,6 +231,20 @@
                 height: 676
             } 
         );
+
+        $('.ZSYFCEditor').click( function (e) {
+            var $tg = $(e.target);
+            if($tg.is(".shape")){
+                var d = d3.select(e.target).datum() || "";
+                if( d ){
+                    d = encodeURIComponent( JSON.stringify( d ) );
+                }
+                console.log( "Load page", "http://www.cnpc.com/?d=" + d );
+                window.open( "http://www.cnpc.com/?d=" + d );
+            }
+        });
+
+
     });
 
 } )();
