@@ -13,8 +13,9 @@ use app\models\DeviceInfo;
 
 ?>
 
-<div class="row" >
-    <div class="col-md-12">
+<div class="device-info-view">
+
+    <h1><?= Html::encode($this->title) ?></h1>
         <?=
         GridView::widget([
             "dataProvider"=>$dataProvider,
@@ -27,5 +28,4 @@ use app\models\DeviceInfo;
             //"export"=>false
         ]);
         ?>
-    </div>
 </div>
