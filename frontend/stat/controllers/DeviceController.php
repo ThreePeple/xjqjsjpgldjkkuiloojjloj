@@ -140,7 +140,6 @@ class DeviceController extends Controller
     public function actionDetail($id){
         $model = $this->findModel($id);
 
-        return $this->render
     }
 
 
