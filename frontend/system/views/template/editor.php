@@ -1,11 +1,7 @@
 <?php
-use yii\helpers\Html; 
+use yii\helpers\Html;  
 
-$this->registerCssFile('/css/stcombobox.css' ); 
-$this->registerCssFile('/css/building-editor.css',['depends'=>'frontend\assets\AppAsset']);
-
- 
- 
+// Init FCEditor 
 $js=<<<JS
 	var data = $selected;  
 
@@ -36,12 +32,23 @@ $this->registerJsFile('/js/ZSYFCHelperPosition.js',['depends'=>'frontend\assets\
 $this->registerJsFile('/js/ZSYFCLinkline.js',['depends'=>'frontend\assets\AppAsset']); 
 $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset']);
 
+$this->registerCssFile('/css/stcombobox.css' );
 $this->registerCssFile('/css/popuppanel.css');
 $this->registerCssFile('/css/style.css');
 $this->registerCssFile('/css/building-editor.css',['depends'=>'frontend\assets\AppAsset']);
 
 ?>
 <script>
+
+<?php
+     /*
+      ZSYFCEditorConfig = {
+          "singleMode": true, // 编辑模式或查看模式切换。默认为编辑模式，
+                              // 提供并true：查看模式（无法使用添加交换机接口）
+
+      }
+      */
+?> 
 var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
     "ID_KEY": "__id__",
     "shape": {
@@ -167,6 +174,7 @@ $(function(){
 
     combo.onSelect = function(e, v, selectedData){
         selectedData_ = selectedData;
+        combo.getInput().blur();
     };
 
     $('#addSwitchBtn').click( function() {
@@ -205,6 +213,10 @@ $(function(){
     ZSYFCEditor.updateCallback( function () {
         _buildList();
     }); 
+
+    combo.getInput().bind("focus", function(e){
+        selectedData_ = null;
+    });
 
 });
 }($switchList);

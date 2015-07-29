@@ -447,17 +447,21 @@
 
             var g = container;
 
-            g.append("text")
+            var titleTxt = g.append("text")
                 .attr("class", function(d) {
                     return shape["title"]() ? "title" : "title none";
                 })
                 .attr("x", shape["cx"]())
                 .attr("y", shape["cy"]() + shape["ry"]() + titleFontSize_)
-                .text(shape["title"]() || "<No Title>")
-                .on("click", events_["shapeTitleClickEvent"]);
+                .text(shape["title"]() || "<No Title>");
 
-            shape.render(g)
-                .call(events_["dragProxy"]())
+            if(!ZSYFCEditorConfig["singleMode"])
+                titleTxt.on("click", events_["shapeTitleClickEvent"]);
+
+            var element = shape.render(g); 
+
+            if(!ZSYFCEditorConfig["singleMode"])
+                element.call(events_["dragProxy"]())
                 .on("mousedown", events_["shapeSelectedClickEvent"]);
 
             var hPos = helperPosition_.get(d);
@@ -474,17 +478,21 @@
             }
 
             // Close btn.
-            var cg = g.append("g")
-                .attr("transform", "matrix(1,0,0,1," +
-                    (shape.cx() + shape.rx() - closeSquareD_ / 2) +
-                    "," + (shape.cy() - shape.ry() - closeSquareD_ / 2) + ")")
-                .attr("class", "remove")
-                .on("click", events_["shapeRemoveClickEvent"]);
-            makeCloseBtn_(cg);
+            if(!ZSYFCEditorConfig["singleMode"]){
+                var cg = g.append("g")
+                    .attr("transform", "matrix(1,0,0,1," +
+                        (shape.cx() + shape.rx() - closeSquareD_ / 2) +
+                        "," + (shape.cy() - shape.ry() - closeSquareD_ / 2) + ")")
+                    .attr("class", "remove")
+                    .on("click", events_["shapeRemoveClickEvent"]);
+                makeCloseBtn_(cg); 
+            }
         }
     };
 
     function bindEvents_(svg) {
+        if(ZSYFCEditorConfig["singleMode"])
+            return;
         svg.on("click", function() {
             if (gMode_ != "drag") { // line or polyline mode
                 var event = d3.event,
@@ -552,6 +560,17 @@
         // Pare data.
         renderSVG_();
     }
+
+    function exportFn_updateData_(d) {
+        // Init closure variables.
+        gData_.setData(d);
+        d = parseData_(gData_.getData());
+        gBindData_ = d["nodes"];
+        gLinkData_ = d["links"]; 
+        // Pare data.
+        renderSVG_();
+    }
+
     // Add something
     function prepareSVG_(svg) {
         return svg.select("g.svg-container");
@@ -574,7 +593,11 @@
             d["attributes"][ID_KEY] = k;
             nodes.push(d["attributes"]);
         });
-        var pathData_, from, to;
+
+        var pathData_, 
+            from, 
+            to;
+
         keys.forEach(function(k, i) {
             d = data[k];
             d.links && d.links.forEach(function(c, i) {
@@ -715,11 +738,16 @@
     // --------------------------------------------
     // Relative fn with ZSYFCEditor
     exportLabel_("init", exportFn_InitPage_);
-    exportLabel_('addShape', exportFn_AddNewShape_);
+    exportLabel_("updateData", exportFn_updateData_);
     exportLabel_('getData', exportFn_toDataJson_);
-    exportLabel_('switchMode', exportFn_switchMode_);
     exportLabel_("updateCallback", function(fn){ refreshCallback_ = fn });
 
+    // Only for edit mode.
+    if(!ZSYFCEditorConfig["singleMode"]){
+        exportLabel_('addShape', exportFn_AddNewShape_);
+        exportLabel_('switchMode', exportFn_switchMode_);
+    }
+    
     //---------------------------------------------
     // Export object.
     //---------------------------------------------

@@ -6,12 +6,12 @@
 .stc-button {
     cursor: pointer;
     width: 20px;
-    background: #DECCA6 url(../images/stcombo_triangle.png) no-repeat center;
+    background: #fff url(../images/stcombo_triangle.png) no-repeat center;
 }
 
 .stc-table {
     position: relative;
-    border: 1px solid #A89B7E;
+    border: 1px solid #fff;
 }
 
 .stc-input {

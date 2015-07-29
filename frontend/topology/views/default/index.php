@@ -1,21 +1,25 @@
 <?php
 
-$this->registerCssFile('/css/popuppanel.css');
-$this->registerCssFile('/css/building.css');
-$this->registerCssFile('/css/wireless-network.css');
-$this->registerCssFile('/css/wire-network.css');
-$this->registerCssFile('/css/app.css');
+$this->registerCssFile('/css/popuppanel.css'); 
+$this->registerCssFile('/css/building-editor.css',['depends'=>'frontend\assets\AppAsset']);
 
-$this->registerJsFile('/js/popuppanel.js',['depends'=>'frontend\assets\AppAsset']);
-$this->registerJsFile('/js/building.js',['depends'=>'frontend\assets\AppAsset']);
-$this->registerJsFile('/js/wireNetwork.js',['depends'=>'frontend\assets\AppAsset']);
-$this->registerJsFile('/js/wirelessNetwork.js',['depends'=>'frontend\assets\AppAsset']);
+$this->registerJsFile('/js/popuppanel.js',['depends'=>'frontend\assets\AppAsset']); 
 $this->registerJsFile('/js/highcharts.js',['depends'=>'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/highcharts-more.js',['depends'=>'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/topology.js',['depends'=>'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/d3.min.js',['depends'=>'frontend\assets\AppAsset']);
-$this->registerJsFile('/js/topology.js',['depends'=>'frontend\assets\AppAsset']);
-$this->registerJsFile('/js/app.js',['depends'=>'frontend\assets\AppAsset']);
+
+$this->registerJsFile('/js/ZSYFCEditorUtil.js',['depends'=>'frontend\assets\AppAsset']); 
+$this->registerJsFile('/js/ZSYFCNodeData.js',['depends'=>'frontend\assets\AppAsset']); 
+$this->registerJsFile('/js/ZSYFCShapeMaker.js',['depends'=>'frontend\assets\AppAsset']);
+$this->registerJsFile('/js/ZSYFCObjectCollector.js',['depends'=>'frontend\assets\AppAsset']);
+$this->registerJsFile('/js/ZSYFCLinePathPosition.js',['depends'=>'frontend\assets\AppAsset']); 
+$this->registerJsFile('/js/ZSYFCHelperPosition.js',['depends'=>'frontend\assets\AppAsset']); 
+$this->registerJsFile('/js/ZSYFCLinkline.js',['depends'=>'frontend\assets\AppAsset']); 
+$this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset']);
+
+
+$this->registerJsFile('/js/topology.js',['depends'=>'frontend\assets\AppAsset']); 
 
 $css = <<<CSS
 .box{
@@ -66,7 +70,15 @@ $this->registerCss($css);
         </div>
     </div>
     <div class="col-md-9">
-        <div class="building" id="buildingHolder">
-        </div>
+        <div class="buidling-editor-container">  
+            <svg class="ZSYFCEditor" oncontextmenu="return false;" >
+                <defs>
+                    <marker id="ZSYFCEditor_MarkerArrow" markerWidth="13" markerHeight="13" refx="9" refy="6" orient="auto">
+                        <path d="M2,2 L2,11 L10,6 L2,2" style="fill: #000000;" />
+                    </marker>
+                </defs>
+                <g class="svg-container"></g>
+            </svg>
+        </div> 
     </div>
 </div>
