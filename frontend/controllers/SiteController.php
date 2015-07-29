@@ -68,7 +68,7 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        $this->redirect(Url::toRoute(['/topology/default/index']));
+        $this->redirect(Url::toRoute(['/topology/dashboard/index']));
     }
 
     public function actionLogin()
