@@ -9,7 +9,20 @@
 $this->registerJsFile("/js/h_collapse.js",["depends"=>'frontend\assets\AppAsset']);
 $this->registerCssFile("/css/h_collapse.css",["depends"=>'frontend\assets\AppAsset']);
 
-
+$js = <<<JS
+        $("#refresh_perf").on("click",function(){
+            $.ajax({
+                url:'/stat/device/perf?id={$model->id}',
+                type:'GET',
+                dataType:'html',
+                success:function(_html){
+                    $(".perf_view table").replaceWith($(_html).find("table"))
+                }
+            })
+        })
+JS;
+$this->registerJs($js);
+$this->title = "设备详情";
 ?>
 <!--<link rel="stylesheet" type="text/css" href="/css/h_collapse.css">
 <script type="text/javascript" src="/js/jquery-1.7.1.min.js"></script>
@@ -36,7 +49,8 @@ $this->registerCssFile("/css/h_collapse.css",["depends"=>'frontend\assets\AppAss
                     </div>
                     <div class="unfold" style="display: none;">
                         <?=$this->render("perf",[
-                            "model" => $perfModel
+                            "data" => $perflists,
+                            "devId" => $model->id
                         ])?>
                     </div>
                 </li>

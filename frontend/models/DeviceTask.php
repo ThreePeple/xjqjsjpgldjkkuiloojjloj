@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "device_task".
@@ -69,5 +70,15 @@ class DeviceTask extends \yii\db\ActiveRecord
             'sumCount' => Yii::t('app', 'Sum Count'),
             'update_time' => Yii::t('app', 'Update Time'),
         ];
+    }
+
+    public static function getPrefList($deviceId){
+        $rows = self::find()->where(["devId"=>$deviceId])
+            ->select(["taskDesc","dataVal"])
+            ->orderBy("update_time desc")
+            ->groupBy("taskId")
+            ->asArray()
+            ->all();
+        return ArrayHelper::map($rows,"taskDesc","dataVal");
     }
 }

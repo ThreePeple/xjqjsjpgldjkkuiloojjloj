@@ -15,7 +15,7 @@ use app\models\DeviceInfo;
 
 <div class="device-info-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode("设备告警信息") ?></h1>
         <?=
         GridView::widget([
             "dataProvider"=>$dataProvider,

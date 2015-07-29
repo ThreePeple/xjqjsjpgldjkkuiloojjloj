@@ -59,13 +59,6 @@ class DeviceController extends Controller
         ]);
     }
 
-    public function actionPerf($id){
-        $model = DeviceTask::find()->where(["devId"=>$id])->orderBy('update_time desc')->one();
-        return $this->render('perf', [
-            'model' => $model
-        ]);
-    }
-
     /**
      * Creates a new DeviceInfo model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -143,10 +136,13 @@ class DeviceController extends Controller
         return $this->render('link',['id'=>$id]);
     }
 
+    /**
+     * 设备详情页面
+     */
     public function actionDetail($id){
         $this->layout = '//main';
         $model = $this->findModel($id);
-        $perfModel = DeviceTask::find()->where(["devId"=>$id])->orderBy('update_time desc')->one();
+        $lists = DeviceTask::getPrefList($id);
         $query = DeviceAlarm::find();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -155,10 +151,22 @@ class DeviceController extends Controller
         return $this->render("detail",[
             'id'=>$id,
             "model"=>$model,
-            "perfModel" => $perfModel,
+            "perflists" => $lists,
             "alarmProvider" =>$dataProvider
         ]);
     }
+    /**
+     * 设备性能指标
+     */
+    public function actionPerf($id){
+        $this->layout = false;
+        $lists = DeviceTask::getPrefList($id);
+        return $this->render('perf', [
+            'data' => $lists,
+            "devId" => $id
+        ]);
+    }
+
 
 
     public function actionTest(){
