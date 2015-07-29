@@ -234,17 +234,23 @@
 
         $('.ZSYFCEditor').click( function (e) {
             var $tg = $(e.target);
+            var data = ZSYFCEditor.getData();
             if($tg.is(".shape")){
                 var d = d3.select(e.target).datum() || "";
                 if( d ){
-                    d = encodeURIComponent( JSON.stringify( d ) );
+                    var key = d[ ZSYFCEditorConfig["ID_KEY"] ];
+                    if( data[key] ){
+                        var id = data[key]["data"]["id"];
+                        console.log( "Load page", "http://www.cnpc.com/?id=" + id );
+                        window.open( "http://www.cnpc.com/?id=" + id );
+                    }
                 }
-                console.log( "Load page", "http://www.cnpc.com/?d=" + d );
-                window.open( "http://www.cnpc.com/?d=" + d );
             }
         });
 
-
+        ZSYFCEditor.updateCallback( function(){
+            // TODO: update switch status here.
+        } );
     });
 
 } )();
