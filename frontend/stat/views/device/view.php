@@ -30,6 +30,7 @@ use yii\widgets\DetailView;
             'mask',
             'mac',
             [
+                'label' => "设备状态",
                 'attribute'=>'statusShow',
                 'format' => "raw"
             ],
