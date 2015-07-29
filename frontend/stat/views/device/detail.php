@@ -14,13 +14,13 @@ $this->registerCssFile("/css/h_collapse.css",["depends"=>'frontend\assets\AppAss
 <!--<link rel="stylesheet" type="text/css" href="/css/h_collapse.css">
 <script type="text/javascript" src="/js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="/js/h_collapse.js"></script>-->
-<div class="item_box box10" style="margin-top: 50px;">
+<div class="item_box box10">
     <div class="item_box_wp">
         <div class="voice_2">
             <ul>
                 <li class="li1" id="li1" style="width: 880px;">
                     <div class="fold" style="display: none;">
-                        <span class="img"></span>
+                        <!--<span class="img"></span>-->
                         <span class="txt">设备详细信息</span>
                     </div>
                     <div class="unfold" style="display: block;">
@@ -31,7 +31,7 @@ $this->registerCssFile("/css/h_collapse.css",["depends"=>'frontend\assets\AppAss
                 </li>
                 <li class="li2" style="width: 100px;">
                     <div class="fold" style="display: block;">
-                        <span class="img"></span>
+                        <!--<span class="img"></span>-->
                         <span class="txt">设备性能指标</span>
                     </div>
                     <div class="unfold" style="display: none;">
@@ -42,26 +42,22 @@ $this->registerCssFile("/css/h_collapse.css",["depends"=>'frontend\assets\AppAss
                 </li>
                 <li class="li3" style="width: 100px;">
                     <div class="fold" style="display: block;">
-                        <span class="img"></span>
+                        <!--<span class="img"></span>-->
                         <span class="txt">设备告警信息</span>
                     </div>
                     <div class="unfold" style="display: none;">
-                        <?=$this->render("link",["id"=>$id])?>
+                        <?=$this->render("perf",[
+                            "model" => $perfModel
+                        ])?>
                     </div>
                 </li>
                 <li class="li4" style="width: 100px;">
                     <div class="fold" style="display: block;">
-                        <span class="img"></span>
+                        <!--<span class="img"></span>-->
                         <span class="txt">设备接口信息</span>
                     </div>
                     <div class="unfold" style="display: none;">
-                        <dl>
-                            <dt><img src="images/img50.png"></dt>
-                            <dd>
-                                <b>回拨通话<a href="http://down.admin5.com/info/">查看接口文档&gt;&gt;</a></b>
-                            </dd>
-                            <dd>同时通过平台方发起主叫和被叫双方，定制通话方满足不同需求的客户服务，企业服务易可根据具体业务需求为客户提供定制服务</dd>
-                        </dl>
+                        <?=$this->render("link",["id"=>$id])?>
                     </div>
                 </li>
                 <!--

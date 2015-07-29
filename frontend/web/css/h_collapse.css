@@ -76,16 +76,16 @@ img {
     position:relative;
 }
 .voice_2 ul li.li1 {
-    background:#4a9ebd
+    background:#5FB72B
 }
 .voice_2 ul li.li2 {
-    background:#4abdb9
+    background:#3AA99C
 }
 .voice_2 ul li.li3 {
-    background:#90d73d
+    background: #CBD800
 }
 .voice_2 ul li.li4 {
-    background:#e3d02c
+    background: #996baa
 }
 .voice_2 ul li.li5 {
     background:#e37e2c
@@ -180,4 +180,7 @@ img {
     display:inline-block;
     color:#fff;
     margin-left:40px;
+}
+.voice_2 .table-striped > tbody > tr:nth-of-type(odd){
+    background-color: inherit;
 }
