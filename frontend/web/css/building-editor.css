@@ -24,6 +24,7 @@ svg.ZSYFCEditor {
 }
 .buidling-editor-container text.title {
 	fill: #fff;
+	text-anchor: middle;
 }
 .buidling-editor-toolbar > *{
 	float: left;

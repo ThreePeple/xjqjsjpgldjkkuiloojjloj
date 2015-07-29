@@ -33,6 +33,15 @@ $css = <<<CSS
 .box-header{
     color: #939393;
 }
+.buidling-editor-container{
+    border: none;
+    position: absolute;
+    right: 0;
+    top: 120px;
+}
+.buidling-editor-container text.title {
+    display: none;
+}
 CSS;
 $this->registerCss($css);
 ?>

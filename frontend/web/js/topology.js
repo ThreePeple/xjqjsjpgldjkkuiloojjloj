@@ -1,7 +1,7 @@
 /**
  * Created by Shengjun on 15-7-9.
  */
-( function () {
+( function () { 
 
     var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
         "ID_KEY": "__id__",
@@ -55,7 +55,7 @@
         }]
     };
 
-    // Dom Ready
+    // Dom Ready 
     $(function(){ 
 
         $('#events_type').highcharts({
@@ -229,23 +229,28 @@
                 svg: d3.select("svg.ZSYFCEditor"),
                 width: 1011,
                 height: 676
-            }
+            } 
         );
 
-        var refreshData = function(){
-            $.ajax({
-                url:'/topology/dashboard/ajax-refresh',
-                type:"post",
-                dataType:'json',
-                success:function(res){
-                    if(res.build){
-                        ZSYFCEditor.updateData(res.build)
+        $('.ZSYFCEditor').click( function (e) {
+            var $tg = $(e.target);
+            var data = ZSYFCEditor.getData();
+            if($tg.is(".shape")){
+                var d = d3.select(e.target).datum() || "";
+                if( d ){
+                    var key = d[ ZSYFCEditorConfig["ID_KEY"] ];
+                    if( data[key] ){
+                        var id = data[key]["data"]["id"];
+                        console.log( "Load page", "http://www.cnpc.com/?id=" + id );
+                        window.open( "http://www.cnpc.com/?id=" + id );
                     }
-                    setTimeout(refreshData,30000);
                 }
-            });
-        }
-        refreshData();
+            }
+        });
+
+        ZSYFCEditor.updateCallback( function(){
+            // TODO: update switch status here.
+        } );
     });
 
 } )();
