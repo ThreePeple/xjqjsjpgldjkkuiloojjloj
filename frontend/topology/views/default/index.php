@@ -35,6 +35,12 @@ $css = <<<CSS
 .box-header{
     color: #939393;
 }
+.buidling-editor-container{
+    border: none;
+    position: absolute;
+    right: 0;
+    top: 120px;
+}
 CSS;
 $this->registerCss($css);
 ?>
