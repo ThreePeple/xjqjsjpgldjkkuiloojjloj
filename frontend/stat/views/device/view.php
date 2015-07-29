@@ -5,10 +5,7 @@ use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\DeviceInfo */
-
-$this->title = $model->label;
-$this->params['breadcrumbs'][] = ['label' => 'Device Infos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->title = "设备详细信息";
 ?>
 <div class="device-info-view">
 

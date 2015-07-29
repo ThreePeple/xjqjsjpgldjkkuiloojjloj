@@ -7,8 +7,6 @@ use yii\widgets\DetailView;
 /* @var $model app\models\DeviceInfo */
 
 $this->title = '设备性能指标';
-$this->params['breadcrumbs'][] = ['label' => '设备性能指标', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="device-info-view">
 

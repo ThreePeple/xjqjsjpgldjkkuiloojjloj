@@ -14,7 +14,7 @@ $this->registerCssFile("/css/h_collapse.css",["depends"=>'frontend\assets\AppAss
 <!--<link rel="stylesheet" type="text/css" href="/css/h_collapse.css">
 <script type="text/javascript" src="/js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="/js/h_collapse.js"></script>-->
-<div class="item_box box10">
+<div class="item_box box10" style="margin-top: 50px;">
     <div class="item_box_wp">
         <div class="voice_2">
             <ul>
