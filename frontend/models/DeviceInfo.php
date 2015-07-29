@@ -158,16 +158,16 @@ class DeviceInfo extends \yii\db\ActiveRecord
     }
 
     public static function getSelect2List($type=null,$q=null,$selected=[]){
-        $exclude_ids = ViewTemplate::find()
+        /*$exclude_ids = ViewTemplate::find()
             ->where(["type"=>$type])
             ->select("device_id")
             ->groupBy("device_id")
             ->asArray()
-            ->column();
+            ->column();*/
         $query = self::find();
        // $query->andFilterWhere(["categoryId"=>$type]);
         $query->andFilterWhere(["like","label",$q]);
-        $query->andFilterWhere(["not in","id",$exclude_ids]);
+       // $query->andFilterWhere(["not in","id",$exclude_ids]);
         $query->select(["id"=>"id","label"=>"label"]);
         $rows = $query->asArray()->all();
         array_walk($rows,function(&$item,$k,$seleceted){

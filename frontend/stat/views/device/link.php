@@ -22,7 +22,7 @@ $this->registerCssFile('/css/app.css');
 
 ?>
 
-<div class="row" style="background: #fff">
+<div class="row" style="">
     <div class="col-md-12 switch_chart" id="switch_holder">
     </div>
 </div>
