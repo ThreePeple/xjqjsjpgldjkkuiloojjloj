@@ -21,6 +21,13 @@ $this->registerCssFile('/css/popuppanel.css');
 $this->registerCssFile('/css/app.css');
 
 ?>
+<style>
+    .switch_chart svg{
+        display: block;
+        margin: 0 auto;
+        cursor: default;
+    }
+</style>
 
 <div class="row" style="">
     <div class="col-md-12 switch_chart" id="switch_holder">

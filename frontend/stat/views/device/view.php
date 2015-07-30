@@ -6,10 +6,23 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\DeviceInfo */
 ?>
-<div class="device-info-view">
+<style>
+    .device-info-view  h1{
+        font-size: 18px;
+        margin: 8px 0;
+    }
+    .device-info-view.view th{
+        width: 100px;
+    }
+    .device-info-view.view tr:hover > *{
+        background-color: #8Fe75B;
+    }
+</style>
+<div class="device-info-view view">
 
     <h1><?= Html::encode("设备详细信息") ?></h1>
-
+<?php 
+/*
     <!--<p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
@@ -20,7 +33,8 @@ use yii\widgets\DetailView;
             ],
         ]) ?>
     </p>-->
-
+*/
+?>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
