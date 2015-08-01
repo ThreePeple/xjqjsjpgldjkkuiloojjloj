@@ -155,6 +155,22 @@ class DeviceController extends Controller
             "alarmProvider" =>$dataProvider
         ]);
     }
+    public function actionWlanDetail($id){
+        $this->layout = '//main';
+        $model = $this->findModel($id);
+        $lists = DeviceTask::getPrefList($id);
+        $query = DeviceAlarm::find();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+        $query->where(["deviceId"=>$id])->orderBy("faultTime desc")->limit(5);
+        return $this->render("detail_wlan",[
+            'id'=>$id,
+            "model"=>$model,
+            "perflists" => $lists,
+            "alarmProvider" =>$dataProvider
+        ]);
+    }
     /**
      * 设备性能指标
      */

@@ -33,9 +33,9 @@ $this->title = "设备详情";
 ?>
 <div class="item_box box10" style="margin-top: 50px;">
     <div class="item_box_wp">
-        <div class="voice_2">
+        <div class="voice_2 voice_3">
             <ul>
-                <li class="li1" id="li1" style="width: 880px;">
+                <li class="li1" id="li1" style="width: 780px;">
                     <div class="fold" style="display: none;">
                         <span class="img"></span>
                         <span class="txt">设备详细信息</span>
@@ -75,7 +75,16 @@ $this->title = "设备详情";
                         <span class="txt">设备接口信息</span>
                     </div>
                     <div class="unfold" style="display: none;">
-                        <?=$this->render("interface",["id"=>$id])?>
+                        <?=$this->render("link",["id"=>$id])?>
+                    </div>
+                </li>
+                <li class="li5" style="width: 100px;">
+                    <div class="fold" style="display: block;">
+                        <span class="img"></span>
+                        <span class="txt">设备链路信息</span>
+                    </div>
+                    <div class="unfold" style="display: none;">
+                        <?=$this->render("link",["id"=>$id])?>
                     </div>
                 </li>
     <?php /*            
