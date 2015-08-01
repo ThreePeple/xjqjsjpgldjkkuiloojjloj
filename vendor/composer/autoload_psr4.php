@@ -47,6 +47,7 @@ return array(
     'kartik\\alert\\' => array($vendorDir . '/kartik-v/yii2-widget-alert'),
     'kartik\\affix\\' => array($vendorDir . '/kartik-v/yii2-widget-affix'),
     'dmstr\\' => array($vendorDir . '/dmstr/yii2-adminlte-asset'),
+    'daixianceng\\smser\\' => array($vendorDir . '/daixianceng/yii2-smser'),
     'cebe\\markdown\\' => array($vendorDir . '/cebe/markdown'),
     'Fhaculty\\Graph\\' => array($vendorDir . '/clue/graph/src'),
     'Faker\\' => array($vendorDir . '/fzaninotto/faker/src/Faker'),

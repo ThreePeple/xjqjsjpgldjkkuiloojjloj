@@ -49,7 +49,8 @@ use yii\helpers\Url;
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="/system/template/index"><span class="fa fa-circle-o"></span> 大楼局域网模板</a> </li>
+                    <li><a href="/system/template/building"><span class="fa fa-circle-o"></span> 大楼局域网模板</a> </li>
+                    <li><a href="/system/template/wlan"><span class="fa fa-circle-o"></span> 有线网络模板</a> </li>
                 </ul>
             </li>
             <li><a href="<?=Url::toRoute('/system/user/index')?>"><span class="fa fa-circle-o"></span> 用户管理</a>

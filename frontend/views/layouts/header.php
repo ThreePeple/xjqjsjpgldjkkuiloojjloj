@@ -9,7 +9,7 @@ use yii\bootstrap\NavBar;
 
 <?php
 NavBar::begin([
-    'brandLabel' => '<span class="logo"><img src="/images/logo_33.png" style="margin-top: -6px;"/></span>  中石油网管系统',
+    'brandLabel' => '<span class=""><img src="/images/logo_33.png" style="margin-top: -6px;"/></span>  中石油网管系统',
     'brandUrl' => Yii::$app->homeUrl,
     'options' => [
         'class' => 'navbar-inverse navbar-fixed-top',

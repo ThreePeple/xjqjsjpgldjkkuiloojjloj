@@ -11,14 +11,16 @@ use Yii;
 
 class TemplateController extends \yii\web\Controller
 {
-    public function actionIndex()
+    public function actionBuilding()
     {
         $lists = DeviceInfo::getSelect2List(ViewTemplate::TYPE_BUILD);
         $selected = ViewTemplate::getTempateSet(ViewTemplate::TYPE_BUILD);
        // $lists = ArrayHelper::map($lists,'id','text');
         return $this->render('editor',["lists"=>$lists,"selected"=>Json::encode($selected, JSON_FORCE_OBJECT),"type"=>ViewTemplate::TYPE_BUILD]);
     }
-
+    /**
+     * 获取大厦可选设备列表
+     */
     public function actionAjaxItems($q=null){
         $data = DeviceInfo::getSelect2List(null,$q,[]);
         return Json::encode(["results"=>$data]);
@@ -54,5 +56,21 @@ class TemplateController extends \yii\web\Controller
             $result["msg"] = $e->getMessage();
         }
         return Json::encode($result);
+    }
+
+    /**
+     * 有限网络
+     */
+    public function actionWlan(){
+        $lists = DeviceInfo::getSelect2List(ViewTemplate::TYPE_WLAN);
+        $selected = ViewTemplate::getTempateSet(ViewTemplate::TYPE_WLAN);
+        // $lists = ArrayHelper::map($lists,'id','text');
+        return $this->render('editorWlan',["lists"=>$lists,"selected"=>Json::encode($selected, JSON_FORCE_OBJECT),"type"=>ViewTemplate::TYPE_WLAN]);
+    }
+    /**
+     * 获取分类设备裂帛啊
+     */
+    public function actionGetTypeDevices(){
+
     }
 }

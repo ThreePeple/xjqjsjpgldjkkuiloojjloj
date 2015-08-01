@@ -318,4 +318,13 @@ return array (
       '@kartik/detail' => $vendorDir . '/kartik-v/yii2-detail-view',
     ),
   ),
+  'daixianceng/yii2-smser' => 
+  array (
+    'name' => 'daixianceng/yii2-smser',
+    'version' => '1.3.0.0',
+    'alias' => 
+    array (
+      '@daixianceng/smser' => $vendorDir . '/daixianceng/yii2-smser',
+    ),
+  ),
 );
