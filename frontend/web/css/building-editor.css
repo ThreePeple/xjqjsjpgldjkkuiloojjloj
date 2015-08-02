@@ -16,12 +16,12 @@
 	border: 1px solid #a0a0a0;
 	width: 1011px;
 	height: 676px;
+	position: relative;
 	box-sizing: border-box
 }
 .wlan-editor-container{
 	width: 1366px;
 	height: 768px;
-	position: relative;
 }
 svg.ZSYFCEditor {
 	background: url(../images/building.png);
