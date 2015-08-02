@@ -1,6 +1,6 @@
 ! function(ns) {
     // Debug mode.
-    var DEBUG_ = false;
+    var DEBUG_ = true;
 
     
     // Console wrapper.

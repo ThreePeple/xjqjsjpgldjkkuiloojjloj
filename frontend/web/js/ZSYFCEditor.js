@@ -47,9 +47,14 @@
         gLinkHelperPath_;
 
     var elementID_ = {
-        "generate": function(idx) {
+        "elementId": function(idx) {
             if (idx != undefined)
                 return "ZSYFCEditor_Element" + String(idx);
+            throw "Invalid parameter.";
+        },
+        "pathId": function (idx){
+            if( idx != undefined )
+                return "ZSYFCEditor_Path" + String( idx );
             throw "Invalid parameter.";
         }
     };
@@ -96,6 +101,9 @@
             this["startD_"] = null;
             this["endD_"] = null;
             this["points_"].length = 0;
+            // Hide link helper
+            gLinkHelperPath_.classed("on", false).attr("d", "M0,0");
+
         },
         "push": function(point) {
             // TODO: check point forward( eg: D Or array[x, y] ).
@@ -538,11 +546,17 @@
             .attr("class", "ZSYFCEditor")
             .attr("width", config.width)
             .attr("height", config.height);
+
         // Init helper( with path element )
         gLinkHelperPath_ = svg.append("path")
-            .attr("class", "link_drag_helper");
+            .attr("class", "link_drag_helper"); 
+
+        svg.append("g")
+            .attr("class", "svg-container");  
+
         bindEvents_(svg);
-        // Append some or not elements in SVG.
+
+        // Add some padding elements.
         svg = prepareSVG_(svg);
 
         // Init closure variables.
@@ -606,7 +620,7 @@
                 if( gData_.hasItem( to ) ){
                     pathData_ = linkLine_.getPathData(c);
                     if (pathData_) {
-                        links.push(pathData_);
+                        links.push({ from: from, to: to, pathData: pathData_ });
                     } else {
                         console.log("parse data: unknown link-value.", c, k);
                     } 
@@ -669,7 +683,7 @@
                 return "element";
             })
             .attr("id", function(d) {
-                return elementID_["generate"](dataFactory_.getId(d));
+                return elementID_["elementId"](dataFactory_.getId(d));
             })
             .each(function(d) {
                 shapeFactory_["render"](d, d3.select(this));
@@ -681,9 +695,11 @@
             .data(gLinkData_)
             .enter().append("path")
             .attr("class", "node_link")
+            .attr("id", function ( d ){ return elementID_["pathId"]( d.from + '_' + d.to );   } )
             .attr("d", function(d) {
-                return d;
+                return d.pathData ;
             });
+
         if( refreshCallback_ )
             refreshCallback_();
     }
@@ -730,13 +746,13 @@
                 gMode_ = "";
                 break;
         }
-
+        linkPathPusher_.clear();
     }
 
     function exportFn_getDom_( nodeType, id ){
         switch( nodeType ){
             case "shape":
-                return d3.select('#' + elementID_["generate"](id) + ' .shape' ).node(); 
+                return d3.select('#' + elementID_["elementId"](id) + ' .shape' ).node(); 
                 break;
         }
         return null;
@@ -747,7 +763,7 @@
             return false;
         switch( nodeType ){
             case "shape":
-                d3.select('#' + elementID_["generate"](id) + ' .shape' ).call( applyFn ); 
+                d3.select('#' + elementID_["elementId"](id) + ' .shape' ).call( applyFn ); 
                 return true;
             default:
                 return false;

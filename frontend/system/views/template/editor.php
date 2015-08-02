@@ -73,8 +73,7 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
 			<marker id="ZSYFCEditor_MarkerArrow" markerWidth="13" markerHeight="13" refx="9" refy="6" orient="auto">
 				<path d="M2,2 L2,11 L10,6 L2,2" style="fill: #000000;" />
 			</marker>
-		</defs>
-		<g class="svg-container"></g>
+		</defs> 
 	</svg>
 </div> 
 
@@ -95,14 +94,7 @@ $switchList = json_encode($lists);
 
 $btnBarJS = <<<abc
 !function(switchList){
-$(function(){
-    $('#FCEditorBtnbar .modeSwitch').click( function () {
-        var mode = $(this).data('mode');
-        $(this).parent().find(".modeSwitch").removeClass("active");
-        $(this).addClass("active");
-        ZSYFCEditor.switchMode(mode);
-    } ).eq(0).trigger('click'); 
-    
+$(function(){    
     // Init combo component
     var combo = new STComboBox();
     var filterList,
