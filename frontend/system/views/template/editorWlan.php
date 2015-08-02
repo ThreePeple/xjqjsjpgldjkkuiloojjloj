@@ -105,7 +105,7 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
         <?=Html::button("保存模板",["class"=>"btn btn-info","id"=>"saveTplDataBtn"])?> 
     </div>
 </div> 
-<div class="buidling-editor-container wlan-editor-container">  
+<div class="buidling-editor-container wlan-editor-container">
 	<svg class="ZSYFCEditor" oncontextmenu="return false;" >
 		<defs>
 			<marker id="ZSYFCEditor_MarkerArrow" markerWidth="13" markerHeight="13" refx="9" refy="6" orient="auto">

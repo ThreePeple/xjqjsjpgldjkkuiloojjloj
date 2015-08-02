@@ -21,10 +21,14 @@
 .wlan-editor-container{
 	width: 1366px;
 	height: 768px;
+	position: relative;
 }
 svg.ZSYFCEditor {
 	background: url(../images/building.png);
 	border: none;
+	position: absolute;
+	left: 0;
+	top: 0;
 }
 .wlan-editor-container svg.ZSYFCEditor {
 	background: url(../images/wlan_bg.png); 
