@@ -113,7 +113,7 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
 			</marker>
 		</defs>
 	</svg>
-</div> 
+</div>
 
 <?php
  
