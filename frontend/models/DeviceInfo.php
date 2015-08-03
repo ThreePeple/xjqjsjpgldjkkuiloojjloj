@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\db\Query;
 
 /**
  * This is the model class for table "device_info".
@@ -179,6 +180,18 @@ class DeviceInfo extends \yii\db\ActiveRecord
             }
         },$selected);
         return $rows;
+    }
+
+    /**
+     * 获取设备链路
+     */
+    public function getLinks(){
+        $links = [];
+        $left = (new Query())->from("device_link a")
+            ->leftJoin("device_info b","a.rightDevice=b.id")
+            ->select(["link_device"=>"b.label","desc"=>"a.rightIfDesc","a.brandWidth","a.status"])
+            ->where(["a.leftDevice"=>$this->id])
+            ->one();
     }
 
     public function getStatusShow(){

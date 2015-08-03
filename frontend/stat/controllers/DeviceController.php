@@ -14,6 +14,7 @@ use app\models\DeviceInterfaceTask;
 use app\models\DeviceTask;
 use app\models\DeviceAlarm;
 use yii\data\ActiveDataProvider;
+use app\models\DeviceLink;
 
 /**
  * DeviceController implements the CRUD actions for DeviceInfo model.
@@ -164,11 +165,19 @@ class DeviceController extends Controller
             'query' => $query,
         ]);
         $query->where(["deviceId"=>$id])->orderBy("faultTime desc")->limit(5);
+
+        $links = DeviceLink::find();
+        $links->where(["or",["leftDevice"=>$id],["rightDevice"=>$id]]);
+        $linkProvider = new ActiveDataProvider([
+            'query'=>$links
+        ]);
+
         return $this->render("detail_wlan",[
             'id'=>$id,
             "model"=>$model,
             "perflists" => $lists,
-            "alarmProvider" =>$dataProvider
+            "alarmProvider" =>$dataProvider,
+            "links" =>$linkProvider,
         ]);
     }
     /**

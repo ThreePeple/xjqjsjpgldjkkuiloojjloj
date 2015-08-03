@@ -61,4 +61,11 @@ class DeviceLink extends \yii\db\ActiveRecord
             'update_time' => Yii::t('app', 'Update Time'),
         ];
     }
+    public function getLeft(){
+        return $this->hasOne(DeviceInfo::className(),["id"=>"leftDevice"]);
+    }
+
+    public function getRight(){
+        return $this->hasOne(DeviceInfo::className(),["id"=>"rightDevice"]);
+    }
 }

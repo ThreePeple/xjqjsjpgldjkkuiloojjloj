@@ -75,7 +75,7 @@ $this->title = "设备详情";
                         <span class="txt">设备接口信息</span>
                     </div>
                     <div class="unfold" style="display: none;">
-                        <?=$this->render("link",["id"=>$id])?>
+                        <?=$this->render("interface",["id"=>$id])?>
                     </div>
                 </li>
                 <li class="li5" style="width: 100px;">
@@ -84,7 +84,9 @@ $this->title = "设备详情";
                         <span class="txt">设备链路信息</span>
                     </div>
                     <div class="unfold" style="display: none;">
-                        <?=$this->render("link",["id"=>$id])?>
+                        <?=$this->render("link",[
+                            "dataProvider"=>$links
+                        ])?>
                     </div>
                 </li>
     <?php /*            
