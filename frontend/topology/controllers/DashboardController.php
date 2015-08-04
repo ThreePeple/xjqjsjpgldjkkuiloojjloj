@@ -121,7 +121,7 @@ class DashboardController extends Controller
             ["id"=>2,"from"=>1,"to"=>3,"color"=>"red"],
             ["id"=>3,"from"=>2,"to"=>4,"color"=>"green"],
             ["id"=>4,"from"=>2,"to"=>5,"color"=>"green","dashes"=>[5,5,3,3]],
-            ["id"=>5,"from"=>1,"to"=>5,"color"=>"red"],
+           // ["id"=>5,"from"=>1,"to"=>5,"color"=>"red"],
         ];
         return Json::encode([
             "nodes" => $nodes,
