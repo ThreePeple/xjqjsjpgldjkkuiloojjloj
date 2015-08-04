@@ -308,6 +308,91 @@
         return new firewall_(title, x, y, config_["firewall"]["rx"], config_["firewall"]["ry"]);
     };         
     
+    var router_  = constructor_("router");
+    router_.prototype = new base_();
+    router_.prototype.constructor = router_;
+    router_.prototype.render = function (g){
+        var shape = this; 
+        return g.append("image")
+            .attr("class", "shape")
+            .attr("x", shape.cx() - shape.rx() )
+            .attr("y", shape.cy() - shape.ry())
+            .attr("width", 2 * shape.rx())
+            .attr("height",2 * shape.ry())
+            .attr("xlink:href", config_["router"]["imgSrc"]);            
+    };
+    router_.newOne = function (title, x, y){
+        return new router_(title, x, y, config_["router"]["rx"], config_["router"]["ry"]);
+    };
+
+    var wireless_  = constructor_("wireless");
+    wireless_.prototype = new base_();
+    wireless_.prototype.constructor = wireless_;
+    wireless_.prototype.render = function (g){
+        var shape = this; 
+        return g.append("image")
+            .attr("class", "shape")
+            .attr("x", shape.cx() - shape.rx() )
+            .attr("y", shape.cy() - shape.ry())
+            .attr("width", 2 * shape.rx())
+            .attr("height",2 * shape.ry())
+            .attr("xlink:href", config_["wireless"]["imgSrc"]);            
+    };
+    wireless_.newOne = function (title, x, y){
+        return new wireless_(title, x, y, config_["wireless"]["rx"], config_["wireless"]["ry"]);
+    };
+
+    var printer_  = constructor_("printer");
+    printer_.prototype = new base_();
+    printer_.prototype.constructor = printer_;
+    printer_.prototype.render = function (g){
+        var shape = this; 
+        return g.append("image")
+            .attr("class", "shape")
+            .attr("x", shape.cx() - shape.rx() )
+            .attr("y", shape.cy() - shape.ry())
+            .attr("width", 2 * shape.rx())
+            .attr("height",2 * shape.ry())
+            .attr("xlink:href", config_["printer"]["imgSrc"]);            
+    };
+    printer_.newOne = function (title, x, y){
+        return new printer_(title, x, y, config_["printer"]["rx"], config_["printer"]["ry"]);
+    }; 
+
+    var ups_  = constructor_("ups");
+    ups_.prototype = new base_();
+    ups_.prototype.constructor = ups_;
+    ups_.prototype.render = function (g){
+        var shape = this; 
+        return g.append("image")
+            .attr("class", "shape")
+            .attr("x", shape.cx() - shape.rx() )
+            .attr("y", shape.cy() - shape.ry())
+            .attr("width", 2 * shape.rx())
+            .attr("height",2 * shape.ry())
+            .attr("xlink:href", config_["ups"]["imgSrc"]);            
+    };
+    ups_.newOne = function (title, x, y){
+        return new ups_(title, x, y, config_["ups"]["rx"], config_["ups"]["ry"]);
+    };  
+
+    var pc_  = constructor_("pc");
+    pc_.prototype = new base_();
+    pc_.prototype.constructor = pc_;
+    pc_.prototype.render = function (g){
+        var shape = this; 
+        return g.append("image")
+            .attr("class", "shape")
+            .attr("x", shape.cx() - shape.rx() )
+            .attr("y", shape.cy() - shape.ry())
+            .attr("width", 2 * shape.rx())
+            .attr("height",2 * shape.ry())
+            .attr("xlink:href", config_["pc"]["imgSrc"]);            
+    };
+    pc_.newOne = function (title, x, y){
+        return new pc_(title, x, y, config_["pc"]["rx"], config_["pc"]["ry"]);
+    };  
+
 
     // Exports
     window[_exportName_] = {
@@ -318,7 +403,12 @@
     	"switch": switch_,
     	"server": server_,
     	"db": db_,
-    	"firewall": firewall_ 
+    	"firewall": firewall_,
+        "router": router_,
+        "wireless": wireless_,
+        "printer": printer_,
+        "ups": ups_,
+        "pc": pc_
 	};
 
 }("FCShapeMaker")

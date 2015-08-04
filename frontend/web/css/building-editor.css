@@ -20,8 +20,8 @@
 	box-sizing: border-box
 }
 .wlan-editor-container{
-	width: 1366px;
-	height: 768px;
+	width: 1440px;
+	height: 1200px;
 }
 svg.ZSYFCEditor {
 	background: url(../images/building.png);
@@ -31,7 +31,7 @@ svg.ZSYFCEditor {
 	top: 0;
 }
 .wlan-editor-container svg.ZSYFCEditor {
-	background: url(../images/wlan_bg.png); 
+	background: url(../images/wlan_bg.jpg); 
 }
 .buidling-editor-container text.title {
 	fill: #fff;

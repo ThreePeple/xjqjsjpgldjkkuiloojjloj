@@ -10,8 +10,8 @@ $js=<<<JS
         data,
         {
             svg: d3.select("svg.ZSYFCEditor"),
-            width: 1366,
-            height: 768
+            width: 1440,
+            height: 1200
         } 
     );
 JS;
@@ -52,20 +52,50 @@ $this->registerCssFile('/css/building-editor.css',['depends'=>'frontend\assets\A
 var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
     "ID_KEY": "__id__",
     "shape": { 
+        "router": {
+            "rx": 19,
+            "ry": 19,
+            "imgSrc": "/images/icons2/router.png" 
+        },
         "switch": {
-            "rx": 24.5,
-            "ry": 15,
-            "imgSrc": "/images/icons/switch2.png"
+            "rx": 42.5,
+            "ry": 32.5,
+            "imgSrc": "/images/icons2/mainSwitch.png"
         },
         "server": {
             "rx": 17,
             "ry": 25,
-            "imgSrc": "/images/icons/server.png"
+            "imgSrc": "/images/icons2/server.png"
         },
         "firewall": {
             "rx": 19,
             "ry": 18,
-            "imgSrc": "/images/icons/firewall.png"
+            "imgSrc": "/images/icons2/firewall.png"
+        },
+        "db": {
+            "rx": 35,
+            "ry": 42,
+            "imgSrc": "/images/icons2/db.png"
+        },
+        "wireless": {
+            "rx": 25,
+            "ry": 24,
+            "imgSrc": "/images/icons2/wireless.gif"
+        },
+        "printer": {
+            "rx": 40,
+            "ry": 41,
+            "imgSrc": "/images/icons2/printer.png"
+        },
+        "ups": {
+            "rx": 40,
+            "ry": 41.5,
+            "imgSrc": "/images/icons2/ups.png"
+        },
+        "pc": {
+            "rx": 38,
+            "ry": 38.5,
+            "imgSrc": "/images/icons2/pc.png"
         }
     }
 
@@ -95,9 +125,15 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
     <div style="float: right;">
         <label for="deviceType">设备类型</label>
         <select class="device-type" id="deviceType">
+            <option value="router">路由器</option> 
             <option value="switch">交换机</option> 
             <option value="server">服务器</option> 
-            <option value="firewall">防火墙</option> 
+            <option value="firewall">安全设备</option>            
+            <option value="db">存储设备</option>          
+            <option value="wireless">无线设备</option>  
+            <option value="printer">打印机</option>  
+            <option value="ups">UPS</option>  
+            <option value="pc">PC</option>  
         </select>
         <label for="switchcombo-ddi" id="addSwitchLabel">选择设备</label>
         <span id="switchcombo"></span> 
@@ -119,6 +155,13 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
  
 $deviceList = <<<abc
 {
+    "router": [
+        { id: 'r-a1', label: '路由器1' },
+        { id: 'r-a2', label: '路由器2' },
+        { id: 'r-a3', label: '路由器3' },
+        { id: 'r-a4', label: '路由器4' },
+        { id: 'r-a5', label: '路由器5' } 
+    ],
     "switch": [
         { id: 'sw-a1', label: '交换机1' },
         { id: 'sw-a2', label: '交换机2' },
@@ -134,11 +177,46 @@ $deviceList = <<<abc
         { id: 'se-a5', label: '服务器5' } 
     ],
     "firewall": [
-        { id: 'f-a1', label: '防火墙1' },
-        { id: 'f-a2', label: '防火墙2' },
-        { id: 'f-a3', label: '防火墙3' },
-        { id: 'f-a4', label: '防火墙4' },
-        { id: 'f-a5', label: '防火墙5' } 
+        { id: 'f-a1', label: '安全设备1' },
+        { id: 'f-a2', label: '安全设备2' },
+        { id: 'f-a3', label: '安全设备3' },
+        { id: 'f-a4', label: '安全设备4' },
+        { id: 'f-a5', label: '安全设备5' } 
+    ],
+    "db": [
+        { id: 'db-a1', label: '存储设备1' },
+        { id: 'db-a2', label: '存储设备2' },
+        { id: 'db-a3', label: '存储设备3' },
+        { id: 'db-a4', label: '存储设备4' },
+        { id: 'db-a5', label: '存储设备5' } 
+    ],
+    "wireless": [
+        { id: 'wireless-a1', label: '无线设备1' },
+        { id: 'wireless-a2', label: '无线设备2' },
+        { id: 'wireless-a3', label: '无线设备3' },
+        { id: 'wireless-a4', label: '无线设备4' },
+        { id: 'wireless-a5', label: '无线设备5' } 
+    ],
+    "printer": [
+        { id: 'printer-a1', label: '无线设备无限1' },
+        { id: 'printer-a2', label: '无线设备2' },
+        { id: 'printer-a3', label: '无线设备3' },
+        { id: 'printer-a4', label: '无线设备4' },
+        { id: 'printer-a5', label: '无线设备5' } 
+    ],
+    "pc": [
+        { id: 'pc-a1', label: '服务器1' },
+        { id: 'pc-a2', label: '服务器2' },
+        { id: 'pc-a3', label: '服务器3' },
+        { id: 'pc-a4', label: '服务器4' },
+        { id: 'pc-a5', label: '服务器5' } 
+    ],
+    "ups": [
+        { id: 'last--a1', label: '无线设备1' },
+        { id: 'last--a2', label: '无线设备2' },
+        { id: 'last--a3', label: '无线设备3' },
+        { id: 'last--a4', label: '无线设备4' },
+        { id: 'last--a5', label: '无线设备5' } 
     ]
 }
 abc;
