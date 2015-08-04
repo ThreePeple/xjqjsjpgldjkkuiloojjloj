@@ -48,11 +48,16 @@ class DashboardController extends Controller
         $data["build"] = $selected;
         return Json::encode($data);
     }
-
+    
+    /**
+     * 区域设备链路图
+     */
     public function  actionDeviceArea(){
         return $this->render("area");
     }
-
+    /**
+     * 获取区域设备和链路数据
+     */
     public function actionAjaxGetNodes(){
         /*
          *  nodes.update([
