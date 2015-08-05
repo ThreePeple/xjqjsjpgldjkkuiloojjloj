@@ -30,49 +30,48 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 		position: absolute;
 		left: 0;
 		top: 0;
-		width: 177px;
-		height: 408px;  
+		width: 60px;
+		height: 60px; 
+		background-color: red;
 		z-index: 2;
 	}
 
 	.wire-network a[data-area-id="a"]{
-		-webkit-transform: rotate(59deg) translate(215px, -118px);
-		width: 277px;
-		height: 308px; 
+		-webkit-transform: rotate(59deg) translate(192px, -118px); 
 	}
 
 	.wire-network a[data-area-id="b"]{
-		-webkit-transform: rotate(59deg) translate(523px, -629px);
-		height: 302px; 
+		-webkit-transform: rotate(59deg) translate(557px, -651px); 
 	}
 
 	.wire-network a[data-area-id="c"]{
-		-webkit-transform: rotate(59deg) translate(688px, -745px);
-		height: 343px; 
-		width: 168px;
+		-webkit-transform: rotate(59deg) translate(793px, -866px); 
 	}
 
 	.wire-network a[data-area-id="d"]{
-		-webkit-transform: rotate(59deg) translate(861px, -843px);
-		height: 343px; 
-		width: 168px;
+		-webkit-transform: rotate(59deg) translate(980px, -980px); 
 	}
 
 	.wire-network a[data-area-id="e"]{
-		-webkit-transform: rotate(49deg) translate(1196px, -327px);
-		height: 252px; 
-		width: 207px;
+		-webkit-transform: rotate(49deg) translate(1185px, -327px); 
 	}
 
 	.wire-network a[data-area-id="f"]{
-		-webkit-transform: rotate(48deg) translate(567px, 294px);
-		height: 440px; 
-		width: 523px;
+		-webkit-transform: rotate(48deg) translate(599px, 294px); 
 	}
-	.buidling-editor-container text.title {
+	.buidling-editor-container text.title{
 		display: none;
 	}
 </style>
+<script type="text/single-html-template" id="switch_node_detail">
+    <ul> 
+        <li><span>名称:</span>{name}</li>
+        <li><span>楼层:</span>{floor}</li> 
+        <li><span>ip地址:</span>{ip}</li>
+        <li><span>设备厂商:</span>{vendors}</li>
+        <li><span>设备类型:</span>{deviceType}</li>
+    </ul>
+</script>
 <div class="row">
     <h4 style="color:white">有线网络拓扑</h4>
     <div class="wire-network buidling-editor-container wlan-editor-container" id="wireNetworkHolder">

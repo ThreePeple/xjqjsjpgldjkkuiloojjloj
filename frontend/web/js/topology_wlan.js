@@ -2,6 +2,8 @@
  * Created by Shengjun on 15-7-9.
  */
 ( function () { 
+   
+    var detailUrl = '/stat/device/ajax-device-tip';
 
     var switchStatusImg = {
         '-1': "/images/building_switch_status2/s-1.gif",
@@ -65,13 +67,88 @@
         }
 
     }; 
- 
+
+
+
+ var _getNodeDetailTpl = function() {
+        var tmp = null;
+        return function() {
+            if (!tmp) {
+                tmp = $('#switch_node_detail').html();
+            }
+            return tmp;
+        };
+    }();
+
+    var _showNodeDetail = function(d, e, contentHtmlTpl) {
+        console.log(d, e, contentHtmlTpl)
+        var $tg = $(e.target);
+        if (false == $tg.is(".element")) {
+            $tg = $tg.closest(".element");
+        }
+        $tg = $tg.find(".shape");
+
+        var offset = $tg.offset();
+        var x = offset.left,
+            y = offset.top;
+
+        var contentTpl = '<div class="popupBody">' +
+            '<div class="popup_close" title="关闭">&nbsp;</div>' +
+            '<div class="popup_content" >{content}</div>' +
+            '</div>';
+
+        var offsetX = 0,
+            offsetY = 0;
+        var className = "nodeDetail";
+        var _parseData = function(data) {
+            if (data) {
+                for (var p in data) {
+                    contentHtmlTpl = contentHtmlTpl.replace('{' + p + '}', data[p]);
+                }
+                return contentHtmlTpl;
+            }
+            return "<span class='none'>No data.</span>";
+        };
+        var _updateContent = function(html) {
+            return contentTpl.replace("{content}", html);
+        };
+        var popPanel = new PopupPanel({
+            className: 'modalessDialog' + (className ? " " + className : ""),
+            offsetX: offsetX,
+            offsetY: offsetY,
+            destroy: true,
+            animate: false,
+            closeHandler: function() {},
+            content: contentTpl,
+            initInterface: function($content) {
+                var inst = this;
+                $content.click(function(e) {
+                    if ($(e.target).is('div.popup_close'))
+                        inst.close(true);
+                });
+
+                $content.find("div.popup_content").html(_updateContent("loading...")); 
+                // nodeDetail_.json : fail data, nodeDetail.json: ok data.
+                var id  = ZSYFCEditor.getData()[ d[ ZSYFCEditorConfig['ID_KEY'] ] ]["data"]["id"];
+                $.get(detailUrl, {
+                    id: id
+                }, function(j) {
+                    if (j.result == 1) {
+                        $content.find("div.popup_content").html(_updateContent(_parseData(j.data)));
+                    } else {
+                        $content.find("div.popup_content").html(_updateContent(j.msg));
+                    }
+                    popPanel.refresh();
+                }, 'json');
+            }
+        }).init().show(x, y);
+    }; 
+
 
     // Dom Ready 
     $(function(){ 
 
-      
-
+ 
         // Render FCEditor
         ZSYFCEditor.init(
             {},
@@ -82,7 +159,15 @@
             } 
         ); 
 
-        ZSYFCEditor.updateCallback( function(){ return;
+        ZSYFCEditor.updateCallback( function(){
+
+            d3.selectAll(".element") 
+            .on("click", function(data) {
+                _showNodeDetail(data, d3.event, _getNodeDetailTpl());
+            });  
+             return;
+
+
             // Update switch status.
             var data = ZSYFCEditor.getData();
             var keys = Object.keys( data ), s, imgSrc; 
@@ -95,7 +180,10 @@
                 });
             });
             
-        } );
+        } ); 
+
+
+
 
         var refreshData = function(){
             $.ajax({
