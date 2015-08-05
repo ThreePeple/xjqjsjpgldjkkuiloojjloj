@@ -18,6 +18,12 @@ class ViewTemplate extends \yii\db\ActiveRecord
     const TYPE_BUILD =1;
     const TYPE_WLAN = 2;
     const TYPE_WIFI = 3;
+
+    static $areas = [
+        "1" => [
+            [305,144],[588,312],[387,414],[110,233]
+        ]
+    ];
     /**
      * @inheritdoc
      */
@@ -97,7 +103,7 @@ class ViewTemplate extends \yii\db\ActiveRecord
      * @param $area  是个顶点坐标
      * @return boolean
      */
-    public function isInArea($point,$area){
+    public static function isInArea($point,$area){
         $flag = true;
         $diff = [];
         for($i=0; $i<4;$i++){
