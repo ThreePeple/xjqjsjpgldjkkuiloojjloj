@@ -24,21 +24,41 @@ $js = <<<JS
                   }
                 }*/
               ,groups:{
-                    "hub":{
+                    "router":{
                         "shape":"image",
-                        "image":'/images/icons/switch1.png'
+                        "image":'/images/icons2/router.png'
+                    },
+                    "switch":{
+                        "shape":"image",
+                        "image":'/images/icons2/mainSwitch.png'
                     },
                     "server":{
                         "shape":"image",
-                        "image":'/images/icons/server.png'
+                        "image":'/images/icons2/server.png'
                     },
                     "firewall":{
                         "shape":"image",
-                        "image":'/images/icons/firewall.png'
+                        "image":'/images/icons2/firewall.png'
                     },
                     "db":{
                         "shape":"image",
-                        "image":'/images/icons/db.png'
+                        "image":'/images/icons2/db.png'
+                    },
+                    "wireless":{
+                        "shape":"image",
+                        "image":'/images/icons2/wireless.png'
+                    },
+                    "printer":{
+                        "shape":"image",
+                        "image":'/images/icons2/printer.png'
+                    },
+                    "ups":{
+                        "shape":"image",
+                        "image":'/images/icons2/ups.png'
+                    },
+                    "pc":{
+                        "shape":"image",
+                        "image":'/images/icons2/pc.png'
                     }
               }
         };
