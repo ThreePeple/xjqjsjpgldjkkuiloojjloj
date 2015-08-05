@@ -182,6 +182,19 @@ class DeviceInfo extends \yii\db\ActiveRecord
         return $rows;
     }
 
+    public static function getWlanList(){
+        $result = [];
+        $rows = self::find()->with("category")->asArray()->all();
+        foreach($rows as $row){
+            $type = $row["category"]["node_group"];
+            if(!isset($result[$type])){
+                $result[$type] = [];
+            }
+            $result[$type][] = ["id"=>$row["id"],"label"=>$row["label"]];
+        }
+        return $result;
+    }
+
     /**
      * 获取设备链路
      */

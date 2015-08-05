@@ -152,7 +152,7 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
 </div>
 
 <?php
- 
+/*
 $deviceList = <<<abc
 {
     "router": [
@@ -220,7 +220,9 @@ $deviceList = <<<abc
     ]
 }
 abc;
+*/
 
+$deviceList = json_encode($deviceList);
 
 $btnBarJS = <<<abc
 !function(deviceList){
