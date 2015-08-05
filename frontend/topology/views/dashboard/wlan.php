@@ -24,41 +24,48 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 		position: relative;
 	}
 	.wire-network a{
-		-webkit-transform: rotate(62deg) translate(48px, -159px); 
+		-webkit-transform: rotate(62deg) translate(129px, -159px); 
 		position: absolute;
 		left: 0;
 		top: 0;
 		width: 177px;
-		height: 408px; 
+		height: 408px;  
+		z-index: 2;
+	}
+
+	.wire-network a[data-area-id="a"]{
+		-webkit-transform: rotate(59deg) translate(215px, -118px);
+		width: 277px;
+		height: 308px; 
 	}
 
 	.wire-network a[data-area-id="b"]{
-		-webkit-transform: rotate(59deg) translate(275px, -475px);
-		height: 264px; 
+		-webkit-transform: rotate(59deg) translate(523px, -629px);
+		height: 302px; 
 	}
 
 	.wire-network a[data-area-id="c"]{
-		-webkit-transform: rotate(59deg) translate(444px, -571px);
-		height: 276px; 
-		width: 128px;
+		-webkit-transform: rotate(59deg) translate(688px, -745px);
+		height: 343px; 
+		width: 168px;
 	}
 
 	.wire-network a[data-area-id="d"]{
-		-webkit-transform: rotate(49deg) translate(692px, -545px);
-		height: 252px; 
-		width: 133px;
+		-webkit-transform: rotate(59deg) translate(861px, -843px);
+		height: 343px; 
+		width: 168px;
 	}
 
 	.wire-network a[data-area-id="e"]{
-		-webkit-transform: rotate(55deg) translate(626px, -357px);
+		-webkit-transform: rotate(49deg) translate(1196px, -327px);
 		height: 252px; 
-		width: 133px;
+		width: 207px;
 	}
 
 	.wire-network a[data-area-id="f"]{
-		-webkit-transform: rotate(62deg) translate(286px, -20px);
-		height: 366px; 
-		width: 253px;
+		-webkit-transform: rotate(48deg) translate(567px, 294px);
+		height: 440px; 
+		width: 523px;
 	}
 
 </style>
