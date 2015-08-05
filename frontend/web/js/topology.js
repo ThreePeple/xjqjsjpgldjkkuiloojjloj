@@ -4,13 +4,13 @@
 ( function () { 
 
     var switchStatusImg = {
-        '-1': "/images/building_switch_status/s-1.png",
-        '0': "/images/building_switch_status/s0.png",
-        '1': "/images/building_switch_status/s1.png",
-        '2': "/images/building_switch_status/s2.png",
-        '3': "/images/building_switch_status/s3.png",
-        '4': "/images/building_switch_status/s4.png",
-        '5': "/images/building_switch_status/s5.png"
+        '-1': "/images/building_switch_status2/s-1.gif",
+        '0': "/images/building_switch_status2/s0.gif",
+        '1': "/images/building_switch_status2/s1.gif",
+        '2': "/images/building_switch_status2/s2.gif",
+        '3': "/images/building_switch_status2/s3.gif",
+        '4': "/images/building_switch_status2/s4.gif",
+        '5': "/images/building_switch_status2/s5.gif"
     };
 
     var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
@@ -19,8 +19,8 @@
         "shape": { 
             "switch": {
                 "rx": 15,
-                "ry": 6.5,
-                "imgSrc": "/images/building_switch_status/s-1.png"
+                "ry": 7.5,
+                "imgSrc": switchStatusImg["-1"]
             }
         }
 
