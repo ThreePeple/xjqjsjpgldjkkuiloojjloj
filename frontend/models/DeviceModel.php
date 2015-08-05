@@ -55,4 +55,8 @@ class DeviceModel extends \yii\db\ActiveRecord
             'update_time' => Yii::t('app', 'Update Time'),
         ];
     }
+
+    public function getVendor(){
+        return $this->hasOne(DeviceVendor::className(),["id"=>"vendor_id"]);
+    }
 }

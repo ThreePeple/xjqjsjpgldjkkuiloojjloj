@@ -193,8 +193,10 @@ class DeviceController extends Controller
     }
 
     public function actionAjaxDeviceTip(){
+        $this->layout = false;
         $id = Yii::$app->request->get("id");
-        return 'sss222';
+        $device = DeviceInfo::find()->with(["type","model"])->where(["id"=>$id])->one();
+        return $this->render("tip",["model"=>$device]);
     }
 
 

@@ -131,6 +131,10 @@ class DeviceInfo extends \yii\db\ActiveRecord
         return $this->hasOne(DeviceCategory::className(),["id"=>'categoryId']);
     }
 
+    public function getType(){
+        return $this->hasOne(DeviceCategory::className(),["id"=>'categoryId']);
+    }
+
     public function getModel(){
         return $this->hasOne(DeviceModel::className(),["id"=>"model_id"]);
     }
