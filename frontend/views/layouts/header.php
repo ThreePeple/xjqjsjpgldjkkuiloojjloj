@@ -19,7 +19,7 @@ NavBar::begin([
     ]
 ]);
 $menuItems = [
-    ['label' => '局域网', 'url' => ['/topology']],
+    ['label' => '局域网', 'url' => ['/topology/dashboard/index']],
     ['label' => '有线网', 'url' => ['/topology/dashboard/wlan']],
     ['label' => '查询统计', 'url' => ['/stat']],
     ['label' => '系统管理', 'url' => ['/system']],
