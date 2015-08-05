@@ -133,13 +133,16 @@
                 $.get(detailUrl, {
                     id: id
                 }, function(j) {
+                    $content.find("div.popup_content").html(j);
+                    popPanel.refresh(); 
+                    return;
                     if (j.result == 1) {
                         $content.find("div.popup_content").html(_updateContent(_parseData(j.data)));
                     } else {
                         $content.find("div.popup_content").html(_updateContent(j.msg));
                     }
                     popPanel.refresh();
-                }, 'json');
+                }, 'html');
             }
         }).init().show(x, y);
     }; 
