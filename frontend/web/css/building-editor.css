@@ -31,7 +31,7 @@ svg.ZSYFCEditor {
 	top: 0;
 }
 .wlan-editor-container svg.ZSYFCEditor {
-	background: url(../images/wlan_bg.jpg); 
+	background: url(../images/wlan_bg.png); 
 }
 .buidling-editor-container text.title {
 	fill: #fff;
