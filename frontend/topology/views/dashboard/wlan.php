@@ -13,13 +13,41 @@ $this->registerJsFile('/js/d3.min.js',['depends'=>'frontend\assets\AppAsset']);
 		position: relative;
 	}
 	.wire-network a{
-		-webkit-transform: rotate(62deg) translate(100px, -151px); 
+		-webkit-transform: rotate(62deg) translate(48px, -159px); 
 		position: absolute;
 		left: 0;
 		top: 0;
-		width: 173px;
-		height: 283px;
-		background-color: red;
+		width: 177px;
+		height: 408px; 
+	}
+
+	.wire-network a[data-area-id="b"]{
+		-webkit-transform: rotate(59deg) translate(275px, -475px);
+		height: 264px; 
+	}
+
+	.wire-network a[data-area-id="c"]{
+		-webkit-transform: rotate(59deg) translate(444px, -571px);
+		height: 276px; 
+		width: 128px;
+	}
+
+	.wire-network a[data-area-id="d"]{
+		-webkit-transform: rotate(49deg) translate(692px, -545px);
+		height: 252px; 
+		width: 133px;
+	}
+
+	.wire-network a[data-area-id="e"]{
+		-webkit-transform: rotate(55deg) translate(626px, -357px);
+		height: 252px; 
+		width: 133px;
+	}
+
+	.wire-network a[data-area-id="f"]{
+		-webkit-transform: rotate(62deg) translate(286px, -20px);
+		height: 366px; 
+		width: 253px;
 	}
 
 </style>
