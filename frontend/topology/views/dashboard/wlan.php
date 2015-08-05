@@ -67,7 +67,9 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 		height: 440px; 
 		width: 523px;
 	}
-
+	.buidling-editor-container text.title {
+		display: none;
+	}
 </style>
 <div class="row">
     <h4 style="color:white">有线网络拓扑</h4>
