@@ -8,6 +8,7 @@ use yii\filters\AccessControl;
 use app\models\ViewTemplate;
 use yii\helpers\Json;
 use app\models\DeviceInfo;
+use Yii;
 
 class DashboardController extends Controller
 {
@@ -44,13 +45,18 @@ class DashboardController extends Controller
      * 刷新面板数据
      */
     public function actionAjaxRefresh(){
+        $type = Yii::$app->request->post('type');
+        if(!$type){
+            $type = ViewTemplate::TYPE_BUILD;
+        }
         $data = [];
-        $selected = ViewTemplate::getTempateSet(ViewTemplate::TYPE_BUILD);
+        $selected = ViewTemplate::getTempateSet($type);
         $data["build"] = $selected;
         return Json::encode($data);
     }
 
     public  function actionWlan(){
+
         return $this->render("wlan");
     }
 
@@ -63,10 +69,12 @@ class DashboardController extends Controller
     /**
      * 获取区域设备和链路数据
      */
-    public function actionAjaxGetNodes($type,$area){
+    public function actionAjaxGetNodes(){
+        $type= 1;
+        $area = 1;
         $nodes = [
-            ["id"=>1,"label"=>"交换机1","group"=>"hub"],
-            ["id"=>2,"label"=>"交换机2","group"=>"hub"],
+            ["id"=>1,"label"=>"交换机1","group"=>"switch"],
+            ["id"=>2,"label"=>"交换机2","group"=>"switch"],
             ["id"=>3,"label"=>"服务器","group"=>"server"],
             ["id"=>4,"label"=>"防火墙","group"=>"firewall"],
             ["id"=>5,"label"=>"数据库","group"=>"db"],
@@ -78,7 +86,7 @@ class DashboardController extends Controller
             ["id"=>4,"from"=>2,"to"=>5,"color"=>"green","dashes"=>[5,5,3,3]],
            // ["id"=>5,"from"=>1,"to"=>5,"color"=>"red"],
         ];
-        $nodes = ViewTemplate::getAreaDeviceData($type,$area);
+        //$nodes = ViewTemplate::getAreaDeviceData($type,$area);
         //TODO edges 获取
         return Json::encode([
             "nodes" => $nodes,

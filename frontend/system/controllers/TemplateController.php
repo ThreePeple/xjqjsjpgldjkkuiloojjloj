@@ -45,6 +45,7 @@ class TemplateController extends \yii\web\Controller
                 $model->links = isset($item["links"])? json_encode($item["links"]):null;
                 $model->type = $type;
                 $model->device_id = $item["data"]["id"];
+                $model->areaId = isset($item["data"]["areaId"]) ? $item["data"]["areaId"] : null;
                 if(!$model->save()){
                     $transaction->rollback();
                     throw new Exception("item error:".$item["data"]["label"].print_r($model->getErrors(),true));
@@ -66,6 +67,7 @@ class TemplateController extends \yii\web\Controller
         $lists = DeviceInfo::getWlanList(ViewTemplate::TYPE_WLAN);
         $selected = ViewTemplate::getTempateSet(ViewTemplate::TYPE_WLAN);
         $areaList = Area::find()->select(["id","name"])->asArray()->all();
+        $areaList = ArrayHelper::map($areaList,"id","name");
         // $lists = ArrayHelper::map($lists,'id','text');
         //var_dump(["areaList"=>$areaList,"deviceList"=>$lists,"selected"=>Json::encode($selected, JSON_FORCE_OBJECT),"type"=>ViewTemplate::TYPE_WLAN]);die;
         return $this->render('editorWlan',["areaList"=>$areaList,"deviceList"=>$lists,"selected"=>Json::encode($selected, JSON_FORCE_OBJECT),"type"=>ViewTemplate::TYPE_WLAN]);

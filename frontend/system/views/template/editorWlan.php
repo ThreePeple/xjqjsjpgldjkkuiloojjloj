@@ -125,11 +125,12 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
     </div>
     <div style="float: right;">
         <label for="deviceArea">设备所在区域</label>
-        <select class="device-area" id="deviceArea">
+        <?=Html::dropDownList("deviceArea",null,$areaList,["id"=>"deviceArea","class"=>"device-area"])?>
+        <!--<select class="device-area" id="deviceArea">
             <option value="a">A区</option> 
             <option value="b">B区</option> 
             <option value="c">C区</option> 
-        </select> 
+        </select> -->
         <label for="deviceType">设备类型</label>
         <select class="device-type" id="deviceType">
             <option value="router">路由器</option> 

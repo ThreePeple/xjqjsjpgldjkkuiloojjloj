@@ -70,6 +70,10 @@ $js = <<<JS
             edges: edges
         };
         var network = new vis.Network(container, data, options);
+        network.on("click", function (params) {
+            params.event = "[original event]";
+            console.log(JSON.stringify(params, null, 4));
+        });
         function getNodes(){
             var params = {};
             params["area"] = 1;
