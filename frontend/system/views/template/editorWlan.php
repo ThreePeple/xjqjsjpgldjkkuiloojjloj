@@ -108,7 +108,8 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
     .wlan-editor-toolbar label{
         line-height: 38px;
     } 
-    .wlan-editor-toolbar select.device-type{
+    .wlan-editor-toolbar select.device-type,
+    .wlan-editor-toolbar select.device-area{
         padding: 6px 5px;
     }
     .ZSYFCEditor-btnbar{
@@ -123,6 +124,12 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
         <span class="btn modeSwitch polylineMode" data-mode="polyline" title="折线连线">&nbsp;</span> 
     </div>
     <div style="float: right;">
+        <label for="deviceArea">设备所在区域</label>
+        <select class="device-area" id="deviceArea">
+            <option value="a">A区</option> 
+            <option value="b">B区</option> 
+            <option value="c">C区</option> 
+        </select> 
         <label for="deviceType">设备类型</label>
         <select class="device-type" id="deviceType">
             <option value="router">路由器</option> 
@@ -295,6 +302,8 @@ $(function(){
     $('#addSwitchBtn').click( function() {
        if(filterList && selectedData_){
             console.log("Button: Add " + deviceType + ".");
+            var area = $("#deviceArea").val();
+            selectedData_["data"]["areaId"] = area;
             ZSYFCEditor.addShape(deviceType, selectedData_["data"]);
             combo.filterAndResetSelected();
             _buildList();

@@ -9,10 +9,10 @@ html,body{
 	position:relative;
 	left: 0;
 	bottom: 0; 
-	width: 1077px;
-	height: 606px;
+	width: 1440px;
+	height: 1200px;
 	overflow: hidden;
-	background: url(../images/wire-network-error.png) 0 0 no-repeat;
+	background: url(../images/wlan_bg.png) 0 0 no-repeat;
 } 
 .wire-network .device-slot{ 
 	position: absolute;
