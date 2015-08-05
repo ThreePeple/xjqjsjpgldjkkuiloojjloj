@@ -71,12 +71,14 @@ $js = <<<JS
         };
         var network = new vis.Network(container, data, options);
         network.on("click", function (params) {
-            params.event = "[original event]";
+            var device_id = params["nodes"][0];
+            if(!device_id) return;
             console.log(JSON.stringify(params, null, 4));
+            window.location.href = '/stat/device/wlan-detail?id='+device_id;
         });
         function getNodes(){
             var params = {};
-            params["area"] = 1;
+            params["area"] = $area;
             //network.setData();
             $.ajax({
                 url:'/topology/dashboard/ajax-get-nodes',

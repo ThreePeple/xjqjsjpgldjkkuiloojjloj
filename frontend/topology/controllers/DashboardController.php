@@ -9,6 +9,8 @@ use app\models\ViewTemplate;
 use yii\helpers\Json;
 use app\models\DeviceInfo;
 use Yii;
+use app\models\DeviceLink;
+use yii\helpers\ArrayHelper;
 
 class DashboardController extends Controller
 {
@@ -63,13 +65,14 @@ class DashboardController extends Controller
     /**
      * 区域设备链路图
      */
-    public function  actionDeviceArea(){
-        return $this->render("area");
+    public function  actionDeviceArea($area){
+        return $this->render("area",["area"=>$area]);
     }
     /**
      * 获取区域设备和链路数据
      */
     public function actionAjaxGetNodes(){
+        /*
         $type= 1;
         $area = 1;
         $nodes = [
@@ -85,8 +88,11 @@ class DashboardController extends Controller
             ["id"=>3,"from"=>2,"to"=>4,"color"=>"green"],
             ["id"=>4,"from"=>2,"to"=>5,"color"=>"green","dashes"=>[5,5,3,3]],
            // ["id"=>5,"from"=>1,"to"=>5,"color"=>"red"],
-        ];
-        //$nodes = ViewTemplate::getAreaDeviceData($type,$area);
+        ];*/
+        $area = Yii::$app->request->post("area");
+        $nodes = ViewTemplate::getAreaDeviceData($area);
+        $ids = array_keys(ArrayHelper::map($nodes,"id","label"));
+        $edges = ViewTemplate::getLinks($ids);
         //TODO edges 获取
         return Json::encode([
             "nodes" => $nodes,

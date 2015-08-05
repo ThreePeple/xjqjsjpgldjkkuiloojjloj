@@ -192,6 +192,11 @@ class DeviceController extends Controller
         ]);
     }
 
+    public function actionAjaxDeviceTip(){
+        $id = Yii::$app->request->get("id");
+        return 'sss222';
+    }
+
 
 
     public function actionTest(){

@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use app\models\DeviceInfo;
+use app\models\DeviceLink;
 
 /**
  * This is the model class for table "view_template".
@@ -82,8 +83,8 @@ class ViewTemplate extends \yii\db\ActiveRecord
     /**
      * 获取区域内设备
      */
-    public static function getAreaDeviceData($type,$area){
-        $deviceIds = self::find()->where(["type"=>$type,"areaId"=>$area])->select("device_id")->asArray()->column();
+    public static function getAreaDeviceData($area){
+        $deviceIds = self::find()->where(["type"=>self::TYPE_WLAN,"areaId"=>$area])->select("device_id")->asArray()->column();
         $rows = DeviceInfo::find()->with(["category"])->where(["id"=>$deviceIds])->select("id,label,categoryId")->asArray()->all();
         $result = [];
         foreach($rows as $row){
@@ -94,6 +95,17 @@ class ViewTemplate extends \yii\db\ActiveRecord
             ];
         }
         return $result;
+    }
+
+    public static function getLinks($ids){
+        $rows = DeviceLink::find()->where(["leftDevice"=>$ids,"rightDevice"=>$ids])
+            ->select(["id","status","from"=>"leftDevice","to"=>"rightDevice"])
+            ->asArray()
+            ->all();
+        array_walk($rows,function(&$item){
+            $item["color"] = $item["status"]==1? 'green':'red';
+        });
+        return $rows;
     }
 
 
