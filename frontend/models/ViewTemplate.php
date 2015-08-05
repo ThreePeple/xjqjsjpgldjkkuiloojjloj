@@ -104,6 +104,7 @@ class ViewTemplate extends \yii\db\ActiveRecord
             ->all();
         array_walk($rows,function(&$item){
             $item["color"] = $item["status"]==1? 'green':'red';
+            $item["value"] = 2;
         });
         return $rows;
     }
