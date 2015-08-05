@@ -54,8 +54,8 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
     "shape": { 
         "switch": {
             "rx": 15,
-            "ry": 6.5,
-            "imgSrc": "/images/building_switch_status/s-1.png"
+            "ry": 7.5,
+            "imgSrc": "/images/building_switch_status2/s-1.gif"
         } 
     }
 
