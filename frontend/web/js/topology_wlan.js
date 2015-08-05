@@ -101,6 +101,7 @@
             $.ajax({
                 url:'/topology/dashboard/ajax-refresh',
                 type:"post",
+                data:{"type":2},
                 dataType:'json',
                 success:function(res){
                     if(res.build){
