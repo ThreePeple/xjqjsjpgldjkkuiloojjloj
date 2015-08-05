@@ -70,10 +70,9 @@ class TemplateController extends \yii\web\Controller
         //var_dump(["areaList"=>$areaList,"deviceList"=>$lists,"selected"=>Json::encode($selected, JSON_FORCE_OBJECT),"type"=>ViewTemplate::TYPE_WLAN]);die;
         return $this->render('editorWlan',["areaList"=>$areaList,"deviceList"=>$lists,"selected"=>Json::encode($selected, JSON_FORCE_OBJECT),"type"=>ViewTemplate::TYPE_WLAN]);
     }
-    /**
-     * 获取分类设备裂帛啊
-     */
-    public function actionGetTypeDevices(){
 
+    public function actionTest(){
+        $f = ViewTemplate::isInArea([371,272],[[305,144],[110,233],[387,414],[588,312]]);
+        var_dump($f);
     }
 }
