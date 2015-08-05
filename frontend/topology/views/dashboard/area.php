@@ -99,6 +99,6 @@ JS;
 $this->registerJs($js);
 
 ?>
-<div id="area-network" style="width: 100%;height: 700px;margin-top: 50px;">
+<div id="area-network" style="width: 100%;height: 600px;margin-top: 50px;">
 
 </div>

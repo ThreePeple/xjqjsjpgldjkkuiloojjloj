@@ -325,7 +325,7 @@ $(function(){
                 if(res.status){
                     alert("操作成功")
                 }else{
-                    alert("操作作失败")
+                    alert("操作失败")
                 }
             }
         });
