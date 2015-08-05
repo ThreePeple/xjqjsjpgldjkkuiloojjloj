@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use app\models\DeviceInfo;
 
 /**
  * This is the model class for table "view_template".
@@ -70,5 +71,49 @@ class ViewTemplate extends \yii\db\ActiveRecord
             ];
         }
         return $data;
+    }
+
+    /**
+     * 获取区域内设备
+     */
+    public static function getAreaDeviceData($type,$area){
+        $deviceIds = self::find()->where(["type"=>$type,"areaId"=>$area])->select("device_id")->asArray()->column();
+        $rows = DeviceInfo::find()->with(["category"])->where(["id"=>$deviceIds])->select("id,label,categoryId")->asArray()->all();
+        $result = [];
+        foreach($rows as $row){
+            $result[] = [
+                "id" => $row["id"],
+                "label" => $row["label"],
+                "group" => isset($row["category"])?$row["category"]["node_group"]:'',
+            ];
+        }
+        return $result;
+    }
+
+
+    /**
+     * 判断点是否在四边形内
+     * @param $point 点位坐标
+     * @param $area  是个顶点坐标
+     * @return boolean
+     */
+    public function isInArea($point,$area){
+        $flag = true;
+        $diff = [];
+        for($i=0; $i<4;$i++){
+            $diff[$i][0] = $area[($i+1)%4][0] - $area[$i][0];
+            $diff[$i][1] = $area[($i+1)%4][1] - $area[$i][1];
+        }
+        $i = 0;
+        while($i<4){
+            $a = ( $point[1] - $area[ $i ][ 1 ] ) * $diff[ $i ][ 0 ];            //a = (y3-y1)(x2-x1)
+            $b = ( $point[0] - $area[ $i ][ 0 ] ) * $diff[ $i ][ 1 ];            //b = (x3-x1)(y2-y1)
+            if($a-$b<0){
+                $flag = false;
+                break;
+            }
+            $i++;
+        }
+        return $flag;
     }
 }
