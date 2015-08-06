@@ -63,10 +63,15 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 	.buidling-editor-container text.title{
 		display: none;
 	}
+	.nodeDetail .popupBody ul{
+	    margin: 0 10px;
+	    padding: 0;
+	}	
 	.nodeDetail .popupBody li {
 		color: #ababab;
 		margin: 3px 0;
 		white-space: nowrap;
+		list-style: none;
 	}
 	.nodeDetail .popupBody li span{
 		font-weight: bold;
