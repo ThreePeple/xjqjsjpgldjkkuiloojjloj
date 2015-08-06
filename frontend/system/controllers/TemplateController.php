@@ -70,7 +70,7 @@ class TemplateController extends \yii\web\Controller
         $areaList = ArrayHelper::map($areaList,"id","name");
         // $lists = ArrayHelper::map($lists,'id','text');
         //var_dump(["areaList"=>$areaList,"deviceList"=>$lists,"selected"=>Json::encode($selected, JSON_FORCE_OBJECT),"type"=>ViewTemplate::TYPE_WLAN]);die;
-        return $this->render('editorWlan',["areaList"=>$areaList,"deviceList"=>$lists,"selected"=>Json::encode($selected, JSON_FORCE_OBJECT),"type"=>ViewTemplate::TYPE_WLAN]);
+        return $this->render('editorWlan',["areaList"=>$areaList,"deviceList"=>$lists,"selected"=>Json::encode($selected),"type"=>ViewTemplate::TYPE_WLAN]);
     }
 
     public function actionTest(){
