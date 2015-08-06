@@ -327,7 +327,7 @@
                     if( data[key] ){
                         var id = data[key]["data"]["id"];
                         console.log( "Load page", "http://www.cnpc.com/?id=" + id );
-                        window.open( "/stat/device/detail?id=" + id );
+                        window.open( "/stat/device/detail?id=" + id, "building-node-detail" );
                     }
                 }
             }
