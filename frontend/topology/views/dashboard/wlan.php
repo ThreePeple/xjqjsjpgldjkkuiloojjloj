@@ -62,6 +62,15 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 	.buidling-editor-container text.title{
 		display: none;
 	}
+	.nodeDetail .popupBody li {
+		color: #ababab;
+		margin: 3px 0;
+	}
+	.nodeDetail .popupBody li span{
+		font-weight: bold;
+		margin-right: 10px;
+		color: #fff;
+	}
 </style>
 <script type="text/single-html-template" id="switch_node_detail">
     <ul> 
