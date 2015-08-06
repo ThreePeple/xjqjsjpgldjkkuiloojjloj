@@ -69,8 +69,6 @@ class TemplateController extends \yii\web\Controller
         $selected = ViewTemplate::getTempateSet(ViewTemplate::TYPE_WLAN);
         $areaList = Area::find()->select(["id","name"])->asArray()->all();
         $areaList = ArrayHelper::map($areaList,"id","name");
-        // $lists = ArrayHelper::map($lists,'id','text');
-        //var_dump(["areaList"=>$areaList,"deviceList"=>$lists,"selected"=>Json::encode($selected, JSON_FORCE_OBJECT),"type"=>ViewTemplate::TYPE_WLAN]);die;
         return $this->render('editorWlan',["areaList"=>$areaList,"deviceList"=>$lists,"selected"=>Json::encode($selected),"type"=>ViewTemplate::TYPE_WLAN]);
     }
 

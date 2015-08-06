@@ -69,12 +69,12 @@ class ViewTemplate extends \yii\db\ActiveRecord
             }
         ])->where(["type"=>$type])->asArray()->all();
 
-        $data = [];
+        $data = new \stdClass();
         foreach($rows as $row){
             if(!$row["device"])
                 continue;
             $d = array_merge($row["device"],["areaId"=>$row["areaId"]]);
-            $data[$row["id"]] = [
+            $data->{$row["id"]} = [
                 "data" => $d,
                 "attributes" => json_decode($row["attributes"]),
                 "links" => json_decode($row["links"])
