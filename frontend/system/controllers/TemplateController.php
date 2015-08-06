@@ -38,6 +38,7 @@ class TemplateController extends \yii\web\Controller
         try{
             ViewTemplate::deleteAll(["type"=>$type]);
             $data = json_decode($data,true);
+            $data = array_filter($data);
             foreach($data as $k=>$item){
                 $model = new ViewTemplate();
                 $model->id = $k;
