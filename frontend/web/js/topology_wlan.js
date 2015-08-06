@@ -80,8 +80,7 @@
         };
     }();
 
-    var _showNodeDetail = function(d, e, contentHtmlTpl) {
-        console.log(d, e, contentHtmlTpl)
+    var _showNodeDetail = function(d, e, contentHtmlTpl) { 
         var $tg = $(e.target);
         if (false == $tg.is(".element")) {
             $tg = $tg.closest(".element");
@@ -165,9 +164,11 @@
         ZSYFCEditor.updateCallback( function(){
 
             d3.selectAll(".element") 
-            .on("click", function(data) {
+            .on("mouseover", function(data) {
+                PopupPanel.clearAll();
                 _showNodeDetail(data, d3.event, _getNodeDetailTpl());
             });  
+
              return;
 
 
