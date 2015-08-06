@@ -30,34 +30,35 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 		position: absolute;
 		left: 0;
 		top: 0;
-		width: 60px;
-		height: 60px; 
-		background-color: red;
+		  width: 123px;
+		  height: 48px; 
 		z-index: 2;
 	}
 
 	.wire-network a[data-area-id="a"]{
-		-webkit-transform: rotate(59deg) translate(192px, -118px); 
+		-webkit-transform: translate(103px, 137px);
 	}
 
 	.wire-network a[data-area-id="b"]{
-		-webkit-transform: rotate(59deg) translate(557px, -651px); 
+		  -webkit-transform: translate(1036px, 175px);
 	}
 
 	.wire-network a[data-area-id="c"]{
-		-webkit-transform: rotate(59deg) translate(793px, -866px); 
+	  -webkit-transform: translate(1180px, 270px);
+	  width: 186px;
 	}
 
 	.wire-network a[data-area-id="d"]{
-		-webkit-transform: rotate(59deg) translate(980px, -980px); 
+	  -webkit-transform: translate(1247px, 572px);
+	  width: 200px;
 	}
 
 	.wire-network a[data-area-id="e"]{
-		-webkit-transform: rotate(49deg) translate(1185px, -327px); 
+		  -webkit-transform: translate(1226px, 866px);
 	}
 
 	.wire-network a[data-area-id="f"]{
-		-webkit-transform: rotate(48deg) translate(599px, 294px); 
+  -webkit-transform: translate(125px, 661px);
 	}
 	.buidling-editor-container text.title{
 		display: none;
