@@ -96,9 +96,11 @@
             '<div class="popup_content" >{content}</div>' +
             '</div>';
 
-        var offsetX = 0,
-            offsetY = 0;
+        var offsetX = 90,
+            offsetY = 65;
+        
         var className = "nodeDetail";
+
         var _parseData = function(data) {
             if (data) {
                 for (var p in data) {
@@ -167,6 +169,10 @@
             .on("mouseover", function(data) {
                 PopupPanel.clearAll();
                 _showNodeDetail(data, d3.event, _getNodeDetailTpl());
+            }).on("click", function(data){
+                var id  = ZSYFCEditor.getData()[ data[ ZSYFCEditorConfig['ID_KEY'] ] ]["data"]["id"];
+                alert(id);
+                // window.location.href = "...?id=" + id;
             });  
 
              return;

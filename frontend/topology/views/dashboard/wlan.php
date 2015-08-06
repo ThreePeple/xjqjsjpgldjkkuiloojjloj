@@ -30,8 +30,8 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 		position: absolute;
 		left: 0;
 		top: 0;
-		  width: 123px;
-		  height: 48px; 
+		width: 123px;
+		height: 48px; 
 		z-index: 2;
 	}
 
@@ -66,6 +66,7 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 	.nodeDetail .popupBody li {
 		color: #ababab;
 		margin: 3px 0;
+		white-space: nowrap;
 	}
 	.nodeDetail .popupBody li span{
 		font-weight: bold;
