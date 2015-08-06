@@ -2,6 +2,8 @@
  * Created by Shengjun on 15-7-9.
  */
 ( function () { 
+   
+    var detailUrl = '/stat/device/ajax-device-tip';
 
     var switchStatusImg = {
         '-1': "/images/building_switch_status2/s-1.gif",
@@ -11,7 +13,80 @@
         '3': "/images/building_switch_status2/s3.gif",
         '4': "/images/building_switch_status2/s4.gif",
         '5': "/images/building_switch_status2/s5.gif"
-    };
+    }; 
+
+    var _showNodeDetail = function(d, e, contentHtmlTpl) { 
+        var $tg = $(e.target);
+        if (false == $tg.is(".element")) {
+            $tg = $tg.closest(".element");
+        }
+        $tg = $tg.find(".shape");
+
+        var offset = $tg.offset();
+        var x = offset.left,
+            y = offset.top;
+
+        var contentTpl = '<div class="popupBody">' +
+            '<div class="popup_close" title="关闭">&nbsp;</div>' +
+            '<div class="popup_content" >{content}</div>' +
+            '</div>';
+
+        var offsetX = 33,
+            offsetY = 15;
+        
+        var className = "nodeDetail";
+
+        var _parseData = function(data) {
+            if (data) {
+                for (var p in data) {
+                    contentHtmlTpl = contentHtmlTpl.replace('{' + p + '}', data[p]);
+                }
+                return contentHtmlTpl;
+            }
+            return "<span class='none'>No data.</span>";
+        };
+        var _updateContent = function(html) {
+            return contentTpl.replace("{content}", html);
+        };
+        var popPanel = new PopupPanel({
+            className: 'modalessDialog' + (className ? " " + className : ""),
+            offsetX: offsetX,
+            offsetY: offsetY,
+            destroy: true,
+            animate: false,
+            closeHandler: function() {},
+            content: contentTpl,
+            initInterface: function($content) {
+                var inst = this;
+                $content.click(function(e) {
+                    if ($(e.target).is('div.popup_close'))
+                        inst.close(true);
+                });
+
+                $content.find("div.popup_content").html(_updateContent("loading...")); 
+                // nodeDetail_.json : fail data, nodeDetail.json: ok data.
+                var id  = ZSYFCEditor.getData()[ d[ ZSYFCEditorConfig['ID_KEY'] ] ]["data"]["id"];
+                $.get(detailUrl, {
+                    id: id
+                }, function(j) {
+                    $content.find("div.popup_content").html(j);
+                    popPanel.refresh(); 
+                    return;
+                    if (j.result == 1) {
+                        $content.find("div.popup_content").html(_updateContent(_parseData(j.data)));
+                    } else {
+                        $content.find("div.popup_content").html(_updateContent(j.msg));
+                    }
+                    popPanel.refresh();
+                }, 'html');
+            }
+        }).init().show(x, y);
+    }; 
+
+
+
+
+
 
     var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
         "ID_KEY": "__id__",
@@ -254,6 +329,16 @@
                         console.log( "Load page", "http://www.cnpc.com/?id=" + id );
                         window.open( "/stat/device/detail?id=" + id );
                     }
+                }
+            }
+        }).mouseover( function(e){
+            var $tg = $(e.target);
+            var data = ZSYFCEditor.getData();
+            if($tg.is(".shape")){
+                var d = d3.select(e.target).datum() || "";
+                if( d ){
+                     PopupPanel.clearAll();
+                    _showNodeDetail(d, e );
                 }
             }
         });

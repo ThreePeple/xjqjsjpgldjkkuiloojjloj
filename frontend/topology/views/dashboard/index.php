@@ -43,6 +43,16 @@ $css = <<<CSS
 .buidling-editor-container text.title {
     display: none;
 }
+    .nodeDetail .popupBody li {
+        color: #ababab;
+        margin: 3px 0;
+        white-space: nowrap;
+    }
+    .nodeDetail .popupBody li span{
+        font-weight: bold;
+        margin-right: 10px;
+        color: #fff;
+    }
 CSS;
 $this->registerCss($css);
 ?>
