@@ -16,13 +16,12 @@ $js = <<<JS
               ,nodes:{
                 font:{size:14, color:'white', face:'arial'}
               }
-              //,physics: false
-              /*
+              ,physics: false
               ,layout: {
                   hierarchical: {
                     sortMethod: 'hubsize'
                   }
-                }*/
+                }
               ,groups:{
                     "router":{
                         "shape":"image",
@@ -73,7 +72,7 @@ $js = <<<JS
         network.on("click", function (params) {
             var device_id = params["nodes"][0];
             if(!device_id) return;
-            console.log(JSON.stringify(params, null, 4));
+            //console.log(JSON.stringify(params, null, 4));
             window.location.href = '/stat/device/wlan-detail?id='+device_id;
         });
         function getNodes(){

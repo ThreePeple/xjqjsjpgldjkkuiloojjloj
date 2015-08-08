@@ -19,9 +19,32 @@ NavBar::begin([
     ]
 ]);
 $menuItems = [
-    ['label' => '局域网', 'url' => ['/topology/dashboard/index']],
-    ['label' => '有线网', 'url' => ['/topology/dashboard/wlan']],
-    ['label' => '查询统计', 'url' => ['/stat']],
+    [
+        'label' => '拓扑展示',
+        'items' =>[
+            [
+                'label' => '大厦局域网',
+                'url' => ['/topology/dashboard/index']
+            ],
+            [
+                'label' => '有线网络',
+                'url' => ['/topology/dashboard/wlan']
+            ],
+            [
+                'label' => '无线网络',
+                'url' => ['/topology/dashboard/index']
+            ],
+            [
+                'label' => '交换机组网',
+                'url' => ['/topology/dashboard/index']
+            ],
+        ]
+    ],
+    [
+        'label'=> '接入管理',
+        'url' => ['/input/config-set/index']
+    ],
+    ['label'=> '报表统计'],
     ['label' => '系统管理', 'url' => ['/system']],
     '<li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
