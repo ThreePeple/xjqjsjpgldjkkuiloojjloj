@@ -89,14 +89,14 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
     </ul>
 </script>
 <div class="row">
-    <div class="wire-network buidling-editor-container wireless-editor-container" id="wireNetworkHolder">
+    <div class=" wireless-editor-container" id="wireNetworkHolder">
     	<a data-area-id="a" title="A区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>1])?>"></a>
     	<a data-area-id="b" title="B区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>4])?>"></a>
     	<a data-area-id="c" title="C区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>5])?>"></a>
     	<a data-area-id="d" title="D区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>6])?>"></a>
     	<a data-area-id="e" title="E区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>3])?>"></a>
     	<a data-area-id="f" title="F区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>2])?>"></a>
-        <svg class="ZSYFCEditor" oncontextmenu="return false;" >
+        <svg class="ZSYFCEditor" oncontextmenu="return false;" style="  background: url(/images/wireless_bg.png) no-repeat; margin-top: 50px;">
             <defs>
                 <marker id="ZSYFCEditor_MarkerArrow" markerWidth="13" markerHeight="13" refx="9" refy="6" orient="auto">
                     <path d="M2,2 L2,11 L10,6 L2,2" style="fill: #000000;" />

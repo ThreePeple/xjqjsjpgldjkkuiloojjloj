@@ -159,7 +159,7 @@
             {
                 svg: d3.select("svg.ZSYFCEditor"),
                 width: 1440,
-                height: 1200
+                height: 800
             } 
         ); 
 
