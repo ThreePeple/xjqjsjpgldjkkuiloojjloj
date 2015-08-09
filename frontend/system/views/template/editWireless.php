@@ -297,8 +297,8 @@ $(function(){
     $('#addSwitchBtn').click( function() {
        if(filterList && selectedData_){
             console.log("Button: Add " + deviceType + ".");
-            var area = $("#deviceArea").val();
-            selectedData_["data"]["areaId"] = area;
+           // var area = $("#deviceArea").val();
+           // selectedData_["data"]["areaId"] = area;
             ZSYFCEditor.addShape(deviceType, selectedData_["data"]);
             combo.filterAndResetSelected();
             _buildList();
