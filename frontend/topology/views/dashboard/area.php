@@ -13,15 +13,22 @@ $js = <<<JS
             autoResize: true,
               height: '100%',
               width: '100%'
+              ,edges:{
+                "smooth": {
+                      "type": "discrete",
+                      "forceDirection": "vertical",
+                      "roundness": 0
+                    }
+              }
               ,nodes:{
                 font:{size:14, color:'white', face:'arial'}
               }
-              ,physics: false
-              ,layout: {
+              //,physics: false
+              /*,layout: {
                   hierarchical: {
-                    sortMethod: 'hubsize'
+                    direction: 'LR'
                   }
-                }
+                }*/
               ,groups:{
                     "router":{
                         "shape":"image",

@@ -41,12 +41,19 @@ use yii\helpers\Url;
             ]
         );
         ?>
-
-        <ul class="sidebar-menu">
-            <li><a href="＃"><span class="fa fa-circle-o"></span> 配置信息下发</a>
-            <li><a href="＃"><span class="fa fa-circle-o"></span> 跳线管理</a>
-            <li><a href=“#”><span class="fa fa-circle-o"></span> 设备信息查询</a>
-        </ul>
+        <?=
+        Nav::widget(
+            [
+                'encodeLabels' => false,
+                'options' => ['class' => 'sidebar-menu'],
+                'items' => [
+                    ["label" => '<span class="fa fa-circle-o"></span> 配置信息下发',"url" => ['#']],
+                    ["label" => '<span class="fa fa-circle-o"></span> 跳线管理',"url" => ['#']],
+                    ["label" => '<span class="fa fa-circle-o"></span> 设备信息查询',"url" => ['#']],
+                ],
+            ]
+        );
+        ?>
 
     </section>
 

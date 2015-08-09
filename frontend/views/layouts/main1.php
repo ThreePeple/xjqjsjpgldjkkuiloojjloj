@@ -4,6 +4,14 @@ use yii\helpers\Html;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+$css = <<<CSS
+.treeview .nav > li > a:hover,
+.treeview .nav > li > a:focus {
+  text-decoration: none;
+  background-color: inherit;
+}
+CSS;
+$this->registerCss($css);
 
 if (Yii::$app->controller->action->id === 'login') { 
 /**
