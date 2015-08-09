@@ -8,7 +8,7 @@ $this->registerCssFile('/css/building-editor.css',['depends'=>'frontend\assets\A
 
 
 $this->registerJsFile('/js/popuppanel.js',['depends'=>'frontend\assets\AppAsset']);
-$this->registerJsFile('/js/topology_wlan.js',['depends'=>'frontend\assets\AppAsset']); 
+$this->registerJsFile('/js/topology_wireless.js',['depends'=>'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/d3.min.js',['depends'=>'frontend\assets\AppAsset']);
 
 $this->registerJsFile('/js/ZSYFCEditorUtil.js',['depends'=>'frontend\assets\AppAsset']); 
@@ -89,8 +89,7 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
     </ul>
 </script>
 <div class="row">
-    <h4 style="color:white">有线网络拓扑</h4>
-    <div class="wire-network buidling-editor-container wlan-editor-container" id="wireNetworkHolder">
+    <div class="wire-network buidling-editor-container wireless-editor-container" id="wireNetworkHolder">
     	<a data-area-id="a" title="A区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>1])?>"></a>
     	<a data-area-id="b" title="B区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>4])?>"></a>
     	<a data-area-id="c" title="C区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>5])?>"></a>
