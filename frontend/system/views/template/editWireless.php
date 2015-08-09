@@ -10,8 +10,8 @@ $js=<<<JS
         data,
         {
             svg: d3.select("svg.ZSYFCEditor"),
-            width: 1440,
-            height: 1200
+            width: 1521,
+            height: 773
         } 
     );
 JS;
@@ -102,22 +102,22 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
 };  
 </script> 
 <style>
-    .content{
-        overflow: auto;
-    }
-    .wlan-editor-toolbar label{
-        line-height: 38px;
-    } 
-    .wlan-editor-toolbar select.device-type,
-    .wlan-editor-toolbar select.device-area{
-        padding: 6px 5px;
-    }
-    .ZSYFCEditor-btnbar{
-        width: auto !important;
-        margin-top: 6px;
-    }
+.content{
+    overflow: auto;
+}
+.wireless-editor-toolbar label{
+    line-height: 38px;
+} 
+.wireless-editor-toolbar select.device-type,
+.wireless-editor-toolbar select.device-area{
+    padding: 6px 5px;
+}
+.ZSYFCEditor-btnbar{
+    width: auto !important;
+    margin-top: 6px;
+}
 </style>
-<div class="buidling-editor-toolbar wlan-editor-toolbar">
+<div class="buidling-editor-toolbar wireless-editor-toolbar">
     <div class="ZSYFCEditor-btnbar" id="FCEditorModeSwitcher"> 
         <span class="btn modeSwitch dragMode" data-mode="drag" title="默认">&nbsp;</span>
         <span class="btn modeSwitch lineMode" data-mode="line" title="智能连线">&nbsp;</span>
@@ -143,7 +143,7 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
         <?=Html::button("保存模板",["class"=>"btn btn-info","id"=>"saveTplDataBtn"])?> 
     </div>
 </div> 
-<div class="buidling-editor-container wlan-editor-container">
+<div class="buidling-editor-container wireless-editor-container">
 	<svg class="ZSYFCEditor" oncontextmenu="return false;" >
 		<defs>
 			<marker id="ZSYFCEditor_MarkerArrow" markerWidth="13" markerHeight="13" refx="9" refy="6" orient="auto">

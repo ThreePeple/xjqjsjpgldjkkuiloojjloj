@@ -23,6 +23,11 @@
 	width: 1440px;
 	height: 1200px;
 }
+.wireless-editor-container{
+	width: 1521px;
+	height: 773px; 
+}
+
 svg.ZSYFCEditor {
 	background: url(../images/building.png);
 	border: none;
@@ -32,6 +37,9 @@ svg.ZSYFCEditor {
 }
 .wlan-editor-container svg.ZSYFCEditor {
 	background: url(../images/wlan_bg.png); 
+}
+.wireless-editor-container svg.ZSYFCEditor {
+	background: url(../images/wireless_bg.png); 
 }
 .buidling-editor-container text.title {
 	fill: #fff;
