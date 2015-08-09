@@ -86,8 +86,8 @@ class ViewTemplate extends \yii\db\ActiveRecord
     /**
      * 获取区域内设备
      */
-    public static function getAreaDeviceData($area){
-        $deviceIds = self::find()->where(["type"=>self::TYPE_WLAN,"areaId"=>$area])->select("device_id")->asArray()->column();
+    public static function getAreaDeviceData($area,$type=2){
+        $deviceIds = self::find()->where(["type"=>$type,"areaId"=>$area])->select("device_id")->asArray()->column();
         $rows = DeviceInfo::find()->with(["category"])->where(["id"=>$deviceIds])->select("id,label,categoryId")->asArray()->all();
         $result = [];
         foreach($rows as $row){

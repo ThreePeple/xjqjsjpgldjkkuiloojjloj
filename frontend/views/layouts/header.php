@@ -32,7 +32,7 @@ $menuItems = [
             ],
             [
                 'label' => '无线网络',
-                'url' => ['/topology/dashboard/index']
+                'url' => ['/topology/dashboard/wireless']
             ],
             [
                 'label' => '交换机组网',

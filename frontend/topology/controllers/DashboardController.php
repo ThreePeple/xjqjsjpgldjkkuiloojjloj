@@ -63,7 +63,29 @@ class DashboardController extends Controller
     }
 
     /**
+     * 无线网络图
+     */
+    public function actionWireless(){
+        return $this->render("wireless");
+    }
+
+    /**
      * 区域设备链路图
+     *
+    $nodes = [
+    ["id"=>1,"label"=>"交换机1","group"=>"switch"],
+    ["id"=>2,"label"=>"交换机2","group"=>"switch"],
+    ["id"=>3,"label"=>"服务器","group"=>"server"],
+    ["id"=>4,"label"=>"防火墙","group"=>"firewall"],
+    ["id"=>5,"label"=>"数据库","group"=>"db"],
+    ];
+    $edges = [
+    ["id"=>1,"from"=>1,"to"=>2,"color"=>"green"],
+    ["id"=>2,"from"=>1,"to"=>3,"color"=>"red"],
+    ["id"=>3,"from"=>2,"to"=>4,"color"=>"green"],
+    ["id"=>4,"from"=>2,"to"=>5,"color"=>"green","dashes"=>[5,5,3,3]],
+    // ["id"=>5,"from"=>1,"to"=>5,"color"=>"red"],
+    ];
      */
     public function  actionDeviceArea($area){
         return $this->render("area",["area"=>$area]);
@@ -72,25 +94,10 @@ class DashboardController extends Controller
      * 获取区域设备和链路数据
      */
     public function actionAjaxGetNodes(){
-        /*
-        $type= 1;
-        $area = 1;
-        $nodes = [
-            ["id"=>1,"label"=>"交换机1","group"=>"switch"],
-            ["id"=>2,"label"=>"交换机2","group"=>"switch"],
-            ["id"=>3,"label"=>"服务器","group"=>"server"],
-            ["id"=>4,"label"=>"防火墙","group"=>"firewall"],
-            ["id"=>5,"label"=>"数据库","group"=>"db"],
-        ];
-        $edges = [
-            ["id"=>1,"from"=>1,"to"=>2,"color"=>"green"],
-            ["id"=>2,"from"=>1,"to"=>3,"color"=>"red"],
-            ["id"=>3,"from"=>2,"to"=>4,"color"=>"green"],
-            ["id"=>4,"from"=>2,"to"=>5,"color"=>"green","dashes"=>[5,5,3,3]],
-           // ["id"=>5,"from"=>1,"to"=>5,"color"=>"red"],
-        ];*/
+
         $area = Yii::$app->request->post("area");
-        $nodes = ViewTemplate::getAreaDeviceData($area);
+        $type = Yii::$app->request->post("type",ViewTemplate::TYPE_WLAN);
+        $nodes = ViewTemplate::getAreaDeviceData($area,$type);
         $ids = array_keys(ArrayHelper::map($nodes,"id","label"));
         $edges = ViewTemplate::getLinks($ids);
         //TODO edges 获取
