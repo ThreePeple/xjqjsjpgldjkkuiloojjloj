@@ -630,7 +630,9 @@
 
 
         // Find max key-value.
-        var _max = _ids.sort().pop();
+        _ids.sort(function(a,b){ if(a<b) return -1; else if( a>b ) return 1; else return 0; });
+        
+        var _max = _ids.shift(); 
         // Init some constants
         dataFactory_.init(_max || 1);
 
