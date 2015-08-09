@@ -186,7 +186,7 @@ class DeviceInfo extends \yii\db\ActiveRecord
         return $rows;
     }
 
-    public static function getWlanList(){
+    public static function getDeviceList(){
         $result = [];
         $rows = self::find()->with("category")->asArray()->all();
         foreach($rows as $row){

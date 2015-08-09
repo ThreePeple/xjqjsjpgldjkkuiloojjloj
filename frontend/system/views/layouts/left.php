@@ -52,6 +52,7 @@ use yii\helpers\Url;
                 <ul class="treeview-menu">
                     <li><a href="/system/template/building"><span class="fa fa-circle-o"></span> 大楼局域网模板</a> </li>
                     <li><a href="/system/template/wlan"><span class="fa fa-circle-o"></span> 有线网络模板</a> </li>
+                    <li><a href="/system/template/wireless"><span class="fa fa-circle-o"></span> 无线网络模板</a> </li>
                 </ul>
             </li>
             <li class="treeview">
@@ -60,10 +61,10 @@ use yii\helpers\Url;
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><span class="fa fa-file-code-o"></span> 条件设置</a></li>
-                    <li><a href="#"><span class="fa fa-dashboard"></span> 消息模版</a></li>
-                    <li><a href="#"><span class="fa fa-dashboard"></span> 消息发送</a></li>
-                    <li><a href="#"><span class="fa fa-dashboard"></span> 告警查询</a></li>
+                    <li><a href="#"><span class="fa fa-circle-o"></span> 条件设置</a></li>
+                    <li><a href="#"><span class="fa fa-circle-o"></span> 消息模版</a></li>
+                    <li><a href="#"><span class="fa fa-circle-o"></span> 消息发送</a></li>
+                    <li><a href="#"><span class="fa fa-circle-o"></span> 告警查询</a></li>
 
                 </ul>
             </li>
@@ -73,9 +74,9 @@ use yii\helpers\Url;
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><span class="fa fa-file-code-o"></span> 链路查询</a>
+                    <li><a href="#"><span class="fa fa-circle-o"></span> 链路查询</a>
                     </li>
-                    <li><a href="#"><span class="fa fa-dashboard"></span> 链路检测</a>
+                    <li><a href="#"><span class="fa fa-circle-o"></span> 链路检测</a>
                     </li>
 
                 </ul>

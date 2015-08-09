@@ -18,13 +18,15 @@ NavBar::begin([
         'class' => 'container-fluid'
     ]
 ]);
+$active = Yii::$app->controller->module->getUniqueId();
 $menuItems = [
     [
         'label' => '拓扑展示',
         'items' =>[
             [
                 'label' => '大厦局域网',
-                'url' => ['/topology/dashboard/index']
+                'url' => ['/topology/dashboard/index'],
+                'active' => ""
             ],
             [
                 'label' => '有线网络',
@@ -38,14 +40,24 @@ $menuItems = [
                 'label' => '交换机组网',
                 'url' => ['/topology/dashboard/index']
             ],
-        ]
+        ],
+        'active' => $active == 'topology'
     ],
     [
         'label'=> '接入管理',
-        'url' => ['/input/config-set/index']
+        'url' => ['/input/config-set/index'],
+        'active' => $active == 'input'
     ],
-    ['label'=> '报表统计'],
-    ['label' => '系统管理', 'url' => ['/system']],
+    [
+        'label'=> '报表统计',
+        'url'=>['/report/report/index'],
+        'active' => $active == 'report'
+    ],
+    [
+        'label' => '系统管理',
+        'url' => ['/system'],
+        'active' => $active == 'system'
+    ],
     '<li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="/images/user2-160x160.jpg" class="user-image" alt="User Image"/>
@@ -63,11 +75,10 @@ $menuItems = [
                     </ul>
                 </li>'
 ];
-$active = Yii::$app->controller->module->getUniqueId();
 echo Nav::widget([
     'options' => ['class' => 'navbar-nav navbar-right'],
     'items' => $menuItems,
-    'route' => $active
+    //'route' => $active
 ]);
 NavBar::end();
 ?>

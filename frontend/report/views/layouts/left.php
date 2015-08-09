@@ -36,50 +36,16 @@ use yii\helpers\Url;
                 'encodeLabels' => false,
                 'options' => ['class' => 'sidebar-menu'],
                 'items' => [
-                    '<li class="header">系统设置</li>',
+                    '<li class="header">报表统计</li>',
                 ],
             ]
         );
         ?>
 
         <ul class="sidebar-menu">
-            <li><a href="<?=Url::toRoute('/system/user/index')?>"><span class="fa fa-circle-o"></span> 用户管理</a>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-circle-o"></i> <span>模板管理</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="/system/template/building"><span class="fa fa-circle-o"></span> 大楼局域网模板</a> </li>
-                    <li><a href="/system/template/wlan"><span class="fa fa-circle-o"></span> 有线网络模板</a> </li>
-                </ul>
-            </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-circle-o"></i> <span>告警管理</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#"><span class="fa fa-file-code-o"></span> 条件设置</a></li>
-                    <li><a href="#"><span class="fa fa-dashboard"></span> 消息模版</a></li>
-                    <li><a href="#"><span class="fa fa-dashboard"></span> 消息发送</a></li>
-                    <li><a href="#"><span class="fa fa-dashboard"></span> 告警查询</a></li>
-
-                </ul>
-            </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-circle-o"></i> <span>链路管理</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#"><span class="fa fa-file-code-o"></span> 链路查询</a>
-                    </li>
-                    <li><a href="#"><span class="fa fa-dashboard"></span> 链路检测</a>
-                    </li>
-
-                </ul>
-            </li>
+            <li><a href="<?=Url::toRoute('/system/user/index')?>"><span class="fa fa-circle-o"></span> 设备分类统计</a>
+            <li><a href="<?=Url::toRoute('/system/user/index')?>"><span class="fa fa-circle-o"></span> 设备运行状态统计</a>
+            <li><a href="<?=Url::toRoute('/system/user/index')?>"><span class="fa fa-circle-o"></span> 链路运行状态统计</a>
         </ul>
 
     </section>

@@ -65,11 +65,26 @@ class TemplateController extends \yii\web\Controller
      * 有限网络
      */
     public function actionWlan(){
-        $lists = DeviceInfo::getWlanList(ViewTemplate::TYPE_WLAN);
+        $lists = DeviceInfo::getDeviceList(ViewTemplate::TYPE_WLAN);
         $selected = ViewTemplate::getTempateSet(ViewTemplate::TYPE_WLAN);
         $areaList = Area::find()->select(["id","name"])->asArray()->all();
         $areaList = ArrayHelper::map($areaList,"id","name");
         return $this->render('editorWlan',["areaList"=>$areaList,"deviceList"=>$lists,"selected"=>Json::encode($selected),"type"=>ViewTemplate::TYPE_WLAN]);
+    }
+
+    /**
+     * 无线网络
+     */
+    public function actionWireless(){
+        $lists = DeviceInfo::getDeviceList(ViewTemplate::TYPE_WIFI);
+        $selected = ViewTemplate::getTempateSet(ViewTemplate::TYPE_WLAN);
+
+        return $this->render('editWireless',[
+            'deviceList' => $lists,
+            'selected' => json_encode($selected),
+            'type' => ViewTemplate::TYPE_WIFI
+        ]);
+
     }
 
     public function actionTest(){
