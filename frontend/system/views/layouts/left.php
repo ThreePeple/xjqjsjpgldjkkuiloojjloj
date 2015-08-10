@@ -1,6 +1,7 @@
 <?php
 use yii\bootstrap\Nav;
 use yii\helpers\Url;
+
 ?>
 <aside class="main-sidebar">
 
@@ -43,32 +44,68 @@ use yii\helpers\Url;
         ?>
 
         <ul class="sidebar-menu">
-            <li><a href="<?=Url::toRoute('/system/user/index')?>"><span class="fa fa-circle-o"></span> 用户管理</a>
-            <li class="treeview">
+            <li class="<?=($this->context->id == 'user'? "active":'')?>"><a href="<?=Url::toRoute('/system/user/index')?>"><span class="fa fa-circle-o"></span> 用户管理</a>
+            <li class="treeview <?=($this->context->id == 'template'? "active":'')?>">
                 <a href="#">
                     <i class="fa fa-circle-o"></i> <span>模板管理</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
-                <ul class="treeview-menu">
+                <?=Nav::widget([
+                    "options" => ["class"=>"treeview-menu"],
+                    'encodeLabels' => false,
+                    "items" => [
+                        [
+                            "label" => '<span class="fa fa-circle-o"></span> 大楼局域网模板</a> ',
+                            "url" => ['/system/template/building']
+                        ],
+                        [
+                            "label" => '<span class="fa fa-circle-o"></span> 有线网络模板</a> ',
+                            "url" => ['/system/template/wlan']
+                        ],
+                        [
+                            "label" => '<span class="fa fa-circle-o"></span> 无线网络模板</a> ',
+                            "url" => ['/system/template/wireless']
+                        ],
+                    ]
+                ])
+                ?>
+                <!--<ul class="treeview-menu">
                     <li><a href="/system/template/building"><span class="fa fa-circle-o"></span> 大楼局域网模板</a> </li>
                     <li><a href="/system/template/wlan"><span class="fa fa-circle-o"></span> 有线网络模板</a> </li>
                     <li><a href="/system/template/wireless"><span class="fa fa-circle-o"></span> 无线网络模板</a> </li>
-                </ul>
+                </ul>-->
             </li>
-            <li class="treeview">
+            <li class="treeview <?=($this->context->id == 'sms'? "active":'')?>">
                 <a href="#">
                     <i class="fa fa-circle-o"></i> <span>告警管理</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
-                <ul class="treeview-menu">
-                    <li><a href="#"><span class="fa fa-circle-o"></span> 条件设置</a></li>
-                    <li><a href="#"><span class="fa fa-circle-o"></span> 消息模版</a></li>
-                    <li><a href="#"><span class="fa fa-circle-o"></span> 消息发送</a></li>
-                    <li><a href="#"><span class="fa fa-circle-o"></span> 告警查询</a></li>
+                <?=Nav::widget([
+                    "options" => ["class"=>"treeview-menu"],
+                    'encodeLabels' => false,
+                    "items" => [
+                        [
+                            "label" => '<span class="fa fa-circle-o"></span> 条件设置</a> ',
+                            "url" => ["#"]
+                        ],
+                        [
+                            "label" => '<span class="fa fa-circle-o"></span> 消息模版</a> ',
+                            "url" => ["#"]
+                        ],
+                        [
+                            "label" => '<span class="fa fa-circle-o"></span> 消息发送</a> ',
+                            "url" => ['＃']
+                        ],
+                        [
+                            "label" => '<span class="fa fa-circle-o"></span> 告警查询</a> ',
+                            "url" => ['＃']
+                        ],
+                    ]
+                ])
+                ?>
 
-                </ul>
             </li>
-            <li class="treeview">
+            <li class="treeview <?=($this->context->id == 'link'? "active":'')?>">
                 <a href="#">
                     <i class="fa fa-circle-o"></i> <span>链路管理</span>
                     <i class="fa fa-angle-left pull-right"></i>

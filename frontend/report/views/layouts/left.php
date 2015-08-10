@@ -41,12 +41,19 @@ use yii\helpers\Url;
             ]
         );
         ?>
-
-        <ul class="sidebar-menu">
-            <li><a href="<?=Url::toRoute('/system/user/index')?>"><span class="fa fa-circle-o"></span> 设备分类统计</a>
-            <li><a href="<?=Url::toRoute('/system/user/index')?>"><span class="fa fa-circle-o"></span> 设备运行状态统计</a>
-            <li><a href="<?=Url::toRoute('/system/user/index')?>"><span class="fa fa-circle-o"></span> 链路运行状态统计</a>
-        </ul>
+        <?=
+        Nav::widget(
+            [
+                'encodeLabels' => false,
+                'options' => ['class' => 'sidebar-menu'],
+                'items' => [
+                    ["label" => '<span class="fa fa-circle-o"></span> 设备分类统计',"url" => ['#']],
+                    ["label" => '<span class="fa fa-circle-o"></span> 设备运行状态统计',"url" => ['#']],
+                    ["label" => '<span class="fa fa-circle-o"></span> 链路运行状态统计',"url" => ['#']],
+                ],
+            ]
+        );
+        ?>
 
     </section>
 

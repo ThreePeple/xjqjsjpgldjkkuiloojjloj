@@ -77,7 +77,7 @@ class TemplateController extends \yii\web\Controller
      */
     public function actionWireless(){
         $lists = DeviceInfo::getDeviceList(ViewTemplate::TYPE_WIFI);
-        $selected = ViewTemplate::getTempateSet(ViewTemplate::TYPE_WLAN);
+        $selected = ViewTemplate::getTempateSet(ViewTemplate::TYPE_WIFI);
 
         return $this->render('editWireless',[
             'deviceList' => $lists,
