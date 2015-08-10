@@ -5,8 +5,8 @@
  * CreateTime: 15-8-1.下午8:37
  * Description: 链路信息
  */
-use yii\grid\GridView;
 use yii\helpers\Html;
+use kartik\grid\GridView;
 
 ?>
 <div class="device-info-view">
@@ -15,6 +15,7 @@ use yii\helpers\Html;
     <?=
     GridView::widget([
         "dataProvider"=>$dataProvider,
+        "pjax" => true,
         "columns" => [
             [
                 "label" => "ID",
@@ -57,7 +58,7 @@ use yii\helpers\Html;
                 "value" => "right.label"
             ],
         ],
-        //"export"=>false
+        "export"=>false
     ]);
     ?>
 </div>

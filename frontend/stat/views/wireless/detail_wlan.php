@@ -12,7 +12,7 @@ $this->registerCssFile("/css/h_collapse.css",["depends"=>'frontend\assets\AppAss
 $js = <<<JS
         $("#refresh_perf").on("click",function(){
             $.ajax({
-                url:'/stat/device/perf?id={$model->id}',
+                url:'/stat/wireless/perf?id={$model->id}',
                 type:'GET',
                 dataType:'html',
                 success:function(_html){

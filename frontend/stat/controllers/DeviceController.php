@@ -147,6 +147,9 @@ class DeviceController extends Controller
         $query = DeviceAlarm::find();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                "pageSize"  => 10
+            ]
         ]);
         $query->where(["deviceId"=>$id])->orderBy("faultTime desc")->limit(5);
         return $this->render("detail",[

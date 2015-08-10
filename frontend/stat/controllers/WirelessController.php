@@ -158,6 +158,9 @@ class WirelessController extends Controller
         $query = WirelessDeviceAlarm::find();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                "pageSize"  => 10
+            ]
         ]);
         $query->where(["deviceId"=>$id])->orderBy("faultTime desc")->limit(5);
 
