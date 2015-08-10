@@ -3,7 +3,7 @@
  */
 ( function () { 
    
-    var detailUrl = '/stat/device/ajax-device-tip';
+    var detailUrl = '/stat/wireless/ajax-device-tip';
 
     var switchStatusImg = {
         '-1': "/images/building_switch_status2/s-1.gif",

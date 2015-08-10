@@ -100,7 +100,6 @@ class DashboardController extends Controller
         $nodes = ViewTemplate::getAreaDeviceData($area,$type);
         $ids = array_keys(ArrayHelper::map($nodes,"id","label"));
         $edges = ViewTemplate::getLinks($ids);
-        //TODO edges 获取
         return Json::encode([
             "nodes" => $nodes,
             "edges" => $edges
