@@ -171,7 +171,7 @@
                 _showNodeDetail(data, d3.event, _getNodeDetailTpl());
             }).on("click", function(data){
                 var id  = ZSYFCEditor.getData()[ data[ ZSYFCEditorConfig['ID_KEY'] ] ]["data"]["id"];
-                 window.open("/stat/device/wlan-detail?id=" + id, "wlan-node-detail");
+                 window.open("/stat/wireless/detail?id=" + id, "wlan-node-detail");
             });  
 
              return;

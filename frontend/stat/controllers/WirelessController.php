@@ -2,24 +2,23 @@
 
 namespace app\stat\controllers;
 
-use app\models\DeviceInterface;
+use app\models\WirelessDeviceAlarm;
+use app\models\WirelessDeviceInterface;
+use app\models\WirelessDeviceLink;
+use app\models\WirelessDeviceTask;
 use Yii;
-use app\models\DeviceInfo;
-use app\models\DeviceInfoSearch;
+use app\models\WirelessDeviceInfo;
+use app\models\WirelessSearch;
+use yii\data\ActiveDataProvider;
+use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\helpers\Json;
-use app\models\DeviceInterfaceTask;
-use app\models\DeviceTask;
-use app\models\DeviceAlarm;
-use yii\data\ActiveDataProvider;
-use app\models\DeviceLink;
 
 /**
- * DeviceController implements the CRUD actions for DeviceInfo model.
+ * WirelessController implements the CRUD actions for WirelessDeviceInfo model.
  */
-class DeviceController extends Controller
+class WirelessController extends Controller
 {
     public function behaviors()
     {
@@ -34,12 +33,12 @@ class DeviceController extends Controller
     }
 
     /**
-     * Lists all DeviceInfo models.
+     * Lists all WirelessDeviceInfo models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new DeviceInfoSearch();
+        $searchModel = new WirelessSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -49,7 +48,7 @@ class DeviceController extends Controller
     }
 
     /**
-     * Displays a single DeviceInfo model.
+     * Displays a single WirelessDeviceInfo model.
      * @param integer $id
      * @return mixed
      */
@@ -61,13 +60,13 @@ class DeviceController extends Controller
     }
 
     /**
-     * Creates a new DeviceInfo model.
+     * Creates a new WirelessDeviceInfo model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new DeviceInfo();
+        $model = new WirelessDeviceInfo();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -79,7 +78,7 @@ class DeviceController extends Controller
     }
 
     /**
-     * Updates an existing DeviceInfo model.
+     * Updates an existing WirelessDeviceInfo model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -98,7 +97,7 @@ class DeviceController extends Controller
     }
 
     /**
-     * Deletes an existing DeviceInfo model.
+     * Deletes an existing WirelessDeviceInfo model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,6 +109,22 @@ class DeviceController extends Controller
         return $this->redirect(['index']);
     }
 
+    /**
+     * Finds the WirelessDeviceInfo model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return WirelessDeviceInfo the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = WirelessDeviceInfo::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
     public function actionGetNodes(){
         $id = Yii::$app->request->get("id");
         $model = $this->findModel($id);
@@ -117,17 +132,16 @@ class DeviceController extends Controller
             "name" => $model->label,
             "children" => []
         ];
-        $childrens = DeviceInterface::find()->where(["device_id"=>$model->id])->select(["name"=>"ifDescription","id"=>"ifIndex"])->asArray()->all();
+        $childrens = WirelessDeviceInterface::find()->where(["device_id"=>$model->id])->select(["name"=>"ifDescription","id"=>"ifIndex"])->asArray()->all();
         $data["children"] = $childrens;
         return Json::encode($data);
     }
-
     /**
      * 接口详情
      */
     public function actionGetDetail(){
         $id = Yii::$app->request->get("node");
-        $data = DeviceInterface::find()->where(["id"=>$id])->asArray()->one();
+        $data = WirelessDeviceInterface::find()->where(["id"=>$id])->asArray()->one();
         return Json::encode(["result"=>1,"data"=>$data]);
     }
     /**
@@ -137,36 +151,17 @@ class DeviceController extends Controller
         return $this->render('link',['id'=>$id]);
     }
 
-    /**
-     * 设备详情页面
-     */
     public function actionDetail($id){
         $this->layout = '//main';
         $model = $this->findModel($id);
-        $lists = DeviceTask::getPrefList($id);
-        $query = DeviceAlarm::find();
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-        $query->where(["deviceId"=>$id])->orderBy("faultTime desc")->limit(5);
-        return $this->render("detail",[
-            'id'=>$id,
-            "model"=>$model,
-            "perflists" => $lists,
-            "alarmProvider" =>$dataProvider
-        ]);
-    }
-    public function actionWlanDetail($id){
-        $this->layout = '//main';
-        $model = $this->findModel($id);
-        $lists = DeviceTask::getPrefList($id);
-        $query = DeviceAlarm::find();
+        $lists = WirelessDeviceTask::getPrefList($id);
+        $query = WirelessDeviceAlarm::find();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
         $query->where(["deviceId"=>$id])->orderBy("faultTime desc")->limit(5);
 
-        $links = DeviceLink::find();
+        $links = WirelessDeviceLink::find();
         $links->where(["or",["leftDevice"=>$id],["rightDevice"=>$id]]);
         $linkProvider = new ActiveDataProvider([
             'query'=>$links
@@ -185,7 +180,7 @@ class DeviceController extends Controller
      */
     public function actionPerf($id){
         $this->layout = false;
-        $lists = DeviceTask::getPrefList($id);
+        $lists = WirelessDeviceTask::getPrefList($id);
         return $this->render('perf', [
             'data' => $lists,
             "devId" => $id
@@ -195,23 +190,7 @@ class DeviceController extends Controller
     public function actionAjaxDeviceTip(){
         $this->layout = false;
         $id = Yii::$app->request->get("id");
-        $device = DeviceInfo::find()->with(["type","model"])->where(["id"=>$id])->one();
+        $device = WirelessDeviceInfo::find()->with(["type","model"])->where(["id"=>$id])->one();
         return $this->render("tip",["model"=>$device]);
-    }
-
-    /**
-     * Finds the DeviceInfo model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return DeviceInfo the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id,$type = 2)
-    {
-        if (($model = DeviceInfo::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace app\system\controllers;
 
+use app\models\WirelessDeviceInfo;
 use yii\base\Exception;
 use yii\helpers\Json;
 use app\models\DeviceInfo;
@@ -76,7 +77,7 @@ class TemplateController extends \yii\web\Controller
      * 无线网络
      */
     public function actionWireless(){
-        $lists = DeviceInfo::getDeviceList(ViewTemplate::TYPE_WIFI);
+        $lists = WirelessDeviceInfo::getDeviceList();
         $selected = ViewTemplate::getTempateSet(ViewTemplate::TYPE_WIFI);
 
         return $this->render('editWireless',[

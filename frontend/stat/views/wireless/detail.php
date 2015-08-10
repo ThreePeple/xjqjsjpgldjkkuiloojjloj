@@ -12,7 +12,7 @@ $this->registerCssFile("/css/h_collapse.css",["depends"=>'frontend\assets\AppAss
 $js = <<<JS
         $("#refresh_perf").on("click",function(){
             $.ajax({
-                url:'/stat/wireless/perf?id={$model->id}',
+                url:'/stat/device/perf?id={$model->id}',
                 type:'GET',
                 dataType:'html',
                 success:function(_html){
@@ -33,9 +33,9 @@ $this->title = "设备详情";
 ?>
 <div class="item_box box10" style="margin-top: 50px;">
     <div class="item_box_wp">
-        <div class="voice_2 voice_3">
+        <div class="voice_2">
             <ul>
-                <li class="li1" id="li1" style="width: 780px;">
+                <li class="li1" id="li1" style="width: 880px;">
                     <div class="fold" style="display: none;">
                         <span class="img"></span>
                         <span class="txt">设备详细信息</span>
@@ -76,17 +76,6 @@ $this->title = "设备详情";
                     </div>
                     <div class="unfold" style="display: none;">
                         <?=$this->render("interface",["id"=>$id])?>
-                    </div>
-                </li>
-                <li class="li5" style="width: 100px;">
-                    <div class="fold" style="display: block;">
-                        <span class="img"></span>
-                        <span class="txt">设备链路信息</span>
-                    </div>
-                    <div class="unfold" style="display: none;">
-                        <?=$this->render("link",[
-                            "dataProvider"=>$links
-                        ])?>
                     </div>
                 </li>
     <?php /*            
