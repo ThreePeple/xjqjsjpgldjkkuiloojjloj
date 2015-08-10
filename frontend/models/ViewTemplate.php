@@ -58,37 +58,78 @@ class ViewTemplate extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * 有线网络设备
+     * @return \yii\db\ActiveQuery
+     */
     public function getDevice(){
         return $this->hasOne(DeviceInfo::className(),["id"=>"device_id"]);
     }
 
-    public static function getTempateSet($type){
-        $rows = self::find()->with([
-            "device"=>function($query){
-                $query->select("id,label,status");
-            }
-        ])->where(["type"=>$type])->asArray()->all();
+    /**
+     * 无线网络设备
+     * @return \yii\db\ActiveQuery
+     */
+    public function getWireless(){
+        return $this->hasOne(WirelessDeviceInfo::className(),["id"=>"device_id"]);
+    }
 
-        $data = new \stdClass();
-        foreach($rows as $row){
-            if(!$row["device"])
-                continue;
-            $d = array_merge($row["device"],["areaId"=>$row["areaId"]]);
-            $data->{$row["id"]} = [
-                "data" => $d,
-                "attributes" => json_decode($row["attributes"]),
-                "links" => json_decode($row["links"])
-            ];
+    public static function getTempateSet($type){
+        if($type == 3){
+            //无线设备
+            $rows = self::find()->with([
+                "wireless"=>function($query){
+                    $query->select("id,label,status");
+                }
+            ])->where(["type"=>$type])->asArray()->all();
+            $data = new \stdClass();
+            foreach($rows as $row){
+                if(!$row["wireless"])
+                    continue;
+                $d = array_merge($row["wireless"],["areaId"=>$row["areaId"]]);
+                $data->{$row["id"]} = [
+                    "data" => $d,
+                    "attributes" => json_decode($row["attributes"]),
+                    "links" => json_decode($row["links"])
+                ];
+            }
+        }else{
+            $rows = self::find()->with([
+                "device"=>function($query){
+                    $query->select("id,label,status");
+                }
+            ])->where(["type"=>$type])->asArray()->all();
+            $data = new \stdClass();
+            foreach($rows as $row){
+                if(!$row["device"])
+                    continue;
+                $d = array_merge($row["device"],["areaId"=>$row["areaId"]]);
+                $data->{$row["id"]} = [
+                    "data" => $d,
+                    "attributes" => json_decode($row["attributes"]),
+                    "links" => json_decode($row["links"])
+                ];
+            }
         }
+
+
+
         return $data;
     }
+
+
 
     /**
      * 获取区域内设备
      */
     public static function getAreaDeviceData($area,$type=2){
         $deviceIds = self::find()->where(["type"=>$type,"areaId"=>$area])->select("device_id")->asArray()->column();
-        $rows = DeviceInfo::find()->with(["category"])->where(["id"=>$deviceIds])->select("id,label,categoryId")->asArray()->all();
+        if($type == 3){
+            //无线设备
+            $rows = WirelessDeviceInfo::find()->with(["category"])->where(["id"=>$deviceIds])->select("id,label,categoryId")->asArray()->all();
+        }else{
+            $rows = DeviceInfo::find()->with(["category"])->where(["id"=>$deviceIds])->select("id,label,categoryId")->asArray()->all();
+        }
         $result = [];
         foreach($rows as $row){
             $result[] = [
@@ -100,8 +141,13 @@ class ViewTemplate extends \yii\db\ActiveRecord
         return $result;
     }
 
-    public static function getLinks($ids){
-        $rows = DeviceLink::find()->where(["leftDevice"=>$ids,"rightDevice"=>$ids])
+    public static function getLinks($ids,$type=2){
+        if($type==3){
+            $query = WirelessDeviceLink::find();
+        }else{
+            $query = DeviceLink::find();
+        }
+        $rows = $query->where(["leftDevice"=>$ids,"rightDevice"=>$ids])
             ->select(["id","status","from"=>"leftDevice","to"=>"rightDevice"])
             ->asArray()
             ->all();
