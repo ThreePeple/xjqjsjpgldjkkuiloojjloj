@@ -82,6 +82,11 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
             "ry": 24,
             "imgSrc": "/images/icons2/wireless.gif"
         },
+        "voice":{
+            "rx": 25,
+            "ry": 25,
+            "imgSrc": "/images/icons2/voice.png"
+        },
         "printer": {
             "rx": 40,
             "ry": 41,
@@ -133,6 +138,7 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
             <option value="firewall">安全设备</option>            
             <option value="db">存储设备</option>          
             <option value="wireless">无线设备</option>  
+            <option value="voice">语音设备</option>     
             <option value="printer">打印机</option>  
             <option value="ups">UPS</option>  
             <option value="pc">PC</option>  
