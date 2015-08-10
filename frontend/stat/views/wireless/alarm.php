@@ -6,11 +6,9 @@
  * CreateTime: 15-7-29.下午7:30
  * Description:
  */
-use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use app\models\DeviceInfo;
-
+use kartik\grid\GridView;
 ?>
 
 <div class="device-info-view">
@@ -19,6 +17,7 @@ use app\models\DeviceInfo;
         <?=
         GridView::widget([
             "dataProvider"=>$dataProvider,
+            'pjax' => true,
             "columns" => [
                 "id",
                 "alarmLevelDesc",
@@ -26,7 +25,7 @@ use app\models\DeviceInfo;
                 "faultTimeDesc",
                 "recTimeDesc"
             ],
-            //"export"=>false
+            "export"=>false
         ]);
         ?>
 </div>

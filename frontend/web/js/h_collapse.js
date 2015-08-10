@@ -1,7 +1,7 @@
 $(function() {
     $(".voice_2 ul li").click(function() {
         var li_index = $(this).index();
-        var li_count = $(".voice_2 li").length;
+        var li_count = $(".voice_2>ul>li").length;
         var width = $(".voice_2").width() - 100*(li_count-1);
         $(this).animate({
                 width: width
