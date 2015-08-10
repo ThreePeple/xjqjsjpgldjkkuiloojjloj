@@ -3,12 +3,6 @@ body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input
     margin:0px;
     padding:0px;
 }
-body {
-    font-size:12px;
-    line-height:1.5;
-    font-family:微软雅黑;
-    background:#fff;
-}
 
 li {
     list-style:none;
