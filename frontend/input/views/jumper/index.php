@@ -14,11 +14,20 @@ $js=<<<JS
 $('#upload-file').uploadifive({
 				'auto'             : true,
 				'uploadScript'     : '$uploadUrl',
+				"buttonClass" : 'btn btn-primary',
+				'buttonText': '导入数据',
+				'height' : '34',
 				'onUploadComplete' : function(file, data) {
 				    window.location.reload()
 				}
 			});
 JS;
+$css = <<<CSS
+ .btn{
+    padding:0;
+}
+CSS;
+$this->registerCss($css);
 $this->registerJs($js);
 ?>
 
