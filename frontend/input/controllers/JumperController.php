@@ -10,6 +10,7 @@ use yii\web\UploadedFile;
 
 class JumperController extends \yii\web\Controller
 {
+    public $enableCsrfValidation = false;
     public function actionIndex()
     {
         $query = JumperInfo::find();
@@ -25,15 +26,15 @@ class JumperController extends \yii\web\Controller
     }
 
     public function actionImport(){
+
         set_time_limit(0);
         ini_set("memory_limit",'512M');
 
-        $uploadfile = UploadedFile::getInstanceByName('file');
-        if(!$uploadfile || $uploadfile->hasError()){
+        $uploadfile = UploadedFile::getInstanceByName('Filedata');
+        if(!$uploadfile || $uploadfile->getHasError()){
             return '文件上传失败';
 
         }
-
 
         $data = $this->getExcelData($uploadfile->tempName);
         //$data = $this->getExcelData('/Users/jsj/workspace/cnpc/test.xls');
@@ -56,7 +57,7 @@ class JumperController extends \yii\web\Controller
             $trans->rollBack();
             throw $e;
         }
-
+        return '操作成功';
     }
 
     private function getExcelData($file){
