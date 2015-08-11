@@ -27,7 +27,7 @@ $('#upload-file').uploadifive({
 			});
 JS;
 $css = <<<CSS
- .btn{
+ #uploadifive-upload-file.btn{
     padding:0;
 }
 CSS;
