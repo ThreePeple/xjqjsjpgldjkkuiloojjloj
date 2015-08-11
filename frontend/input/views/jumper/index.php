@@ -18,7 +18,11 @@ $('#upload-file').uploadifive({
 				'buttonText': '导入数据',
 				'height' : '34',
 				'onUploadComplete' : function(file, data) {
-				    window.location.reload()
+                    if(data==1){
+                        window.location.reload()
+                    }else{
+                        alert("文件导入失败！")
+                    }
 				}
 			});
 JS;

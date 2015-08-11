@@ -33,7 +33,7 @@ class JumperController extends \yii\web\Controller
 
         $uploadfile = UploadedFile::getInstanceByName('Filedata');
         if(!$uploadfile || $uploadfile->getHasError()){
-            return '文件上传失败';
+            return 0;
 
         }
 
@@ -58,7 +58,7 @@ class JumperController extends \yii\web\Controller
             $trans->rollBack();
             throw $e;
         }
-        return '操作成功';
+        return 1;
     }
 
     private function getExcelData($file){
