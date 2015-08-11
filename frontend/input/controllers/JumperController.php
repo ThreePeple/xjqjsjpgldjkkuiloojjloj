@@ -6,6 +6,7 @@ use app\models\JumperInfo;
 use yii\base\ErrorException;
 use yii\base\Exception;
 use yii\data\ActiveDataProvider;
+use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
 class JumperController extends \yii\web\Controller
@@ -100,5 +101,26 @@ class JumperController extends \yii\web\Controller
         return $data;
     }
 
+    public function actionDelete($id){
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the DeviceInfo model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return DeviceInfo the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id,$type = 2)
+    {
+        if (($model = JumperInfo::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
 }
 

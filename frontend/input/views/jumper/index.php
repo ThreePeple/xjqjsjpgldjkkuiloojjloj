@@ -15,7 +15,7 @@ $('#upload-file').uploadifive({
 				'auto'             : true,
 				'uploadScript'     : '$uploadUrl',
 				'onUploadComplete' : function(file, data) {
-				    console.log(data);
+				    window.location.reload()
 				}
 			});
 JS;
@@ -33,10 +33,17 @@ $this->registerJs($js);
                 "wire_frame",
                 "wire_position",
                 "point",
-                "insert_no"
+                "insert_no",
+                [
+                    'label' => '',
+                    "value" => function($model){
+                        return Html::a('删除',\yii\helpers\Url::toRoute(['/input/jumper/delete',"id"=>$model->id]),['class'=>'btn btn-link']);
+                    },
+                    "format" => "raw"
+                ]
             ],
             'panel' => [
-                'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-globe"></i> 用户列表</h3>',
+                'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-globe"></i> 跳线管理</h3>',
                 'type'=>'default',
                 'before'=>Html::input("file","upload-file",'',['id'=>"upload-file",'class'=>"btn btn-primary"]),
             ],

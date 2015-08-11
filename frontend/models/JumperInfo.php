@@ -44,12 +44,12 @@ class JumperInfo extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'ip' => 'Ip',
-            'port' => 'Port',
-            'wire_frame' => 'Wire Frame',
-            'wire_position' => 'Wire Position',
-            'point' => 'Point',
-            'insert_no' => 'Insert No',
+            'ip' => '交换机IP',
+            'port' => '端口号',
+            'wire_frame' => '线架号',
+            'wire_position' => '线架位置',
+            'point' => '点位号',
+            'insert_no' => '插口号',
         ];
     }
 }
