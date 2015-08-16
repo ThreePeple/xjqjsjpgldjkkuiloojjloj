@@ -327,4 +327,13 @@ return array (
       '@daixianceng/smser' => $vendorDir . '/daixianceng/yii2-smser',
     ),
   ),
+  'kartik-v/yii2-editable' => 
+  array (
+    'name' => 'kartik-v/yii2-editable',
+    'version' => '9999999-dev',
+    'alias' => 
+    array (
+      '@kartik/editable' => $vendorDir . '/kartik-v/yii2-editable',
+    ),
+  ),
 );

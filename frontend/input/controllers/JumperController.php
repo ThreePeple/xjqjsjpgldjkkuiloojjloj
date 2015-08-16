@@ -3,27 +3,52 @@
 namespace app\input\controllers;
 
 use app\models\JumperInfo;
+use app\models\JumperInfoSearch;
 use yii\base\ErrorException;
 use yii\base\Exception;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
+use Yii;
 
 class JumperController extends \yii\web\Controller
 {
     public $enableCsrfValidation = false;
     public function actionIndex()
     {
-        $query = JumperInfo::find();
+        $searchModel = new JumperInfoSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        /*$query = JumperInfo::find();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
                 "pageSize"  => 10
             ]
-        ]);
+        ]);*/
         return $this->render("index",[
             'dataProvider'=>$dataProvider,
+            'model' => $searchModel
         ]);
+    }
+
+    /**
+     * Updates an existing JumperInfo model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
     }
 
     public function actionImport(){
@@ -107,14 +132,20 @@ class JumperController extends \yii\web\Controller
         return $this->redirect(['index']);
     }
 
+    public function actionDeleteBatch(){
+        $ids = Yii::$app->request->post("ids");
+        $result = JumperInfo::deleteAll(["id"=>$ids]);
+        return json_encode(["status"=>$result]);
+    }
+
     /**
-     * Finds the DeviceInfo model based on its primary key value.
+     * Finds the JumperInfo model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return DeviceInfo the loaded model
+     * @return JumperInfo the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id,$type = 2)
+    protected function findModel($id)
     {
         if (($model = JumperInfo::findOne($id)) !== null) {
             return $model;
