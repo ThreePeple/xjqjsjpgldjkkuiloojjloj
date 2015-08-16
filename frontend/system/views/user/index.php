@@ -21,7 +21,7 @@ use yii\helpers\Html;
             'panel' => [
                 'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-globe"></i> 用户列表</h3>',
                 'type'=>'default',
-                'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> 创建用户', ['create'], ['class' => 'btn btn-info']),
+                'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> 创建用户', ['create'], ['class' => 'btn btn-primary']),
             ],
             "export"=>false,
         ]);
