@@ -19,7 +19,7 @@ class JumperInfoSearch extends JumperInfo
     {
         return [
             [['id'], 'integer'],
-            [['ip', 'port', 'wire_frame', 'wire_position', 'point', 'insert_no'], 'safe'],
+            [['ip', 'port', 'wire_frame', 'wire_position', 'point', 'insert_no','tag'], 'safe'],
         ];
     }
 
@@ -67,7 +67,8 @@ class JumperInfoSearch extends JumperInfo
             ->andFilterWhere(['like', 'wire_frame', $this->wire_frame])
             ->andFilterWhere(['like', 'wire_position', $this->wire_position])
             ->andFilterWhere(['like', 'point', $this->point])
-            ->andFilterWhere(['like', 'insert_no', $this->insert_no]);
+            ->andFilterWhere(['like', 'insert_no', $this->insert_no])
+            ->andFilterWhere(['like', 'tag', $this->tag]);
 
         return $dataProvider;
     }

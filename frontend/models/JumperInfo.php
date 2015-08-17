@@ -32,7 +32,7 @@ class JumperInfo extends \yii\db\ActiveRecord
     {
         return [
             [['ip'], 'string', 'max' => 64],
-            [['port', 'wire_frame', 'wire_position', 'point', 'insert_no'], 'string', 'max' => 128],
+            [['port', 'wire_frame', 'wire_position', 'point', 'insert_no','tag'], 'string', 'max' => 128],
             [['ip', 'port'], 'unique', 'targetAttribute' => ['ip', 'port'], 'message' => 'The combination of Ip and Port has already been taken.']
         ];
     }
@@ -45,11 +45,12 @@ class JumperInfo extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'ip' => '交换机IP',
-            'port' => '端口号',
+            'port' => '设备端口',
             'wire_frame' => '线架号',
             'wire_position' => '线架位置',
-            'point' => '点位号',
-            'insert_no' => '插口号',
+            'point' => '线架端口',
+            'tag' => '点位标签',
+            'insert_no' => '点位号'
         ];
     }
 }

@@ -8,6 +8,7 @@ use yii\base\ErrorException;
 use yii\base\Exception;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 use yii\web\UploadedFile;
 use Yii;
 
@@ -16,16 +17,32 @@ class JumperController extends \yii\web\Controller
     public $enableCsrfValidation = false;
     public function actionIndex()
     {
+        if(isset($_POST['hasEditable'])){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $id = Yii::$app->request->post("editableKey");
+            $index = Yii::$app->request->post("editableIndex");
+            $data = Yii::$app->request->post('JumperInfo');
+            $model = $this->findModel($id);
+
+            if(isset($data["insert_no"])){
+                $data[$index]["tag"] = $this->getTagByIP($model->ip,$data["insert_no"]);
+                $data[$index]["insert_no"] = $data["insert_no"];
+            }
+            $data = $data[$index];
+
+            if(isset($data["ip"])){
+                $data['tag'] = $this->getTagByIP($data["ip"],$model->insert_no);
+            }
+            if($model->load($data,'') && $model->save()){
+
+                return ["output"=>null ,"message"=>''];
+            }else{
+                return ['output' => '', "message" => ''];
+            }
+        }
         $searchModel = new JumperInfoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        /*$query = JumperInfo::find();
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                "pageSize"  => 10
-            ]
-        ]);*/
         return $this->render("index",[
             'dataProvider'=>$dataProvider,
             'model' => $searchModel
@@ -122,8 +139,26 @@ class JumperController extends \yii\web\Controller
             $data[$i]["wire_position"] = $item[3];
             $data[$i]["point"] = $item[4];
             $data[$i]["insert_no"] = $item[5];
+            $data[$i]["tag"] = $this->getTagByIP($item[0],$item[5]);
         }
         return $data;
+    }
+
+    /**
+     * 根据IP 获取点位标签
+     */
+    private function getTagByIP($ip,$no){
+        $tmp = explode('.',$ip);
+        if(count($tmp) != 4){
+            return '';
+        }
+        $area = substr($tmp[2],-1);
+        $floor = (int)substr($tmp[3],0,-1);
+        if($floor>12){
+            $floor += 2;
+        }
+        $area = chr(ord('A')+ $area-1);
+        return implode('-',[$area,$floor,$no]);
     }
 
     public function actionDelete($id){

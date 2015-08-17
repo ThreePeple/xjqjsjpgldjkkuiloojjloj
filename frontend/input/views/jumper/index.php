@@ -66,22 +66,54 @@ $this->registerJs($js);
             "dataProvider"=>$dataProvider,
             'filterModel' => $model,
             "id" => "jumper-list",
+
             //'pjax' => true,
             "columns" => [
                 [
-                    //'class'=>'kartik\grid\EditableColumn',
-                    'attribute' => "ip"
+                    'class'=>'kartik\grid\EditableColumn',
+                    'attribute' => "ip",
+                    "editableOptions"=>[
+                        "pluginEvents" => [
+                            "editableSuccess" => "function(event,val,form,data){window.location.reload();}"
+                        ]
+                    ]
                 ],
-                "port",
-                "wire_frame",
-                "wire_position",
-                "point",
-                "insert_no",
+                [
+                    'class'=>'kartik\grid\EditableColumn',
+                    'attribute' => 'port',
+                ],
+                [
+                    'class'=>'kartik\grid\EditableColumn',
+                    'attribute' => "wire_frame",
+                ],
+                [
+                    'class'=>'kartik\grid\EditableColumn',
+                    'attribute' => 'wire_position',
+                ],
+                [
+                    'class'=>'kartik\grid\EditableColumn',
+                    'attribute' => 'point',
+                ],
+                //'insert_no',
+                [
+                    'class'=>'kartik\grid\EditableColumn',
+                    'attribute' => 'tag',
+                    'editableOptions' => [
+                        "inputType" => \kartik\editable\Editable::INPUT_HIDDEN,
+                        //"beforeInput" => Html::label('点位标签'),
+                        //"inputContainerOptions" => ["disabled"=>"disabled"],
+                        "afterInput" => function($form,$widget){
+                            echo $form->field($widget->model,'insert_no');
+                        },
+                        "pluginEvents" => [
+                            "editableSuccess" => "function(event,val,form,data){window.location.reload();}"
+                        ]
+                    ]
+                ],
                 [
                     'label' => '',
                     "value" => function($model){
-                        return Html::a('编辑',\yii\helpers\Url::toRoute(['/input/jumper/update',"id"=>$model->id]),['class'=>'btn btn-link'])
-                            .Html::a('删除',\yii\helpers\Url::toRoute(['/input/jumper/delete',"id"=>$model->id]),['class'=>'btn btn-link']);
+                        return Html::a('删除',\yii\helpers\Url::toRoute(['/input/jumper/delete',"id"=>$model->id]),['class'=>'btn btn-link']);
                     },
                     "format" => "raw",
                     'headerOptions' => [
