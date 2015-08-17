@@ -58,6 +58,9 @@ $css = <<<CSS
     margin-right: 10px;
     color: #fff;
 }
+.ZSYFCEditor image{
+    opacity: 0.5
+}
 CSS;
 $this->registerCss($css);
 ?>
