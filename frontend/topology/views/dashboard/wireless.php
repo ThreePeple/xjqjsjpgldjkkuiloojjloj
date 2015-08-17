@@ -22,10 +22,10 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 
 ?>
 <style>
-	.wire-network{
+	.wireless-network{
 		position: relative;
 	}
-	.wire-network a{
+	.wireless-network a{ 
 		-webkit-transform: rotate(62deg) translate(129px, -159px); 
 		position: absolute;
 		left: 0;
@@ -35,31 +35,33 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 		z-index: 2;
 	}
 
-	.wire-network a[data-area-id="a"]{
-		-webkit-transform: translate(103px, 137px);
+	.wireless-network a[data-area-id="a"]{
+		-webkit-transform: translate(158px, 194px)rotate(26deg);
 	}
 
-	.wire-network a[data-area-id="b"]{
-		  -webkit-transform: translate(1036px, 175px);
+	.wireless-network a[data-area-id="b"]{
+		  -webkit-transform: translate(2px, 480px)rotate(25deg);
 	}
 
-	.wire-network a[data-area-id="c"]{
-	  -webkit-transform: translate(1180px, 270px);
+	.wireless-network a[data-area-id="c"]{
+	  -webkit-transform: translate(152px, 577px)rotate(25deg);
 	  width: 186px;
 	}
 
-	.wire-network a[data-area-id="d"]{
-	  -webkit-transform: translate(1247px, 572px);
+	.wireless-network a[data-area-id="d"]{
+	  -webkit-transform: translate(368px, 679px)rotate(25deg);
 	  width: 200px;
 	}
 
-	.wire-network a[data-area-id="e"]{
-		  -webkit-transform: translate(1226px, 866px);
+	.wireless-network a[data-area-id="e"]{
+		  -webkit-transform:translate(598px, 774px)rotate(0deg);
 	}
 
-	.wire-network a[data-area-id="f"]{
-  -webkit-transform: translate(125px, 661px);
+	.wireless-network a[data-area-id="f"]{
+  -webkit-transform: translate(1000px, 211px)rotate(27deg);
 	}
+
+
 	.buidling-editor-container text.title{
 		display: none;
 	}
@@ -89,7 +91,7 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
     </ul>
 </script>
 <div class="row">
-    <div class=" wireless-editor-container" id="wireNetworkHolder">
+    <div class="wireless-network wireless-editor-container" id="wireNetworkHolder">
     	<a data-area-id="a" title="A区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>1])?>"></a>
     	<a data-area-id="b" title="B区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>4])?>"></a>
     	<a data-area-id="c" title="C区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>5])?>"></a>
