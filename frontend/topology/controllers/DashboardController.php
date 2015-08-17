@@ -106,6 +106,12 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function actionAjaxLinkDetail(){
+        $id = Yii::$app->request->get("id");
+        $type = Yii::$app->request->get("type");
+        return 'tobe done';
+    }
+
     public function actionTest(){
         $data = ViewTemplate::getAreaDeviceData(1,1);
         var_dump($data);

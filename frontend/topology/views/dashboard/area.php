@@ -7,6 +7,12 @@
  */
 $this->registerJsFile('/js/vis/dist/vis.min.js',['depends'=>'frontend\assets\AppAsset']);
 $this->registerCssFile('/js/vis/dist/vis.min.css');
+
+$this->registerCssFile('/css/popuppanel.css');
+$this->registerJsFile('/js/popuppanel.js',['depends'=>'frontend\assets\AppAsset']);
+$this->registerJsFile('/js/area.js',['depends'=>'frontend\assets\AppAsset']);
+
+
 $js = <<<JS
         var container = document.getElementById("area-network");
         var options = {
@@ -77,11 +83,16 @@ $js = <<<JS
         };
         var network = new vis.Network(container, data, options);
         network.on("click", function (params) {
+            //console.log(JSON.stringify(params, null, 4));return;
             var device_id = params["nodes"][0];
-            if(!device_id) return;
-            //console.log(JSON.stringify(params, null, 4));
-            window.location.href = '/stat/device/wlan-detail?id='+device_id;
+            var edgeId = params["edges"][0];
+            if(edgeId){
+                showLinkDetail('/topology/dashboard/ajax-link-detail',params,3)
+            }else if(device_id){
+                window.location.href = '/stat/device/wlan-detail?id='+device_id;
+            }
         });
+
         function getNodes(){
             var params = {};
             params["area"] = $area;

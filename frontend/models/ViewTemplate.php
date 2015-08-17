@@ -5,6 +5,8 @@ namespace app\models;
 use Yii;
 use app\models\DeviceInfo;
 use app\models\DeviceLink;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 
 /**
  * This is the model class for table "view_template".
@@ -123,7 +125,9 @@ class ViewTemplate extends \yii\db\ActiveRecord
      * 获取区域内设备
      */
     public static function getAreaDeviceData($area,$type=2){
-        $deviceIds = self::find()->where(["type"=>$type,"areaId"=>$area])->select("device_id")->asArray()->column();
+        $template = self::find()->where(["type"=>$type,"areaId"=>$area])->select("device_id,attributes")->asArray()->all();
+        $data = ArrayHelper::map($template,'device_id',"attributes");
+        $deviceIds = array_keys($data);
         if($type == 3){
             //无线设备
             $rows = WirelessDeviceInfo::find()->with(["category"])->where(["id"=>$deviceIds])->select("id,label,categoryId")->asArray()->all();
@@ -132,13 +136,24 @@ class ViewTemplate extends \yii\db\ActiveRecord
         }
         $result = [];
         foreach($rows as $row){
+            //$pos = self::getPosition($data[$row["id"]]);
             $result[] = [
                 "id" => $row["id"],
                 "label" => $row["label"],
                 "group" => isset($row["category"])?$row["category"]["node_group"]:'',
+               // 'x' => $pos["x"],
+               // 'y' => $pos["y"]
             ];
         }
         return $result;
+    }
+
+    private static function getPosition($data){
+        $data = json_decode($data,true);
+        return [
+            "x" => $data["cx"]-700,
+            "y" => $data["cy"]-400
+        ];
     }
 
     public static function getLinks($ids,$type=2){
