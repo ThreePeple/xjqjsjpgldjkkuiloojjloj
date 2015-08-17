@@ -55,52 +55,52 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
         "router": {
             "rx": 19,
             "ry": 19,
-            "imgSrc": "/images/icons2/router.png" 
+            "imgSrc": "/images/icons3/router.png" 
         },
         "switch": {
             "rx": 42.5,
             "ry": 32.5,
-            "imgSrc": "/images/icons2/mainSwitch.png"
+            "imgSrc": "/images/icons3/mainSwitch.png"
         },
         "server": {
             "rx": 17,
             "ry": 25,
-            "imgSrc": "/images/icons2/server.png"
+            "imgSrc": "/images/icons3/server.png"
         },
         "firewall": {
             "rx": 19,
             "ry": 18,
-            "imgSrc": "/images/icons2/firewall.png"
+            "imgSrc": "/images/icons3/firewall.png"
         },
         "db": {
             "rx": 35,
             "ry": 42,
-            "imgSrc": "/images/icons2/db.png"
+            "imgSrc": "/images/icons3/db.png"
         },
         "wireless": {
             "rx": 25,
             "ry": 24,
-            "imgSrc": "/images/icons2/wireless.gif"
+            "imgSrc": "/images/icons3/wireless.gif"
         },
         "voice":{
             "rx": 25,
             "ry": 25,
-            "imgSrc": "/images/icons2/voice.png"
+            "imgSrc": "/images/icons3/voice.png"
         },
         "printer": {
             "rx": 40,
             "ry": 41,
-            "imgSrc": "/images/icons2/printer.png"
+            "imgSrc": "/images/icons3/printer.png"
         },
         "ups": {
             "rx": 40,
             "ry": 41.5,
-            "imgSrc": "/images/icons2/ups.png"
+            "imgSrc": "/images/icons3/ups.png"
         },
         "pc": {
             "rx": 38,
             "ry": 38.5,
-            "imgSrc": "/images/icons2/pc.png"
+            "imgSrc": "/images/icons3/pc.png"
         }
     }
 
