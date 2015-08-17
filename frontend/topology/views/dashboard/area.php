@@ -12,6 +12,11 @@ $this->registerCssFile('/css/popuppanel.css');
 $this->registerJsFile('/js/popuppanel.js',['depends'=>'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/area.js',['depends'=>'frontend\assets\AppAsset']);
 
+if($type == \app\models\ViewTemplate::TYPE_WLAN){
+    $detailUrl = '/stat/device/wlan-detail?id=';
+}else{
+    $detailUrl = '/stat/wireless/detail?id=';
+}
 
 $js = <<<JS
         var container = document.getElementById("area-network");
@@ -86,16 +91,18 @@ $js = <<<JS
             //console.log(JSON.stringify(params, null, 4));return;
             var device_id = params["nodes"][0];
             var edgeId = params["edges"][0];
-            if(edgeId){
+
+            if(device_id){
+                window.location.href = '$detailUrl'+device_id;
+            }else if(edgeId){
                 showLinkDetail('/topology/dashboard/ajax-link-detail',params,3)
-            }else if(device_id){
-                window.location.href = '/stat/device/wlan-detail?id='+device_id;
             }
         });
 
         function getNodes(){
             var params = {};
             params["area"] = $area;
+            params["type"] = $type;
             //network.setData();
             $.ajax({
                 url:'/topology/dashboard/ajax-get-nodes',

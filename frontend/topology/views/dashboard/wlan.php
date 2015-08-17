@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Url;
+use app\models\ViewTemplate;
 
 $this->registerCssFile('/css/popuppanel.css'); 
 $this->registerCssFile('/css/style.css');
@@ -91,12 +92,12 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 <div class="row">
     <h4 style="color:white">有线网络拓扑</h4>
     <div class="wire-network wlan-editor-container" id="wireNetworkHolder">
-    	<a data-area-id="a" title="A区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>1])?>"></a>
-    	<a data-area-id="b" title="B区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>4])?>"></a>
-    	<a data-area-id="c" title="C区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>5])?>"></a>
-    	<a data-area-id="d" title="D区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>6])?>"></a>
-    	<a data-area-id="e" title="E区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>3])?>"></a>
-    	<a data-area-id="f" title="F区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>2])?>"></a>
+    	<a data-area-id="a" title="A区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>1,'type'=>ViewTemplate::TYPE_WLAN])?>"></a>
+    	<a data-area-id="b" title="B区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>4,'type'=>ViewTemplate::TYPE_WLAN])?>"></a>
+    	<a data-area-id="c" title="C区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>5,'type'=>ViewTemplate::TYPE_WLAN])?>"></a>
+    	<a data-area-id="d" title="D区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>6,'type'=>ViewTemplate::TYPE_WLAN])?>"></a>
+    	<a data-area-id="e" title="E区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>3,'type'=>ViewTemplate::TYPE_WLAN])?>"></a>
+    	<a data-area-id="f" title="F区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>2,'type'=>ViewTemplate::TYPE_WLAN])?>"></a>
         <svg class="ZSYFCEditor" oncontextmenu="return false;" >
             <defs>
                 <marker id="ZSYFCEditor_MarkerArrow" markerWidth="13" markerHeight="13" refx="9" refy="6" orient="auto">

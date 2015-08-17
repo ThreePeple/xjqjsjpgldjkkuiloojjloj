@@ -128,6 +128,7 @@ class ViewTemplate extends \yii\db\ActiveRecord
         $template = self::find()->where(["type"=>$type,"areaId"=>$area])->select("device_id,attributes")->asArray()->all();
         $data = ArrayHelper::map($template,'device_id',"attributes");
         $deviceIds = array_keys($data);
+        //var_dump($deviceIds);
         if($type == 3){
             //无线设备
             $rows = WirelessDeviceInfo::find()->with(["category"])->where(["id"=>$deviceIds])->select("id,label,categoryId")->asArray()->all();

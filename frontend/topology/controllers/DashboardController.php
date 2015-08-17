@@ -87,14 +87,13 @@ class DashboardController extends Controller
     // ["id"=>5,"from"=>1,"to"=>5,"color"=>"red"],
     ];
      */
-    public function  actionDeviceArea($area){
-        return $this->render("area",["area"=>$area]);
+    public function  actionDeviceArea($area,$type){
+        return $this->render("area",["area"=>$area,"type"=>$type]);
     }
     /**
      * 获取区域设备和链路数据
      */
     public function actionAjaxGetNodes(){
-
         $area = Yii::$app->request->post("area");
         $type = Yii::$app->request->post("type",ViewTemplate::TYPE_WLAN);
         $nodes = ViewTemplate::getAreaDeviceData($area,$type);
