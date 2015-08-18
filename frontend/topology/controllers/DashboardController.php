@@ -2,6 +2,7 @@
 
 namespace app\topology\controllers;
 
+use app\models\WirelessDeviceLink;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -98,7 +99,7 @@ class DashboardController extends Controller
         $type = Yii::$app->request->post("type",ViewTemplate::TYPE_WLAN);
         $nodes = ViewTemplate::getAreaDeviceData($area,$type);
         $ids = array_keys(ArrayHelper::map($nodes,"id","label"));
-        $edges = ViewTemplate::getLinks($ids);
+        $edges = ViewTemplate::getLinks($ids,$type);
         return Json::encode([
             "nodes" => $nodes,
             "edges" => $edges
@@ -106,9 +107,17 @@ class DashboardController extends Controller
     }
 
     public function actionAjaxLinkDetail(){
+        $this->layout = false;
         $id = Yii::$app->request->get("id");
         $type = Yii::$app->request->get("type");
-        return 'tobe done';
+        if(false && $type == 3){
+            $model = WirelessDeviceLink::findOne($id);
+        }else{
+            $model = DeviceLink::findOne($id);
+        }
+        return $this->render('link-detail',[
+            "model" => $model
+        ]);
     }
 
     public function actionTest(){
