@@ -23,9 +23,12 @@ class ViewTemplate extends \yii\db\ActiveRecord
     const TYPE_WIFI = 3;
 
     static $areas = [
-        "1" => [
-            [305,144],[588,312],[387,414],[110,233]
-        ]
+        "wlan" => [
+            [[300,200],[]],
+        ],
+        'wireless' => [
+            []
+        ],
     ];
     /**
      * @inheritdoc
