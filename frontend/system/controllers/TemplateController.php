@@ -47,7 +47,7 @@ class TemplateController extends \yii\web\Controller
                 $model->links = isset($item["links"])? json_encode($item["links"]):null;
                 $model->type = $type;
                 $model->device_id = $item["data"]["id"];
-                $model->areaId = isset($item["data"]["areaId"]) ? $item["data"]["areaId"] : null;
+                $model->areaId = $model->getAreaId($item["attributes"]["cx"],$item["attributes"]["cy"]);
                 if(!$model->save()){
                     $transaction->rollback();
                     throw new Exception("item error:".$item["data"]["label"].print_r($model->getErrors(),true));

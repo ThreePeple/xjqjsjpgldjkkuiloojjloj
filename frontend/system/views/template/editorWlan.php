@@ -129,8 +129,8 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
         <span class="btn modeSwitch polylineMode" data-mode="polyline" title="折线连线">&nbsp;</span> 
     </div>
     <div style="float: right;">
-        <label for="deviceArea">设备所在区域</label>
-        <?=Html::dropDownList("deviceArea",null,$areaList,["id"=>"deviceArea","class"=>"device-area"])?>
+        <!--<label for="deviceArea">设备所在区域</label>-->
+        <!--<?=Html::dropDownList("deviceArea",null,$areaList,["id"=>"deviceArea","class"=>"device-area"])?>-->
         <!--<select class="device-area" id="deviceArea">
             <option value="a">A区</option> 
             <option value="b">B区</option> 
@@ -309,8 +309,10 @@ $(function(){
     $('#addSwitchBtn').click( function() {
        if(filterList && selectedData_){
             console.log("Button: Add " + deviceType + ".");
+           /*
             var area = $("#deviceArea").val();
             selectedData_["data"]["areaId"] = area;
+            */
             ZSYFCEditor.addShape(deviceType, selectedData_["data"]);
             combo.filterAndResetSelected();
             _buildList();
