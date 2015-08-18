@@ -68,4 +68,9 @@ class DeviceLink extends \yii\db\ActiveRecord
     public function getRight(){
         return $this->hasOne(DeviceInfo::className(),["id"=>"rightDevice"]);
     }
+
+
+    public function getBandFormat(){
+        return (int)($this->bandWidth/1000000).'M';
+    }
 }

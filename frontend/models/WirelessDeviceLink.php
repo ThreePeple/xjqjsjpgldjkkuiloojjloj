@@ -61,4 +61,16 @@ class WirelessDeviceLink extends \yii\db\ActiveRecord
             'update_time' => 'Update Time',
         ];
     }
+
+    public function getLeft(){
+        return $this->hasOne(DeviceInfo::className(),["id"=>"leftDevice"]);
+    }
+
+    public function getRight(){
+        return $this->hasOne(DeviceInfo::className(),["id"=>"rightDevice"]);
+    }
+
+    public function getBandFormat(){
+        return (int)($this->bandWidth/1000000).'M';
+    }
 }

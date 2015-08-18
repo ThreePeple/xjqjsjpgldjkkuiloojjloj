@@ -95,7 +95,7 @@ $js = <<<JS
             if(device_id){
                 window.location.href = '$detailUrl'+device_id;
             }else if(edgeId){
-                showLinkDetail('/topology/dashboard/ajax-link-detail',params,3)
+                showLinkDetail('/topology/dashboard/ajax-link-detail',params,$type)
             }
         });
 

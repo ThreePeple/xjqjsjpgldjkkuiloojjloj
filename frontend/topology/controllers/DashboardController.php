@@ -110,7 +110,7 @@ class DashboardController extends Controller
         $this->layout = false;
         $id = Yii::$app->request->get("id");
         $type = Yii::$app->request->get("type");
-        if(false && $type == 3){
+        if($type == 3){
             $model = WirelessDeviceLink::findOne($id);
         }else{
             $model = DeviceLink::findOne($id);
