@@ -10,7 +10,7 @@ function renderChart(core_id){
         dataType:'JSON',
         success:function(res){
             if(res.status){
-                ZSYPolymerChart.init({data: res.data});
+                ZSYPolymerChart.init({data: res.data, svgWidth:1300, svgHeight: 1000});
                 ZSYPolymerChart.render();
             }
         }

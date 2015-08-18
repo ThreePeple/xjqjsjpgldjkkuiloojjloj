@@ -11,19 +11,6 @@ $this->registerJsFile('/js/ZSYPolymerChart.js',["depends"=> 'frontend\assets\App
 $this->registerJsFile('/js/ploymer.js',["depends"=> 'frontend\assets\AppAsset']);
 
 $css = <<<CSS
-.box{
-  color: #fff;
-  position: relative;
-  border-radius: 3px;
-  /* background: #ffffff; */
-  border: 1px solid #454545;
-  margin-bottom: 20px;
-  width: 100%;
-  box-shadow: 0 1px 1px rgba(0,0,0,0.1);
-}
-.box-header{
-    color: #939393;
-}
 			html,body{
 				background-color: #252525;
 			}
@@ -113,24 +100,13 @@ $this->registerJs($js);
 
 
 ?>
-<div class="row" style="margin-top:50px;min-height: 700px">
-    <div class="col-md-3" style="margin-top:10px;">
-        <div class="box" style="background: none;">
-            <div class="box-body" id="events_type">
-                <button class="btn btm-primary">聚汇交换机1</button>
-                <button class="btn btm-primary">聚汇交换机1</button>
-                <button class="btn btm-primary">聚汇交换机1</button>
-                <button class="btn btm-primary">聚汇交换机1</button>
-            </div><!-- /.box-body -->
-        </div><!-- /.box -->
-    </div>
-    <div class="col-md-9" id="chartcontainer">
-        <svg id="ZSYPolymerChart">
-            <defs>
-                <filter id="filter_blur" x="0" y="0">
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
-                </filter>
-            </defs>
-        </svg>
-    </div>
+<div style="margin-top: 50px">
+    <svg id="ZSYPolymerChart">
+        <defs>
+            <filter id="filter_blur" x="0" y="0">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
+            </filter>
+        </defs>
+    </svg>
 </div>
+

@@ -140,7 +140,7 @@ class DashboardController extends Controller
         $this->layout= false;
         $core_id = Yii::$app->request->post("core_id");
         $data = DeviceLink::getPolymerData($core_id);
-            /*
+/*
         $data["groups"]=[
             "group1" => [
                 ["label"=>"LABEL 0","id"=>"ida0"],
