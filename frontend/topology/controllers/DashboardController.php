@@ -137,8 +137,10 @@ class DashboardController extends Controller
     }
 
     public function actionAjaxGetHub(){
-        $data = [];
-
+        $this->layout= false;
+        $core_id = Yii::$app->request->post("core_id");
+        $data = DeviceLink::getPolymerData($core_id);
+            /*
         $data["groups"]=[
             "group1" => [
                 ["label"=>"LABEL 0","id"=>"ida0"],
@@ -196,7 +198,12 @@ class DashboardController extends Controller
                 ]
             ]
         ];
-        return Json::encode($data);
+            */
+
+        return Json::encode([
+            'status'=> 1,
+            "data" => $data
+        ]);
     }
 
     /**

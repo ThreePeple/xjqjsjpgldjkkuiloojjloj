@@ -8,6 +8,7 @@
 
 $this->registerJsFile('/js/d3.min.js',["depends"=> 'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/ZSYPolymerChart.js',["depends"=> 'frontend\assets\AppAsset']);
+$this->registerJsFile('/js/ploymer.js',["depends"=> 'frontend\assets\AppAsset']);
 
 $css = <<<CSS
 .box{
@@ -106,8 +107,7 @@ var _DATA = {
 				]
 
 			};*/
-ZSYPolymerChart.init({data: $data});
-ZSYPolymerChart.render();
+renderChart(885)
 JS;
 $this->registerJs($js);
 
@@ -124,7 +124,7 @@ $this->registerJs($js);
             </div><!-- /.box-body -->
         </div><!-- /.box -->
     </div>
-    <div class="col-md-9" id="test">
+    <div class="col-md-9" id="chartcontainer">
         <svg id="ZSYPolymerChart">
             <defs>
                 <filter id="filter_blur" x="0" y="0">
