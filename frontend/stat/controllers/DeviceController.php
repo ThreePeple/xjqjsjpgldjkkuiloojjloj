@@ -3,9 +3,11 @@
 namespace app\stat\controllers;
 
 use app\models\DeviceInterface;
+use app\models\InfoConfig;
 use Yii;
 use app\models\DeviceInfo;
 use app\models\DeviceInfoSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -199,9 +201,17 @@ class DeviceController extends Controller
         $this->layout = false;
         $id = Yii::$app->request->get("id");
         $device = DeviceInfo::find()->with(["type","model"])->where(["id"=>$id])->one();
-        return $this->render("tip",["model"=>$device]);
+        $deviceConfig =ArrayHelper::map(InfoConfig::getTipConfig(1),"key","value");
+        $perfConfig = InfoConfig::getTipConfig(2);
+        return $this->render("tip",[
+            "model"=>$device,
+            "deviceConfig"=>$deviceConfig
+        ]);
     }
 
+    private function getPerfInfos($config){
+        $ids = ArrayHelper::map($config,"key","value");
+    }
     /**
      * Finds the DeviceInfo model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

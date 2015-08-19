@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "info_config".
@@ -46,5 +47,9 @@ class InfoConfig extends \yii\db\ActiveRecord
             'type_id' => Yii::t('app', 'Type ID'),
             'is_show' => Yii::t('app', 'Is Show'),
         ];
+    }
+
+    public static function getTipConfig($type){
+        return self::find()->where(["type_id"=>$type,"is_show"=>1])->select(["key","value","type_id"])->asArray()->all();
     }
 }
