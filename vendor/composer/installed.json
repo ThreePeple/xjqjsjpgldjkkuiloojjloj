@@ -2925,17 +2925,17 @@
     },
     {
         "name": "yiisoft/yii2",
-        "version": "2.0.6",
-        "version_normalized": "2.0.6.0",
+        "version": "2.0.5",
+        "version_normalized": "2.0.5.0",
         "source": {
             "type": "git",
             "url": "https://github.com/yiisoft/yii2-framework.git",
-            "reference": "f42b2eb80f61992438661b01d0d74c6738e2ff38"
+            "reference": "ea8c13b9f5cd437bd7bf73cad8a3457a155f3727"
         },
         "dist": {
             "type": "zip",
-            "url": "http://packagist.phpcomposer.com/files/yiisoft/yii2-framework/f42b2eb80f61992438661b01d0d74c6738e2ff38.zip",
-            "reference": "f42b2eb80f61992438661b01d0d74c6738e2ff38",
+            "url": "http://packagist.phpcomposer.com/files/yiisoft/yii2-framework/ea8c13b9f5cd437bd7bf73cad8a3457a155f3727.zip",
+            "reference": "ea8c13b9f5cd437bd7bf73cad8a3457a155f3727",
             "shasum": ""
         },
         "require": {
@@ -2950,7 +2950,7 @@
             "php": ">=5.4.0",
             "yiisoft/yii2-composer": "*"
         },
-        "time": "2015-08-05 22:00:30",
+        "time": "2015-07-11 02:37:59",
         "bin": [
             "yii"
         ],
@@ -3015,24 +3015,24 @@
     },
     {
         "name": "yiisoft/yii2-debug",
-        "version": "2.0.5",
-        "version_normalized": "2.0.5.0",
+        "version": "2.0.4",
+        "version_normalized": "2.0.4.0",
         "source": {
             "type": "git",
             "url": "https://github.com/yiisoft/yii2-debug.git",
-            "reference": "1b302e67521d46feb2413d9d96ca94ed82b39b0e"
+            "reference": "5c7081b2be71c61d3a50d978b31edc3e0b6f2f97"
         },
         "dist": {
             "type": "zip",
-            "url": "http://packagist.phpcomposer.com/files/yiisoft/yii2-debug/1b302e67521d46feb2413d9d96ca94ed82b39b0e.zip",
-            "reference": "1b302e67521d46feb2413d9d96ca94ed82b39b0e",
+            "url": "http://packagist.phpcomposer.com/files/yiisoft/yii2-debug/5c7081b2be71c61d3a50d978b31edc3e0b6f2f97.zip",
+            "reference": "5c7081b2be71c61d3a50d978b31edc3e0b6f2f97",
             "shasum": ""
         },
         "require": {
             "yiisoft/yii2": ">=2.0.4",
             "yiisoft/yii2-bootstrap": "*"
         },
-        "time": "2015-08-06 16:14:06",
+        "time": "2015-05-10 22:08:56",
         "type": "yii2-extension",
         "extra": {
             "branch-alias": {
@@ -3064,20 +3064,20 @@
     },
     {
         "name": "almasaeed2010/adminlte",
-        "version": "v2.3.0",
-        "version_normalized": "2.3.0.0",
+        "version": "v2.2.0",
+        "version_normalized": "2.2.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/almasaeed2010/AdminLTE.git",
-            "reference": "81aa879d3a4489213888e24975b073c7478f0447"
+            "reference": "a6c2500da3cb4a333ca436f4f78cf09dd00ca9ba"
         },
         "dist": {
             "type": "zip",
-            "url": "http://packagist.phpcomposer.com/files/almasaeed2010/AdminLTE/81aa879d3a4489213888e24975b073c7478f0447.zip",
-            "reference": "81aa879d3a4489213888e24975b073c7478f0447",
+            "url": "http://packagist.phpcomposer.com/files/almasaeed2010/AdminLTE/a6c2500da3cb4a333ca436f4f78cf09dd00ca9ba.zip",
+            "reference": "a6c2500da3cb4a333ca436f4f78cf09dd00ca9ba",
             "shasum": ""
         },
-        "time": "2015-08-17 01:49:41",
+        "time": "2015-07-08 21:18:12",
         "type": "library",
         "installation-source": "dist",
         "notification-url": "https://packagist.org/downloads/",
@@ -3106,23 +3106,23 @@
     },
     {
         "name": "kartik-v/yii2-widget-datepicker",
-        "version": "v1.3.3",
-        "version_normalized": "1.3.3.0",
+        "version": "v1.3.2",
+        "version_normalized": "1.3.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/kartik-v/yii2-widget-datepicker.git",
-            "reference": "368b181ef658c05707fe41dd16eee4d9ffd9da38"
+            "reference": "3fb31048bb70ebddf94a827aec77779835305629"
         },
         "dist": {
             "type": "zip",
-            "url": "http://packagist.phpcomposer.com/files/kartik-v/yii2-widget-datepicker/368b181ef658c05707fe41dd16eee4d9ffd9da38.zip",
-            "reference": "368b181ef658c05707fe41dd16eee4d9ffd9da38",
+            "url": "http://packagist.phpcomposer.com/files/kartik-v/yii2-widget-datepicker/3fb31048bb70ebddf94a827aec77779835305629.zip",
+            "reference": "3fb31048bb70ebddf94a827aec77779835305629",
             "shasum": ""
         },
         "require": {
-            "kartik-v/yii2-krajee-base": "~1.7"
+            "kartik-v/yii2-krajee-base": "*"
         },
-        "time": "2015-07-19 04:49:03",
+        "time": "2015-03-02 13:03:59",
         "type": "yii2-extension",
         "installation-source": "dist",
         "autoload": {
@@ -3132,7 +3132,7 @@
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
-            "BSD-3-Clause"
+            "BSD 3-Clause"
         ],
         "authors": [
             {
@@ -3157,20 +3157,20 @@
     },
     {
         "name": "kartik-v/bootstrap-fileinput",
-        "version": "v4.2.5",
-        "version_normalized": "4.2.5.0",
+        "version": "v4.2.3",
+        "version_normalized": "4.2.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/kartik-v/bootstrap-fileinput.git",
-            "reference": "e8a712d4840ba9abe7c1302808e86e55e91aab7f"
+            "reference": "1b30f372977efdb5aa1cc8b706d9e40be90ff904"
         },
         "dist": {
             "type": "zip",
-            "url": "http://packagist.phpcomposer.com/files/kartik-v/bootstrap-fileinput/e8a712d4840ba9abe7c1302808e86e55e91aab7f.zip",
-            "reference": "e8a712d4840ba9abe7c1302808e86e55e91aab7f",
+            "url": "http://packagist.phpcomposer.com/files/kartik-v/bootstrap-fileinput/1b30f372977efdb5aa1cc8b706d9e40be90ff904.zip",
+            "reference": "1b30f372977efdb5aa1cc8b706d9e40be90ff904",
             "shasum": ""
         },
-        "time": "2015-07-26 20:29:14",
+        "time": "2015-06-21 13:36:43",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -3207,20 +3207,20 @@
     },
     {
         "name": "kartik-v/dependent-dropdown",
-        "version": "v1.4.3",
-        "version_normalized": "1.4.3.0",
+        "version": "v1.4.2",
+        "version_normalized": "1.4.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/kartik-v/dependent-dropdown.git",
-            "reference": "03b086d7ec51fc773aab064d7204adbbaa807ec4"
+            "reference": "5af96f871606fc75aa8f3a3b34b01c8fe56345fd"
         },
         "dist": {
             "type": "zip",
-            "url": "http://packagist.phpcomposer.com/files/kartik-v/dependent-dropdown/03b086d7ec51fc773aab064d7204adbbaa807ec4.zip",
-            "reference": "03b086d7ec51fc773aab064d7204adbbaa807ec4",
+            "url": "http://packagist.phpcomposer.com/files/kartik-v/dependent-dropdown/5af96f871606fc75aa8f3a3b34b01c8fe56345fd.zip",
+            "reference": "5af96f871606fc75aa8f3a3b34b01c8fe56345fd",
             "shasum": ""
         },
-        "time": "2015-07-14 09:54:25",
+        "time": "2015-06-18 15:04:37",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -3247,6 +3247,56 @@
             "jquery",
             "option",
             "select"
+        ]
+    },
+    {
+        "name": "kartik-v/yii2-editable",
+        "version": "v1.7.3",
+        "version_normalized": "1.7.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/kartik-v/yii2-editable.git",
+            "reference": "bbbe10218d1539c31f1628e86ee889a27629e3f5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "http://packagist.phpcomposer.com/files/kartik-v/yii2-editable/bbbe10218d1539c31f1628e86ee889a27629e3f5.zip",
+            "reference": "bbbe10218d1539c31f1628e86ee889a27629e3f5",
+            "shasum": ""
+        },
+        "require": {
+            "kartik-v/yii2-krajee-base": "~1.7",
+            "kartik-v/yii2-popover-x": "~1.3"
+        },
+        "time": "2015-07-01 16:46:53",
+        "type": "yii2-extension",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "kartik\\editable\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Kartik Visweswaran",
+                "email": "kartikv2@gmail.com",
+                "homepage": "http://www.krajee.com/"
+            }
+        ],
+        "description": "An enhanced editable widget for Yii 2.0 that allows easy editing of displayed data with numerous configuration possibilities.",
+        "homepage": "https://github.com/kartik-v/yii2-editable",
+        "keywords": [
+            "bootstrap",
+            "editable",
+            "input",
+            "jquery",
+            "popover",
+            "popover-x",
+            "widget"
         ]
     }
 ]

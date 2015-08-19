@@ -1,14 +1,5 @@
-/*!
- * Bootstrap's Gruntfile
- * http://getbootstrap.com
- * Copyright 2013-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
-
-
+'use strict';
 module.exports = function (grunt) {
-
-  'use strict';
 
   grunt.initConfig({
     watch: {
@@ -26,7 +17,7 @@ module.exports = function (grunt) {
           compress: false
         },
         files: {
-          // compilation.css  :  source.less
+          // compilation.css  :  source.less          
           "dist/css/AdminLTE.css": "build/less/AdminLTE.less",
           //Non minified skin files
           "dist/css/skins/skin-blue.css": "build/less/skins/skin-blue.less",
@@ -47,7 +38,7 @@ module.exports = function (grunt) {
       // Production compresses version
       production: {
         options: {
-          // Whether to compress or not
+          // Whether to compress or not          
           compress: true
         },
         files: {
@@ -85,8 +76,8 @@ module.exports = function (grunt) {
     // Build the documentation files
     includes: {
       build: {
-        src: ['*.html'], // Source files
-        dest: 'documentation/', // Destination directory
+        src: ['*.html'], // Source files 
+        dest: 'documentation/', // Destination directory 
         flatten: true,
         cwd: 'documentation/build',
         options: {
@@ -95,49 +86,15 @@ module.exports = function (grunt) {
         }
       }
     },
-
-    // Optimize images
-    image: {
-      dynamic: {
-        files: [{
-          expand: true,
-          cwd: 'build/img/',
-          src: ['**/*.{png,jpg,gif,svg,jpeg}'],
-          dest: 'dist/img/'
-        }]
+    cssjanus: {
+      build: {
+        files: {
+          'dist/css/AdminLTE-rtl.css': 'dist/css/AdminLTE.css',
+          'dist/css/AdminLTE-rtl.min.css': 'dist/css/AdminLTE.min.css',
+          'bootstrap/css/bootstrap-rtl.css': 'bootstrap/css/bootstrap.css',
+          'bootstrap/css/bootstrap-rtl.min.css': 'bootstrap/css/bootstrap.min.css'
+        }
       }
-    },
-
-    // Validate JS code
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc'
-      },
-      core: {
-        src: 'dist/js/app.js'
-      },
-      demo: {
-        src: 'dist/js/demo.js'
-      },
-      pages: {
-        src: 'dist/js/pages/*.js'
-      }
-    },
-
-    csslint: {
-      options: {
-        csslintrc: 'build/less/.csslintrc'
-      },
-      dist: [
-        'dist/css/AdminLTE.css',
-      ]
-    },
-
-    // Delete images in build directory
-    // After compressing the images in the build/img dir, there is no need
-    // for them
-    clean: {
-      build: ["build/img/*"]
     }
   });
 
@@ -151,14 +108,8 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   // Include Files Within HTML
   grunt.loadNpmTasks('grunt-includes');
-  // Optimize images
-  grunt.loadNpmTasks('grunt-image');
-  // Validate JS code
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  // Delete not needed files
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  // Lint CSS
-  grunt.loadNpmTasks('grunt-contrib-csslint');
+  // Convert CSS to RTL
+  grunt.loadNpmTasks('grunt-cssjanus');
 
   // The default task (running "grunt" in console) is "watch"
   grunt.registerTask('default', ['watch']);

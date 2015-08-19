@@ -4,7 +4,7 @@
  * @copyright Copyright &copy; Kartik Visweswaran, Krajee.com, 2015
  * @package yii2-widgets
  * @subpackage yii2-widget-datepicker
- * @version 1.3.3
+ * @version 1.3.2
  */
 
 namespace kartik\date;
@@ -17,11 +17,12 @@ namespace kartik\date;
  */
 class DatePickerAsset extends \kartik\base\AssetBundle
 {
+
     public function init()
     {
         $this->setSourcePath(__DIR__ . '/assets');
         $this->setupAssets('css', ['css/bootstrap-datepicker3', 'css/datepicker-kv']);
-        $this->setupAssets('js', ['js/bootstrap-datepicker', 'js/datepicker-kv']);
+        $this->setupAssets('js', ['js/bootstrap-datepicker']);
         parent::init();
     }
 }
