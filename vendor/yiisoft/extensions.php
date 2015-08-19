@@ -330,7 +330,7 @@ return array (
   'kartik-v/yii2-editable' => 
   array (
     'name' => 'kartik-v/yii2-editable',
-    'version' => '9999999-dev',
+    'version' => '1.7.3.0',
     'alias' => 
     array (
       '@kartik/editable' => $vendorDir . '/kartik-v/yii2-editable',

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "098590b9344af566e9959a01c7aecacf",
+    "hash": "70d7874ffabcbeec59cab853f68b23b7",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -959,16 +959,16 @@
         },
         {
             "name": "kartik-v/yii2-editable",
-            "version": "dev-master",
+            "version": "v1.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-editable.git",
-                "reference": "f9ecdf622d9477d217efef8522fbd2622de2fa20"
+                "reference": "bbbe10218d1539c31f1628e86ee889a27629e3f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "http://packagist.phpcomposer.com/files/kartik-v/yii2-editable/f9ecdf622d9477d217efef8522fbd2622de2fa20.zip",
-                "reference": "f9ecdf622d9477d217efef8522fbd2622de2fa20",
+                "url": "http://packagist.phpcomposer.com/files/kartik-v/yii2-editable/bbbe10218d1539c31f1628e86ee889a27629e3f5.zip",
+                "reference": "bbbe10218d1539c31f1628e86ee889a27629e3f5",
                 "shasum": ""
             },
             "require": {
@@ -1003,7 +1003,7 @@
                 "popover-x",
                 "widget"
             ],
-            "time": "2015-08-14 21:18:03"
+            "time": "2015-07-01 16:46:53"
         },
         {
             "name": "kartik-v/yii2-grid",
@@ -3253,8 +3253,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "kartik-v/yii2-widgets": 20,
-        "kartik-v/yii2-grid": 20,
-        "kartik-v/yii2-editable": 20
+        "kartik-v/yii2-grid": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
