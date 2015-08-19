@@ -57,7 +57,7 @@ class ViewTemplate extends \yii\db\ActiveRecord
             "pc" => ["shape"=>"image","image"=>'/images/icons2/pc.png'],
             "driver" => ["shape"=>"image","image"=>'/images/icons2/driver.png'],
             "audio" => ["shape"=>"image","image"=>'/images/icons2/voice.png'],
-            "ac" => ["shape"=>"image","image"=>'/images/icons2/imc.png'],
+            "ac" => ["shape"=>"image","image"=>'/images/icons2/ac.png'],
             "core" => ["shape"=>"image","image"=>'/images/icons2/core.png'],
         ],
         "3" => [ //wireless
@@ -72,7 +72,7 @@ class ViewTemplate extends \yii\db\ActiveRecord
             "pc" => ["shape"=>"image","image"=>'/images/icons3/pc.png'],
             "driver" => ["shape"=>"image","image"=>'/images/icons3/driver.png'],
             "audio" => ["shape"=>"image","image"=>'/images/icons3/voice.png'],
-            "ac" => ["shape"=>"image","image"=>'/images/icons3/imc.png'],
+            "ac" => ["shape"=>"image","image"=>'/images/icons3/ac.png'],
             "core" => ["shape"=>"image","image"=>'/images/icons3/core.png'],
         ]
     ];
