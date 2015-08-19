@@ -202,10 +202,19 @@ class DeviceController extends Controller
         $id = Yii::$app->request->get("id");
         $device = DeviceInfo::find()->with(["type","model"])->where(["id"=>$id])->one();
         $deviceConfig =ArrayHelper::map(InfoConfig::getTipConfig(1),"key","value");
-        $perfConfig = InfoConfig::getTipConfig(2);
+        $perfConfig = ArrayHelper::map(InfoConfig::getTipConfig(2),"key","value");
+        $perfData = DeviceTask::find()->where(["taskId"=>array_values($perfConfig),"devId"=>$id])
+            ->select(["taskId","dataVal"])
+            ->orderBy("update_time desc")
+            ->groupBy("taskId")
+            ->asArray()
+            ->all();
+        $perfData = ArrayHelper::map($perfData,"taskId","dataVal");
         return $this->render("tip",[
             "model"=>$device,
-            "deviceConfig"=>$deviceConfig
+            "deviceConfig"=>$deviceConfig,
+            "perfConfig" => $perfConfig,
+            "perfData" => $perfData
         ]);
     }
 
