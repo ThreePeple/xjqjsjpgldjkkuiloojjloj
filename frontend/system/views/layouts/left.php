@@ -75,6 +75,7 @@ use yii\helpers\Url;
                     <li><a href="/system/template/wireless"><span class="fa fa-circle-o"></span> 无线网络模板</a> </li>
                 </ul>-->
             </li>
+            <li class="<?=($this->context->id == 'tip'? "active":'')?>"><a href="<?=Url::toRoute('/system/tip/index')?>"><span class="fa fa-circle-o"></span> 提示信息设置</a>
             <li class="treeview <?=($this->context->id == 'sms'? "active":'')?>">
                 <a href="#">
                     <i class="fa fa-circle-o"></i> <span>告警管理</span>
