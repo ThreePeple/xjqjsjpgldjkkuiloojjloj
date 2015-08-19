@@ -6,7 +6,6 @@
  * Time: 11:51
  */
 
-//use yii\grid\GridView;
 use yii\helpers\Html;
 use kartik\grid\GridView;
 ?>
@@ -24,7 +23,7 @@ use kartik\grid\GridView;
                     'class'=>'kartik\grid\CheckboxColumn',
                     'headerOptions'=>['class'=>'kartik-sheet-style'],
                     "checkboxOptions" => function($model,$key,$index,$column){
-                        return ["checked"=>($model->is_show?"checked":''),"value"=>$model->id];
+                        return ["checked"=>($model->is_show?"checked":'')];
                     }
                 ],
                 [
@@ -36,12 +35,5 @@ use kartik\grid\GridView;
             "layout" => "{items}",
             "export" => false,
         ])?>
-        <?=Html::button("保存设置",["class"=>"btn btn-primary save"])?>
+        <?=Html::button("保存设置",["class"=>"btn btn-primary save","type"=>$type])?>
 </div>
-<script>
-    $(".save").click(function(){
-        var container_id = "info_config_<?=$type?>";
-        var values = $("#"+container_id).yiiGridView("getSelectedRows");
-        console.log(values);
-    })
-</script>

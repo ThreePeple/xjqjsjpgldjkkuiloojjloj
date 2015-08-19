@@ -7,19 +7,34 @@ use kartik\tabs\TabsX;
 $items = [
     [
         'label'=>'<i class="glyphicon glyphicon-home"></i> 设备信息',
-        'content'=>'',
+        'content'=>$content1,
         'active'=>true,
-        'linkOptions'=>['data-url'=>Url::to(['/system/tip/ajax-get-content',"type"=>1])]
     ],
     [
         'label'=>'<i class="glyphicon glyphicon-user"></i> 性能信息',
-        'content'=>'',
-        'linkOptions'=>['data-url'=>Url::to(['/system/tip/ajax-get-content',"type"=>2])]
+        'content'=>$content2,
     ]
 ];
 
 $js =<<<JS
-    $("#w0-tab0").trigger("click");
+    $(".save").click(function(){
+        var type = $(this).attr("type");
+        var ids = $("#info_config_"+type).yiiGridView("getSelectedRows");
+        console.log(ids);
+        $.ajax({
+            url: '/system/tip/save-config',
+            type: 'POST',
+            data: {"type":type,"selected":ids},
+            dataType:"json",
+            success:function(res){
+                if(res.status){
+                    alert('操作成功')
+                }else{
+                    alert('操作失败')
+                }
+            }
+        })
+    })
 JS;
 $this->registerJs($js);
 ?>
