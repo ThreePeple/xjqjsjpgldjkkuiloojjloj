@@ -232,7 +232,8 @@ class DashboardController extends Controller
     ];
      */
     public function  actionDeviceArea($area,$type){
-        return $this->render("area",["area"=>$area,"type"=>$type]);
+        $group = ViewTemplate::$groups[$type];
+        return $this->render("area",["area"=>$area,"type"=>$type,"group"=>json_encode($group)]);
     }
     /**
      * 获取区域设备和链路数据
