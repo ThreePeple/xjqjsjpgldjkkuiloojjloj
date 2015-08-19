@@ -72,9 +72,14 @@ class DashboardController extends Controller
      */
     public function actionHubCompose(){
         $rows = DeviceInfo::find()->where(["categoryId"=>12])->select(["id","label"])->asArray()->all();
+        $first = 0;
+        if(!empty($rows)){
+            $first = $rows[0]["id"];
+        }
         $data = ArrayHelper::map($rows,"id","label");
         return $this->render('polymerchart',[
-            "cores" => $data
+            "cores" => $data,
+            "firstCore" => $first
         ]);
     }
 

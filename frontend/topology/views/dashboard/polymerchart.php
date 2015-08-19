@@ -59,38 +59,48 @@ $css = <<<CSS
 				stroke-width: 1px;
 			}
 
+.box{
+  color: #fff;
+  position: relative;
+  border-radius: 3px;
+  /* background: #ffffff; */
+  border: 1px solid #454545;
+  margin-bottom: 20px;
+  width: 100%;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+.box-header{
+    color: #939393;
+}
 CSS;
 
 $this->registerCss($css);
 
-
-
+$js = <<<JS
+    renderChart($firstCore)
+JS;
+$this->registerJs($js);
 ?>
-<div style="row margin-top: 50px">
-    <div class="col-md-3">
-        <div class="col-md-12">
-            <div class="box" style="background: none;">
-                <div class="box-header">
-                    <h3 class="box-title">核心交换机</h3>
-                </div><!-- /.box-header -->
-                <div class="box-body" id="events_type">
-                    <?php
-                        foreach($cores as $id=>$label){
-                            echo \yii\helpers\Html::button($label,["class"=>"btn btn-default","value"=>$id,"onclick"=>"renderChart(".$id.")"]);
-                        }
-                    ?>
-                </div><!-- /.box-body -->
-            </div><!-- /.box -->
-        </div>
-    </div>
-    <div class="col-md-9">
-        <svg id="ZSYPolymerChart">
-            <defs>
-                <filter id="filter_blur" x="0" y="0">
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
-                </filter>
-            </defs>
-        </svg>
-    </div>
+<div class="box" style="background: none;position: absolute;z-index:100;margin-top: 100px;width: 180px;">
+    <div class="box-header">
+        <h3 class="box-title">核心交换机</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body" id="events_type">
+        <?php
+        foreach($cores as $id=>$label){
+            $css = $id==$firstCore? 'btn-info' : "btn-primary";
+            echo \yii\helpers\Html::button($label,["class"=>"btn $css","style"=>"margin:5px;","onclick"=>"changeCore(this,".$id.")"]);
+        }
+        ?>
+    </div><!-- /.box-body -->
+</div><!-- /.box -->
+<div style=" margin-top: 50px">
+    <svg id="ZSYPolymerChart">
+        <defs>
+            <filter id="filter_blur" x="0" y="0">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
+            </filter>
+        </defs>
+    </svg>
 </div>
 
