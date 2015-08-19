@@ -218,9 +218,6 @@ class DeviceController extends Controller
         ]);
     }
 
-    private function getPerfInfos($config){
-        $ids = ArrayHelper::map($config,"key","value");
-    }
     /**
      * Finds the DeviceInfo model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
