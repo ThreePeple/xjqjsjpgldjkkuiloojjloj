@@ -58,9 +58,9 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
             "imgSrc": "/images/icons2/router.png" 
         },
         "switch": {
-            "rx": 42.5,
-            "ry": 32.5,
-            "imgSrc": "/images/icons2/mainSwitch.png"
+            "rx": 26,
+            "ry": 19,
+            "imgSrc": "/images/icons2/switch.png"
         },
         "server": {
             "rx": 17,
@@ -101,6 +101,16 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
             "rx": 38,
             "ry": 38.5,
             "imgSrc": "/images/icons2/pc.png"
+        },
+        "coreSwitch":{
+            "rx": 26.5,
+            "ry": 27.5,
+            "imgSrc": "/images/icons2/core.png"
+        },
+        "mainSwitch":{
+            "rx": 42.5,
+            "ry": 32.5,
+            "imgSrc": "/images/icons2/mainSwitch.png"
         }
     }
 
@@ -130,7 +140,20 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
     </div>
     <div style="float: right;">
         <label for="deviceType">设备类型</label>
-        <?=Html::dropDownList('deviceType',null,$categorys,["id"=>"deviceType","class"=>"device-type"])?>
+        <select class="device-type" id="deviceType">
+            <option value="router">路由器</option> 
+            <option value="switch">交换机</option> 
+            <option value="server">服务器</option> 
+            <option value="firewall">安全设备</option>            
+            <option value="db">存储设备</option>          
+            <option value="wireless">无线设备</option>  
+            <option value="voice">语音设备</option>   
+            <option value="printer">打印机</option>  
+            <option value="ups">UPS</option>  
+            <option value="pc">PC</option>   
+            <option value="coreSwitch">核心交换机</option>  
+            <option value="mainSwitch">聚汇交换机</option>  
+        </select>
         <label for="switchcombo-ddi" id="addSwitchLabel">选择设备</label>
         <span id="switchcombo"></span> 
         <?=Html::button("添加设备",["class"=>"btn btn-info","id"=>"addSwitchBtn"])?>

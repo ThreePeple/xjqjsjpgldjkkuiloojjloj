@@ -53,9 +53,9 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
     "ID_KEY": "__id__",
     "shape": { 
         "router": {
-            "rx": 19,
-            "ry": 19,
-            "imgSrc": "/images/icons3/router.png" 
+            "rx": 20,
+            "ry": 20,
+            "imgSrc": "/images/icons3/ac.png" 
         },
         "switch": {
             "rx": 42.5,
@@ -77,10 +77,10 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
             "ry": 24,
             "imgSrc": "/images/icons3/ap.png"
         },
-        "mainSwitch":{
-            "rx": 42.5,
-            "ry": 32.5,
-            "imgSrc": "/images/icons3/mainSwitch.png"
+        "coreSwitch":{
+            "rx": 26.5,
+            "ry": 27.5,
+            "imgSrc": "/images/icons3/core.png"
         }
     }
 
@@ -117,7 +117,7 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
             <option value="firewall">安全设备</option>    
             <option value="wireless">无线设备</option> 
             <option value="router">控制器</option>  
-            <option value="mainSwitch">核心交换机</option>
+            <option value="coreSwitch">核心交换机</option>
         </select>
         <label for="switchcombo-ddi" id="addSwitchLabel">选择设备</label>
         <span id="switchcombo"></span> 
