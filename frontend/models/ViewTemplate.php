@@ -47,7 +47,7 @@ class ViewTemplate extends \yii\db\ActiveRecord
     static $groups = [
         "2" => [ //wlan
             "router" => ["shape"=>"image","image"=>'/images/icons2/router.png'],
-            "switch" => ["shape"=>"image","image"=>'/images/icons2/mainSwitch.png'],
+            "switch" => ["shape"=>"image","image"=>'/images/icons2/switch.png'],
             "server" => ["shape"=>"image","image"=>'/images/icons2/server.png'],
             "firewall" => ["shape"=>"image","image"=>'/images/icons2/firewall.png'],
             "db" => ["shape"=>"image","image"=>'/images/icons2/db.png'],
@@ -59,6 +59,7 @@ class ViewTemplate extends \yii\db\ActiveRecord
             "audio" => ["shape"=>"image","image"=>'/images/icons2/voice.png'],
             "ac" => ["shape"=>"image","image"=>'/images/icons2/ac.png'],
             "core" => ["shape"=>"image","image"=>'/images/icons2/core.png'],
+            "switch1" => ["shape"=>"image","image"=>'/images/icons2/mainSwitch.png'],
         ],
         "3" => [ //wireless
             "router" => ["shape"=>"image","image"=>'/images/icons3/router.png'],
