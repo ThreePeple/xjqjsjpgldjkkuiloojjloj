@@ -28,7 +28,7 @@
         "kartik-v/yii2-detail-view": "*",
         "daixianceng/yii2-smser": "*",
         "phpoffice/phpexcel": "^1.8",
-        "kartik-v/yii2-editable": "@dev"
+        "kartik-v/yii2-editable": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

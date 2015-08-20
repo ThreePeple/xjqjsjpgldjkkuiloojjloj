@@ -55,11 +55,11 @@ use yii\helpers\Url;
                     'encodeLabels' => false,
                     "items" => [
                         [
-                            "label" => '<span class="fa fa-circle-o"></span> 大楼局域网模板</a> ',
+                            "label" => '<span class="fa fa-circle-o"></span> 大厦拓扑模板</a> ',
                             "url" => ['/system/template/building']
                         ],
                         [
-                            "label" => '<span class="fa fa-circle-o"></span> 有线网络模板</a> ',
+                            "label" => '<span class="fa fa-circle-o"></span> 大厦局域网1模板</a> ',
                             "url" => ['/system/template/wlan']
                         ],
                         [
@@ -75,6 +75,7 @@ use yii\helpers\Url;
                     <li><a href="/system/template/wireless"><span class="fa fa-circle-o"></span> 无线网络模板</a> </li>
                 </ul>-->
             </li>
+            <li class="<?=($this->context->id == 'tip'? "active":'')?>"><a href="<?=Url::toRoute('/system/tip/index')?>"><span class="fa fa-circle-o"></span> 提示信息设置</a>
             <li class="treeview <?=($this->context->id == 'sms'? "active":'')?>">
                 <a href="#">
                     <i class="fa fa-circle-o"></i> <span>告警管理</span>

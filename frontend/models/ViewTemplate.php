@@ -22,9 +22,58 @@ class ViewTemplate extends \yii\db\ActiveRecord
     const TYPE_WLAN = 2;
     const TYPE_WIFI = 3;
 
+    /**
+     * @var array 区域坐标
+     */
     static $areas = [
-        "1" => [
-            [305,144],[588,312],[387,414],[110,233]
+        "wlan" => [
+            1=>[[308,142],[600,308],[380,420],[110,234]], //广域网
+            2=>[[388,622],[802,864],[432,1074],[30,818]], //因特网
+            3=>[[1162,684],[1340,784],[1116,948],[934,838]], //大厦局域网
+            4=>[[928,186],[1080,264],[860,394],[700,310]], //基础数据
+            5=>[[1100,272],[1264,354],[1038,486],[874,402]], //三层
+            6=>[[1280,360],[1450,450],[1230,600],[1056,504]], //一层
+
+        ],
+        'wireless' => [
+            1=>[[670,50],[780,130],[140,460],[0,387]], //A
+            2=>[[810,145],[957,223],[333,557],[160,465]], //B
+            3=>[[1143,260],[1290,335],[640,687],[468,600]], //C
+            4=>[[1296,337],[1477,426],[799,773],[655,695]], //D
+            5=>[[1165,0],[1464,148],[1260,252],[951,99]], //E
+            6=>[[273,24],[462,120],[324,184],[138,93]], //A-F7
+        ],
+    ];
+    static $groups = [
+        "2" => [ //wlan
+            "router" => ["shape"=>"image","image"=>'/images/icons2/router.png'],
+            "switch" => ["shape"=>"image","image"=>'/images/icons2/mainSwitch.png'],
+            "server" => ["shape"=>"image","image"=>'/images/icons2/server.png'],
+            "firewall" => ["shape"=>"image","image"=>'/images/icons2/firewall.png'],
+            "db" => ["shape"=>"image","image"=>'/images/icons2/db.png'],
+            "wireless" => ["shape"=>"image","image"=>'/images/icons2/wireless.gif'],
+            "printer" => ["shape"=>"image","image"=>'/images/icons2/printer.png'],
+            "ups" => ["shape"=>"image","image"=>'/images/icons2/ups.png'],
+            "pc" => ["shape"=>"image","image"=>'/images/icons2/pc.png'],
+            "driver" => ["shape"=>"image","image"=>'/images/icons2/driver.png'],
+            "audio" => ["shape"=>"image","image"=>'/images/icons2/voice.png'],
+            "ac" => ["shape"=>"image","image"=>'/images/icons2/ac.png'],
+            "core" => ["shape"=>"image","image"=>'/images/icons2/core.png'],
+        ],
+        "3" => [ //wireless
+            "router" => ["shape"=>"image","image"=>'/images/icons3/router.png'],
+            "switch" => ["shape"=>"image","image"=>'/images/icons3/mainSwitch.png'],
+            "server" => ["shape"=>"image","image"=>'/images/icons3/server.png'],
+            "firewall" => ["shape"=>"image","image"=>'/images/icons3/firewall.png'],
+            "db" => ["shape"=>"image","image"=>'/images/icons3/db.png'],
+            "wireless" => ["shape"=>"image","image"=>'/images/icons3/wireless.gif'],
+            "printer" => ["shape"=>"image","image"=>'/images/icons3/printer.png'],
+            "ups" => ["shape"=>"image","image"=>'/images/icons3/ups.png'],
+            "pc" => ["shape"=>"image","image"=>'/images/icons3/pc.png'],
+            "driver" => ["shape"=>"image","image"=>'/images/icons3/driver.png'],
+            "audio" => ["shape"=>"image","image"=>'/images/icons3/voice.png'],
+            "ac" => ["shape"=>"image","image"=>'/images/icons3/ac.png'],
+            "core" => ["shape"=>"image","image"=>'/images/icons3/core.png'],
         ]
     ];
     /**
@@ -174,6 +223,23 @@ class ViewTemplate extends \yii\db\ActiveRecord
         return $rows;
     }
 
+    public function getAreaId($x,$y){
+        if($this->type == 2){
+            $areas = self::$areas["wlan"];
+        }elseif($this->type==3){
+            $areas = self::$areas["wireless"];
+        }else{
+            $areas = [];
+        }
+        $areaId = null;
+        foreach($areas as $id=>$area){
+            if(self::isInArea([$x,$y],$area)){
+                $areaId = $id;
+                break;
+            }
+        }
+        return $areaId;
+    }
 
     /**
      * 判断点是否在四边形内

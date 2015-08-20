@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\Query;
 
 /**
  * This is the model class for table "device_link".
@@ -72,5 +73,48 @@ class DeviceLink extends \yii\db\ActiveRecord
 
     public function getBandFormat(){
         return (int)($this->bandWidth/1000000).'M';
+    }
+
+    public static function getPolymerData($core_id){
+        $polymers = [];
+        $models = self::find()->with("right")->where(["leftDevice"=>$core_id])->limit(2)->all();
+        $n =1 ;
+        foreach($models as $model){
+            if(!$model->right) continue;
+            $polymers[$model->right->id] = [
+                'id' => 'p'.$n,
+                'label' => $model->right->label,
+                "children" => []
+            ];
+            $n++;
+        }
+
+        $ployIds = array_keys($polymers);
+
+        $group1 = [];
+        $rows = self::find()->with("left")->where(["and",["rightDevice"=>$ployIds],["not",["leftDevice"=>$core_id]]])->all();
+        //$rows = self::find()->with("left")->where(["rightDevice"=>$ployIds])->groupBy("leftDevice")->all();
+        foreach($rows as $model){
+            if(!$model->left) continue;
+            $polymerId = $model->rightDevice;
+            $node_id = 'id'.$model->left->id;
+            $group1[] = ["label"=>$model->left->label,"id"=>$node_id,"status"=>$model->left->status];
+            $polymers[$polymerId]["children"][] = "group1:".$node_id;
+        }
+
+        $group2 = [];
+        $rows = self::find()->with("right")->where(["leftDevice"=>$ployIds])->groupBy("rightDevice")->all();
+        foreach($rows as $model){
+            if(!$model->right) continue;
+            $polymerId = $model->leftDevice;
+            $node_id = 'id'.$model->right->id;
+            $group2[] = ["label"=>$model->right->label,"id"=>$node_id,"status"=>$model->right->status];
+            $polymers[$polymerId]["children"][] = "group2:".$node_id;
+        }
+
+        return [
+            "groups" => ["group1"=>$group1,"group2"=>$group2],
+            "polymers" => array_values($polymers)
+        ];
     }
 }

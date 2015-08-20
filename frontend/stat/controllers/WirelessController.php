@@ -2,6 +2,7 @@
 
 namespace app\stat\controllers;
 
+use app\models\InfoConfig;
 use app\models\WirelessDeviceAlarm;
 use app\models\WirelessDeviceInterface;
 use app\models\WirelessDeviceLink;
@@ -10,6 +11,7 @@ use Yii;
 use app\models\WirelessDeviceInfo;
 use app\models\WirelessSearch;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -194,6 +196,20 @@ class WirelessController extends Controller
         $this->layout = false;
         $id = Yii::$app->request->get("id");
         $device = WirelessDeviceInfo::find()->with(["type","model"])->where(["id"=>$id])->one();
-        return $this->render("tip",["model"=>$device]);
+        $deviceConfig =ArrayHelper::map(InfoConfig::getTipConfig(1),"key","value");
+        $perfConfig = ArrayHelper::map(InfoConfig::getTipConfig(2),"key","value");
+        $perfData = WirelessDeviceTask::find()->where(["taskId"=>array_values($perfConfig),"devId"=>$id])
+            ->select(["taskId","dataVal"])
+            ->orderBy("update_time desc")
+            ->groupBy("taskId")
+            ->asArray()
+            ->all();
+        $perfData = ArrayHelper::map($perfData,"taskId","dataVal");
+        return $this->render("tip",[
+            "model"=>$device,
+            "deviceConfig"=>$deviceConfig,
+            "perfConfig" => $perfConfig,
+            "perfData" => $perfData
+        ]);
     }
 }

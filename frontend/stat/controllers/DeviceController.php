@@ -3,9 +3,11 @@
 namespace app\stat\controllers;
 
 use app\models\DeviceInterface;
+use app\models\InfoConfig;
 use Yii;
 use app\models\DeviceInfo;
 use app\models\DeviceInfoSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -199,7 +201,21 @@ class DeviceController extends Controller
         $this->layout = false;
         $id = Yii::$app->request->get("id");
         $device = DeviceInfo::find()->with(["type","model"])->where(["id"=>$id])->one();
-        return $this->render("tip",["model"=>$device]);
+        $deviceConfig =ArrayHelper::map(InfoConfig::getTipConfig(1),"key","value");
+        $perfConfig = ArrayHelper::map(InfoConfig::getTipConfig(2),"key","value");
+        $perfData = DeviceTask::find()->where(["taskId"=>array_values($perfConfig),"devId"=>$id])
+            ->select(["taskId","dataVal"])
+            ->orderBy("update_time desc")
+            ->groupBy("taskId")
+            ->asArray()
+            ->all();
+        $perfData = ArrayHelper::map($perfData,"taskId","dataVal");
+        return $this->render("tip",[
+            "model"=>$device,
+            "deviceConfig"=>$deviceConfig,
+            "perfConfig" => $perfConfig,
+            "perfData" => $perfData
+        ]);
     }
 
     /**

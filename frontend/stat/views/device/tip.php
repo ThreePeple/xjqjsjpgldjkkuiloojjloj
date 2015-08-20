@@ -6,12 +6,47 @@
  * Description:
  */
 $this->registerCssFile('/css/popuppanel.css');
+
+$dataProvider = new \yii\data\ArrayDataProvider([
+    "allModels" => $deviceConfig
+]);
+?>
+<?php
+if(!empty($deviceConfig)){
+?>
+    <h4>基础信息：</h4>
+    <table class="table" border="0">
+        <tbody>
+        <?php
+        foreach($deviceConfig as $key=>$attribute){
+            if($attribute == 'vendor.name'){
+                $value = isset($model->model)?(isset($model->model->vendor)?$model->model->vendor->name:''):'';
+            }else{
+                $value = $model->{$attribute};
+            }
+            echo '<tr><th style="border-top:0;text-align:right;padding:1px 8px 1px;width: 200px">'.$key.'</th><td style="border-top:0;padding:1px 8px 1px;">'.$value.'</td></tr>';
+        }
+        ?>
+        </tbody>
+    </table>
+<?php
+}
 ?>
 
-<ul>
-    <li><span>名称:</span><?=$model["label"]?></li>
-    <li><span>楼层:</span></li>
-    <li><span>ip地址:</span><?=$model["ip"]?></li>
-    <li><span>设备厂商:</span><?=isset($model->model)?(isset($model->model->vendor)?$model->model->vendor->name:''):'';?></li>
-    <li><span>设备类型:</span><?=isset($model->type)?$model->type->name:''?></li>
-</ul>
+<?php
+if(!empty($perfConfig)){
+    ?>
+    <h4>性能指标：</h4>
+    <table class="table" border="0">
+        <tbody>
+        <?php
+        foreach($perfConfig as $key=>$id){
+            $value = isset($perfData[$id])?$perfData[$id]:'';
+            echo '<tr><th style="border-top:0;text-align:right;padding:1px 8px 1px; width:200px">'.$key.'</th><td style="border-top:0;padding:1px 8px 1px;">'.$value.'</td></tr>';
+        }
+        ?>
+        </tbody>
+    </table>
+<?php
+}
+?>

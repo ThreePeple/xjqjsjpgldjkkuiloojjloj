@@ -7,7 +7,9 @@
 	border-radius: 8px;
 	color: #fff;
 	box-shadow: 0 0 8px 3px #999;
-	font-family: Î¢ÈíÑÅºÚ, Verdana;
+	font-family: Î¢ï¿½ï¿½ï¿½Åºï¿½, Verdana;
+    max-height: 500px;
+    overflow-y: auto;
 } 
 .jppopuppanel .popup_close{
 	background:url(../images/close.png) center center no-repeat;

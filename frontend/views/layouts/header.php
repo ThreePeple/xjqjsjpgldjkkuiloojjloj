@@ -55,11 +55,11 @@ $menuItems = [
                     ],
                     [
                         "label"=>"大厦局域网2",
-                        "url"=>"#",
-                        "options" => ["class"=>($action == 'topology/dashboard/'? 'active':'')]
+                        "url"=>"/topology/dashboard/hub-compose",
+                        "options" => ["class"=>($action == 'topology/dashboard/hub-compose'? 'active':'')]
                     ]
                 ],
-                'active' => in_array($action,['topology/dashboard/wlan','topology/dashboard/'])
+                'active' => in_array($action,['topology/dashboard/wlan','topology/dashboard/hub-compose'])
             ],
             '<li role="separator" class="divider"></li>',
             [

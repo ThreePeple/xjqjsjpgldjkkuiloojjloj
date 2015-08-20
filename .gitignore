@@ -28,6 +28,6 @@ composer.phar
 phpunit.phar
 # local phpunit config
 /phpunit.xml
-/vendor33
-vendor33
+#/vendor33
+#vendor33
 /frontend/system/views/template/editor.php.LOCAL - ¸±±¾.php

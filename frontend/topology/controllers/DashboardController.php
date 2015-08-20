@@ -58,9 +58,99 @@ class DashboardController extends Controller
         return Json::encode($data);
     }
 
+    /**
+     * 有线网络
+     * @return string
+     */
     public  function actionWlan(){
 
         return $this->render("wlan");
+    }
+
+    /**
+     * 有线网络2   交换机组网
+     */
+    public function actionHubCompose(){
+        $rows = DeviceInfo::find()->where(["categoryId"=>12])->select(["id","label"])->asArray()->all();
+        $first = 0;
+        if(!empty($rows)){
+            $first = $rows[0]["id"];
+        }
+        $data = ArrayHelper::map($rows,"id","label");
+        return $this->render('polymerchart',[
+            "cores" => $data,
+            "firstCore" => $first
+        ]);
+    }
+
+    public function actionAjaxGetHub(){
+        $this->layout= false;
+        $core_id = Yii::$app->request->post("core_id");
+        $data = DeviceLink::getPolymerData($core_id);
+/*
+        $data["groups"]=[
+            "group1" => [
+                ["label"=>"LABEL 0","id"=>"ida0"],
+                ["label"=>"LABEL 1","id"=>"ida1"],
+                ["label"=>"LABEL 2","id"=>"ida2"],
+                ["label"=>"LABEL 3","id"=>"ida3"],
+                ["label"=>"LABEL 4","id"=>"ida4"],
+                ["label"=>"LABEL 5","id"=>"ida5"],
+            ],
+            "group2" => [
+                ["label"=>"LABEL 0","id"=>"idb0"],
+                ["label"=>"LABEL 1","id"=>"idb1"],
+                ["label"=>"LABEL 2","id"=>"idb2"],
+                ["label"=>"LABEL 3","id"=>"idb3"],
+                ["label"=>"LABEL 4","id"=>"idb4"],
+                ["label"=>"LABEL 5","id"=>"idb5"],
+            ],
+        ];
+
+        $data["polymers"] = [
+            [
+                "id" => "p1",
+                "label" => "聚会交换机1",
+                "children" => [
+                    "group1:ida0",
+                    "group1:ida1",
+                    "group1:ida2",
+                    "group1:ida3",
+                    "group1:ida4",
+                    "group1:ida5",
+                    "group2:idb0",
+                    "group2:idb1",
+                    "group2:idb2",
+                    "group2:idb3",
+                    "group2:idb4",
+                    "group2:idb5"
+                ]
+            ],
+            [
+                "id" => "p2",
+                "label" => "聚会交换机2",
+                "children" => [
+                    "group1:ida0",
+                    "group1:ida1",
+                    "group1:ida2",
+                    "group1:ida3",
+                    "group1:ida4",
+                    "group1:ida5",
+                    "group2:idb0",
+                    "group2:idb1",
+                    "group2:idb2",
+                    "group2:idb3",
+                    "group2:idb4",
+                    // "group2:idb5"
+                ]
+            ]
+        ];
+            */
+
+        return Json::encode([
+            'status'=> 1,
+            "data" => $data
+        ]);
     }
 
     /**
@@ -89,7 +179,8 @@ class DashboardController extends Controller
     ];
      */
     public function  actionDeviceArea($area,$type){
-        return $this->render("area",["area"=>$area,"type"=>$type]);
+        $group = ViewTemplate::$groups[$type];
+        return $this->render("area",["area"=>$area,"type"=>$type,"group"=>json_encode($group)]);
     }
     /**
      * 获取区域设备和链路数据
@@ -121,9 +212,9 @@ class DashboardController extends Controller
     }
 
     public function actionTest(){
-        $data = ViewTemplate::getAreaDeviceData(1,1);
-        var_dump($data);
-        /*$m = DeviceInfo::find()->with(["category"])->where(["id"=>2])->asArray()->one();
-        var_dump($m);*/
+        $area = [[0,0],[100,10],[100,100],[10,100]];
+
+        $r = ViewTemplate::isInArea([11,100],$area);
+        var_dump($r);
     }
 }
