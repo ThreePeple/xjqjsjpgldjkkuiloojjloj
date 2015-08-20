@@ -131,18 +131,7 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
     <div style="float: right;">
 
         <label for="deviceType">设备类型</label>
-        <select class="device-type" id="deviceType">
-            <option value="router">路由器</option> 
-            <option value="switch">交换机</option> 
-            <option value="server">服务器</option> 
-            <option value="firewall">安全设备</option>            
-            <option value="db">存储设备</option>          
-            <option value="wireless">无线设备</option>  
-            <option value="voice">语音设备</option>     
-            <option value="printer">打印机</option>  
-            <option value="ups">UPS</option>  
-            <option value="pc">PC</option>  
-        </select>
+        <?=Html::dropDownList('deviceType',null,$categorys,["id"=>"deviceType","class"=>"device-type"])?>
         <label for="switchcombo-ddi" id="addSwitchLabel">选择设备</label>
         <span id="switchcombo"></span> 
         <?=Html::button("添加设备",["class"=>"btn btn-info","id"=>"addSwitchBtn"])?>

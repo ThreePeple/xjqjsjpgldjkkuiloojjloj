@@ -2,6 +2,7 @@
 
 namespace app\system\controllers;
 
+use app\models\DeviceCategory;
 use app\models\WirelessDeviceInfo;
 use yii\base\Exception;
 use yii\helpers\Json;
@@ -68,9 +69,17 @@ class TemplateController extends \yii\web\Controller
     public function actionWlan(){
         $lists = DeviceInfo::getDeviceList(ViewTemplate::TYPE_WLAN);
         $selected = ViewTemplate::getTempateSet(ViewTemplate::TYPE_WLAN);
-        $areaList = Area::find()->select(["id","name"])->asArray()->all();
-        $areaList = ArrayHelper::map($areaList,"id","name");
-        return $this->render('editorWlan',["areaList"=>$areaList,"deviceList"=>$lists,"selected"=>Json::encode($selected),"type"=>ViewTemplate::TYPE_WLAN]);
+        //$areaList = Area::find()->select(["id","name"])->asArray()->all();
+        //$areaList = ArrayHelper::map($areaList,"id","name");
+        $categorys = ArrayHelper::map(DeviceCategory::find()->all(),"node_group","name");
+
+        return $this->render('editorWlan',[
+            //"areaList"=>$areaList,
+            "deviceList"=>$lists,
+            "selected"=>Json::encode($selected),
+            "type"=>ViewTemplate::TYPE_WLAN,
+            "categorys" => $categorys
+        ]);
     }
 
     /**
@@ -79,11 +88,14 @@ class TemplateController extends \yii\web\Controller
     public function actionWireless(){
         $lists = WirelessDeviceInfo::getDeviceList();
         $selected = ViewTemplate::getTempateSet(ViewTemplate::TYPE_WIFI);
+        $categorys = ArrayHelper::map(DeviceCategory::find()->all(),"node_group","name");
 
         return $this->render('editWireless',[
             'deviceList' => $lists,
             'selected' => json_encode($selected),
-            'type' => ViewTemplate::TYPE_WIFI
+            'type' => ViewTemplate::TYPE_WIFI,
+            "categorys" => $categorys
+
         ]);
 
     }
