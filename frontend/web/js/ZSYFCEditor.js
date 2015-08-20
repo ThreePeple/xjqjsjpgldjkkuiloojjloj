@@ -148,7 +148,7 @@
         },
         "completeChoosen_": function() {
             var line;
-            switch (gMode_) {
+            ƒwitch (gMode_) {
                 case "line":
                     line = new linkLine_["base"]["Line"]();
                     line.startD(this["startD_"]);
