@@ -221,7 +221,8 @@
     };
     ellipse_.newOne = function (title, x, y){
         return new ellipse_(title, x, y, config_["ellipse"]["rx"], config_["ellipse"]["ry"]);
-    };
+    }; 
+    
 
     var mainSwitch_  = constructor_("mainSwitch");
     mainSwitch_.prototype = new base_();
@@ -239,6 +240,24 @@
     mainSwitch_.newOne = function (title, x, y){
         return new mainSwitch_(title, x, y, config_["mainSwitch"]["rx"], config_["mainSwitch"]["ry"]);
     }; 
+
+    var coreSwitch_  = constructor_("coreSwitch");
+    coreSwitch_.prototype = new base_();
+    coreSwitch_.prototype.constructor = coreSwitch_;
+    coreSwitch_.prototype.render = function (g){
+        var shape = this;
+        return g.append("image")
+            .attr("class", "shape")
+            .attr("x", shape.cx() - shape.rx() )
+            .attr("y", shape.cy() - shape.ry())
+            .attr("width", 2 * shape.rx())
+            .attr("height",2 * shape.ry())
+            .attr("xlink:href", config_["coreSwitch"]["imgSrc"]);            
+    };
+    coreSwitch_.newOne = function (title, x, y){
+        return new coreSwitch_(title, x, y, config_["coreSwitch"]["rx"], config_["coreSwitch"]["ry"]);
+    }; 
+
 
     var switch_  = constructor_("switch");
     switch_.prototype = new base_();
@@ -400,6 +419,7 @@
     	"rect": rect_,
     	"ellipse": ellipse_,
     	"mainSwitch": mainSwitch_,
+        "coreSwitch": coreSwitch_,
     	"switch": switch_,
     	"server": server_,
     	"db": db_,
