@@ -117,7 +117,7 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
             <option value="server">服务器</option> 
             <option value="firewall">安全设备</option>    
             <option value="wireless">无线设备</option> 
-            <option value="router">控制器</option>  
+            <option value="router">控制器</option>
             <option value="coreSwitch">核心交换机</option>
         </select>
         <label for="switchcombo-ddi" id="addSwitchLabel">选择设备</label>

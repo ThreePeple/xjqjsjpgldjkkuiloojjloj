@@ -62,19 +62,12 @@ class ViewTemplate extends \yii\db\ActiveRecord
             "mainSwitch" => ["shape"=>"image","image"=>'/images/icons2/mainSwitch.png'],
         ],
         "3" => [ //wireless
-            "router" => ["shape"=>"image","image"=>'/images/icons3/router.png'],
+            "router" => ["shape"=>"image","image"=>'/images/icons3/ac.png'],
             "switch" => ["shape"=>"image","image"=>'/images/icons3/mainSwitch.png'],
             "server" => ["shape"=>"image","image"=>'/images/icons3/server.png'],
             "firewall" => ["shape"=>"image","image"=>'/images/icons3/firewall.png'],
-            "db" => ["shape"=>"image","image"=>'/images/icons3/db.png'],
-            "wireless" => ["shape"=>"image","image"=>'/images/icons3/wireless.gif'],
-            "printer" => ["shape"=>"image","image"=>'/images/icons3/printer.png'],
-            "ups" => ["shape"=>"image","image"=>'/images/icons3/ups.png'],
-            "pc" => ["shape"=>"image","image"=>'/images/icons3/pc.png'],
-            "driver" => ["shape"=>"image","image"=>'/images/icons3/driver.png'],
-            "audio" => ["shape"=>"image","image"=>'/images/icons3/voice.png'],
-            "ac" => ["shape"=>"image","image"=>'/images/icons3/ac.png'],
-            "mainSwitch" => ["shape"=>"image","image"=>'/images/icons3/core.png'],
+            "wireless" => ["shape"=>"image","image"=>'/images/icons3/ap.gif'],
+            "coreSwitch" => ["shape"=>"image","image"=>'/images/icons3/core.png'],
         ]
     ];
     /**

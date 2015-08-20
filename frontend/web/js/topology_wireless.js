@@ -22,7 +22,7 @@
 				 "router": {
 					"rx": 20,
 					"ry": 20,
-					"imgSrc": "/images/icons3/ac.png" 
+					"imgSrc": "/images/icons3/ac.png"
 				},
 				"switch": {
 					"rx": 42.5,
