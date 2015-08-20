@@ -3,6 +3,7 @@
 namespace app\system\controllers;
 
 use app\models\DeviceCategory;
+use app\models\WirelessDeviceCategory;
 use app\models\WirelessDeviceInfo;
 use yii\base\Exception;
 use yii\helpers\Json;
@@ -88,7 +89,7 @@ class TemplateController extends \yii\web\Controller
     public function actionWireless(){
         $lists = WirelessDeviceInfo::getDeviceList();
         $selected = ViewTemplate::getTempateSet(ViewTemplate::TYPE_WIFI);
-        $categorys = ArrayHelper::map(DeviceCategory::find()->all(),"node_group","name");
+        $categorys = ArrayHelper::map(WirelessDeviceCategory::find()->all(),"node_group","name");
 
         return $this->render('editWireless',[
             'deviceList' => $lists,

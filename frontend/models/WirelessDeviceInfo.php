@@ -131,11 +131,11 @@ class WirelessDeviceInfo extends \yii\db\ActiveRecord
     }
 
     public function getCategory(){
-        return $this->hasOne(DeviceCategory::className(),["id"=>'categoryId']);
+        return $this->hasOne(WirelessDeviceCategory::className(),["id"=>'categoryId']);
     }
 
     public function getType(){
-        return $this->hasOne(DeviceCategory::className(),["id"=>'categoryId']);
+        return $this->hasOne(WirelessDeviceCategory::className(),["id"=>'categoryId']);
     }
 
     public function getModel(){
