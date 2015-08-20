@@ -71,36 +71,16 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
             "rx": 19,
             "ry": 18,
             "imgSrc": "/images/icons3/firewall.png"
-        },
-        "db": {
-            "rx": 35,
-            "ry": 42,
-            "imgSrc": "/images/icons3/db.png"
-        },
+        }, 
         "wireless": {
             "rx": 25,
             "ry": 24,
-            "imgSrc": "/images/icons3/wireless.gif"
+            "imgSrc": "/images/icons3/ap.png"
         },
-        "voice":{
-            "rx": 25,
-            "ry": 25,
-            "imgSrc": "/images/icons3/voice.png"
-        },
-        "printer": {
-            "rx": 40,
-            "ry": 41,
-            "imgSrc": "/images/icons3/printer.png"
-        },
-        "ups": {
-            "rx": 40,
-            "ry": 41.5,
-            "imgSrc": "/images/icons3/ups.png"
-        },
-        "pc": {
-            "rx": 38,
-            "ry": 38.5,
-            "imgSrc": "/images/icons3/pc.png"
+        "mainSwitch":{
+            "rx": 42.5,
+            "ry": 32.5,
+            "imgSrc": "/images/icons3/mainSwitch.png"
         }
     }
 
@@ -132,16 +112,12 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
 
         <label for="deviceType">设备类型</label>
         <select class="device-type" id="deviceType">
-            <option value="router">路由器</option> 
             <option value="switch">交换机</option> 
             <option value="server">服务器</option> 
-            <option value="firewall">安全设备</option>            
-            <option value="db">存储设备</option>          
-            <option value="wireless">无线设备</option>  
-            <option value="voice">语音设备</option>     
-            <option value="printer">打印机</option>  
-            <option value="ups">UPS</option>  
-            <option value="pc">PC</option>  
+            <option value="firewall">安全设备</option>    
+            <option value="wireless">无线设备</option> 
+            <option value="router">控制器</option>  
+            <option value="mainSwitch">核心交换机</option>
         </select>
         <label for="switchcombo-ddi" id="addSwitchLabel">选择设备</label>
         <span id="switchcombo"></span> 

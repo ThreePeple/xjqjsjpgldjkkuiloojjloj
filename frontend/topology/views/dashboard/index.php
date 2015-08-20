@@ -59,7 +59,7 @@ $css = <<<CSS
     color: #fff;
 }
 .ZSYFCEditor image{
-    opacity: 0.5
+    opacity: 0.666
 }
 CSS;
 $this->registerCss($css);
