@@ -58,8 +58,8 @@ class ViewTemplate extends \yii\db\ActiveRecord
             "driver" => ["shape"=>"image","image"=>'/images/icons2/driver.png'],
             "audio" => ["shape"=>"image","image"=>'/images/icons2/voice.png'],
             "ac" => ["shape"=>"image","image"=>'/images/icons2/ac.png'],
-            "core" => ["shape"=>"image","image"=>'/images/icons2/core.png'],
-            "switch1" => ["shape"=>"image","image"=>'/images/icons2/mainSwitch.png'],
+            "coreSwitch" => ["shape"=>"image","image"=>'/images/icons2/core.png'],
+            "mainSwitch" => ["shape"=>"image","image"=>'/images/icons2/mainSwitch.png'],
         ],
         "3" => [ //wireless
             "router" => ["shape"=>"image","image"=>'/images/icons3/router.png'],
@@ -74,7 +74,7 @@ class ViewTemplate extends \yii\db\ActiveRecord
             "driver" => ["shape"=>"image","image"=>'/images/icons3/driver.png'],
             "audio" => ["shape"=>"image","image"=>'/images/icons3/voice.png'],
             "ac" => ["shape"=>"image","image"=>'/images/icons3/ac.png'],
-            "core" => ["shape"=>"image","image"=>'/images/icons3/core.png'],
+            "mainSwitch" => ["shape"=>"image","image"=>'/images/icons3/core.png'],
         ]
     ];
     /**
