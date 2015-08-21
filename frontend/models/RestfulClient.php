@@ -54,13 +54,13 @@ class RestfulClient {
         return $this->error_code;
     }
 
-    public static function get($path,$query){
+    public static function get($url,$query){
         $model = new self();
-        $model->request("GET",$path,$query);
+        $model->request("GET",$url,$query);
         return $model->getData();
     }
 
-    public function request($method,$path,$params){
+    public function request($method,$url,$params=[]){
         $this->clear();
 
         $this->ch = curl_init();
@@ -72,18 +72,19 @@ class RestfulClient {
         curl_setopt_array($this->ch,$options);
 
         $method = strtoupper($method);
-        curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, $method); //设置请求方式
-        curl_setopt($this->ch,CURLOPT_HTTPHEADER,array("X-HTTP-Method-Override: $method"));//设置HTTP头信息
+
+        $this->setHeaders($method);
+        $this->setAuth();
+
         switch ($method){
             case 'POST' :
                 curl_setopt($this->ch,CURLOPT_POST, 1);
                 curl_setopt($this->ch,CURLOPT_POSTFIELDS, $params);
-                $url = $this->buildUrl($path);
                 break;
             default :
-                $url = $this->buildUrl($path,$params);
                 break;
         }
+        $url = $this->buildUrl($url,$params);
         curl_setopt($this->ch,CURLOPT_URL,$url);
         $this->data = curl_exec($this->ch);
         if ($this->data === false || $this->data === null) {
@@ -97,12 +98,34 @@ class RestfulClient {
     }
 
     public function parseResult(){
-        //TODO
+        $this->data = json_decode($this->data,true);
     }
 
-    public function buildUrl($path,$params=[]){
-        $domain = Yii::$app->params["apiDomain"];
-        $url = $domain .'/'. trim($path,'/');
+    public function setHeaders($method){
+        curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, $method); //设置请求方式
+        curl_setopt($this->ch,CURLOPT_HTTPHEADER,[
+            "X-HTTP-Method-Override: $method",
+            "Accept: application/json",
+            "Content-Type: application/json; charset=UTF-8",
+        ]);//设置HTTP头信息
+    }
+
+    public function setAuth(){
+        $auth = Yii::$app->params["apiAuth"];
+        $type = $auth["type"];
+        curl_setopt($this->ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+        switch($type){
+            case "http_basic":
+                $user = $auth["http_basic"]["user"];
+                $pwd = $auth["http_basic"]["pwd"];
+                curl_setopt($this->ch,CURLOPT_USERPWD, $user . ':' . $pwd);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public function buildUrl($url,$params=[]){
         $url .= empty($params)? '' : '?'.http_build_query($params);
         return $url;
     }

@@ -210,11 +210,4 @@ class DashboardController extends Controller
             "model" => $model
         ]);
     }
-
-    public function actionTest(){
-        $area = [[0,0],[100,10],[100,100],[10,100]];
-
-        $r = ViewTemplate::isInArea([11,100],$area);
-        var_dump($r);
-    }
 }

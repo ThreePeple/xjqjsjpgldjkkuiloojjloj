@@ -12,6 +12,12 @@ class QueryController extends \yii\web\Controller
     }
 
     public function actionTest(){
-        RestfulClient::get("/device",["id"=>1]);
+        $data = RestfulClient::get("http://223.72.164.195:8090/imcrs/plat/res/device/489/interface",[
+            "start" => 0,
+            "size" => 10,
+            "desc"=>false,
+            "total"=>false
+        ]);
+        print_r($data);
     }
 }
