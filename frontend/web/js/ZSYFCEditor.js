@@ -587,7 +587,8 @@
                 var from = $target.data("from"),
                     to = $target.data("to")
                 var r = dataFactory_.unlink(from, to);
-                r && repaint_();
+                r && $target.remove();
+                return false;
             }
         });
     }
