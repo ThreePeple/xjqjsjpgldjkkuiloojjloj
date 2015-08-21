@@ -81,6 +81,10 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 		margin-right: 10px;
 		color: #fff;
 	}
+	.nodeDetail .popup_content{
+		max-height: 350px;
+		overflow: auto;
+	}
 </style>
 <script type="text/single-html-template" id="switch_node_detail">
     <ul> 

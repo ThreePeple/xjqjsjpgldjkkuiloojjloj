@@ -72,7 +72,7 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
             "ry": 18,
             "imgSrc": "/images/icons2/firewall.png"
         },
-        "db": {
+        "driver": {
             "rx": 35,
             "ry": 42,
             "imgSrc": "/images/icons2/db.png"
@@ -82,7 +82,7 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
             "ry": 24,
             "imgSrc": "/images/icons2/wireless.gif"
         },
-        "voice":{
+        "audio":{
             "rx": 25,
             "ry": 25,
             "imgSrc": "/images/icons2/voice.png"
@@ -147,9 +147,9 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
             <option value="switch">交换机</option> 
             <option value="server">服务器</option> 
             <option value="firewall">安全设备</option>            
-            <option value="db">存储设备</option>          
+            <option value="driver">存储设备</option>          
             <option value="wireless">无线设备</option>  
-            <option value="voice">语音设备</option>   
+            <option value="audio">语音设备</option>   
             <option value="printer">打印机</option>  
             <option value="ups">UPS</option>  
             <option value="pc">PC</option>   
