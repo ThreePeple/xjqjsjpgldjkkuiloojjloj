@@ -57,7 +57,7 @@ class RestfulClient {
     public static function get($url,$query){
         $model = new self();
         $model->request("GET",$url,$query);
-        return $model->getData();
+        return $model;
     }
 
     public function request($method,$url,$params=[]){

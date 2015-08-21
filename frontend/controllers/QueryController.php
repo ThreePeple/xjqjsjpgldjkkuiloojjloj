@@ -17,7 +17,7 @@ class QueryController extends \yii\web\Controller
             "size" => 10,
             "desc"=>false,
             "total"=>false
-        ]);
-        print_r($data);
+        ])->getData();
+        var_dump($data);
     }
 }
