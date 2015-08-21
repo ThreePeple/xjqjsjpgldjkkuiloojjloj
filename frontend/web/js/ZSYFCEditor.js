@@ -128,8 +128,7 @@
             if(this["points_"].length){
                 this["points_"].pop();
             } else {
-                this["startD_"] = null;
-                this["endD_"] = null; 
+                this["clear"]();
             }
         },
         "drawChoosenTrackingPoints": function(x, y) {
