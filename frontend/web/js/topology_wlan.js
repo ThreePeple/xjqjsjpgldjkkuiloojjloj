@@ -25,8 +25,8 @@
                 "imgSrc": "/images/icons2/router.png" 
             },
             "switch": {
-                "rx": 27,
-                "ry": 20.5,
+                "rx": 5,
+                "ry": 3,
                 "imgSrc": "/images/icons2/switch.png"
             },
             "server": {
@@ -75,8 +75,8 @@
                 "imgSrc": "/images/icons2/core.png"
             },
             "mainSwitch":{
-                "rx": 32,
-                "ry": 22,
+                "rx": 16,
+                "ry": 11,
                 "imgSrc": "/images/icons2/mainSwitch.png"
             }
         } 

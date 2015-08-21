@@ -58,8 +58,8 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
             "imgSrc": "/images/icons2/router.png" 
         },
         "switch": {
-            "rx": 27,
-            "ry": 20.5,
+            "rx": 23,
+            "ry": 16.5,
             "imgSrc": "/images/icons2/switch.png"
         },
         "server": {
@@ -108,8 +108,8 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
             "imgSrc": "/images/icons2/core.png"
         },
         "mainSwitch":{
-            "rx": 32,
-            "ry": 22,
+            "rx": 28,
+            "ry": 18,
             "imgSrc": "/images/icons2/mainSwitch.png"
         }
     }
