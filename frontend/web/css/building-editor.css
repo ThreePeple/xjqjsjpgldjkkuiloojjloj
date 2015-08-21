@@ -69,3 +69,7 @@ svg.ZSYFCEditor {
 .buidling-editor-toolbar .stc-lc td{
 	padding: 5px 6px;
 }
+
+svg.ZSYFCEditor path.node_link:hover{
+	stroke-width: 3px;
+}

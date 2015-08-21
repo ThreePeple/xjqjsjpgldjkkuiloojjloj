@@ -24,7 +24,7 @@ if(!empty($deviceConfig)){
             }else{
                 $value = $model->{$attribute};
             }
-            echo '<tr><th style="border-top:0;text-align:right;padding:1px 8px 1px;width: 200px">'.$key.'</th><td style="border-top:0;padding:1px 8px 1px;">'.$value.'</td></tr>';
+            echo '<tr><th style="border-top:0;text-align:right;padding:1px 8px 1px;width: 180px">'.$key.'</th><td style="border-top:0;padding:1px 8px 1px;">'.$value.'</td></tr>';
         }
         ?>
         </tbody>
@@ -42,7 +42,7 @@ if(!empty($perfConfig)){
         <?php
         foreach($perfConfig as $key=>$id){
             $value = isset($perfData[$id])?$perfData[$id]:'';
-            echo '<tr><th style="border-top:0;text-align:right;padding:1px 8px 1px; width:200px">'.$key.'</th><td style="border-top:0;padding:1px 8px 1px;">'.$value.'</td></tr>';
+            echo '<tr><th style="border-top:0;text-align:right;padding:1px 8px 1px; width:180px">'.$key.'</th><td style="border-top:0;padding:1px 8px 1px;">'.$value.'</td></tr>';
         }
         ?>
         </tbody>

@@ -61,6 +61,11 @@ $css = <<<CSS
 .ZSYFCEditor image{
     opacity: 0.666
 }
+.nodeDetail .popup_content{
+    max-height: 350px;
+    min-width: 330px;
+    overflow: auto;
+} 
 CSS;
 $this->registerCss($css);
 ?>

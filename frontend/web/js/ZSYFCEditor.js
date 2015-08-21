@@ -211,6 +211,32 @@
                     }
                 }
             },
+            "unlink": function (fromD, toD){ 
+                var unlinkSourceId = fromD,
+                    unlinkTargetId = toD;
+                if( typeof fromD == 'object' ){
+                    unlinkSourceId = fromD[ID_KEY]; 
+                }
+                if( typeof toD == 'object' ){
+                    unlinkTargetId = toD[ID_KEY]; 
+                }
+                var source = gData_.getItem( unlinkSourceId );
+                if( source ){
+                    var links = source["links"];
+                    if( links ){
+                       var len1 = links.length, link; 
+                       while( --len1 > -1 ){
+                            link = links[ len1 ];
+                            if( link["data"]["from"] == unlinkSourceId 
+                                && link["data"]["to"] == unlinkTargetId ){
+                                links.splice( len1, 1 ); 
+                                return true;
+                            }
+                       } 
+                    }
+                }
+                return false; 
+            },
             "makeLink": function(d, tgDatum, linkData) {
                 var _key = this.getId(tgDatum);
                 var ownerKey = this.getId(d);
@@ -501,6 +527,7 @@
     function bindEvents_(svg) {
         if(ZSYFCEditorConfig["singleMode"])
             return;
+
         svg.on("click", function() {
             if (gMode_ != "drag") { // line or polyline mode
                 var event = d3.event,
@@ -536,6 +563,15 @@
             y += document.body.scrollTop;
             if (gMode_ != "drag") { // line or polyline mode
                 linkPathPusher_.drawChoosenTrackingPoints( x,  y);
+            }
+        }); 
+        $(svg.node()).bind("dblclick", function (event){ 
+            var $target = $(event.target);
+            if($target.is("path.node_link")){
+                var from = $target.data("from"),
+                    to = $target.data("to")
+                var r = dataFactory_.unlink(from, to);
+                r && repaint_();
             }
         });
     }
@@ -696,6 +732,8 @@
             .data(gLinkData_)
             .enter().append("path")
             .attr("class", "node_link")
+            .attr("data-from", function( d ){ return d.from; })
+            .attr("data-to", function( d ){ return d.to; })
             .attr("id", function ( d ){ return elementID_["pathId"]( d.from + '_' + d.to );   } )
             .attr("d", function(d) {
                 return d.pathData ;
