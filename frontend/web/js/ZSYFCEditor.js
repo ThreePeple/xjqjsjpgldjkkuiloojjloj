@@ -124,6 +124,14 @@
                 }
             }
         },
+        "pop": function (){
+            if(this["points_"].length){
+                this["points_"].pop();
+            } else {
+                this["startD_"] = null;
+                this["endD_"] = null; 
+            }
+        },
         "drawChoosenTrackingPoints": function(x, y) {
             if (this["startD_"]) {// Has chosen startD
                 x = pointValue_(x);
@@ -548,7 +556,7 @@
                 } else {
                     linkPathPusher_.push([x, y]);
                 }
-                console.log("svg click: ", x, y, target, element, data);
+                console.log("svg click: ", x, y, target, element, data); 
             }
         }).on("mousemove", function() {
             var event = d3.event,
@@ -564,7 +572,16 @@
             if (gMode_ != "drag") { // line or polyline mode
                 linkPathPusher_.drawChoosenTrackingPoints( x,  y);
             }
+        }).on("mousedown", function (){
+            var event = d3.event,
+                target = event.target,
+                data;
+            // Select mode, and press mouse's right button
+            if( gMode_ != "drag" && event.which === 3 ){
+                linkPathPusher_.pop();
+            }
         }); 
+
         $(svg.node()).bind("dblclick", function (event){ 
             var $target = $(event.target);
             if($target.is("path.node_link")){
