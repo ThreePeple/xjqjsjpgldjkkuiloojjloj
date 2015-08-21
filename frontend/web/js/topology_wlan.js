@@ -19,14 +19,14 @@
         "ID_KEY": "__id__",
         "singleMode": true,
         "shape": { 
-           "router": {
+            "router": {
                 "rx": 19,
                 "ry": 19,
                 "imgSrc": "/images/icons2/router.png" 
             },
             "switch": {
-                "rx": 26,
-                "ry": 19,
+                "rx": 27,
+                "ry": 20.5,
                 "imgSrc": "/images/icons2/switch.png"
             },
             "server": {
@@ -75,8 +75,8 @@
                 "imgSrc": "/images/icons2/core.png"
             },
             "mainSwitch":{
-                "rx": 42.5,
-                "ry": 32.5,
+                "rx": 32,
+                "ry": 22,
                 "imgSrc": "/images/icons2/mainSwitch.png"
             }
         } 
