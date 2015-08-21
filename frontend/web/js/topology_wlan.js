@@ -19,66 +19,66 @@
         "ID_KEY": "__id__",
         "singleMode": true,
         "shape": { 
-				"router": {
-					"rx": 19,
-					"ry": 19,
-					"imgSrc": "/images/icons2/router.png" 
-				},
-				"switch": {
-					"rx": 26,
-					"ry": 19,
-					"imgSrc": "/images/icons2/switch.png"
-				},
-				"server": {
-					"rx": 17,
-					"ry": 25,
-					"imgSrc": "/images/icons2/server.png"
-				},
-				"firewall": {
-					"rx": 19,
-					"ry": 18,
-					"imgSrc": "/images/icons2/firewall.png"
-				},
-				"db": {
-					"rx": 35,
-					"ry": 42,
-					"imgSrc": "/images/icons2/db.png"
-				},
-				"wireless": {
-					"rx": 25,
-					"ry": 24,
-					"imgSrc": "/images/icons2/wireless.gif"
-				},
-				"voice":{
-					"rx": 25,
-					"ry": 25,
-					"imgSrc": "/images/icons2/voice.png"
-				},
-				"printer": {
-					"rx": 40,
-					"ry": 41,
-					"imgSrc": "/images/icons2/printer.png"
-				},
-				"ups": {
-					"rx": 40,
-					"ry": 41.5,
-					"imgSrc": "/images/icons2/ups.png"
-				},
-				"pc": {
-					"rx": 38,
-					"ry": 38.5,
-					"imgSrc": "/images/icons2/pc.png"
-				},
-				"coreSwitch":{
-					"rx": 26.5,
-					"ry": 27.5,
-					"imgSrc": "/images/icons2/core.png"
-				},
-				"mainSwitch":{
-					"rx": 42.5,
-					"ry": 32.5,
-					"imgSrc": "/images/icons2/mainSwitch.png"
-				}
+           "router": {
+                "rx": 19,
+                "ry": 19,
+                "imgSrc": "/images/icons2/router.png" 
+            },
+            "switch": {
+                "rx": 26,
+                "ry": 19,
+                "imgSrc": "/images/icons2/switch.png"
+            },
+            "server": {
+                "rx": 17,
+                "ry": 25,
+                "imgSrc": "/images/icons2/server.png"
+            },
+            "firewall": {
+                "rx": 19,
+                "ry": 18,
+                "imgSrc": "/images/icons2/firewall.png"
+            },
+            "driver": {
+                "rx": 35,
+                "ry": 42,
+                "imgSrc": "/images/icons2/db.png"
+            },
+            "wireless": {
+                "rx": 25,
+                "ry": 24,
+                "imgSrc": "/images/icons2/wireless.gif"
+            },
+            "audio":{
+                "rx": 25,
+                "ry": 25,
+                "imgSrc": "/images/icons2/voice.png"
+            },
+            "printer": {
+                "rx": 40,
+                "ry": 41,
+                "imgSrc": "/images/icons2/printer.png"
+            },
+            "ups": {
+                "rx": 40,
+                "ry": 41.5,
+                "imgSrc": "/images/icons2/ups.png"
+            },
+            "pc": {
+                "rx": 38,
+                "ry": 38.5,
+                "imgSrc": "/images/icons2/pc.png"
+            },
+            "coreSwitch":{
+                "rx": 26.5,
+                "ry": 27.5,
+                "imgSrc": "/images/icons2/core.png"
+            },
+            "mainSwitch":{
+                "rx": 42.5,
+                "ry": 32.5,
+                "imgSrc": "/images/icons2/mainSwitch.png"
+            }
         } 
     }; 
 

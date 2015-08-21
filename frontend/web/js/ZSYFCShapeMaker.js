@@ -310,6 +310,24 @@
         return new db_(title, x, y, config_["db"]["rx"], config_["db"]["ry"]);
     }; 
 
+    var driver_  = constructor_("driver");
+    driver_.prototype = new base_();
+    driver_.prototype.constructor = driver_;
+    driver_.prototype.render = function (g){
+        var shape = this; 
+        return g.append("image")
+            .attr("class", "shape")
+            .attr("x", shape.cx() - shape.rx() )
+            .attr("y", shape.cy() - shape.ry())
+            .attr("width", 2 * shape.rx())
+            .attr("height",2 * shape.ry())
+            .attr("xlink:href",config_["driver"]["imgSrc"]);            
+    };
+    driver_.newOne = function (title, x, y){
+        return new driver_(title, x, y, config_["driver"]["rx"], config_["driver"]["ry"]);
+    };  
+
+
     var firewall_  = constructor_("firewall");
     firewall_.prototype = new base_();
     firewall_.prototype.constructor = firewall_;
@@ -412,6 +430,40 @@
         return new pc_(title, x, y, config_["pc"]["rx"], config_["pc"]["ry"]);
     };  
 
+    var audio_  = constructor_("audio");
+    audio_.prototype = new base_();
+    audio_.prototype.constructor = audio_;
+    audio_.prototype.render = function (g){
+        var shape = this; 
+        return g.append("image")
+            .attr("class", "shape")
+            .attr("x", shape.cx() - shape.rx() )
+            .attr("y", shape.cy() - shape.ry())
+            .attr("width", 2 * shape.rx())
+            .attr("height",2 * shape.ry())
+            .attr("xlink:href", config_["audio"]["imgSrc"]);            
+    };
+    audio_.newOne = function (title, x, y){
+        return new audio_(title, x, y, config_["audio"]["rx"], config_["audio"]["ry"]);
+    };  
+
+
+    var ac_  = constructor_("ac");
+    ac_.prototype = new base_();
+    ac_.prototype.constructor = ac_;
+    ac_.prototype.render = function (g){
+        var shape = this; 
+        return g.append("image")
+            .attr("class", "shape")
+            .attr("x", shape.cx() - shape.rx() )
+            .attr("y", shape.cy() - shape.ry())
+            .attr("width", 2 * shape.rx())
+            .attr("height",2 * shape.ry())
+            .attr("xlink:href", config_["ac"]["imgSrc"]);            
+    };
+    ac_.newOne = function (title, x, y){
+        return new ac_(title, x, y, config_["ac"]["rx"], config_["ac"]["ry"]);
+    };  
 
     // Exports
     window[_exportName_] = {
@@ -423,12 +475,15 @@
     	"switch": switch_,
     	"server": server_,
     	"db": db_,
+        "driver": driver_,
     	"firewall": firewall_,
         "router": router_,
         "wireless": wireless_,
         "printer": printer_,
         "ups": ups_,
-        "pc": pc_
+        "pc": pc_,
+        "audio": audio_,
+        "ac": ac_
 	};
 
 }("FCShapeMaker")
