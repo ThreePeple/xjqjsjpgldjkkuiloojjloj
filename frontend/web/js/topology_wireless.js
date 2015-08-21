@@ -27,7 +27,7 @@
             "switch": {
                 "rx": 42.5,
                 "ry": 32.5,
-                "imgSrc": "/images/icons3/mainSwitch.png"
+                "imgSrc": "/images/icons3/switch.png"
             },
             "server": {
                 "rx": 17,
@@ -35,14 +35,14 @@
                 "imgSrc": "/images/icons3/server.png"
             },
             "firewall": {
-                "rx": 19,
-                "ry": 18,
+                "rx": 44.5,
+                "ry": 34,
                 "imgSrc": "/images/icons3/firewall.png"
             }, 
             "wireless": {
                 "rx": 25,
                 "ry": 24,
-                "imgSrc": "/images/icons3/ap.png"
+                "imgSrc": "/images/icons3/wireless.png"
             },
             "coreSwitch":{
                 "rx": 26.5,
