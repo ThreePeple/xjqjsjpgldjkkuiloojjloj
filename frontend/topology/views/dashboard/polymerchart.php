@@ -46,7 +46,7 @@ svg{
 }
 .ZSYPolymerChart .link-path{
 	fill: transparent;
-	stroke: gray;
+	stroke: green;
 	stroke-width: 1px;
 }
 .ZSYPolymerChart .node.hover text{
@@ -58,7 +58,7 @@ svg{
 	-webkit-transform: scale(1.38);
 }
 .ZSYPolymerChart .link-path.hover{
-	stroke: #fff;
+	stroke: rgb(30, 255, 30);
 	stroke-width: 1px;
 } 
 .box{
