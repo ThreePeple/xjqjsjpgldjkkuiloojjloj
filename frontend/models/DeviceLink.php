@@ -75,24 +75,32 @@ class DeviceLink extends \yii\db\ActiveRecord
         return (int)($this->bandWidth/1000000).'M';
     }
 
-    public static function getPolymerData($core_id){
+    public static function getPolymerData($id1,$id2){
         $polymers = [];
-        $models = self::find()->with("right")->where(["leftDevice"=>$core_id])->limit(2)->all();
+
+        $models = DeviceInfo::find()->where(["id"=>[$id1,$id2]])->all();
         $n =1 ;
         foreach($models as $model){
-            if(!$model->right) continue;
-            $polymers[$model->right->id] = [
+            $polymers[] = [
                 'id' => 'p'.$n,
-                'label' => $model->right->label,
+                'label' => $model->label,
                 "children" => []
             ];
             $n++;
         }
 
-        $ployIds = array_keys($polymers);
+        $filterIds = DeviceIpfilter::find()->where(["type_id"=>DeviceIpfilter::TYPE_POLYMER])->select("ip")->column();
 
         $group1 = [];
-        $rows = self::find()->with("left")->where(["and",["rightDevice"=>$ployIds],["not",["leftDevice"=>$core_id]]])->all();
+
+        $rows = (new Query())
+            ->from("device_link a")
+            ->leftJoin("device_info b","a.leftDevice = b.id")
+            ->where(["a.rightDevce"=>[$id1,$id2],"b.ip"=>$filterIds])
+            ->select(["label"=>"b.label","nodeId"=>"CONCAT('id',b.id)","group"=>"CONCAT('group1:',b.id)","status"]);
+
+        $rows = self::find()->with(["left"=>function($query){
+        }])->where(["and",["rightDevice"=>[$id1,$id2]],["not",["leftDevice"=>$core_id]]])->all();
         //$rows = self::find()->with("left")->where(["rightDevice"=>$ployIds])->groupBy("leftDevice")->all();
         foreach($rows as $model){
             if(!$model->left) continue;
