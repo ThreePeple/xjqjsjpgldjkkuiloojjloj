@@ -186,7 +186,7 @@
             },
             chart: {
                 type: 'bar',
-                height: 300,
+                height: 200,
                 backgroundColor:'transparent'
             },
             plotOptions:{

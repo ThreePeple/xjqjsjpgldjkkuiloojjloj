@@ -113,10 +113,10 @@ class DeviceAlarm extends \yii\db\ActiveRecord
      */
     public static function getTypeChartData(){
         $ips = DeviceIpfilter::getIdsByType(DeviceIpfilter::TYPE_BUILD);
-        $sql = "select a.subDesc as category, a.id as categoryId, count(b.id) as count ,a.color as color
+        $sql = "select a.baseDesc as category, a.id as categoryId, count(b.id) as count ,a.color as color
         from alarm_category a
         left join (select * from device_alarm where deviceIp in ('".implode("','",$ips)."')) b on a.id = b.alarmCategory
-        group by a.id";
+        group by a.baseClass";
         $rows = Yii::$app->db->createCommand($sql)->queryAll();
         /*
         $rows = (new Query())
