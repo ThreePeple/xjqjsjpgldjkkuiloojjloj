@@ -7,7 +7,7 @@
 
     var alarmImageMap = {
         "router": { 
-            "2": "/images/icons2/router.gif" 
+            "2": "/images/icons2/alarm/router.gif" 
         },
         "switch": { 
             "2": "/images/icons2/alarm/switch.gif"

@@ -3,18 +3,28 @@
  */
 ( function () { 
    
-    var detailUrl = '/stat/wireless/ajax-device-tip';
+    var detailUrl = '/stat/wireless/ajax-device-tip'; 
 
-    var switchStatusImg = {
-        '-1': "/images/building_switch_status2/s-1.gif",
-        '0': "/images/building_switch_status2/s0.gif",
-        '1': "/images/building_switch_status2/s1.gif",
-        '2': "/images/building_switch_status2/s2.gif",
-        '3': "/images/building_switch_status2/s3.gif",
-        '4': "/images/building_switch_status2/s4.gif",
-        '5': "/images/building_switch_status2/s5.gif"
+    var alarmImageMap = { 
+        "ac": { 
+            "2": "/images/icons3/alarm/ac.gif" 
+        },
+        "switch": { 
+            "2": "/images/icons3/alarm/switch.gif"
+        },
+        "server": { 
+            "2": "/images/icons3/alarm/server.gif"
+        },
+        "firewall": { 
+            "2": "/images/icons3/alarm/firewall.gif"
+        }, 
+        "wireless": { 
+            "2": "/images/icons3/alarm/wireless.gif"
+        },
+        "coreSwitch":{ 
+            "2": "/images/icons3/alarm/core.gif"
+        } 
     };
-
     var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
         "ID_KEY": "__id__",
         "singleMode": true,
@@ -133,6 +143,13 @@
         }).init().show(x, y);
     }; 
 
+    var _updateImage = function (shape, shapeType, s){  
+        if( s == '1' ){
+           shape.attr("href", ZSYFCEditorConfig["shape"][shapeType]["imgSrc"] );
+        } else { 
+           shape.attr("href", alarmImageMap[shapeType]["2"]);
+        }
+    };
 
     // Dom Ready 
     $(function(){ 
@@ -146,7 +163,8 @@
                 width: 1440,
                 height: 800
             } 
-        ); 
+        );
+
 
         ZSYFCEditor.updateCallback( function(){
 
@@ -158,19 +176,15 @@
                 var id  = ZSYFCEditor.getData()[ data[ ZSYFCEditorConfig['ID_KEY'] ] ]["data"]["id"];
                  window.open("/stat/wireless/detail?id=" + id, "wlan-node-detail");
             });  
-
-             return;
-
+ 
 
             // Update switch status.
             var data = ZSYFCEditor.getData();
             var keys = Object.keys( data ), s, imgSrc; 
             keys.forEach( function ( id ){
                 ZSYFCEditor.callFN("shape", id, function (){
-                    s = data[id]['data'] ? data[id]['data']["status"] ? data[id]['data']['status'] : '-1' : '-1';
-                    imgSrc = switchStatusImg[s] ? switchStatusImg[s] : switchStatusImg['-1'];
-                    //alert(imgSrc);
-                    this.attr( "href", imgSrc );
+                    this.attr("data-status", data[id]['data']["status"] ); 
+                    _updateImage(this, this.node().parentNode.getAttribute("data-shape-type") ,data[id]['data']["status"]);
                 });
             });
             
