@@ -94,7 +94,7 @@ class DeviceLink extends \yii\db\ActiveRecord
         $group1 = (new Query())
             ->from("device_link a")
             ->leftJoin("device_info b","a.leftDevice = b.id")
-            ->where(["a.rightDevice"=>[$id1,$id2],"b.ip"=>$filterIds])
+            ->where(['and',["a.rightDevice"=>[$id1,$id2],"b.ip"=>$filterIds],["not",["a.leftDevice"=>[$id1,$id2]]]])
             ->select(["label"=>"b.label","id"=>"CONCAT('id',b.id)","group"=>"CONCAT('group1:',CONCAT('id',b.id))","a.status","device_id"=>"a.rightDevice"])
             ->groupBy('a.leftDevice')
             ->all();
@@ -104,8 +104,8 @@ class DeviceLink extends \yii\db\ActiveRecord
 
         $group2 = (new Query())
             ->from("device_link a")
-            ->leftJoin("device_info b","a.leftDevice = b.id")
-            ->where(["a.leftDevice"=>[$id1,$id2],"b.ip"=>$filterIds])
+            ->leftJoin("device_info b","a.rightDevice = b.id")
+            ->where(["and",["a.leftDevice"=>[$id1,$id2],"b.ip"=>$filterIds],["not",["a.rightDevice"=>[$id1,$id2]]]])
             ->select(["label"=>"b.label","id"=>"CONCAT('id',b.id)","group"=>"CONCAT('group2:',CONCAT('id',b.id))","a.status","device_id"=>"a.leftDevice"])
             ->groupBy('a.leftDevice')
             ->all();
