@@ -728,6 +728,17 @@
         gNodeUpdate_ = shape;
         gNodeExit_ = shapeExit;
 
+        gSVG_.selectAll(".node_link")
+            .data(gLinkData_)
+            .enter().append("path")
+            .attr("class", "node_link")
+            .attr("data-from", function( d ){ return d.from; })
+            .attr("data-to", function( d ){ return d.to; })
+            .attr("id", function ( d ){ return elementID_["pathId"]( d.from + '_' + d.to );   } )
+            .attr("d", function(d) {
+                return d.pathData ;
+            });        
+
         var g = gNodeEnter_.append("g")
             .attr("data-shape-type", function(d) {
                 return d.type;
@@ -745,16 +756,7 @@
 
         gNodeExit_.transition().remove();
 
-        gSVG_.selectAll(".node_link")
-            .data(gLinkData_)
-            .enter().append("path")
-            .attr("class", "node_link")
-            .attr("data-from", function( d ){ return d.from; })
-            .attr("data-to", function( d ){ return d.to; })
-            .attr("id", function ( d ){ return elementID_["pathId"]( d.from + '_' + d.to );   } )
-            .attr("d", function(d) {
-                return d.pathData ;
-            });
+
 
         if( refreshCallback_ )
             refreshCallback_();
