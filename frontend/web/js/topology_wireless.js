@@ -176,18 +176,23 @@
             
         } ); 
 
-
-
+        var pathIdPrefix = "ZSYFCEditor_Path";
+        var _updateLinksStatus = function (links){
+            links.forEach( function ( link ){
+                d3.select('#' + pathIdPrefix + link.from + "_" + link.to).classed( "node_link_error", link.status != '1' );
+            } );
+        };
 
         var refreshData = function(){
             $.ajax({
-                url:'/topology/dashboard/ajax-refresh',
+                url:'/topology/dashboard/ajax-links-refresh',
                 type:"post",
                 data:{"type":3},
                 dataType:'json',
                 success:function(res){
                     if(res.build){
                         ZSYFCEditor.updateData(res.build);
+                        _updateLinksStatus( res.links );
                     }
                     setTimeout(refreshData,30000);
                 }
