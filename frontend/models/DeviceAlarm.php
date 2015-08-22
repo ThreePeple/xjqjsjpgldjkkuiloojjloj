@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\Query;
 
 /**
  * This is the model class for table "device_alarm".
@@ -104,5 +105,12 @@ class DeviceAlarm extends \yii\db\ActiveRecord
             'specificId' => Yii::t('app', 'Specific ID'),
             'originalType' => Yii::t('app', 'Original Type'),
         ];
+    }
+
+    public static function getTypeChartData(){
+        $ips = DeviceIpfilter::getIdsByType(DeviceIpfilter::TYPE_BUILD);
+        $rows = (new Query())
+            ->from("device_alarm a")
+            ->
     }
 }

@@ -216,6 +216,12 @@ class DashboardController extends Controller
      * 图表数据
      */
     public function actionAjaxChartData(){
+        $deviceData = DeviceInfo::getDeviceCountStat();
 
+        $alarmType =
+
+        return json_encode([
+            "device" => $deviceData
+        ]);
     }
 }

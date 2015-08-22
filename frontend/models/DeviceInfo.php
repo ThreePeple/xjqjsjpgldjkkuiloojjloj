@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "device_info".
@@ -48,7 +49,7 @@ class DeviceInfo extends \yii\db\ActiveRecord
     const STATUS_IMPORTANT =4;
     const STATUS_SERIOUS =5;
 
-    static $status = [
+    static $status_config = [
         self::STATUS_UNMANAGED =>["未管理",'#808080'],
         self::STATUS_UNKNOWN => ['未知','#00F'],
         self::STATUS_NORMAL => ['正常','#00F'],
@@ -247,5 +248,39 @@ class DeviceInfo extends \yii\db\ActiveRecord
             default:
                 return '<span style="color:#00F">未知</span>';
         }
+    }
+
+    public static function getDeviceCountStat(){
+        $ips = DeviceIpfilter::getIdsByType(DeviceIpfilter::TYPE_BUILD);
+        $rows = DeviceInfo::find()
+            ->where(["ip"=>$ips])
+            ->select(["status","count"=>"count(id)"])
+            ->groupBy("status")
+            ->asArray()
+            ->all();
+        $rows = ArrayHelper::map($rows,"status","count");
+
+        $data = [];
+        $categories = [];
+        foreach(self::$status_config as $key => $config){
+            $data[] = [
+                "name" => $config[0],
+                "color" => $config[1],
+                "y" => isset($rows[$key])?$rows[$key] : 0,
+            ];
+            $categories[] = $config[0];
+        }
+
+        $series = [
+            "data" => $data,
+            "dataLabels" => [
+                "enabled" => true,
+                "align" => "top"
+            ]
+        ];
+        return [
+            "series" => $series,
+            "categories" => $categories
+        ];
     }
 }
