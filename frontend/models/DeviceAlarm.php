@@ -159,7 +159,7 @@ class DeviceAlarm extends \yii\db\ActiveRecord
         foreach($rows as $row){
             $data[] = [
                 "name" => $row["category"],
-                //"color" => $row["color"],
+                "color" => $row["color"],
                 "y" => (int)$row["count"],
             ];
             if($row["count"]>$max){
