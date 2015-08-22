@@ -95,22 +95,22 @@ class DeviceLink extends \yii\db\ActiveRecord
             ->from("device_link a")
             ->leftJoin("device_info b","a.leftDevice = b.id")
             ->where(['and',["a.rightDevice"=>[$id1,$id2],"b.ip"=>$filterIds],["not",["a.leftDevice"=>[$id1,$id2]]]])
-            ->select(["label"=>"b.label","id"=>"CONCAT('id',b.id)","group"=>"CONCAT('group1:',CONCAT('id',b.id))","a.status","device_id"=>"a.rightDevice"])
+            ->select(["label"=>"b.label","id"=>"CONCAT('id',b.id)","group"=>"CONCAT('group1:',CONCAT('id',b.id))","a.status",'polymer_id'=>"a.rightDevice","device_id"=>"b.id"])
             ->groupBy('a.leftDevice')
             ->all();
         foreach($group1 as $one){
-            $polymers[$one["device_id"]]["children"][] = $one["group"];
+            $polymers[$one["polymer_id"]]["children"][] = $one["group"];
         }
 
         $group2 = (new Query())
             ->from("device_link a")
             ->leftJoin("device_info b","a.rightDevice = b.id")
             ->where(["and",["a.leftDevice"=>[$id1,$id2],"b.ip"=>$filterIds],["not",["a.rightDevice"=>[$id1,$id2]]]])
-            ->select(["label"=>"b.label","id"=>"CONCAT('id',b.id)","group"=>"CONCAT('group2:',CONCAT('id',b.id))","a.status","device_id"=>"a.leftDevice"])
-            ->groupBy('a.leftDevice')
+            ->select(["label"=>"b.label","id"=>"CONCAT('id',b.id)","group"=>"CONCAT('group2:',CONCAT('id',b.id))","a.status","polymer_id"=>"a.leftDevice","device_id"=>"b.id"])
+            ->groupBy('a.rightDevice')
             ->all();
         foreach($group2 as $one){
-            $polymers[$one["device_id"]]["children"][] = $one["group"];
+            $polymers[$one["polymer_id"]]["children"][] = $one["group"];
         }
 
         return [

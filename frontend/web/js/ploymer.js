@@ -81,9 +81,11 @@ function changeCore(group,id1,id2){
 
                 $content.find("div.popup_content").html(_updateContent("loading...")); 
                 // nodeDetail_.json : fail data, nodeDetail.json: ok data.
-                var id  = d["data"]["device_id"];
-                var url = __detailUrl+'?id='+id;
-                $.get(url, function(j) {
+                var id  = d["id"], device_id = d["device_id"];
+                $.get(__detailUrl, {
+                    id: id,
+                    device_id: device_id
+                }, function(j) {
                     $content.find("div.popup_content").html(j);
                     popPanel.refresh(); 
                     return;

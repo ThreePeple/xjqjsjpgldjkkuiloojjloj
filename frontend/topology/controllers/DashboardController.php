@@ -126,7 +126,6 @@ class DashboardController extends Controller
         $id1 = Yii::$app->request->post("id1");
         $id2 = Yii::$app->request->post("id2");
 
-
         $data = DeviceLink::getPolymerData($id1,$id2);
 
         return Json::encode([
