@@ -73,16 +73,18 @@ class DashboardController extends Controller
      * 有线网络2   交换机组网
      */
     public function actionHubCompose(){
-        /*$rows = DeviceInfo::find()->where(["categoryId"=>12])->select(["id","label"])->asArray()->all();
+        $rows = DeviceInfo::find()->where(["categoryId"=>12])->select(["id","label"])->asArray()->all();
         $first = 0;
         if(!empty($rows)){
             $first = $rows[0]["id"];
-        }*/
+        }
         $ips = ["10.253.1.11","10.253.1.12","10.253.1.13","10.253.1.14"];
-        $rows = DeviceIpfilter::find()->where(["ip"=>$ips])->select(["id","label"])->asArray()->all();
-        $data = ArrayHelper::map($rows,"id","label");
+        //$rows = DeviceIpfilter::find()->where(["ip"=>$ips])->select(["id","label"])->asArray()->all();
+        //$data = ArrayHelper::map($rows,"id","label");
+        $data = [];
         return $this->render('polymerchart',[
             "cores" => $data,
+            "firstCore" => 0
         ]);
     }
 
@@ -90,6 +92,11 @@ class DashboardController extends Controller
         $this->layout= false;
         $id1 = Yii::$app->request->post("id1");
         $id2 = Yii::$app->request->post("id2");
+
+        //debug
+        $id1 = 681;
+        $id2 = 731;
+
         $data = DeviceLink::getPolymerData($id1,$id2);
 
         return Json::encode([
@@ -167,7 +174,6 @@ class DashboardController extends Controller
         $query->where(["or",["leftDevice"=>$ids],["rightDevice"=>$ids]])
             ->select(["from"=>"leftDevice","to"=>"rightDevice","status"=>"status"]);
         $links = $query->asArray()->all();
-        //var_dump($links);die;
         return Json::encode($links);
     }
 

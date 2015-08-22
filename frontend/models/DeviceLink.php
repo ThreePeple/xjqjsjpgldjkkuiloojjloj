@@ -81,7 +81,7 @@ class DeviceLink extends \yii\db\ActiveRecord
         $models = DeviceInfo::find()->where(["id"=>[$id1,$id2]])->all();
         $n =1 ;
         foreach($models as $model){
-            $polymers[] = [
+            $polymers[$model->id] = [
                 'id' => 'p'.$n,
                 'label' => $model->label,
                 "children" => []
@@ -91,33 +91,26 @@ class DeviceLink extends \yii\db\ActiveRecord
 
         $filterIds = DeviceIpfilter::find()->where(["type_id"=>DeviceIpfilter::TYPE_POLYMER])->select("ip")->column();
 
-        $group1 = [];
-
-        $rows = (new Query())
+        $group1 = (new Query())
             ->from("device_link a")
             ->leftJoin("device_info b","a.leftDevice = b.id")
-            ->where(["a.rightDevce"=>[$id1,$id2],"b.ip"=>$filterIds])
-            ->select(["label"=>"b.label","nodeId"=>"CONCAT('id',b.id)","group"=>"CONCAT('group1:',b.id)","status"]);
-
-        $rows = self::find()->with(["left"=>function($query){
-        }])->where(["and",["rightDevice"=>[$id1,$id2]],["not",["leftDevice"=>$core_id]]])->all();
-        //$rows = self::find()->with("left")->where(["rightDevice"=>$ployIds])->groupBy("leftDevice")->all();
-        foreach($rows as $model){
-            if(!$model->left) continue;
-            $polymerId = $model->rightDevice;
-            $node_id = 'id'.$model->left->id;
-            $group1[] = ["label"=>$model->left->label,"id"=>$node_id,"status"=>$model->left->status];
-            $polymers[$polymerId]["children"][] = "group1:".$node_id;
+            ->where(["a.rightDevice"=>[$id1,$id2],"b.ip"=>$filterIds])
+            ->select(["label"=>"b.label","id"=>"CONCAT('id',b.id)","group"=>"CONCAT('group1:',CONCAT('id',b.id))","a.status","device_id"=>"a.rightDevice"])
+            ->groupBy('a.leftDevice')
+            ->all();
+        foreach($group1 as $one){
+            $polymers[$one["device_id"]]["children"][] = $one["group"];
         }
 
-        $group2 = [];
-        $rows = self::find()->with("right")->where(["leftDevice"=>$ployIds])->groupBy("rightDevice")->all();
-        foreach($rows as $model){
-            if(!$model->right) continue;
-            $polymerId = $model->leftDevice;
-            $node_id = 'id'.$model->right->id;
-            $group2[] = ["label"=>$model->right->label,"id"=>$node_id,"status"=>$model->right->status];
-            $polymers[$polymerId]["children"][] = "group2:".$node_id;
+        $group2 = (new Query())
+            ->from("device_link a")
+            ->leftJoin("device_info b","a.leftDevice = b.id")
+            ->where(["a.leftDevice"=>[$id1,$id2],"b.ip"=>$filterIds])
+            ->select(["label"=>"b.label","id"=>"CONCAT('id',b.id)","group"=>"CONCAT('group2:',CONCAT('id',b.id))","a.status","device_id"=>"a.leftDevice"])
+            ->groupBy('a.leftDevice')
+            ->all();
+        foreach($group2 as $one){
+            $polymers[$one["device_id"]]["children"][] = $one["group"];
         }
 
         return [
