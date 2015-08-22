@@ -102,7 +102,7 @@ var _showNodeDetail = function(d, e, contentHtmlTpl) {
 
             $content.find("div.popup_content").html(_updateContent("loading...")); 
             // nodeDetail_.json : fail data, nodeDetail.json: ok data.
-            var id  = d["id"], device_id = d["device_id"];
+            var id  = d["data"]["id"], device_id = d["data"]["device_id"];
             $.get(__detailUrl, {
                 id: id,
                 device_id: device_id
