@@ -3,16 +3,45 @@
  */
 ( function () { 
    
-    var detailUrl = '/stat/device/ajax-device-tip';
+    var detailUrl = '/stat/device/ajax-device-tip'; 
 
-    var switchStatusImg = {
-        '-1': "/images/building_switch_status2/s-1.gif",
-        '0': "/images/building_switch_status2/s0.gif",
-        '1': "/images/building_switch_status2/s1.gif",
-        '2': "/images/building_switch_status2/s2.gif",
-        '3': "/images/building_switch_status2/s3.gif",
-        '4': "/images/building_switch_status2/s4.gif",
-        '5': "/images/building_switch_status2/s5.gif"
+    var alarmImageMap = {
+        "router": { 
+            "2": "/images/icons2/router.gif" 
+        },
+        "switch": { 
+            "2": "/images/icons2/alarm/switch.gif"
+        },
+        "server": { 
+            "2": "/images/icons2/alarm/server.gif"
+        },
+        "firewall": { 
+            "2": "/images/icons2/alarm/firewall.gif"
+        },
+        "driver": { 
+            "2": "/images/icons2/alarm/db.gif"
+        },
+        "wireless": { 
+            "2": "/images/icons2/alarm/wireless.gif"
+        },
+        "audio":{ 
+            "2": "/images/icons2/alarm/voice.gif"
+        },
+        "printer": { 
+            "2": "/images/icons2/alarm/printer.gif"
+        },
+        "ups": { 
+            "2": "/images/icons2/alarm/ups.gif"
+        },
+        "pc": { 
+            "2": "/images/icons2/alarm/pc.gif"
+        },
+        "coreSwitch":{ 
+            "2": "/images/icons2/alarm/core.gif"
+        },
+        "mainSwitch":{ 
+            "2": "/images/icons2/alarm/mainSwitch.gif"
+        }        
     };
 
     var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
@@ -161,7 +190,14 @@
             }
         }).init().show(x, y);
     }; 
-
+ 
+    var _updateImage = function (shape, shapeType, s){  
+        if( s == '1' ){
+           shape.attr("href", ZSYFCEditorConfig["shape"][shapeType]["imgSrc"] );
+        } else { 
+           shape.attr("href", alarmImageMap[shapeType]["2"]);
+        }
+    };
 
     // Dom Ready 
     $(function(){ 
@@ -186,20 +222,15 @@
             }).on("click", function(data){
                 var id  = ZSYFCEditor.getData()[ data[ ZSYFCEditorConfig['ID_KEY'] ] ]["data"]["id"];
                  window.open("/stat/device/wlan-detail?id=" + id, "wlan-node-detail");
-            });  
-
-             return;
-
+            });   
 
             // Update switch status.
             var data = ZSYFCEditor.getData();
             var keys = Object.keys( data ), s, imgSrc; 
             keys.forEach( function ( id ){
                 ZSYFCEditor.callFN("shape", id, function (){
-                    s = data[id]['data'] ? data[id]['data']["status"] ? data[id]['data']['status'] : '-1' : '-1';
-                    imgSrc = switchStatusImg[s] ? switchStatusImg[s] : switchStatusImg['-1'];
-                    //alert(imgSrc);
-                    this.attr( "href", imgSrc );
+                    this.attr("data-status", data[id]['data']["status"] ); 
+                    _updateImage(this, this.node().parentNode.getAttribute("data-shape-type") ,data[id]['data']["status"]);
                 });
             });
             
