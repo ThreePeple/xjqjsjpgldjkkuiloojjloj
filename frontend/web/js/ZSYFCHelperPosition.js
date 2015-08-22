@@ -18,6 +18,9 @@
                 if (this["cache_"][key] == undefined) {
                     var shape = objectCollector_.get(d);
                     var posMap = {};
+
+                    delta = Math.min( shape.rx(), shape.ry() ) ;
+
                     //x,y,w,h,cx,cy
                     // top
                     posMap["t"] = [
