@@ -2,6 +2,7 @@
 
 namespace app\topology\controllers;
 
+use app\models\DeviceAlarm;
 use app\models\DeviceIpfilter;
 use app\models\WirelessDeviceInfo;
 use app\models\WirelessDeviceLink;
@@ -218,10 +219,13 @@ class DashboardController extends Controller
     public function actionAjaxChartData(){
         $deviceData = DeviceInfo::getDeviceCountStat();
 
-        $alarmType =
+        $alarmTypes = DeviceAlarm::getTypeChartData();
+        $alarmLevels = DeviceAlarm::getLevelChartData();
 
         return json_encode([
-            "device" => $deviceData
+            "device" => $deviceData,
+            "alarmType" => $alarmTypes,
+            "alarmLevel" => $alarmLevels
         ]);
     }
 }

@@ -107,10 +107,74 @@ class DeviceAlarm extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * 告警分类统计图表
+     * @return array
+     */
     public static function getTypeChartData(){
         $ips = DeviceIpfilter::getIdsByType(DeviceIpfilter::TYPE_BUILD);
         $rows = (new Query())
-            ->from("device_alarm a")
-            ->
+            ->from("alarm_category a")
+            ->leftJoin("device_alarm b","a.id = b.alarmCategory")
+            ->where(["b.deviceIp"=>$ips])
+            ->select(["category"=>"a.subDesc","categoryId"=>"a.id","count"=>"count(b.id)","color"=>"a.color"])
+            ->groupBy("a.id")
+            ->all();
+        $categories = [];
+        $data = [];
+        foreach($rows as $row){
+            $categories[] = $row["category"];
+            $data[] = [
+                "name"=>$row["category"],
+                "color"=>$row["color"],
+                "y"=>(int)$row["count"],
+            ];
+        }
+
+        return [
+            "categories" => $categories,
+            "series" =>[
+                [
+                    "data" => $data,
+                    "dataLabels" => [
+                        "enabled" => true,
+                        "align" => "top"
+                    ]
+                ]
+            ]
+        ];
+    }
+
+    public static function getLevelChartData(){
+        $ips = DeviceIpfilter::getIdsByType(DeviceIpfilter::TYPE_BUILD);
+        $rows = (new Query())
+            ->from("alarm_level a")
+            ->leftJoin("device_alarm b","a.id = b.alarmLevel")
+            ->where(["b.deviceIp"=>$ips])
+            ->select(["category"=>"a.desc","categoryId"=>"a.id","count"=>"count(b.id)","color"=>"a.color"])
+            ->groupBy("a.id")
+            ->all();
+        $data = [];
+        $max = 0;
+        foreach($rows as $row){
+            $data[] = [
+                "name" => $row["category"],
+                //"color" => $row["color"],
+                "y" => (int)$row["count"],
+            ];
+            if($row["count"]>$max){
+                $max = $row["count"];
+            }
+        }
+        $max = $max+1;
+        return [
+            "series" => [[
+                "type" => "column",
+                "name" => "数量",
+                "data" => $data,
+                "pointPlacement" => "between"
+            ]],
+            "max" => $max
+        ];
     }
 }

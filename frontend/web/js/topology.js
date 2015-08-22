@@ -140,10 +140,8 @@
         }]
     };
 
-    // Dom Ready 
-    $(function(){ 
-
-        $('#events_type').highcharts({
+    function loadDeviceChart(series,categories){
+        $('#device_status').highcharts({
             credits: {
                 enabled: false
             },
@@ -165,7 +163,7 @@
                 text: ''
             },
             xAxis: {
-                categories: events_type.categories,
+                categories: categories,
                 tickLength: 0
             },
             yAxis: {
@@ -176,8 +174,47 @@
             legend: {
                 enabled: false
             },
-            series: events_type.series
+            series: series
         });
+    }
+
+    function loadAlarmTypeChart(series,categories){
+        console.log(JSON.stringify(series))
+        $('#runtime').highcharts({
+            credits: {
+                enabled: false
+            },
+            chart: {
+                type: 'bar',
+                height: 150,
+                backgroundColor:'transparent'
+            },
+            plotOptions:{
+                series:{
+                    groupPadding:0.05,
+                    pointPadding:0
+                }
+            },
+            title:{
+                text: ''
+            },
+            xAxis: {
+                categories: categories,
+                tickLength: 0
+            },
+            yAxis: {
+                title: '',
+                gridLineWidth: 0,
+                labels:{ enabled:false}
+            },
+            legend: {
+                enabled: false
+            },
+            series: series
+        });
+    }
+
+    function loadAlarmLevelData(series,max){
         $('#events_levels').highcharts({
             credits: {
                 enabled: false
@@ -213,7 +250,7 @@
                 min: 0,
                 lineWidth:0,
                 gridLineWidth:0,
-                max:20
+                max: max
             },
 
             plotOptions: {
@@ -226,10 +263,12 @@
                     groupPadding: 0
                 }
             },
-
+            series : series
+            /*
             series: [{
                 type: 'column',
                 name: 'Column',
+
                 data: [
                     {color:'#9BCA62',y:18},
                     {color:'#EDD777',y:14},
@@ -238,74 +277,29 @@
                     {color:'#F88464',y:4}
                 ],
                 pointPlacement: 'between'
-            }]
+            }]*/
         });
-        $('#runtime').highcharts({
-            credits: {
-                enabled: false
-            },
-            chart: {
-                type: 'bar',
-                height: 150,
-                backgroundColor:'transparent'
-            },
-            plotOptions:{
-                series:{
-                    groupPadding:0.05,
-                    pointPadding:0
+
+    }
+
+    // Dom Ready 
+    $(function(){ 
+
+        var reloadChart = function(){
+            $.ajax({
+                url:'/topology/dashboard/ajax-chart-data',
+                type:"post",
+                data: {"type":1},
+                dataType:'json',
+                success:function(res){
+                    loadDeviceChart(res.device.series,res.device.categories);
+                    loadAlarmTypeChart(res.alarmType.series,res.alarmType.categories);
+                    loadAlarmLevelData(res.alarmLevel.series,res.alarmLevel.max);
+                    setTimeout(reloadChart,30000);
                 }
-            },
-            title:{
-                text: ''
-            },
-            xAxis: {
-                categories: ['安全设备', '服务器','机房设备','客户端','应用系统','通讯设备','网络设备'],
-                tickLength: 0
-            },
-            yAxis: {
-                title: '',
-                gridLineWidth: 0,
-                labels:{ enabled:false}
-            },
-            legend: {
-                enabled: false
-            },
-            series: [{
-                data: [{
-                    name: 'Point 1',
-                    color: '#59BFA9',
-                    y: 2
-                }, {
-                    name: 'Point 2',
-                    color: '#F95E4B',
-                    y: 10
-                },{
-                    name: 'Point 2',
-                    color: '#59BFA9',
-                    y: 2
-                },{
-                    name: 'Point 2',
-                    color: '#59BFA9',
-                    y:2
-                },{
-                    name: 'Point 2',
-                    color: '#E99406',
-                    y: 8
-                },{
-                    name: 'Point 2',
-                    color: '#FBDB51',
-                    y: 3
-                },{
-                    name: 'Point 2',
-                    color: '#59BFA9',
-                    y: 4
-                }],
-                dataLabels:{
-                    enabled: true,
-                    align: 'top'
-                }
-            }]
-        });
+            });
+        }
+        reloadChart();
 
         // Render FCEditor
         ZSYFCEditor.init(

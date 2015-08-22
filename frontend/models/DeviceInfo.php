@@ -52,11 +52,11 @@ class DeviceInfo extends \yii\db\ActiveRecord
     static $status_config = [
         self::STATUS_UNMANAGED =>["未管理",'#808080'],
         self::STATUS_UNKNOWN => ['未知','#00F'],
-        self::STATUS_NORMAL => ['正常','#00F'],
-        self::STATUS_WARNING => ['警告','#00F'],
-        self::STATUS_MINOR => ['次要','#00F'],
-        self::STATUS_IMPORTANT => ['重要','#00F'],
-        self::STATUS_SERIOUS => ['严重','#00F'],
+        self::STATUS_NORMAL => ['正常','#008000'],
+        self::STATUS_WARNING => ['警告','#0FF'],
+        self::STATUS_MINOR => ['次要','#FF0'],
+        self::STATUS_IMPORTANT => ['重要','#FFA500'],
+        self::STATUS_SERIOUS => ['严重','#F00'],
     ];
 
     static $status_titles = [
@@ -266,16 +266,19 @@ class DeviceInfo extends \yii\db\ActiveRecord
             $data[] = [
                 "name" => $config[0],
                 "color" => $config[1],
-                "y" => isset($rows[$key])?$rows[$key] : 0,
+                "y" => isset($rows[$key])? (int) $rows[$key] : 0,
             ];
             $categories[] = $config[0];
         }
 
         $series = [
-            "data" => $data,
-            "dataLabels" => [
-                "enabled" => true,
-                "align" => "top"
+            [
+                "name" => "数量",
+                "data" => $data,
+                "dataLabels" => [
+                    "enabled" => true,
+                    "align" => "top"
+                ]
             ]
         ];
         return [
