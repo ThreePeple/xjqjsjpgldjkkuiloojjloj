@@ -1,13 +1,11 @@
 ( function (_exportName_){ 
     var console = ZSYFCEditorUtil.console;
-    var helperSquareD_ = 6;// 四边节点直径（接连线）
+    var helperSquareD_ = 0;// 四边节点直径（接连线）
     
     // Object-collector factory
     var objectCollector_ = window["FCObjectCollector"];
 
     var ID_KEY = ZSYFCEditorConfig["ID_KEY"];
-
-    var delta = 10;
 
     // 4 rect(s) helper( for generating {x,y,w,h,cx,cy} ) 
     var helperPosition_ = {
@@ -18,45 +16,42 @@
                 if (this["cache_"][key] == undefined) {
                     var shape = objectCollector_.get(d);
                     var posMap = {};
-
-                    delta = Math.min( shape.rx(), shape.ry() ) ;
-
                     //x,y,w,h,cx,cy
                     // top
                     posMap["t"] = [
-                        shape.cx() - helperSquareD_ / 2,
-                        shape.cy() - shape.ry() - helperSquareD_ / 2 + delta,
+                        shape.cx() ,
+                        shape.cy() ,
                         helperSquareD_,
                         helperSquareD_,
                         shape.cx(),
-                        shape.cy() - shape.ry() + delta
+                        shape.cy() 
                     ];
                     // right
                     posMap["r"] = [
-                        shape.cx() + shape.rx() - helperSquareD_ / 2 - delta,
-                        shape.cy() - helperSquareD_ / 2,
+                        shape.cx() ,
+                        shape.cy() ,
                         helperSquareD_,
                         helperSquareD_,
-                        shape.cx() + shape.rx() - delta,
+                        shape.cx() ,
                         shape.cy()
                     ];
 
                     // bottom
                     posMap["b"] = [
-                        shape.cx() - helperSquareD_ / 2,
-                        shape.cy() + shape.ry() - helperSquareD_ / 2 - delta,
+                        shape.cx() ,
+                        shape.cy() ,
                         helperSquareD_,
                         helperSquareD_,
                         shape.cx(),
-                        shape.cy() + shape.ry() - delta
+                        shape.cy() 
                     ];
                     // left
                     posMap["l"] = [
-                        shape.cx() - shape.rx() - helperSquareD_ / 2 + delta,
-                        shape.cy() - helperSquareD_ / 2,
+                        shape.cx() ,
+                        shape.cy() ,
                         helperSquareD_,
                         helperSquareD_,
-                        shape.cx() - shape.rx() + delta,
+                        shape.cx() ,
                         shape.cy()
                     ];
                     this["cache_"][key] = posMap;
