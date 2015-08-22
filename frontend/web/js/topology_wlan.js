@@ -25,8 +25,8 @@
                 "imgSrc": "/images/icons2/router.png" 
             },
             "switch": {
-                "rx": 5,
-                "ry": 3,
+                "rx": 23,
+                "ry": 16.5,
                 "imgSrc": "/images/icons2/switch.png"
             },
             "server": {
@@ -75,8 +75,8 @@
                 "imgSrc": "/images/icons2/core.png"
             },
             "mainSwitch":{
-                "rx": 16,
-                "ry": 11,
+                "rx": 28,
+                "ry": 18,
                 "imgSrc": "/images/icons2/mainSwitch.png"
             }
         } 
@@ -204,19 +204,25 @@
             });
             
         } ); 
-
-
+        
+        var pathIdPrefix = "ZSYFCEditor_Path";
+        var _updateLinksStatus = function (links){
+            links.forEach( function ( link ){
+                d3.select('#' + pathIdPrefix + link.from + "_" + link.to).classed( "node_link_error", link.status != '1' );
+            } );
+        };
 
 
         var refreshData = function(){
             $.ajax({
-                url:'/topology/dashboard/ajax-refresh',
+                url:'/topology/dashboard/ajax-links-refresh',
                 type:"post",
                 data:{"type":2},
                 dataType:'json',
                 success:function(res){
                     if(res.build){
                         ZSYFCEditor.updateData(res.build);
+                        _updateLinksStatus( res.links );
                     }
                     setTimeout(refreshData,30000);
                 }
