@@ -82,8 +82,11 @@ $id1 = isset($group[0])?$group[0]:0;
 $id2 = isset($group[1])?$group[1]:0;
 
 $js = <<<JS
-
+<<<<<<< HEAD
     renderChart($id1,$id2)
+=======
+    renderChart($firstCore);
+>>>>>>> 212f1d07a14bafa6bccd037e300ebb0c9a153665
 JS;
 $this->registerJs($js);
 ?>

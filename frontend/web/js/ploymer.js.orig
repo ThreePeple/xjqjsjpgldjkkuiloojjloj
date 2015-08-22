@@ -2,11 +2,15 @@
  * Created by jsj on 15/8/18.
  */
 
-var __detailUrl = '/stat/device/ajax-device-tip';
-
+<<<<<<< HEAD
 function renderChart(id1,id2){
-    var __data;
+=======
+var __detailUrl = '/stat/wireless/ajax-device-tip';
 
+var __data;
+
+function renderChart(core_id){
+>>>>>>> 212f1d07a14bafa6bccd037e300ebb0c9a153665
     $.ajax({
         url : '/topology/dashboard/ajax-get-hub',
         data:{"id1":id1,"id2":id2},
@@ -26,10 +30,16 @@ function renderChart(id1,id2){
 
 }
 
+<<<<<<< HEAD
 function changeCore(group,id1,id2){
     $("#events_type button[group='"+group+"']").removeClass("btn-primary").addClass("btn-default");
     $("#events_type button[group='"+(group+1>2?1:group+1)+"']").removeClass("btn-default").addClass("btn-primary");
     renderChart(id1,id2)
+=======
+function changeCore(_this,id){
+    $(_this).removeClass("btn-primary").addClass("btn-info");
+    $(_this).siblings('.btn-info').removeClass("btn-info").addClass("btn-primary");
+    renderChart(id)
 }
 
  var _showNodeDetail = function(d, e, contentHtmlTpl) { 
@@ -81,9 +91,11 @@ function changeCore(group,id1,id2){
 
                 $content.find("div.popup_content").html(_updateContent("loading...")); 
                 // nodeDetail_.json : fail data, nodeDetail.json: ok data.
-                var id  = d["data"]["device_id"];
-                var url = __detailUrl+'?id='+id;
-                $.get(url, function(j) {
+                var id  = d["id"], device_id = d["device_id"];
+                $.get(__detailUrl, {
+                    id: id,
+                    device_id: device_id
+                }, function(j) {
                     $content.find("div.popup_content").html(j);
                     popPanel.refresh(); 
                     return;
@@ -108,5 +120,7 @@ function readyChartCallback(__data){
           d = data.data;
          var id  = d["id"], device_id = d["device_id"]; 
          window.open("/stat/wireless/detail?id=" + id + "&device_id=" + device_id, "hub-compose-node-detail");
-    });
+    });  
+
+>>>>>>> 212f1d07a14bafa6bccd037e300ebb0c9a153665
 }
