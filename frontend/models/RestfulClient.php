@@ -6,7 +6,7 @@
  * Time: 22:42
  */
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
 use yii\helpers\Url;

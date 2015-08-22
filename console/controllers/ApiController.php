@@ -1,18 +1,19 @@
 <?php
 
 namespace console\controllers;
+use frontend\models\Constants;
+use yii\console\Controller;
 use yii\log\Logger;
 use yii\base\Exception;
 use Yii;
 use yii\helpers\Json;
-use app\models\RestfulClient;
-use app\models\Constants;
+use frontend\models\RestfulClient;
 
-class ApiController extends \yii\web\Controller
+class ApiController extends Controller
 {
     public function actionIndex()
     {
-        return $this->render('index');
+        echo '11';
     }
 
     /**
@@ -22,7 +23,7 @@ class ApiController extends \yii\web\Controller
     {
        $host=Yii::$app->params['wireless_api_host'];
        $api_path=Constants::WIRELESS_DEVICE;
-       $query='resPrivilegeFilter=false&start=0&size=500&orderBy=id&desc=false&total=false';
+       $query=['resPrivilegeFilter=false&start=0&size=500&orderBy=id&desc=false&total=false'];
         //设备信息列表
         $url=$host.$api_path;
        $client=(new RestfulClient())->get($url,$query);
