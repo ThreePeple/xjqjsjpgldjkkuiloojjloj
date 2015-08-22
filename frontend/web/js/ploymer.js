@@ -2,10 +2,10 @@
  * Created by jsj on 15/8/18.
  */
 
-function renderChart(core_id){
+function renderChart(id1,id2){
     $.ajax({
         url : '/topology/dashboard/ajax-get-hub',
-        data:{"core_id":core_id},
+        data:{"id1":id1,"id2":id2},
         type:"POST",
         dataType:'JSON',
         success:function(res){
@@ -20,8 +20,8 @@ function renderChart(core_id){
 
 }
 
-function changeCore(_this,id){
-    $(_this).removeClass("btn-primary").addClass("btn-info");
-    $(_this).siblings('.btn-info').removeClass("btn-info").addClass("btn-primary");
-    renderChart(id)
+function changeCore(group,id1,id2){
+    $("#events_type button[group='"+group+"']").removeClass("btn-primary").addClass("btn-default");
+    $("#events_type button[group='"+(group+1>2?1:group+1)+"']").removeClass("btn-default").addClass("btn-primary");
+    renderChart(id1,id2)
 }

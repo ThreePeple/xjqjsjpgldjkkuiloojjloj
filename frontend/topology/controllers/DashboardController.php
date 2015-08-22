@@ -5,6 +5,7 @@ namespace app\topology\controllers;
 use app\models\DeviceIpfilter;
 use app\models\WirelessDeviceInfo;
 use app\models\WirelessDeviceLink;
+use yii\db\Query;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -98,12 +99,25 @@ class DashboardController extends Controller
             $first = $rows[0]["id"];
         }
         $ips = ["10.253.1.11","10.253.1.12","10.253.1.13","10.253.1.14"];
-        //$rows = DeviceIpfilter::find()->where(["ip"=>$ips])->select(["id","label"])->asArray()->all();
-        //$data = ArrayHelper::map($rows,"id","label");
-        $data = [];
+        $rows = (new Query())
+            ->from("device_ipfilter a")
+            ->leftJoin("device_info b","a.ip = b.ip")
+            ->where(["a.ip"=>$ips])
+            ->select(["b.id","b.label","group"=>"IF(b.ip='10.253.1.11' or b.ip='10.253.1.12',1,2)"])
+            ->orderBy("group asc")
+            ->all();
+        //$rows = DeviceIpfilter::find()->where(["ip"=>$ips])->select(["ip","label","group"=>"IF(ip='10.253.1.11' or ip='10.253.1.13',1,2)"])->asArray()->all();
+        $data = ArrayHelper::map($rows,"id",function($data){
+            return ["label"=>$data["label"],"group"=>$data["group"],"id"=>$data["id"]];
+        });
+        $groups = [];
+        foreach($data as $key=>$row){
+            $groups[$row["group"]][] = $row["id"];
+
+        }
         return $this->render('polymerchart',[
-            "cores" => $data,
-            "firstCore" => 0
+            "polymers" => $data,
+            "groups" => $groups
         ]);
     }
 
@@ -112,9 +126,6 @@ class DashboardController extends Controller
         $id1 = Yii::$app->request->post("id1");
         $id2 = Yii::$app->request->post("id2");
 
-        //debug
-        $id1 = 681;
-        $id2 = 731;
 
         $data = DeviceLink::getPolymerData($id1,$id2);
 

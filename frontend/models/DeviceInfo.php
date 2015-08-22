@@ -51,11 +51,11 @@ class DeviceInfo extends \yii\db\ActiveRecord
     static $status = [
         self::STATUS_UNMANAGED =>["未管理",'#808080'],
         self::STATUS_UNKNOWN => ['未知','#00F'],
-        self::STATUS_NORMAL => ['未知','#00F'],
-        self::STATUS_WARNING => ['未知','#00F'],
-        self::STATUS_MINOR => ['未知','#00F'],
-        self::STATUS_IMPORTANT => ['未知','#00F'],
-        self::STATUS_SERIOUS => ['未知','#00F'],
+        self::STATUS_NORMAL => ['正常','#00F'],
+        self::STATUS_WARNING => ['警告','#00F'],
+        self::STATUS_MINOR => ['次要','#00F'],
+        self::STATUS_IMPORTANT => ['重要','#00F'],
+        self::STATUS_SERIOUS => ['严重','#00F'],
     ];
 
     static $status_titles = [
