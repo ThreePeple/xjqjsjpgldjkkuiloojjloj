@@ -127,12 +127,12 @@ class DashboardController extends Controller
         $id2 = Yii::$app->request->post("id2");
 
         $data = DeviceLink::getPolymerData($id1,$id2);
-
+/*
         $data["links"] = array(
                 array( "from" => "id766", "to" => "p1", "status" => "1" ),
                 array( "from" => "id825", "to" => "p1", "status" => "2" ),
 
-            );
+            );*/
 
         return Json::encode([
             'status'=> 1,
