@@ -7,6 +7,8 @@
 
     var ID_KEY = ZSYFCEditorConfig["ID_KEY"];
 
+    var delta = 10;
+
     // 4 rect(s) helper( for generating {x,y,w,h,cx,cy} ) 
     var helperPosition_ = {
         "cache_": {},
@@ -20,38 +22,38 @@
                     // top
                     posMap["t"] = [
                         shape.cx() - helperSquareD_ / 2,
-                        shape.cy() - shape.ry() - helperSquareD_ / 2,
+                        shape.cy() - shape.ry() - helperSquareD_ / 2 + delta,
                         helperSquareD_,
                         helperSquareD_,
                         shape.cx(),
-                        shape.cy() - shape.ry()
+                        shape.cy() - shape.ry() + delta
                     ];
                     // right
                     posMap["r"] = [
-                        shape.cx() + shape.rx() - helperSquareD_ / 2,
+                        shape.cx() + shape.rx() - helperSquareD_ / 2 - delta,
                         shape.cy() - helperSquareD_ / 2,
                         helperSquareD_,
                         helperSquareD_,
-                        shape.cx() + shape.rx(),
+                        shape.cx() + shape.rx() - delta,
                         shape.cy()
                     ];
 
                     // bottom
                     posMap["b"] = [
                         shape.cx() - helperSquareD_ / 2,
-                        shape.cy() + shape.ry() - helperSquareD_ / 2,
+                        shape.cy() + shape.ry() - helperSquareD_ / 2 - delta,
                         helperSquareD_,
                         helperSquareD_,
                         shape.cx(),
-                        shape.cy() + shape.ry()
+                        shape.cy() + shape.ry() - delta
                     ];
                     // left
                     posMap["l"] = [
-                        shape.cx() - shape.rx() - helperSquareD_ / 2,
+                        shape.cx() - shape.rx() - helperSquareD_ / 2 + delta,
                         shape.cy() - helperSquareD_ / 2,
                         helperSquareD_,
                         helperSquareD_,
-                        shape.cx() - shape.rx(),
+                        shape.cx() - shape.rx() + delta,
                         shape.cy()
                     ];
                     this["cache_"][key] = posMap;
