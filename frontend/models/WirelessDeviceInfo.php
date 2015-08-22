@@ -185,7 +185,12 @@ class WirelessDeviceInfo extends \yii\db\ActiveRecord
 
     public static function getDeviceList(){
         $result = [];
-        $rows = self::find()->with("category")->asArray()->all();
+        $filterIps = DeviceIpfilter::getIdsByType(DeviceIpfilter::TYPE_WIRELESS);
+        $rows = self::find()
+            ->with("category")
+            ->where(["ip"=>$filterIps])
+            ->asArray()
+            ->all();
         foreach($rows as $row){
             $type = $row["category"]["node_group"];
             if(!isset($result[$type])){

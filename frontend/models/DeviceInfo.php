@@ -48,6 +48,16 @@ class DeviceInfo extends \yii\db\ActiveRecord
     const STATUS_IMPORTANT =4;
     const STATUS_SERIOUS =5;
 
+    static $status = [
+        self::STATUS_UNMANAGED =>["未管理",'#808080'],
+        self::STATUS_UNKNOWN => ['未知','#00F'],
+        self::STATUS_NORMAL => ['未知','#00F'],
+        self::STATUS_WARNING => ['未知','#00F'],
+        self::STATUS_MINOR => ['未知','#00F'],
+        self::STATUS_IMPORTANT => ['未知','#00F'],
+        self::STATUS_SERIOUS => ['未知','#00F'],
+    ];
+
     static $status_titles = [
         self::STATUS_UNMANAGED =>'<span style="color:#808080" class="label label-default">未管理</span>',
         self::STATUS_UNKNOWN => '<span style="color:#00F" class="label label-default">未知</span>',
@@ -177,6 +187,9 @@ class DeviceInfo extends \yii\db\ActiveRecord
         $query->andFilterWhere(["like","label",$q]);
        // $query->andFilterWhere(["not in","id",$exclude_ids]);
         $query->select(["id"=>"id","label"=>"label"]);
+
+        $filterIps = DeviceIpfilter::getIdsByType(DeviceIpfilter::TYPE_BUILD);
+        $query->andWhere(["ip"=>$filterIps]);
         $rows = $query->asArray()->all();
         array_walk($rows,function(&$item,$k,$seleceted){
             if(in_array($item["id"],$seleceted)){
@@ -188,7 +201,11 @@ class DeviceInfo extends \yii\db\ActiveRecord
 
     public static function getDeviceList(){
         $result = [];
-        $rows = self::find()->with("category")->asArray()->all();
+        $filterIps = DeviceIpfilter::getIdsByType(DeviceIpfilter::TYPE_WLAN);
+        $rows = self::find()
+            ->with("category")
+            ->where(["ip"=>$filterIps])
+            ->asArray()->all();
         foreach($rows as $row){
             $type = $row["category"]["node_group"];
             if(!isset($result[$type])){
