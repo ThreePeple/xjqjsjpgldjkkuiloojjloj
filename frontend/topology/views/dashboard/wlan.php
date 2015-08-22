@@ -64,6 +64,11 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 	.buidling-editor-container text.title{
 		display: none;
 	}
+	
+	svg.ZSYFCEditor path.node_link_error{
+		stroke: red !important;
+	}
+
 	.nodeDetail .popupBody ul{
 	    margin: 0 10px;
 	    padding: 0;

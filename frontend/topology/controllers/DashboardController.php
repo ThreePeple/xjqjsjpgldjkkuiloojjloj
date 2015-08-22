@@ -61,6 +61,25 @@ class DashboardController extends Controller
     }
 
     /**
+     * 刷新面板数据
+     */
+    public function actionAjaxLinksRefresh(){
+        $type = Yii::$app->request->post('type');
+        if(!$type){
+            $type = ViewTemplate::TYPE_BUILD;
+        }
+        $data = [];
+        $selected = ViewTemplate::getTempateSet($type);
+        $data["build"] = $selected;
+        $data["links"] = array( 
+                            array( "from" => "2", "to" => "3", "status" => "2" ),
+                            array( "from" => "2", "to" => "4", "status" => "1" )
+                        ); 
+        return Json::encode($data);
+    }
+
+
+    /**
      * 有线网络
      * @return string
      */
