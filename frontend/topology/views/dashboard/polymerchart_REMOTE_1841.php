@@ -33,13 +33,9 @@ svg{
 	cursor: default;
 }
 .ZSYPolymerChart circle{
-	fill: green;
-	stroke: green;
+	fill: gray;
+	stroke: gray;
 	stroke-width: 1px;
-}
-.ZSYPolymerChart [data-status="2"] circle{
-	fill: red;
-	stroke: red;
 }
 .ZSYPolymerChart .node text{
 	fill: gray;
@@ -50,32 +46,21 @@ svg{
 }
 .ZSYPolymerChart .link-path{
 	fill: transparent;
-	stroke: green;
+	stroke: gray;
 	stroke-width: 1px;
 }
-.ZSYPolymerChart .link-path[data-status="2"]{
-	stroke: red;
-}
-
 .ZSYPolymerChart .node.hover text{
 	fill: #fff;
 }
 .ZSYPolymerChart .node.hover circle{
-	fill: rgb(30, 255, 30);
+	fill: #fff;
 	filter: url(#filter_blur);
 	-webkit-transform: scale(1.38);
 }
-.ZSYPolymerChart .node.hover[data-status="2"] circle{
-	fill: rgb(255, 60, 60);
-}
-
 .ZSYPolymerChart .link-path.hover{
-	stroke: rgb(30, 255, 30);
+	stroke: #fff;
 	stroke-width: 1px;
 } 
-.ZSYPolymerChart .link-path[data-status="2"].hover{
-	stroke: rgb(255,60,60);
-}
 .box{
   color: #fff;
   position: relative;
@@ -92,29 +77,20 @@ CSS;
 
 $this->registerCss($css);
 
-$group = $groups[1];
-$id1 = isset($group[0])?$group[0]:0;
-$id2 = isset($group[1])?$group[1]:0;
-
 $js = <<<JS
-
-    renderChart($id1,$id2)
+    renderChart($firstCore);
 JS;
 $this->registerJs($js);
 ?>
 <div class="box" style="background: none;position: absolute;z-index:100;margin-top: 100px;width: 180px;">
     <div class="box-header">
-        <h3 class="box-title">聚汇交换机</h3>
+        <h3 class="box-title">核心交换机</h3>
     </div><!-- /.box-header -->
     <div class="box-body" id="events_type">
         <?php
-        foreach($polymers as $id=>$item){
-            $label = $item["label"];
-            $group = $groups[$item["group"]];
-            $id1 = isset($group[0])?$group[0]:0;
-            $id2 = isset($group[1])?$group[1]:0;
-            $css = $item["group"]==1? "btn-default" : "btn-primary";
-            echo \yii\helpers\Html::button($label,["class"=>"btn $css","style"=>"margin:5px;","id"=>$item["id"],"group"=>$item["group"],"onclick"=>"changeCore(".$item["group"].",".$id1.",".$id2.")"]);
+        foreach($cores as $id=>$label){
+            $css = $id==$firstCore? 'btn-info' : "btn-primary";
+            echo \yii\helpers\Html::button($label,["class"=>"btn $css","style"=>"margin:5px;","onclick"=>"changeCore(this,".$id.")"]);
         }
         ?>
     </div><!-- /.box-body -->

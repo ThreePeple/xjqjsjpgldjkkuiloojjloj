@@ -6,80 +6,64 @@
  * Time: 12:37
  */
 
-$this->registerCssFile("/css/popuppanel.css",["depends"=> 'frontend\assets\AppAsset']);
-$this->registerJsFile("/js/popuppanel.js",["depends"=> 'frontend\assets\AppAsset']);
-
 $this->registerJsFile('/js/d3.min.js',["depends"=> 'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/ZSYPolymerChart.js',["depends"=> 'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/ploymer.js',["depends"=> 'frontend\assets\AppAsset']);
 
 $css = <<<CSS
-html,body{
-	background-color: #252525;
-}
-svg{
-    font-size: 12px;
-}
-.ZSYPolymerChart .shape.shape0{
-	fill: #60c0dd;
-}
-.ZSYPolymerChart .shape.shape1{
-	fill: #d9c771;
-}
-.ZSYPolymerChart .polymer text{
-	  font-family: "微软雅黑";
-}
-.ZSYPolymerChart .node{
-	cursor: default;
-}
-.ZSYPolymerChart circle{
-	fill: green;
-	stroke: green;
-	stroke-width: 1px;
-}
-.ZSYPolymerChart [data-status="2"] circle{
-	fill: red;
-	stroke: red;
-}
-.ZSYPolymerChart .node text{
-	fill: gray;
-	font-size: 15px;
-}
-.ZSYPolymerChart .node circle{
-	-webkit-transform: scale(1);
-}
-.ZSYPolymerChart .link-path{
-	fill: transparent;
-	stroke: green;
-	stroke-width: 1px;
-}
-.ZSYPolymerChart .link-path[data-status="2"]{
-	stroke: red;
-}
+			html,body{
+				background-color: #252525;
+			}
+			svg{
+			    font-size: 12px;
+			}
+			.ZSYPolymerChart .shape.shape0{
+				fill: #60c0dd;
+			}
+			.ZSYPolymerChart .shape.shape1{
+				fill: #d9c771;
+			}
+			.ZSYPolymerChart .polymer text{
+				  font-family: "微软雅黑";
+			}
+			.ZSYPolymerChart .node{
+				cursor: default;
+			}
+			.ZSYPolymerChart circle{
+				fill: gray;
+				stroke: gray;
+				stroke-width: 1px;
+			}
+			.ZSYPolymerChart .node text{
+				fill: gray;
+				font-size: 15px;
+			}
+			.ZSYPolymerChart .node circle{
+				-webkit-transform: scale(1);
+			}
+			.ZSYPolymerChart .link-path{
+				fill: transparent;
+				stroke: gray;
+				stroke-width: 1px;
+			}
+			.ZSYPolymerChart .node.hover text{
+				fill: #fff;
+			}
+			.ZSYPolymerChart .node.hover circle{
+				fill: #fff;
+				filter: url(#filter_blur);
+				-webkit-transform: scale(1.38);
+			}
+			.ZSYPolymerChart .link-path.hover{
+				stroke: #fff;
+				stroke-width: 1px;
+			}
 
-.ZSYPolymerChart .node.hover text{
-	fill: #fff;
-}
-.ZSYPolymerChart .node.hover circle{
-	fill: rgb(30, 255, 30);
-	filter: url(#filter_blur);
-	-webkit-transform: scale(1.38);
-}
-.ZSYPolymerChart .node.hover[data-status="2"] circle{
-	fill: rgb(255, 60, 60);
-}
-
-.ZSYPolymerChart .link-path.hover{
-	stroke: rgb(30, 255, 30);
-	stroke-width: 1px;
-} 
-.ZSYPolymerChart .link-path[data-status="2"].hover{
-	stroke: rgb(255,60,60);
-}
 .box{
   color: #fff;
   position: relative;
-  border-radius: 3px; 
+  border-radius: 3px;
+  /* background: #ffffff; */
   border: 1px solid #454545;
   margin-bottom: 20px;
   width: 100%;
@@ -97,7 +81,6 @@ $id1 = isset($group[0])?$group[0]:0;
 $id2 = isset($group[1])?$group[1]:0;
 
 $js = <<<JS
-
     renderChart($id1,$id2)
 JS;
 $this->registerJs($js);
