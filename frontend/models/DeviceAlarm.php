@@ -113,6 +113,12 @@ class DeviceAlarm extends \yii\db\ActiveRecord
      */
     public static function getTypeChartData(){
         $ips = DeviceIpfilter::getIdsByType(DeviceIpfilter::TYPE_BUILD);
+        $sql = "select a.subDesc as category, a.id as categoryId, count(b.id) as count ,a.color as color
+        from alarm_category a
+        left join (select * from device_alarm where deviceIp in ('".implode("','",$ips)."')) b on a.id = b.alarmCategory
+        group by a.id";
+        $rows = Yii::$app->db->createCommand($sql)->queryAll();
+        /*
         $rows = (new Query())
             ->from("alarm_category a")
             ->leftJoin("device_alarm b","a.id = b.alarmCategory")
@@ -120,6 +126,7 @@ class DeviceAlarm extends \yii\db\ActiveRecord
             ->select(["category"=>"a.subDesc","categoryId"=>"a.id","count"=>"count(b.id)","color"=>"a.color"])
             ->groupBy("a.id")
             ->all();
+        */
         $categories = [];
         $data = [];
         foreach($rows as $row){
@@ -135,6 +142,7 @@ class DeviceAlarm extends \yii\db\ActiveRecord
             "categories" => $categories,
             "series" =>[
                 [
+                    "name" => "数量",
                     "data" => $data,
                     "dataLabels" => [
                         "enabled" => true,
@@ -147,6 +155,10 @@ class DeviceAlarm extends \yii\db\ActiveRecord
 
     public static function getLevelChartData(){
         $ips = DeviceIpfilter::getIdsByType(DeviceIpfilter::TYPE_BUILD);
+        $sql = "select a.desc as category, a.id as categoryId, count(b.id) as count ,a.color as color from alarm_level a
+         left join (select * from device_alarm where deviceIp in ('".implode("','",$ips)."')) b on a.id = b.alarmLevel
+         group by a.id";
+        /*
         $rows = (new Query())
             ->from("alarm_level a")
             ->leftJoin("device_alarm b","a.id = b.alarmLevel")
@@ -154,6 +166,8 @@ class DeviceAlarm extends \yii\db\ActiveRecord
             ->select(["category"=>"a.desc","categoryId"=>"a.id","count"=>"count(b.id)","color"=>"a.color"])
             ->groupBy("a.id")
             ->all();
+        */
+        $rows = Yii::$app->db->createCommand($sql)->queryAll();
         $data = [];
         $max = 0;
         foreach($rows as $row){
