@@ -19,6 +19,8 @@ html,body{
 }
 svg{
     font-size: 12px;
+    margin: 90px auto 0;
+    display: block;
 }
 .ZSYPolymerChart .shape.shape0{
 	fill: #60c0dd;
@@ -74,7 +76,7 @@ svg{
 	stroke-width: 1px;
 } 
 .ZSYPolymerChart .link-path[data-status="2"].hover{
-	stroke: rgb(255,60,60);
+	stroke: rgb(255,100,100);
 }
 .box{
   color: #fff;
@@ -87,6 +89,37 @@ svg{
 }
 .box-header{
     color: #939393;
+}
+.nodeDetail .popup_content{
+	max-height: 350px;
+	min-width: 330px;
+	overflow: auto;
+}
+
+.fixedbox{
+	background: none;position: fixed;z-index:100;margin-top: 100px;width: 160px;
+	box-shadow: 0 0 3px 1px #111;
+	background-color: #363636;
+}
+.fixedbox .box-header{
+	padding: 6px 10px;
+}
+.fixedbox .box-body{
+	padding: 2px 10px;
+}
+.fixedbox .box-body .vs{
+	text-align: center;
+	position: relative;
+	margin: -6px 0;
+	display: none;
+}
+.fixedbox .box-body .group{
+	background-color: rgba(255,255,255, 0.2);
+	margin: 5px 0;
+	border-radius: 5px;
+}
+.fixedbox .box-body .splitter{
+	margin: 10px 0;
 }
 CSS;
 
@@ -102,20 +135,34 @@ $js = <<<JS
 JS;
 $this->registerJs($js);
 ?>
-<div class="box" style="background: none;position: absolute;z-index:100;margin-top: 100px;width: 180px;">
-    <div class="box-header">
+<div class="box fixedbox">
+    <div class="box-header" style="text-align: center">
         <h3 class="box-title">聚汇交换机</h3>
     </div><!-- /.box-header -->
     <div class="box-body" id="events_type">
         <?php
-        foreach($polymers as $id=>$item){
-            $label = $item["label"];
-            $group = $groups[$item["group"]];
-            $id1 = isset($group[0])?$group[0]:0;
-            $id2 = isset($group[1])?$group[1]:0;
-            $css = $item["group"]==1? "btn-default" : "btn-primary";
-            echo \yii\helpers\Html::button($label,["class"=>"btn $css","style"=>"margin:5px;","id"=>$item["id"],"group"=>$item["group"],"onclick"=>"changeCore(".$item["group"].",".$id1.",".$id2.")"]);
-        }
+	        $currentIndex = 0;
+	        foreach($polymers as $id=>$item){
+	        	$currentIndex++;
+	            $label = $item["label"];
+	            $group = $groups[$item["group"]];
+	            $id1 = isset($group[0])?$group[0]:0;
+	            $id2 = isset($group[1])?$group[1]:0;
+	            $css = $item["group"]==1? "btn-default" : "btn-primary";
+
+	            if( $currentIndex % 2 == 1 ){
+	            	echo "<div class='group'>";
+	            }
+	            
+	            echo \yii\helpers\Html::button($label,["class"=>"btn $css","style"=>"margin:5px;","id"=>$item["id"],"group"=>$item["group"],"onclick"=>"changeCore(".$item["group"].",".$id1.",".$id2.")"]);
+	            
+	            if( $currentIndex % 2 == 1 ){
+	            	echo "<div class='vs'>VS.</div>";
+	            } else
+	            	if( $currentIndex % 2 == 0 ){
+	            		echo "</div>";
+	            	}
+	        }
         ?>
     </div><!-- /.box-body -->
 </div><!-- /.box -->
