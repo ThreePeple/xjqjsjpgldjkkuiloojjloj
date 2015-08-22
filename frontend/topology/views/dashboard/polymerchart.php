@@ -37,6 +37,10 @@ svg{
 	stroke: green;
 	stroke-width: 1px;
 }
+.ZSYPolymerChart [data-status="2"] circle{
+	fill: red;
+	stroke: red;
+}
 .ZSYPolymerChart .node text{
 	fill: gray;
 	font-size: 15px;
@@ -49,6 +53,10 @@ svg{
 	stroke: green;
 	stroke-width: 1px;
 }
+.ZSYPolymerChart .link-path[data-status="2"]{
+	stroke: red;
+}
+
 .ZSYPolymerChart .node.hover text{
 	fill: #fff;
 }
@@ -57,10 +65,17 @@ svg{
 	filter: url(#filter_blur);
 	-webkit-transform: scale(1.38);
 }
+.ZSYPolymerChart .node.hover[data-status="2"] circle{
+	fill: rgb(255, 60, 60);
+}
+
 .ZSYPolymerChart .link-path.hover{
 	stroke: rgb(30, 255, 30);
 	stroke-width: 1px;
 } 
+.ZSYPolymerChart .link-path[data-status="2"].hover{
+	stroke: rgb(255,60,60);
+}
 .box{
   color: #fff;
   position: relative;
