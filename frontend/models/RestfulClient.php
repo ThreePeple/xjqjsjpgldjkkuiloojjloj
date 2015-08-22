@@ -20,6 +20,12 @@ class RestfulClient {
     private $error_msg='';
     private $data;
 
+    private $config_key;
+
+    public function withConfig($key){
+        $this->config_key=$key;
+        return $this;
+    }
 
     public function clear(){
         $this->error_code = 0;
@@ -54,10 +60,9 @@ class RestfulClient {
         return $this->error_code;
     }
 
-    public static function get($url,$query){
-        $model = new self();
-        $model->request("GET",$url,$query);
-        return $model;
+    public function get($url,$query){
+        $this->request("GET",$url,$query);
+        return $this;
     }
 
     public function request($method,$url,$params=[]){
@@ -116,8 +121,14 @@ class RestfulClient {
         curl_setopt($this->ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
         switch($type){
             case "http_basic":
-                $user = $auth["http_basic"]["user"];
-                $pwd = $auth["http_basic"]["pwd"];
+                if(isset($this->config_key)){
+                    $key = $this->config_key;
+                }else{
+                    $key = "http_basic";
+                }
+
+                $user = $auth[$key]["user"];
+                $pwd = $auth[$key]["pwd"];
                 curl_setopt($this->ch,CURLOPT_USERPWD, $user . ':' . $pwd);
                 break;
             default:
