@@ -130,7 +130,7 @@ function readyChartCallback(__data){
     }).on("click", function(data){
           d = data.data;
          var id  = d["id"], device_id = d["device_id"]; 
-         window.open("/stat/wireless/detail?id=" + id + "&device_id=" + device_id, "hub-compose-node-detail");
+         window.open("/stat/device/wlan-detail?id=" + device_id, "hub-compose-node-detail");
     });  
     if(__data){
         __updateStatus(__data);

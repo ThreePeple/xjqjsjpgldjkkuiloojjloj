@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\Query;
 
 /**
  * This is the model class for table "device_alarm".
@@ -103,6 +104,91 @@ class DeviceAlarm extends \yii\db\ActiveRecord
             'update_time' => Yii::t('app', 'Update Time'),
             'specificId' => Yii::t('app', 'Specific ID'),
             'originalType' => Yii::t('app', 'Original Type'),
+        ];
+    }
+
+    /**
+     * 告警分类统计图表
+     * @return array
+     */
+    public static function getTypeChartData(){
+        $ips = DeviceIpfilter::getIdsByType(DeviceIpfilter::TYPE_BUILD);
+        $sql = "select a.baseDesc as category, a.id as categoryId, count(b.id) as count ,a.color as color
+        from alarm_category a
+        left join (select * from device_alarm where deviceIp in ('".implode("','",$ips)."')) b on a.id = b.alarmCategory
+        group by a.baseClass";
+        $rows = Yii::$app->db->createCommand($sql)->queryAll();
+        /*
+        $rows = (new Query())
+            ->from("alarm_category a")
+            ->leftJoin("device_alarm b","a.id = b.alarmCategory")
+            ->where(["b.deviceIp"=>$ips])
+            ->select(["category"=>"a.subDesc","categoryId"=>"a.id","count"=>"count(b.id)","color"=>"a.color"])
+            ->groupBy("a.id")
+            ->all();
+        */
+        $categories = [];
+        $data = [];
+        foreach($rows as $row){
+            $categories[] = $row["category"];
+            $data[] = [
+                "name"=>$row["category"],
+                "color"=>$row["color"],
+                "y"=>(int)$row["count"],
+            ];
+        }
+
+        return [
+            "categories" => $categories,
+            "series" =>[
+                [
+                    "name" => "数量",
+                    "data" => $data,
+                    "dataLabels" => [
+                        "enabled" => true,
+                        "align" => "top"
+                    ]
+                ]
+            ]
+        ];
+    }
+
+    public static function getLevelChartData(){
+        $ips = DeviceIpfilter::getIdsByType(DeviceIpfilter::TYPE_BUILD);
+        $sql = "select a.desc as category, a.id as categoryId, count(b.id) as count ,a.color as color from alarm_level a
+         left join (select * from device_alarm where deviceIp in ('".implode("','",$ips)."')) b on a.id = b.alarmLevel
+         group by a.id";
+        /*
+        $rows = (new Query())
+            ->from("alarm_level a")
+            ->leftJoin("device_alarm b","a.id = b.alarmLevel")
+            ->where(["b.deviceIp"=>$ips])
+            ->select(["category"=>"a.desc","categoryId"=>"a.id","count"=>"count(b.id)","color"=>"a.color"])
+            ->groupBy("a.id")
+            ->all();
+        */
+        $rows = Yii::$app->db->createCommand($sql)->queryAll();
+        $data = [];
+        $max = 0;
+        foreach($rows as $row){
+            $data[] = [
+                "name" => $row["category"],
+                "color" => $row["color"],
+                "y" => (int)$row["count"],
+            ];
+            if($row["count"]>$max){
+                $max = $row["count"];
+            }
+        }
+        $max = $max+1;
+        return [
+            "series" => [[
+                "type" => "column",
+                "name" => "数量",
+                "data" => $data,
+                "pointPlacement" => "between"
+            ]],
+            "max" => $max
         ];
     }
 }

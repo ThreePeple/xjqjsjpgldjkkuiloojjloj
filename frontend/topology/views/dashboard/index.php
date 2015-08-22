@@ -74,9 +74,9 @@ $this->registerCss($css);
         <div class="col-md-12">
             <div class="box" style="background: none;">
                 <div class="box-header">
-                    <h3 class="box-title">事件按类型分类</h3>
+                    <h3 class="box-title">设备统计</h3>
                 </div><!-- /.box-header -->
-                <div class="box-body" id="events_type">
+                <div class="box-body" id="device_status">
 
                 </div><!-- /.box-body -->
             </div><!-- /.box -->

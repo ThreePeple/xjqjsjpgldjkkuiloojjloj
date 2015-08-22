@@ -2,6 +2,7 @@
 
 namespace app\topology\controllers;
 
+use app\models\DeviceAlarm;
 use app\models\DeviceIpfilter;
 use app\models\WirelessDeviceInfo;
 use app\models\WirelessDeviceLink;
@@ -127,12 +128,12 @@ class DashboardController extends Controller
         $id2 = Yii::$app->request->post("id2");
 
         $data = DeviceLink::getPolymerData($id1,$id2);
-
+/*
         $data["links"] = array(
                 array( "from" => "id766", "to" => "p1", "status" => "1" ),
                 array( "from" => "id825", "to" => "p1", "status" => "2" ),
 
-            );
+            );*/
 
         return Json::encode([
             'status'=> 1,
@@ -216,6 +217,15 @@ class DashboardController extends Controller
      * 图表数据
      */
     public function actionAjaxChartData(){
+        $deviceData = DeviceInfo::getDeviceCountStat();
 
+        $alarmTypes = DeviceAlarm::getTypeChartData();
+        $alarmLevels = DeviceAlarm::getLevelChartData();
+
+        return json_encode([
+            "device" => $deviceData,
+            "alarmType" => $alarmTypes,
+            "alarmLevel" => $alarmLevels
+        ]);
     }
 }
