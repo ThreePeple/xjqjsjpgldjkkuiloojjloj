@@ -66,6 +66,7 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
     <label for="switchcombo-ddi" id="addSwitchLabel">选择设备</label><span id="switchcombo"></span> 
     <?=Html::button("添加设备",["class"=>"btn btn-info","id"=>"addSwitchBtn"])?>
     <?=Html::button("保存模板",["class"=>"btn btn-info","id"=>"saveTplDataBtn"])?> 
+    <?=Html::button("重置模版",["class"=>"btn btn-info","id"=>"resetTplDataBtn"])?> 
 </div> 
 <div class="buidling-editor-container">  
 	<svg class="ZSYFCEditor" oncontextmenu="return false;" >
@@ -151,7 +152,11 @@ $(function(){
             selectedData_ = null;
        } 
     });
-    
+
+    $("#resetTplDataBtn").click( function () {
+        ZSYFCEditor.reset(true);
+    } );
+
     $("#saveTplDataBtn").click( function () {
         $.ajax({
             url:'/system/template/save',

@@ -627,6 +627,27 @@
         // Pare data.
         renderSVG_();
     }
+    function resetEditor_(){
+        // Init closure variables.
+        gData_.setData({});
+        d = parseData_(gData_.getData());
+        gBindData_ = d["nodes"];
+        gLinkData_ = d["links"]; 
+        window.console.log(gBindData_, gLinkData_)
+        // Pare data.
+        renderSVG_();        
+    };
+    function exportFn_reset_(userConfirm) {
+        userConfirm = userConfirm === true ? true : false;
+        if(userConfirm){
+            if( window.confirm("是否重新创建模版？") ){
+                resetEditor_();
+            }
+        } else {
+            resetEditor_();
+        }
+
+    }    
 
     function exportFn_updateData_(d) {
         // Init closure variables.
@@ -728,17 +749,20 @@
         gNodeUpdate_ = shape;
         gNodeExit_ = shapeExit;
 
-        gSVG_.selectAll(".node_link")
-            .data(gLinkData_)
-            .enter().append("path")
+        gSVG_.selectAll(".node_link").remove();
+
+        var glinkPath =  gSVG_.selectAll(".node_link")
+            .data(gLinkData_);
+
+        glinkPath.enter().append("path")
             .attr("class", "node_link")
             .attr("data-from", function( d ){ return d.from; })
             .attr("data-to", function( d ){ return d.to; })
             .attr("id", function ( d ){ return elementID_["pathId"]( d.from + '_' + d.to );   } )
             .attr("d", function(d) {
                 return d.pathData ;
-            });        
-
+            }); 
+            
         var g = gNodeEnter_.append("g")
             .attr("data-shape-type", function(d) {
                 return d.type;
@@ -754,9 +778,7 @@
                 shapeFactory_["render"](d, d3.select(this));
             });
 
-        gNodeExit_.transition().remove();
-
-
+        gNodeExit_.transition().remove(); 
 
         if( refreshCallback_ )
             refreshCallback_();
@@ -834,6 +856,7 @@
     // Relative fn with ZSYFCEditor
     exportLabel_("init", exportFn_InitPage_);
     exportLabel_("updateData", exportFn_updateData_);
+    exportLabel_("reset", exportFn_reset_);
     exportLabel_('getData', exportFn_toDataJson_);
     exportLabel_("updateCallback", function(fn){ refreshCallback_ = fn });
     exportLabel_("getDOM", exportFn_getDom_);
