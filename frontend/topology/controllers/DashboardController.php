@@ -65,7 +65,7 @@ class DashboardController extends Controller
     }
 
     /**
-     * 刷新面板数据
+     * 刷新面板、链路数据
      */
     public function actionAjaxLinksRefresh(){
         $type = Yii::$app->request->post('type');
