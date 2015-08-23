@@ -3,6 +3,7 @@
 namespace app\stat\controllers;
 
 use app\models\InfoConfig;
+use app\models\ViewTemplate;
 use app\models\WirelessDeviceAlarm;
 use app\models\WirelessDeviceInterface;
 use app\models\WirelessDeviceLink;
@@ -217,17 +218,34 @@ class WirelessController extends Controller
     /**
      * 无线区域点击链路展示TIP 信息
      */
-    public function actionGetLinkTip(){
+    public function actionAjaxLinkTip(){
         $this->layout= false;
-        $areaId = Yii::$app->request->get("a");
-        $data= WirelessDeviceLink::getLinks($areaId);
-
-        $dataProvider = new ArrayDataProvider([
-            "allModes"
+        $where = Yii::$app->request->get("where");
+        switch($where){
+            case 'r':
+                $areaId =1;
+                break;
+            case 'g':
+                $areaId = 2;
+                break;
+            case "b":
+                $areaId = 3;
+                break;
+            default:
+                $areaId = 0;
+        }
+        //$data= WirelessDeviceLink::getLinks($areaId);
+        $ids = ViewTemplate::find()->where(["type"=>ViewTemplate::TYPE_WIFI,"areaId"=>$areaId])->select("device_id")->column();
+        //var_dump($ids);
+        $query = WirelessDeviceLink::find()->with(["left","right"]);
+        $query->where(["or",["leftDevice"=>$ids],["rightDevice"=>$ids]]);
+        $dataProvider = new ActiveDataProvider([
+            "query" => $query,
+            "pagination" => false
         ]);
-
+       // var_dump($dataProvider->getModels());
         return $this->render("link-tip",[
-            "data" => $data,
+            "dataProvider" => $dataProvider,
         ]);
     }
 }

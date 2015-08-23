@@ -5,7 +5,7 @@
    
     var detailUrl = '/stat/wireless/ajax-device-tip'; 
 
-    var mainLinkDetailUrl = '/stat/wireless/ajax-device-tip'; 
+    var mainLinkDetailUrl = '/stat/wireless/ajax-link-tip';
 
     var alarmImageMap = { 
         "ac": { 
