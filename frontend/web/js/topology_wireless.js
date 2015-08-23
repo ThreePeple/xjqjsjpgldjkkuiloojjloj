@@ -190,7 +190,7 @@
         d3.select("svg.ZSYFCEditor")
             .insert("path", "g.svg-container")
             .attr("class", "main_node_link green_link")
-            .attr("d", "M206,448L817,132L971,214L829,289L849,298")
+            .attr("d", "M210,442L817,132L971,214L829,289L849,298")
             .on("mouseover", function() {
                 PopupPanel.clearAll();
                 _showMainLinkDetail("r", d3.event );
@@ -199,7 +199,7 @@
         d3.select("svg.ZSYFCEditor")
             .insert("path", "g.svg-container")
             .attr("class", "main_node_link green_link")
-            .attr("d", "M634,672L1262,353L1049,245L1030,257")
+            .attr("d", "M638,670L1262,353L1049,245L1032,255")
             .on("mouseover", function() {
                 PopupPanel.clearAll();
                 _showMainLinkDetail("g", d3.event );
