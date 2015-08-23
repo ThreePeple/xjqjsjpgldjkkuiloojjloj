@@ -1,26 +1,20 @@
 <?php
-
-$this->registerCssFile('/css/popuppanel.css'); 
+$this->registerCssFile('/css/popuppanel.css');
 $this->registerCssFile('/css/style.css');
 $this->registerCssFile('/css/building-editor.css',['depends'=>'frontend\assets\AppAsset']);
-
-$this->registerJsFile('/js/popuppanel.js',['depends'=>'frontend\assets\AppAsset']); 
+$this->registerJsFile('/js/popuppanel.js',['depends'=>'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/highcharts.js',['depends'=>'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/highcharts-more.js',['depends'=>'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/topology.js',['depends'=>'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/d3.min.js',['depends'=>'frontend\assets\AppAsset']);
-
-$this->registerJsFile('/js/ZSYFCEditorUtil.js',['depends'=>'frontend\assets\AppAsset']); 
-$this->registerJsFile('/js/ZSYFCNodeData.js',['depends'=>'frontend\assets\AppAsset']); 
+$this->registerJsFile('/js/ZSYFCEditorUtil.js',['depends'=>'frontend\assets\AppAsset']);
+$this->registerJsFile('/js/ZSYFCNodeData.js',['depends'=>'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/ZSYFCShapeMaker.js',['depends'=>'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/ZSYFCObjectCollector.js',['depends'=>'frontend\assets\AppAsset']);
-$this->registerJsFile('/js/ZSYFCLinePathPosition.js',['depends'=>'frontend\assets\AppAsset']); 
-$this->registerJsFile('/js/ZSYFCHelperPosition.js',['depends'=>'frontend\assets\AppAsset']); 
-$this->registerJsFile('/js/ZSYFCLinkline.js',['depends'=>'frontend\assets\AppAsset']); 
+$this->registerJsFile('/js/ZSYFCLinePathPosition.js',['depends'=>'frontend\assets\AppAsset']);
+$this->registerJsFile('/js/ZSYFCHelperPosition.js',['depends'=>'frontend\assets\AppAsset']);
+$this->registerJsFile('/js/ZSYFCLinkline.js',['depends'=>'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset']);
-$this->registerJsFile('/js/jQuery.marquee/jquery.marquee.js',['depends'=>'frontend\assets\AppAsset']);
-
-
 $css = <<<CSS
 body{
     background-color: rgb(37,37,37) !important;
@@ -47,13 +41,12 @@ body{
 .buidling-editor-container text.title {
     display: none;
 }
-svg.ZSYFCEditor { 
+svg.ZSYFCEditor {
     left: auto;
     top: auto;
     right: 0 !important;
     bottom: 0 !important;
 }
-
 .nodeDetail .popupBody ul{
     margin: 0 10px;
     padding: 0;
@@ -77,64 +70,8 @@ svg.ZSYFCEditor {
     min-width: 330px;
     overflow: auto;
 }
-
-
-.marquee {
-  width: 90%;
-  overflow: hidden;
-  /*
-  border: 1px solid #ccc;
-  background: #ccc;
-  */
-  margin-top: 20px;
-  color:#8DFFB5;
-  font-size: 20px;
-}
 CSS;
 $this->registerCss($css);
-
-$js = <<<JS
-    var \$mq = $('.marquee');
-    function reloadData(){
-        $.ajax({
-            url:'/topology/dashboard/get-marquee-data',
-            type:'get',
-            dataType: 'html',
-            success:function(htm){
-                \$mq.html(htm);
-                \$mq.marquee('destroy')
-                marquee()
-            }
-        })
-    }
-    var counter = 0;
-    function marquee(){
-        \$mq.bind('finished', function(){
-            reloadData();
-        })
-        .marquee({
-            duration: 5000,
-            duplicated: false,
-            pauseOnHover: true
-        })
-    }
-    reloadData();
-
-/*
-$('.marquee').marquee({
-    //speed in milliseconds of the marquee
-    duration: 5000,
-    //gap in pixels between the tickers
-    gap: 50,
-    //time in milliseconds before the marquee will start animating
-    delayBeforeStart: 0,
-    //'left' or 'right'
-    direction: 'left',
-    //true or false - should the marquee be duplicated to show an effect of continues flow
-    duplicated: false
-});*/
-JS;
-$this->registerJs($js);
 ?>
 <div class="row" style="margin-top:50px;min-height: 700px;position:relative;">
     <div class="col-md-3" style="margin-top: 10px;position:relative; z-index:2">
@@ -167,8 +104,8 @@ $this->registerJs($js);
             </div><!-- /.box -->
         </div>
     </div>
-    <div class="col-md-9">
-        <div class="marquee"></div>
+    <div class="main" style="height: 100%;">
+        <div style="position:absolute; z-index: 2; left: 330px; top:10px; right: 20px; text-align: center; border:1px solid gray; height:30px; ">谢谢谢谢谢谢</div>
         <div class="buidling-editor-container">
             <svg class="ZSYFCEditor" oncontextmenu="return false;" >
                 <defs>
@@ -178,7 +115,7 @@ $this->registerJs($js);
                 </defs>
                 <g class="svg-container"></g>
             </svg>
-        </div> 
+        </div>
     </div>
 
 </div>
