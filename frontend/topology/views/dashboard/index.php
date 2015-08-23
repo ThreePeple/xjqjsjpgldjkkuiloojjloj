@@ -18,6 +18,7 @@ $this->registerJsFile('/js/ZSYFCLinePathPosition.js',['depends'=>'frontend\asset
 $this->registerJsFile('/js/ZSYFCHelperPosition.js',['depends'=>'frontend\assets\AppAsset']); 
 $this->registerJsFile('/js/ZSYFCLinkline.js',['depends'=>'frontend\assets\AppAsset']); 
 $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset']);
+$this->registerJsFile('/js/jQuery.marquee/jquery.marquee.js',['depends'=>'frontend\assets\AppAsset']);
 
 
 $css = <<<CSS
@@ -65,9 +66,64 @@ $css = <<<CSS
     max-height: 350px;
     min-width: 330px;
     overflow: auto;
-} 
+}
+
+
+.marquee {
+  width: 90%;
+  overflow: hidden;
+  /*
+  border: 1px solid #ccc;
+  background: #ccc;
+  */
+  margin-top: 10px;
+  color:#8F8F8F;
+}
 CSS;
 $this->registerCss($css);
+
+$js = <<<JS
+    var \$mq = $('.marquee');
+    function reloadData(){
+        $.ajax({
+            url:'/topology/dashboard/get-marquee-data',
+            type:'get',
+            dataType: 'html',
+            success:function(htm){
+                \$mq.html(htm);
+                \$mq.marquee('destroy')
+                marquee()
+            }
+        })
+    }
+    var counter = 0;
+    function marquee(){
+        \$mq.bind('finished', function(){
+            reloadData();
+        })
+        .marquee({
+            duration: 5000,
+            duplicated: false,
+            pauseOnHover: true
+        })
+    }
+    reloadData();
+
+/*
+$('.marquee').marquee({
+    //speed in milliseconds of the marquee
+    duration: 5000,
+    //gap in pixels between the tickers
+    gap: 50,
+    //time in milliseconds before the marquee will start animating
+    delayBeforeStart: 0,
+    //'left' or 'right'
+    direction: 'left',
+    //true or false - should the marquee be duplicated to show an effect of continues flow
+    duplicated: false
+});*/
+JS;
+$this->registerJs($js);
 ?>
 <div class="row" style="margin-top:50px;min-height: 700px">
     <div class="col-md-3" style="margin-top: 10px">
@@ -101,8 +157,8 @@ $this->registerCss($css);
         </div>
     </div>
     <div class="col-md-9">
-        <div style="position: relative;z-index:100;left: 0px; top: 10px; border:1px solid gray; width:90%;height:30px; ">谢谢谢谢谢谢</div>
-        <div class="buidling-editor-container">  
+        <div class="marquee">jQuery marquee is the best <b>marquee</b> plugin in the world</div>
+        <div class="buidling-editor-container">
             <svg class="ZSYFCEditor" oncontextmenu="return false;" >
                 <defs>
                     <marker id="ZSYFCEditor_MarkerArrow" markerWidth="13" markerHeight="13" refx="9" refy="6" orient="auto">
