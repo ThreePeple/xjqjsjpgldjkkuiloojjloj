@@ -73,4 +73,12 @@ class WirelessDeviceLink extends \yii\db\ActiveRecord
     public function getBandFormat(){
         return (int)($this->bandWidth/1000000).'M';
     }
+
+    public static function getLinks($areaId){
+        $ids = ViewTemplate::find()->where(["type"=>ViewTemplate::TYPE_WIFI,"areaId"=>$areaId])->select("device_id")->column();
+        $rows = self::find()
+            ->where(["or",["leftDevice"=>$ids,"rightDevice"=>$ids]])
+            ->all();
+        return  $rows;
+    }
 }
