@@ -80,12 +80,15 @@ svg.ZSYFCEditor {
 
 
 .marquee {
-  width: 90%;
+  position:absolute;
+  z-index:1000;
+  width: 1000px;
   overflow: hidden;
   /*
   border: 1px solid #ccc;
   background: #ccc;
   */
+  margin-left:330px;
   margin-top: 20px;
   color:#8DFFB5;
   font-size: 20px;
@@ -168,7 +171,6 @@ $this->registerJs($js);
         </div>
     </div>
     <div class="main">
-        <div class="marquee"></div>
         <div class="buidling-editor-container">
             <svg class="ZSYFCEditor" oncontextmenu="return false;" >
                 <defs>
@@ -180,5 +182,5 @@ $this->registerJs($js);
             </svg>
         </div> 
     </div>
-
+    <div class="marquee"></div>
 </div>
