@@ -116,6 +116,7 @@ class DeviceAlarm extends \yii\db\ActiveRecord
         $sql = "select a.baseDesc as category, a.id as categoryId, count(b.id) as count ,a.color as color
         from alarm_category a
         left join (select * from device_alarm where deviceIp in ('".implode("','",$ips)."')) b on a.id = b.alarmCategory
+        where a.id<100
         group by a.baseClass";
         $rows = Yii::$app->db->createCommand($sql)->queryAll();
         /*
@@ -156,7 +157,7 @@ class DeviceAlarm extends \yii\db\ActiveRecord
     public static function getLevelChartData(){
         $ips = DeviceIpfilter::getIdsByType(DeviceIpfilter::TYPE_BUILD);
         $sql = "select a.desc as category, a.id as categoryId, count(b.id) as count ,a.color as color from alarm_level a
-         left join (select * from device_alarm where deviceIp in ('".implode("','",$ips)."')) b on a.id = b.alarmLevel
+         left join (select * from device_alarm where deviceIp in ('".implode("','",$ips)."')) b on a.id = b.alarmLevel where a.id<10
          group by a.id";
         /*
         $rows = (new Query())

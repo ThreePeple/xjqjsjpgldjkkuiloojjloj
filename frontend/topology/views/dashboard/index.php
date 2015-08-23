@@ -84,7 +84,7 @@ $this->registerCss($css);
         <div class="col-md-12">
             <div class="box"  style="background: none;">
                 <div class="box-header">
-                    <h3 class="box-title">当前全部事件统计</h3>
+                    <h3 class="box-title">告警级别</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body" id="events_levels">
                 </div><!-- /.box-body -->
@@ -93,7 +93,7 @@ $this->registerCss($css);
         <div class="col-md-12">
             <div class="box"  style="background: none;">
                 <div class="box-header">
-                    <h3 class="box-title">系统运行状态快照</h3>
+                    <h3 class="box-title">告警类型</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body" id="runtime">
                 </div><!-- /.box-body -->
@@ -101,6 +101,7 @@ $this->registerCss($css);
         </div>
     </div>
     <div class="col-md-9">
+        <div style="position: relative;z-index:100;left: 0px; top: 10px; border:1px solid gray; width:90%;height:30px; ">谢谢谢谢谢谢</div>
         <div class="buidling-editor-container">  
             <svg class="ZSYFCEditor" oncontextmenu="return false;" >
                 <defs>
@@ -112,4 +113,5 @@ $this->registerCss($css);
             </svg>
         </div> 
     </div>
+
 </div>

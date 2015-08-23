@@ -214,7 +214,61 @@
         });
     }
 
+    function loadAlarmLevelPie(series){
+        $('#events_levels').highcharts({
+            credits: {
+                enabled: false
+            },
+            legend: {
+                enabled: true,
+                layout: 'vertical',
+                //backgroundColor: '#FFFFFF',
+                align: 'right',
+                verticalAlign: 'top',
+               // floating: true,
+                //x: 0,
+                //y: 0
+            },
+            chart: {
+                polar: true,
+                height: 200,
+                backgroundColor: 'transparent',
+                margin: 0
+            },
+
+            title: {
+                text: ''
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.y}</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                    /*
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.y}',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        },
+                        connectorColor: 'silver'
+                    }*/
+                }
+            },
+            series: series
+        });
+    }
+
     function loadAlarmLevelData(series,max){
+        var count = series[0].data.length;
+        var rote = 360/count;
+        console.log(count);
         $('#events_levels').highcharts({
             credits: {
                 enabled: false
@@ -237,7 +291,7 @@
                 endAngle: 360
             },
             xAxis: {
-                tickInterval: 72,
+                tickInterval: rote,
                 min: 0,
                 max: 360,
                 labels: {
@@ -256,7 +310,7 @@
             plotOptions: {
                 series: {
                     pointStart: 0,
-                    pointInterval: 72
+                    pointInterval: rote
                 },
                 column: {
                     pointPadding: 0,
@@ -264,20 +318,6 @@
                 }
             },
             series : series
-            /*
-            series: [{
-                type: 'column',
-                name: 'Column',
-
-                data: [
-                    {color:'#9BCA62',y:18},
-                    {color:'#EDD777',y:14},
-                    {color:'#61C0DE',y:8},
-                    {color:'#067CCC',y:11},
-                    {color:'#F88464',y:4}
-                ],
-                pointPlacement: 'between'
-            }]*/
         });
 
     }
@@ -295,6 +335,7 @@
                     loadDeviceChart(res.device.series,res.device.categories);
                     loadAlarmTypeChart(res.alarmType.series,res.alarmType.categories);
                     loadAlarmLevelData(res.alarmLevel.series,res.alarmLevel.max);
+                    //loadAlarmLevelPie(res.alarmLevel.series);
                     setTimeout(reloadChart,30000);
                 }
             });

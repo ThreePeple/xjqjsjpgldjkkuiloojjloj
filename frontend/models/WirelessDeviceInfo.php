@@ -196,7 +196,7 @@ class WirelessDeviceInfo extends \yii\db\ActiveRecord
             if(!isset($result[$type])){
                 $result[$type] = [];
             }
-            $result[$type][] = ["id"=>$row["id"],"label"=>$row["label"]];
+            $result[$type][] = ["id"=>$row["id"],"label"=>$row["ip"]];
         }
         return $result;
     }

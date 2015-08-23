@@ -187,16 +187,17 @@ class DeviceInfo extends \yii\db\ActiveRecord
        // $query->andFilterWhere(["categoryId"=>$type]);
         $query->andFilterWhere(["like","label",$q]);
        // $query->andFilterWhere(["not in","id",$exclude_ids]);
-        $query->select(["id"=>"id","label"=>"label"]);
+        $query->select(["id"=>"id","label"=>"ip"]);
 
         $filterIps = DeviceIpfilter::getIdsByType(DeviceIpfilter::TYPE_BUILD);
         $query->andWhere(["ip"=>$filterIps]);
         $rows = $query->asArray()->all();
+        /*
         array_walk($rows,function(&$item,$k,$seleceted){
             if(in_array($item["id"],$seleceted)){
                 $item["disabled"] = true;
             }
-        },$selected);
+        },$selected);*/
         return $rows;
     }
 
@@ -212,7 +213,7 @@ class DeviceInfo extends \yii\db\ActiveRecord
             if(!isset($result[$type])){
                 $result[$type] = [];
             }
-            $result[$type][] = ["id"=>$row["id"],"label"=>$row["label"]];
+            $result[$type][] = ["id"=>$row["id"],"label"=>$row["ip"]];
         }
         return $result;
     }
