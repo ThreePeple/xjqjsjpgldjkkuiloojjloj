@@ -62,6 +62,11 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
 }; 
 
 </script> 
+<style>
+    section.content{
+        overflow: auto;
+    }
+</style>
 <div class="buidling-editor-toolbar">
     <label for="switchcombo-ddi" id="addSwitchLabel">选择设备</label><span id="switchcombo"></span> 
     <?=Html::button("添加设备",["class"=>"btn btn-info","id"=>"addSwitchBtn"])?>
