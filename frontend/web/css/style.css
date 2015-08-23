@@ -76,7 +76,7 @@ svg.ZSYFCEditor path{
 }
 svg.ZSYFCEditor path.node_link{
 	stroke: green; 
-	stroke-width: 1px; 
+	stroke-width: 1.8px; 
 	fill: none;
 	marker-end: url(#ZSYFCEditor_MarkerArrow);
 }
