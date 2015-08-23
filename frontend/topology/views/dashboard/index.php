@@ -167,7 +167,7 @@ $this->registerJs($js);
             </div><!-- /.box -->
         </div>
     </div>
-    <div class="col-md-9">
+    <div class="main">
         <div class="marquee"></div>
         <div class="buidling-editor-container">
             <svg class="ZSYFCEditor" oncontextmenu="return false;" >
