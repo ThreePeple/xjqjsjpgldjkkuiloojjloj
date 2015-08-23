@@ -77,7 +77,8 @@ $css = <<<CSS
   background: #ccc;
   */
   margin-top: 10px;
-  color:#8F8F8F;
+  color:#8DFFB5;
+  font-size: 20px;
 }
 CSS;
 $this->registerCss($css);
