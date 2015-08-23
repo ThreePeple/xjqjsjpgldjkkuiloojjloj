@@ -81,4 +81,17 @@ class WirelessDeviceLink extends \yii\db\ActiveRecord
             ->all();
         return  $rows;
     }
+
+    /**
+     * 无线链路状态
+     */
+    public static function getWirelessLinkStatus($areaId){
+        $ids = ViewTemplate::find()->where(["type"=>ViewTemplate::TYPE_WIFI,"areaId"=>$areaId])->select("device_id")->column();
+        //var_dump($ids);
+        $query = WirelessDeviceLink::find();
+        $query->where(["or",["leftDevice"=>$ids],["rightDevice"=>$ids]]);
+        $query->andWhere("status>1");
+        $count = $query->count();
+        return $count>0? 2 : 1;
+    }
 }
