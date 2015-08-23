@@ -7,6 +7,7 @@ use app\models\DeviceIpfilter;
 use app\models\DeviceTask;
 use app\models\WirelessDeviceInfo;
 use app\models\WirelessDeviceLink;
+use yii\base\View;
 use yii\db\Query;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -79,11 +80,18 @@ class DashboardController extends Controller
                             array( "from" => "2", "to" => "4", "status" => "1" )
                         ); 
 
-        $data["mainLinks"] = array( 
+       /* $data["mainLinks"] = array(
                                 "r" => array( "status" => rand(1, 2) ),
                                 "g" => array( "status" => rand(1, 2) ),
                                 "b" => array( "status" => rand(1, 2) )
-                            ); 
+                            );*/
+        if($type == ViewTemplate::TYPE_WIFI){
+            $data["mainLinks"] = [
+                "r" => ["status"=> WirelessDeviceLink::getWirelessLinkStatus(1)],
+                "g" =>["status" => WirelessDeviceLink::getWirelessLinkStatus(2)] ,
+                "b" => ["status"=>WirelessDeviceLink::getWirelessLinkStatus(3)],
+            ];
+        }
 
         return Json::encode($data);
     }
