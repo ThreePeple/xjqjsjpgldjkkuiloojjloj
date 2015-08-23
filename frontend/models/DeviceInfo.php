@@ -191,6 +191,7 @@ class DeviceInfo extends \yii\db\ActiveRecord
 
         $filterIps = DeviceIpfilter::getIdsByType(DeviceIpfilter::TYPE_BUILD);
         $query->andWhere(["ip"=>$filterIps]);
+        $query->orderBy("ip asc");
         $rows = $query->asArray()->all();
         /*
         array_walk($rows,function(&$item,$k,$seleceted){
@@ -207,6 +208,7 @@ class DeviceInfo extends \yii\db\ActiveRecord
         $rows = self::find()
             ->with("category")
             ->where(["ip"=>$filterIps])
+            ->orderBy("ip asc")
             ->asArray()->all();
         foreach($rows as $row){
             $type = $row["category"]["node_group"];
