@@ -86,6 +86,11 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 		min-width: 300px;
 		overflow: auto;
 	}
+	.mainLinkDetail .popup_content{
+		max-height: 350px;
+		min-width: 350px;
+		overflow: auto;
+	}
 
 	path.main_node_link{
 		stroke-width: 1.5px !important; 
