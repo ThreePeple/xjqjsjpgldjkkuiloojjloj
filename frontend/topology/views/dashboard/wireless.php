@@ -61,8 +61,9 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 	.wireless-network a[data-area-id="f"]{
   -webkit-transform: translate(1000px, 211px)rotate(27deg);
 	}
-
-
+	svg.ZSYFCEditor {
+	 	background: url(/images/wireless_bg_index.png) !important;
+	}
 	.buidling-editor-container text.title{
 		display: none;
 	}
