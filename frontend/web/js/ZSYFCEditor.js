@@ -603,7 +603,7 @@
         // Init helper( with path element )
         gLinkHelperPath_ = svg.append("path")
             .attr("class", "link_drag_helper"); 
-
+        
         svg.append("g")
             .attr("class", "svg-container");  
 
@@ -635,7 +635,7 @@
         gLinkData_ = d["links"]; 
         window.console.log(gBindData_, gLinkData_)
         // Pare data.
-        renderSVG_();        
+        repaint_();        
     };
     function exportFn_reset_(userConfirm) {
         userConfirm = userConfirm === true ? true : false;
@@ -656,7 +656,7 @@
         gBindData_ = d["nodes"];
         gLinkData_ = d["links"]; 
         // Pare data.
-        renderSVG_();
+        repaint_();
     }
 
     // Add something
@@ -742,6 +742,13 @@
         gLinkData_ = d["links"];
         var arr = gBindData_;
 
+        var elementContainer = 
+
+        gSVG_.selectAll(".node_link").remove();
+
+        var glinkPath =  gSVG_.selectAll(".node_link")
+            .data(gLinkData_);
+
         var shape = gSVG_.selectAll(".element").data(arr);
         var shapeEnter = shape.enter();
         var shapeExit = shape.exit();
@@ -749,10 +756,6 @@
         gNodeUpdate_ = shape;
         gNodeExit_ = shapeExit;
 
-        gSVG_.selectAll(".node_link").remove();
-
-        var glinkPath =  gSVG_.selectAll(".node_link")
-            .data(gLinkData_);
 
         glinkPath.enter().append("path")
             .attr("class", "node_link")
@@ -762,7 +765,7 @@
             .attr("d", function(d) {
                 return d.pathData ;
             }); 
-            
+
         var g = gNodeEnter_.append("g")
             .attr("data-shape-type", function(d) {
                 return d.type;

@@ -97,12 +97,14 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 </script>
 <div class="row">
     <div class="wireless-network wireless-editor-container" id="wireNetworkHolder">
+  <!--  
     	<a data-area-id="a" title="F区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>6,'type'=>ViewTemplate::TYPE_WIFI])?>"></a>
     	<a data-area-id="b" title="A区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>1,'type'=>ViewTemplate::TYPE_WIFI])?>"></a>
     	<a data-area-id="c" title="B区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>2,'type'=>ViewTemplate::TYPE_WIFI])?>"></a>
     	<a data-area-id="d" title="C区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>3,'type'=>ViewTemplate::TYPE_WIFI])?>"></a>
     	<a data-area-id="e" title="D区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>4,'type'=>ViewTemplate::TYPE_WIFI])?>"></a>
     	<a data-area-id="f" title="E区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>5,'type'=>ViewTemplate::TYPE_WIFI])?>"></a>
+  -->    
         <svg class="ZSYFCEditor" oncontextmenu="return false;" style="  background: url(/images/wireless_bg.png) no-repeat; margin-top: 50px;">
             <defs> 
             </defs>

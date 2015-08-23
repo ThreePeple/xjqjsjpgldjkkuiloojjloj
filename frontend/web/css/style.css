@@ -7,6 +7,9 @@ body.ZSYFCEditor_shape_moving{
 body.ZSYFCEditor_link_moving{
 	cursor: default;
 }
+footer.footer{
+	color: #cdcdcd;
+}
 .jppopuppanel.modify_title{
 	margin-top: 10px;
 	margin-left: -80px;

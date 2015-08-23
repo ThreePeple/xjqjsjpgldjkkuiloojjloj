@@ -151,6 +151,23 @@
         }
     };
 
+    var _mockMainLinkPath = function(){
+        d3.select("svg.ZSYFCEditor")
+            .insert("path", "g.svg-container")
+            .attr("class", "main_node_link")
+            .attr("d", "M206,448L817,132L971,214L829,289L849,298");
+
+        d3.select("svg.ZSYFCEditor")
+            .insert("path", "g.svg-container")
+            .attr("class", "main_node_link")
+            .attr("d", "M634,672L1262,353L1049,245L1030,257");
+        
+        d3.select("svg.ZSYFCEditor")
+            .insert("path", "g.svg-container")
+            .attr("class", "main_node_link")
+            .attr("d", "M1078,168L850,286L866,295");
+    };
+
     // Dom Ready 
     $(function(){ 
 
@@ -189,6 +206,8 @@
             });
             
         } ); 
+
+        _mockMainLinkPath();
 
         var pathIdPrefix = "ZSYFCEditor_Path";
         var _updateLinksStatus = function (links){
