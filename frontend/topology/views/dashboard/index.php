@@ -21,6 +21,9 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 
 
 $css = <<<CSS
+body{
+    background-color: rgb(37,37,37) !important;
+}
 .box{
   color: #fff;
   position: relative;
@@ -38,11 +41,18 @@ $css = <<<CSS
     border: none;
     position: absolute;
     right: 0;
-    top: 120px;
+    bottom: 0;
 }
 .buidling-editor-container text.title {
     display: none;
 }
+svg.ZSYFCEditor { 
+    left: auto;
+    top: auto;
+    right: 0 !important;
+    bottom: 0 !important;
+}
+
 .nodeDetail .popupBody ul{
     margin: 0 10px;
     padding: 0;
@@ -69,8 +79,8 @@ $css = <<<CSS
 CSS;
 $this->registerCss($css);
 ?>
-<div class="row" style="margin-top:50px;min-height: 700px">
-    <div class="col-md-3" style="margin-top: 10px">
+<div class="row" style="margin-top:50px;min-height: 700px;position:relative;">
+    <div class="col-md-3" style="margin-top: 10px;position:relative; z-index:2">
         <div class="col-md-12">
             <div class="box" style="background: none;">
                 <div class="box-header">
@@ -100,8 +110,8 @@ $this->registerCss($css);
             </div><!-- /.box -->
         </div>
     </div>
-    <div class="col-md-9">
-        <div style="position: relative;z-index:100;left: 0px; top: 10px; border:1px solid gray; width:90%;height:30px; ">谢谢谢谢谢谢</div>
+    <div class="main" style="height: 100%;">
+        <div style="position:absolute; z-index: 2; left: 330px; top:10px; right: 20px; text-align: center; border:1px solid gray; height:30px; ">谢谢谢谢谢谢</div>
         <div class="buidling-editor-container">  
             <svg class="ZSYFCEditor" oncontextmenu="return false;" >
                 <defs>
