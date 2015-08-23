@@ -94,7 +94,7 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 	}
 
 	path.main_node_link{
-		stroke-width: 1.5px !important; 
+		stroke-width: 2px !important; 
 	}
 	path.main_node_link.blue_link{
 		stroke: rgb(109,142, 180);
