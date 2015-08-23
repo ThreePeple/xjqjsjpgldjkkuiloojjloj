@@ -5,6 +5,8 @@
    
     var detailUrl = '/stat/wireless/ajax-device-tip'; 
 
+    var mainLinkDetailUrl = '/stat/wireless/ajax-device-tip'; 
+
     var alarmImageMap = { 
         "ac": { 
             "2": "/images/icons3/alarm/ac.gif" 
@@ -75,7 +77,7 @@
         };
     }();
 
-    var _showNodeDetail = function(d, e, contentHtmlTpl) { 
+    var _showNodeDetail = function(d, e ) { 
         var $tg = $(e.target);
         if (false == $tg.is(".element")) {
             $tg = $tg.closest(".element");
@@ -94,17 +96,58 @@
         var offsetX = 90,
             offsetY = 65;
         
-        var className = "nodeDetail";
+        var className = "nodeDetail"; 
 
-        var _parseData = function(data) {
-            if (data) {
-                for (var p in data) {
-                    contentHtmlTpl = contentHtmlTpl.replace('{' + p + '}', data[p]);
-                }
-                return contentHtmlTpl;
-            }
-            return "<span class='none'>No data.</span>";
+        var _updateContent = function(html) {
+            return contentTpl.replace("{content}", html);
         };
+        var popPanel = new PopupPanel({
+            className: 'modalessDialog' + (className ? " " + className : ""),
+            offsetX: offsetX,
+            offsetY: offsetY,
+            destroy: true,
+            animate: false,
+            closeHandler: function() {},
+            content: contentTpl,
+            initInterface: function($content) {
+                var inst = this;
+                $content.click(function(e) {
+                    if ($(e.target).is('div.popup_close'))
+                        inst.close(true);
+                });
+
+                $content.find("div.popup_content").html(_updateContent("loading..."));  
+                var id  = ZSYFCEditor.getData()[ d[ ZSYFCEditorConfig['ID_KEY'] ] ]["data"]["id"];
+                $.get(detailUrl, {
+                    id: id
+                }, function(j) {
+                    $content.find("div.popup_content").html(j);
+                    popPanel.refresh();  
+                }, 'html');
+            }
+        }).init().show(x, y);
+    }; 
+
+    var _showMainLinkDetail = function(where, e ) { 
+        var $tg = $(e.target);
+        if (false == $tg.is(".main_node_link")) {
+            $tg = $tg.closest(".main_node_link");
+        } 
+
+        var offset = $tg.offset();
+        var x = offset.left,
+            y = offset.top;
+
+        var contentTpl = '<div class="popupBody">' +
+            '<div class="popup_close" title="关闭">&nbsp;</div>' +
+            '<div class="popup_content" >{content}</div>' +
+            '</div>';
+
+        var offsetX = 90,
+            offsetY = 65;
+        
+        var className = "mainLinkDetail"; 
+
         var _updateContent = function(html) {
             return contentTpl.replace("{content}", html);
         };
@@ -124,24 +167,16 @@
                 });
 
                 $content.find("div.popup_content").html(_updateContent("loading...")); 
-                // nodeDetail_.json : fail data, nodeDetail.json: ok data.
-                var id  = ZSYFCEditor.getData()[ d[ ZSYFCEditorConfig['ID_KEY'] ] ]["data"]["id"];
-                $.get(detailUrl, {
-                    id: id
+
+                $.get(mainLinkDetailUrl, {
+                    where: where
                 }, function(j) {
                     $content.find("div.popup_content").html(j);
-                    popPanel.refresh(); 
-                    return;
-                    if (j.result == 1) {
-                        $content.find("div.popup_content").html(_updateContent(_parseData(j.data)));
-                    } else {
-                        $content.find("div.popup_content").html(_updateContent(j.msg));
-                    }
-                    popPanel.refresh();
+                    popPanel.refresh();  
                 }, 'html');
             }
         }).init().show(x, y);
-    }; 
+    };    
 
     var _updateImage = function (shape, shapeType, s){  
         if( s == '1' ){
@@ -154,18 +189,30 @@
     var _mockMainLinkPath = function(){
         d3.select("svg.ZSYFCEditor")
             .insert("path", "g.svg-container")
-            .attr("class", "main_node_link")
-            .attr("d", "M206,448L817,132L971,214L829,289L849,298");
+            .attr("class", "main_node_link green_link")
+            .attr("d", "M206,448L817,132L971,214L829,289L849,298")
+            .on("mouseover", function() {
+                PopupPanel.clearAll();
+                _showMainLinkDetail("r", d3.event );
+            });  
 
         d3.select("svg.ZSYFCEditor")
             .insert("path", "g.svg-container")
-            .attr("class", "main_node_link")
-            .attr("d", "M634,672L1262,353L1049,245L1030,257");
+            .attr("class", "main_node_link green_link")
+            .attr("d", "M634,672L1262,353L1049,245L1030,257")
+            .on("mouseover", function() {
+                PopupPanel.clearAll();
+                _showMainLinkDetail("g", d3.event );
+            });  
         
         d3.select("svg.ZSYFCEditor")
             .insert("path", "g.svg-container")
-            .attr("class", "main_node_link")
-            .attr("d", "M1078,168L850,286L866,295");
+            .attr("class", "main_node_link blue_link")
+            .attr("d", "M1078,168L850,286L866,295")
+            .on("mouseover", function() {
+                PopupPanel.clearAll();
+                _showMainLinkDetail("b", d3.event );
+            });  
     };
 
     // Dom Ready 
@@ -188,7 +235,7 @@
             d3.selectAll(".element") 
             .on("mouseover", function(data) {
                 PopupPanel.clearAll();
-                _showNodeDetail(data, d3.event, _getNodeDetailTpl());
+                _showNodeDetail(data, d3.event );
             }).on("click", function(data){
                 var id  = ZSYFCEditor.getData()[ data[ ZSYFCEditorConfig['ID_KEY'] ] ]["data"]["id"];
                  window.open("/stat/wireless/detail?id=" + id, "wlan-node-detail");

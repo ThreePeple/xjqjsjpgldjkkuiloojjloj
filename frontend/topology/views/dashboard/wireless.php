@@ -83,8 +83,25 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 	}
 	.nodeDetail .popup_content{
 		max-height: 350px;
+		min-width: 300px;
 		overflow: auto;
 	}
+
+	path.main_node_link{
+		stroke-width: 1.5px !important; 
+	}
+	path.main_node_link.blue_link{
+		stroke: rgb(109,142, 180);
+	}
+	path.main_node_link.green_link{
+		stroke: green;
+	}
+	path.green_link:hover{
+		stroke: rgb(30, 255, 30);
+	}
+	path.blue_link:hover{
+		stroke: rgb(199,232, 250);
+	}	
 </style>
 <script type="text/single-html-template" id="switch_node_detail">
     <ul> 
