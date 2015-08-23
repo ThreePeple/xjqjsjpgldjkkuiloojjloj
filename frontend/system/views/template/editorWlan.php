@@ -165,10 +165,7 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
 </div> 
 <div class="buidling-editor-container wlan-editor-container">
 	<svg class="ZSYFCEditor" oncontextmenu="return false;" >
-		<defs>
-			<marker id="ZSYFCEditor_MarkerArrow" markerWidth="13" markerHeight="13" refx="9" refy="6" orient="auto">
-				<path d="M2,2 L2,11 L10,6 L2,2" style="fill: #000000;" />
-			</marker>
+		<defs> 
 		</defs>
 	</svg>
 </div>

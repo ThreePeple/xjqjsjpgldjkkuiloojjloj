@@ -109,10 +109,7 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
     	<a data-area-id="e" title="E区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>3,'type'=>ViewTemplate::TYPE_WLAN])?>"></a>
     	<a data-area-id="f" title="F区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>2,'type'=>ViewTemplate::TYPE_WLAN])?>"></a>
         <svg class="ZSYFCEditor" oncontextmenu="return false;" >
-            <defs>
-                <marker id="ZSYFCEditor_MarkerArrow" markerWidth="13" markerHeight="13" refx="9" refy="6" orient="auto">
-                    <path d="M2,2 L2,11 L10,6 L2,2" style="fill: #000000;" />
-                </marker>
+            <defs> 
             </defs>
             <g class="svg-container"></g>
         </svg>

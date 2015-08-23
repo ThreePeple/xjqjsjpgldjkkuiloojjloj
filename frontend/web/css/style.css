@@ -72,15 +72,15 @@ svg.ZSYFCEditor path{
 	stroke-width: .5px;
 }
 svg.ZSYFCEditor path.node_link{
-	stroke: #6666ff; 
+	stroke: green; 
 	stroke-width: 1px; 
 	fill: none;
 	marker-end: url(#ZSYFCEditor_MarkerArrow);
 }
 svg.ZSYFCEditor path.link_drag_helper{
-	stroke: red; 
+	stroke: rgb(255, 100, 100); 
 	visibility: hidden;
- 		stroke-dasharray: 5,5; 
+ 	stroke-dasharray: 5,5; 
 	marker-end: url(#ZSYFCEditor_MarkerArrow);
 }
 svg.ZSYFCEditor path.link_drag_helper.on{

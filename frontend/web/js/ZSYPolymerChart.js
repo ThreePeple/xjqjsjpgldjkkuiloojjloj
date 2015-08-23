@@ -5,7 +5,7 @@
 
     var svgWidth = 1000,
         svgHeight = 1000,
-        circleRadius = 160;
+        circleRadius = 120;
 
     var polymerWidth,
         polymerHeight,
@@ -86,8 +86,8 @@
         polymerHeight = 35;
 
 
-        groupsHPadding = polymerWidth - 100,
-        groupsVPadding = polymerHeight - 80;
+        groupsHPadding = polymerWidth - 10,
+        groupsVPadding = polymerHeight ;
 
         groupCenterXY["group1"] = {
             x: (svgWidth - groupsHPadding) / 2 - circleRadius,
@@ -112,6 +112,8 @@
             .attr("width", svgWidth)
             .attr("height", svgHeight);
 
+        var linkParent = polymerChart.append("g").attr("class", "links");
+
         // Group 1
         var group1 = polymerChart.append("g")
             .attr("transform", "translate(" + groupCenterXY["group1"]["x"] + "," + groupCenterXY["group1"]["y"] + ")");
@@ -123,9 +125,8 @@
 
         _renderPolymers();
         _renderGroup("group1", data.groups, group1);
-        _renderGroup("group2", data.groups, group2, true);
-        _renderLinks(data.polymers);
-
+        _renderGroup("group2", data.groups, group2, true); 
+        _renderLinks(data.polymers,linkParent); 
         _bindEvents();
     };
 
@@ -173,7 +174,7 @@
         throw "Invalid data.";
     };
 
-    var _renderLinks = function(polymers) {
+    var _renderLinks = function(polymers, linkParent) {
         var links = [],
             from, to;
         polymers.forEach(function(polymer) {
@@ -217,7 +218,7 @@
                 linkPath: link.from + "_" + link.to
             };
         });
-        _renderPath(links);
+        _renderPath(links, linkParent);
         map = null;
     };
 
@@ -229,8 +230,8 @@
             return d.y;
         });
 
-    var _renderPath = function(links) {
-        polymerChart.selectAll(".link-path")
+    var _renderPath = function(links, linkParent) {
+        linkParent.selectAll(".link-path")
             .data(links)
             .enter()
             .append("path")
