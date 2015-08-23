@@ -78,6 +78,13 @@ class DashboardController extends Controller
                             array( "from" => "2", "to" => "3", "status" => "2" ),
                             array( "from" => "2", "to" => "4", "status" => "1" )
                         ); 
+
+        $data["mainLinks"] = array( 
+                                "r" => array( "status" => rand(1, 2) ),
+                                "g" => array( "status" => rand(1, 2) ),
+                                "b" => array( "status" => rand(1, 2) )
+                            ); 
+
         return Json::encode($data);
     }
 

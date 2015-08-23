@@ -96,6 +96,9 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 	path.main_node_link{
 		stroke-width: 2px !important; 
 	}
+	path.main_node_link[data-status="2"]{
+		stroke: red !important;
+	}
 	path.main_node_link.blue_link{
 		stroke: rgb(109,142, 180);
 	}
@@ -108,6 +111,9 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 	path.blue_link:hover{
 		stroke: rgb(199,232, 250);
 	}	
+	path.main_node_link[data-status="2"]:hover{
+		stroke: rgb(  255, 100,100 ) !important;
+	}
 </style>
 <script type="text/single-html-template" id="switch_node_detail">
     <ul> 

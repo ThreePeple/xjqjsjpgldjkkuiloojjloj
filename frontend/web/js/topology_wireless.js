@@ -191,6 +191,7 @@
             .insert("path", "g.svg-container")
             .attr("class", "main_node_link green_link")
             .attr("d", "M210,442L817,132L971,214L829,289L849,298")
+            .attr("id", "main_link_r")
             .on("mouseover", function() {
                 PopupPanel.clearAll();
                 _showMainLinkDetail("r", d3.event );
@@ -199,6 +200,7 @@
         d3.select("svg.ZSYFCEditor")
             .insert("path", "g.svg-container")
             .attr("class", "main_node_link green_link")
+            .attr("id", "main_link_g")
             .attr("d", "M638,670L1262,353L1049,245L1032,255")
             .on("mouseover", function() {
                 PopupPanel.clearAll();
@@ -208,6 +210,7 @@
         d3.select("svg.ZSYFCEditor")
             .insert("path", "g.svg-container")
             .attr("class", "main_node_link blue_link")
+            .attr("id", "main_link_b")
             .attr("d", "M1078,168L850,286L866,295")
             .on("mouseover", function() {
                 PopupPanel.clearAll();
@@ -263,6 +266,16 @@
             } );
         };
 
+        var _updateMainLinksStatus = function ( map ){
+            var link;
+            Object.keys(map).forEach( function (k) {
+                link = d3.select('#main_link_' + k ); 
+                if( link.node() ){
+                    link.attr("data-status", map[k]["status"] );
+                }
+            } )
+        }
+
         var refreshData = function(){
             $.ajax({
                 url:'/topology/dashboard/ajax-links-refresh',
@@ -273,6 +286,7 @@
                     if(res.build){
                         ZSYFCEditor.updateData(res.build);
                         _updateLinksStatus( res.links );
+                        _updateMainLinksStatus( res.mainLinks );
                     }
                     setTimeout(refreshData,30000);
                 }
