@@ -123,6 +123,10 @@ class DashboardController extends Controller
         ]);
     }
 
+    /**
+     * 交换机组网数据
+     * @return string
+     */
     public function actionAjaxGetHub(){
         $this->layout= false;
         $id1 = Yii::$app->request->post("id1");
