@@ -151,7 +151,8 @@
                 marginBottom: 50,
                 allowOverlap:true,
                 marginTop:20,
-                height:200
+                height:200,
+                marginLeft:20,
             },
             plotOptions:{
                 series:{
