@@ -189,6 +189,7 @@ class WirelessDeviceInfo extends \yii\db\ActiveRecord
         $rows = self::find()
             ->with("category")
             ->where(["ip"=>$filterIps])
+            ->orderBy("ip asc")
             ->asArray()
             ->all();
         foreach($rows as $row){

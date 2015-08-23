@@ -4,6 +4,7 @@ namespace app\topology\controllers;
 
 use app\models\DeviceAlarm;
 use app\models\DeviceIpfilter;
+use app\models\DeviceTask;
 use app\models\WirelessDeviceInfo;
 use app\models\WirelessDeviceLink;
 use yii\db\Query;
@@ -227,5 +228,12 @@ class DashboardController extends Controller
             "alarmType" => $alarmTypes,
             "alarmLevel" => $alarmLevels
         ]);
+    }
+
+    /**
+     * 大厦滚动性能信息
+     */
+    public function actionGetMarqueeData(){
+        return DeviceTask::getLastPreDatas();
     }
 }

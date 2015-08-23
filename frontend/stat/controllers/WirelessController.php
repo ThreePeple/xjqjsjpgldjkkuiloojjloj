@@ -212,4 +212,16 @@ class WirelessController extends Controller
             "perfData" => $perfData
         ]);
     }
+
+    /**
+     * 无线区域点击链路展示TIP 信息
+     */
+    public function actionGetLinkTip(){
+        $this->layout= false;
+        $areaId = Yii::$app->request->get("a");
+        $data= WirelessDeviceLink::getLinks($areaId);
+        return $this->render("link-tip",[
+            "data" => $data,
+        ]);
+    }
 }

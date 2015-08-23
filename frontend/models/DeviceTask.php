@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\Query;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -26,6 +27,10 @@ use yii\helpers\ArrayHelper;
  */
 class DeviceTask extends \yii\db\ActiveRecord
 {
+    const TASKID_CPU = 2;       //CPU
+    const TASKID_MEMORY = 4;    //内存
+    const TASKID_RES_TIME = 6;  //响应时间
+
     /**
      * @inheritdoc
      */
@@ -81,4 +86,34 @@ class DeviceTask extends \yii\db\ActiveRecord
             ->all();
         return ArrayHelper::map($rows,"taskDesc","dataVal");
     }
+
+    public static function getLastPreDatas(){
+        $ips = DeviceIpfilter::getIdsByType(ViewTemplate::TYPE_BUILD);
+
+        $rows =(new Query())
+            ->from("device_task a")
+            ->innerJoin("device_info b","a.devId = b.id")
+            ->where(["b.ip"=>$ips])
+            ->select(["id"=>"a.devId","label"=>"b.label","ip"=>"b.ip","key"=>"a.taskDesc","value"=>"a.dataVal"])
+            ->groupBy("a.devId,a.taskId")
+            ->orderBy("a.devId asc,a.dataTime desc")
+            ->all();
+
+        $data = [];
+        foreach($rows as $row){
+            $deviceId = $row["id"];
+            if(!isset($data[$deviceId])){
+                $data[$deviceId]=[];
+                $data[$deviceId][] = $row["label"].'('.$row["ip"].')';
+            }
+            $data[$deviceId][] = $row["key"].':'.$row["value"];
+        }
+
+        $html =[];
+        foreach($data as $id=>$item){
+            $html[] = implode('&nbsp;&nbsp;',$item);
+        }
+        return implode('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',$html);
+    }
+
 }

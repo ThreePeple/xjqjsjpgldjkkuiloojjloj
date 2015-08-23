@@ -167,9 +167,15 @@ $this->registerJs($js);
             </div><!-- /.box -->
         </div>
     </div>
+<<<<<<< HEAD
     <div class="col-md-9">
-        <div class="marquee"></div>
+        <div class="marquee">jQuery marquee is the best <b>marquee</b> plugin in the world</div>
         <div class="buidling-editor-container">
+=======
+    <div class="main" style="height: 100%;">
+        <div style="position:absolute; z-index: 2; left: 330px; top:10px; right: 20px; text-align: center; border:1px solid gray; height:30px; ">谢谢谢谢谢谢</div>
+        <div class="buidling-editor-container">  
+>>>>>>> 86cbfc9ee1ce1dc280bf788c0bb094dd54cfd601
             <svg class="ZSYFCEditor" oncontextmenu="return false;" >
                 <defs>
                     <marker id="ZSYFCEditor_MarkerArrow" markerWidth="13" markerHeight="13" refx="9" refy="6" orient="auto">
