@@ -227,8 +227,8 @@
             {},
             {
                 svg: d3.select("svg.ZSYFCEditor"),
-                width: 1440,
-                height: 800
+                width: 1521,
+                height: 773
             } 
         );
 
