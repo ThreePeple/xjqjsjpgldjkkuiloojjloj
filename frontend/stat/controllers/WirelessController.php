@@ -11,6 +11,7 @@ use Yii;
 use app\models\WirelessDeviceInfo;
 use app\models\WirelessSearch;
 use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\Controller;
@@ -220,6 +221,11 @@ class WirelessController extends Controller
         $this->layout= false;
         $areaId = Yii::$app->request->get("a");
         $data= WirelessDeviceLink::getLinks($areaId);
+
+        $dataProvider = new ArrayDataProvider([
+            "allModes"
+        ]);
+
         return $this->render("link-tip",[
             "data" => $data,
         ]);
