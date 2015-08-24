@@ -96,6 +96,36 @@ class DashboardController extends Controller
         return Json::encode($data);
     }
 
+    /**
+     * 有线网络新的状态更新服务
+     *
+     * 
+     * @return [String] json string
+     */
+    public function actionAjaxWlanRefresh(){
+
+ $rand1 = rand(1, 2);
+ $rand2 = rand(1, 2);
+
+$jsonData = <<<abc
+{
+    "element_node_5": {
+        "status": $rand1
+    },
+    "element_node_32": {
+        "status": $rand2
+    },
+    "element_line_16":{
+        "status": $rand2 
+    },
+    "element_line_29":{
+        "status": $rand1 
+    }
+}
+abc;
+        return $jsonData;
+
+    }
 
     /**
      * 有线网络
