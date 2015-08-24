@@ -94,7 +94,10 @@ $this->registerJs($js);
                     'class'=>'kartik\grid\EditableColumn',
                     'attribute' => 'point',
                 ],
-                //'insert_no',
+                [
+                    "attribute"=>"insert_no",
+                    "hidden" => true,
+                ],
                 [
                     'class'=>'kartik\grid\EditableColumn',
                     'attribute' => 'tag',
@@ -108,6 +111,12 @@ $this->registerJs($js);
                         "pluginEvents" => [
                             "editableSuccess" => "function(event,val,form,data){window.location.reload();}"
                         ]
+                    ],
+                    'headerOptions' => [
+                        'class' => 'skip-export'
+                    ],
+                    "contentOptions" => [
+                        "class" => 'skip-export'
                     ]
                 ],
                 [
@@ -162,10 +171,10 @@ $this->registerJs($js);
                     'options' => ['title' =>  'Microsoft Excel 95+'],
                     'mime' => 'application/vnd.ms-excel',
                     'config' => [
-                        'worksheet' => 'ExportWorksheet',
+                        'worksheet' => 'jumper',
                         'cssFile' => ''
                     ]
-                ],
+                ]
             ]
         ]);
         ?>
