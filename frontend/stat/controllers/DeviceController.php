@@ -222,10 +222,26 @@ class DeviceController extends Controller
      */
     public function actionAjaxNodeTip(){
         $nodeId = Yii::$app->request->get("id");
-        $devId = TopologyConfig::find()->where(["id"=>$nodeId])->select("device1")->scalar();
-        return $this->getTip($devId);
+        $row = TopologyConfig::find()->where(["id"=>$nodeId])->select("device1,device2,type_id")->one();
+        switch($row["type_id"]){
+            case 1:
+                $id = DeviceInfo::find()->where(["ip"=>$row["device1"]])->select("id")->scalar();
+                return $this->getTip($id);
+            case 2:
+                $ids = DeviceInfo::find()->where(["ip"=>[$row["device1"],$row["device2"]]])->select("id")->column();
+                if(count($ids) ==2){
+                    return $this->getLinkTip($ids[0],$ids[1]);
+                }
+            default:
+                return '';
+        }
     }
 
+    /**
+     * 设备提示信息
+     * @param $deviceId
+     * @return string
+     */
     protected function getTip($deviceId){
         $this->layout = false;
 
@@ -250,7 +266,18 @@ class DeviceController extends Controller
             "perfData" => $perfData
         ]);
     }
-
+    /**
+     * 链路提示信息
+     */
+    public function getLinkTip($d1,$d2){
+        $this->layout = false;
+        $model = DeviceLink::find()
+            ->where(["or",["and",["leftDevice"=>$d1,"rightDevice"=>$d2]],["and",["leftDevice"=>$d2,"rightDevice"=>$d1]]])
+            ->one();
+        return $this->render('link-detail',[
+        "model" => $model
+        ]);
+    }
     /**
      * Finds the DeviceInfo model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
