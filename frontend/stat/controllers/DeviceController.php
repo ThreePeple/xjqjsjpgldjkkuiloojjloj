@@ -4,6 +4,7 @@ namespace app\stat\controllers;
 
 use app\models\DeviceInterface;
 use app\models\InfoConfig;
+use app\models\TopologyConfig;
 use Yii;
 use app\models\DeviceInfo;
 use app\models\DeviceInfoSearch;
@@ -207,13 +208,35 @@ class DeviceController extends Controller
         ]);
     }
 
+    /**
+     * 设备TIP
+     * @return string
+     */
     public function actionAjaxDeviceTip(){
-        $this->layout = false;
         $id = Yii::$app->request->get("id");
-        $device = DeviceInfo::find()->with(["type","model"])->where(["id"=>$id])->one();
+        return $this->getTip($id);
+    }
+
+    /**
+     * 有线拓扑 根据nodeId 获取设备TIP
+     */
+    public function actionAjaxNodeTip(){
+        $nodeId = Yii::$app->request->get("id");
+        $devId = TopologyConfig::find()->where(["id"=>$nodeId])->select("device1")->scalar();
+        return $this->getTip($devId);
+    }
+
+    protected function getTip($deviceId){
+        $this->layout = false;
+
+        $device = DeviceInfo::find()->with(["type","model"])->where(["id"=>$deviceId])->one();
+        if(!$device){
+            return "设备未找到";
+        }
+
         $deviceConfig =ArrayHelper::map(InfoConfig::getTipConfig(1),"key","value");
         $perfConfig = ArrayHelper::map(InfoConfig::getTipConfig(2),"key","value");
-        $perfData = DeviceTask::find()->where(["taskId"=>array_values($perfConfig),"devId"=>$id])
+        $perfData = DeviceTask::find()->where(["taskId"=>array_values($perfConfig),"devId"=>$deviceId])
             ->select(["taskId","dataVal"])
             ->orderBy("update_time desc")
             ->groupBy("taskId")

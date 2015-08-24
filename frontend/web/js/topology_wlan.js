@@ -3,7 +3,7 @@
  */
 ( function () { 
    
-    var detailUrl = '/stat/device/ajax-device-tip';  
+    var detailUrl = '/stat/device/ajax-node-tip';
 
     var _showNodeDetail = function(id, e ) { 
         var $tg = $(e.target); 
