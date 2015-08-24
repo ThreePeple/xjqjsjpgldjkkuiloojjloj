@@ -130,27 +130,21 @@ class DeviceAlarm extends \yii\db\ActiveRecord
         */
         $categories = [];
         $data = [];
+        $colors = [];
         foreach($rows as $row){
             $categories[] = $row["category"];
             $data[] = [
                 "name"=>$row["category"],
-                "color"=>$row["color"],
-                "y"=>(int)$row["count"],
+                "value"=>(int)$row["count"],
             ];
+            $colors[] = $row["color"];
+
         }
 
         return [
             "categories" => $categories,
-            "series" =>[
-                [
-                    "name" => "数量",
-                    "data" => $data,
-                    "dataLabels" => [
-                        "enabled" => true,
-                        "align" => "top"
-                    ]
-                ]
-            ]
+            "data" =>$data,
+            "colors" => $colors
         ];
     }
 
@@ -159,37 +153,22 @@ class DeviceAlarm extends \yii\db\ActiveRecord
         $sql = "select a.desc as category, a.id as categoryId, count(b.id) as count ,a.color as color from alarm_level a
          left join (select * from device_alarm where deviceIp in ('".implode("','",$ips)."')) b on a.id = b.alarmLevel where a.id<10
          group by a.id";
-        /*
-        $rows = (new Query())
-            ->from("alarm_level a")
-            ->leftJoin("device_alarm b","a.id = b.alarmLevel")
-            ->where(["b.deviceIp"=>$ips])
-            ->select(["category"=>"a.desc","categoryId"=>"a.id","count"=>"count(b.id)","color"=>"a.color"])
-            ->groupBy("a.id")
-            ->all();
-        */
         $rows = Yii::$app->db->createCommand($sql)->queryAll();
         $data = [];
-        $max = 0;
+        $categories = [];
+        $colors = [];
         foreach($rows as $row){
+            $colors[] = $row["color"];
             $data[] = [
                 "name" => $row["category"],
-                "color" => $row["color"],
-                "y" => (int)$row["count"],
+                "value" => (int)$row["count"],
             ];
-            if($row["count"]>$max){
-                $max = $row["count"];
-            }
+            $categories[] = $row["category"];
         }
-        $max = $max+1;
         return [
-            "series" => [[
-                "type" => "column",
-                "name" => "数量",
-                "data" => $data,
-                "pointPlacement" => "between"
-            ]],
-            "max" => $max
+            "data" => $data,
+            "categories" => $categories,
+            "colors" => $colors
         ];
     }
 }

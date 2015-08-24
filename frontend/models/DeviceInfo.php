@@ -263,15 +263,17 @@ class DeviceInfo extends \yii\db\ActiveRecord
             ->all();
         $rows = ArrayHelper::map($rows,"status","count");
 
-        $data = [];
+        $markData = [];
         $categories = [];
+        $data = [];
         foreach(self::$status_config as $key => $config){
-            $data[] = [
+            $value = isset($rows[$key])? (int) $rows[$key] : 0;
+            $markData[] = [
                 "name" => $config[0],
-                "color" => $config[1],
-                "y" => isset($rows[$key])? (int) $rows[$key] : 0,
+                "value" => $value
             ];
             $categories[] = $config[0];
+            $data[] = $value;
         }
 
         $series = [
@@ -285,7 +287,8 @@ class DeviceInfo extends \yii\db\ActiveRecord
             ]
         ];
         return [
-            "series" => $series,
+            "markData" => $markData,
+            "data" =>$data,
             "categories" => $categories
         ];
     }

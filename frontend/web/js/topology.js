@@ -139,188 +139,209 @@
             }
         }]
     };
-
-    function loadDeviceChart(series,categories){
-        $('#device_status').highcharts({
-            credits: {
-                enabled: false
-            },
-            chart: {
-                type: 'column',
-                backgroundColor:'transparent',
-                marginBottom: 50,
-                allowOverlap:true,
-                marginTop:20,
-                height:200,
-                marginLeft:20,
-            },
-            plotOptions:{
-                series:{
-                    groupPadding:0.05,
-                    pointPadding:0
-                }
-            },
-            title:{
-                text: ''
-            },
-            xAxis: {
-                categories: categories,
-                tickLength: 0
-            },
-            yAxis: {
-                title: '',
-                gridLineWidth: 0,
-                labels:{ enabled:false}
-            },
-            legend: {
-                enabled: false
-            },
-            series: series
-        });
+    var containers = [];
+    function renderEChart(id,chart,option){
+        if(!containers[id]){
+            var myChart = echarts.init(document.getElementById(id));
+            containers[id] = myChart;
+        }
+        containers[id].setOption(option);
     }
 
-    function loadAlarmTypeChart(series,categories){
-        console.log(JSON.stringify(series))
-        $('#runtime').highcharts({
-            credits: {
-                enabled: false
-            },
-            chart: {
-                type: 'bar',
-                height: 200,
-                backgroundColor:'transparent'
-            },
-            plotOptions:{
-                series:{
-                    groupPadding:0.05,
-                    pointPadding:0
-                }
-            },
-            title:{
-                text: ''
-            },
-            xAxis: {
-                categories: categories,
-                tickLength: 0
-            },
-            yAxis: {
-                title: '',
-                gridLineWidth: 0,
-                labels:{ enabled:false}
-            },
-            legend: {
-                enabled: false
-            },
-            series: series
-        });
-    }
-
-    function loadAlarmLevelPie(series){
-        $('#events_levels').highcharts({
-            credits: {
-                enabled: false
-            },
-            legend: {
-                enabled: true,
-                layout: 'vertical',
-                //backgroundColor: '#FFFFFF',
-                align: 'right',
-                verticalAlign: 'top',
-               // floating: true,
-                //x: 0,
-                //y: 0
-            },
-            chart: {
-                polar: true,
-                height: 200,
-                backgroundColor: 'transparent',
-                margin: 0
-            },
-
+    function loadDeviceChart(data,markData,categories){
+        var option = {
             title: {
-                text: ''
+                x: '',
+                text: '',
+                subtext: ''
             },
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.y}</b>'
+                trigger: 'item'
             },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: false
-                    },
-                    showInLegend: true
-                    /*
-                    dataLabels: {
-                        enabled: true,
-                        format: '<b>{point.name}</b>: {point.y}',
-                        style: {
-                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                        },
-                        connectorColor: 'silver'
-                    }*/
+            toolbox: false,
+            calculable: false,
+            grid: {
+                borderWidth: 0,
+                y: 5,
+                y2: 5,
+                x:10,
+                x2:10
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    show: false,
+                    data: categories
                 }
-            },
-            series: series
-        });
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    show: false
+                }
+            ],
+            series: [
+                {
+                    name: '数量',
+                    type: 'bar',
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                // build a color map as your need.
+                                var colorList = [
+                                    '#808080','#00F','#008000','#0FF','#FF0',
+                                    '#FFA500','#F00','#00F','#F3A43B','#60C0DD',
+                                    '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
+                                ];
+                                return colorList[params.dataIndex]
+                            },
+                            label: {
+                                show: true,
+                                position: 'top',
+                                formatter: '{b}\n{c}'
+                            },
+                            barBorderRadius: [5,5,5,5]
+                        }
+                    },
+                    data: data,
+                    markPoint: {
+                        tooltip: {
+                            trigger: 'item',
+                            backgroundColor: 'rgba(0,0,0,0)'
+                        },
+                        data: markData
+                    }
+                }
+            ]
+        };
+        renderEChart('device_status',"bar",option);
     }
 
-    function loadAlarmLevelData(series,max){
-        var count = series[0].data.length;
-        var rote = 360/count;
-        console.log(count);
-        $('#events_levels').highcharts({
-            credits: {
-                enabled: false
+    function loadAlarmTypeChart(data,categories,colors){
+
+        var option = {
+            title : false,
+            tooltip : {
+                trigger: 'item'
+            },
+            /*
+            legend: {
+                data:['2011年', '2012年']
+            },*/
+            legend: false,
+            toolbox: false,
+            calculable : false,
+            grid:{
+                borderWidth:0,
+                x: 80,
+                y: 0,
+                x2: 5,
+                y2: 5
+            },
+
+            xAxis : [
+                {
+                    type : 'value',
+                    boundaryGap : [0, 0.01],
+                    show:false
+                }
+            ],
+            yAxis : [
+                {
+                    splitLine: false,
+                    axisTick: false,
+                    axisLine: {show :false},
+                    axisLabel: {
+                        textStyle: {
+                            color:'#fff'
+                        }
+                    },
+                    type : 'category',
+                    data : categories
+                }
+            ],
+            series : [
+                {
+
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                // build a color map as your need.
+                                var colorList = [
+                                    '#C1232B','#B5C334','#FCCE10','#E87C25','#27727B',
+                                    '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD',
+                                    '#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'
+                                ];
+                                return colorList[params.dataIndex]
+                            },
+                            barBorderRadius:[0,5,5,0]
+                        }
+                    },
+                    name:'数量',
+                    type:'bar',
+                    data:data
+                }
+            ]
+        };
+        renderEChart("itemType","bar",option);
+    }
+
+    function loadAlarmLevelPie(data,categories,colors){
+        var option = {
+            title : false,
+            tooltip : {
+                trigger: 'item',
+                formatter: "{b} : {c}"
             },
             legend: {
-                enabled: false
-            },
-            chart: {
-                polar: true,
-                height: 200,
-                backgroundColor:'transparent',
-                margin:0
-            },
-
-            title: {
-                text: ''
-            },
-            pane: {
-                startAngle: 0,
-                endAngle: 360
-            },
-            xAxis: {
-                tickInterval: rote,
-                min: 0,
-                max: 360,
-                labels: {
-                    enabled:false
-                },
-                gridLineWidth:0
-            },
-
-            yAxis: {
-                min: 0,
-                lineWidth:0,
-                gridLineWidth:0,
-                max: max
-            },
-
-            plotOptions: {
-                series: {
-                    pointStart: 0,
-                    pointInterval: rote
-                },
-                column: {
-                    pointPadding: 0,
-                    groupPadding: 0
+                orient: 'vertical',
+                x : 'right',
+                y : 'top',
+                data:categories,
+                textStyle:{
+                    color:"#fff"
                 }
             },
-            series : series
-        });
+            toolbox: false,
+            calculable : true,
+            series : [
+                {
+                    name:'数量',
+                    type:'pie',
+                    radius : [20, '88%'],
+                    center : ['40%', '50%'],
+                    roseType : 'radius',
+                    itemStyle : {
+                        normal : {
+                            label : {
+                                show : false
+                            },
+                            labelLine : {
+                                show : false
+                            }
 
+                        },
+                        emphasis : {
+                            label : {
+                                show : true
+                            },
+                            labelLine : {
+                                show : true
+                            }
+                        },
+                        color: function(params){
+                            // build a color map as your need.
+                            var colorList = colors;
+                            return colorList[params.dataIndex]
+                        }
+
+                    },
+                    data:data
+                }
+
+            ]
+        };
+        renderEChart('events_levels','pie',option);
     }
 
     // Dom Ready 
@@ -333,10 +354,9 @@
                 data: {"type":1},
                 dataType:'json',
                 success:function(res){
-                    loadDeviceChart(res.device.series,res.device.categories);
-                    loadAlarmTypeChart(res.alarmType.series,res.alarmType.categories);
-                    loadAlarmLevelData(res.alarmLevel.series,res.alarmLevel.max);
-                    //loadAlarmLevelPie(res.alarmLevel.series);
+                    loadDeviceChart(res.device.data,res.device.markData,res.device.categories);
+                    loadAlarmTypeChart(res.alarmType.data,res.alarmType.categories,res.alarmType.colors);
+                    loadAlarmLevelPie(res.alarmLevel.data,res.alarmLevel.categories,res.alarmLevel.colors);
                     setTimeout(reloadChart,30000);
                 }
             });

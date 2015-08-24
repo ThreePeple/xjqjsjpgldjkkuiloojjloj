@@ -4,9 +4,14 @@ $this->registerCssFile('/css/popuppanel.css');
 $this->registerCssFile('/css/style.css');
 $this->registerCssFile('/css/building-editor.css',['depends'=>'frontend\assets\AppAsset']);
 
-$this->registerJsFile('/js/popuppanel.js',['depends'=>'frontend\assets\AppAsset']); 
+$this->registerJsFile('/js/popuppanel.js',['depends'=>'frontend\assets\AppAsset']);
+/*
 $this->registerJsFile('/js/highcharts.js',['depends'=>'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/highcharts-more.js',['depends'=>'frontend\assets\AppAsset']);
+*/
+$this->registerJsFile('/js/echarts/build/dist/echarts-all.js',['depends'=>'frontend\assets\AppAsset']);
+
+
 $this->registerJsFile('/js/topology.js',['depends'=>'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/d3.min.js',['depends'=>'frontend\assets\AppAsset']);
 
@@ -146,7 +151,7 @@ $this->registerJs($js);
                 <div class="box-header">
                     <h3 class="box-title">设备统计</h3>
                 </div><!-- /.box-header -->
-                <div class="box-body" id="device_status">
+                <div class="box-body" id="device_status" style="width:100%;height:200px;">
 
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
@@ -156,7 +161,7 @@ $this->registerJs($js);
                 <div class="box-header">
                     <h3 class="box-title">告警级别</h3>
                 </div><!-- /.box-header -->
-                <div class="box-body" id="events_levels">
+                <div class="box-body" id="events_levels" style="width:100%; height: 200px;">
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div>
@@ -165,7 +170,7 @@ $this->registerJs($js);
                 <div class="box-header">
                     <h3 class="box-title">告警类型</h3>
                 </div><!-- /.box-header -->
-                <div class="box-body" id="runtime">
+                <div class="box-body" id="itemType" style="width:300px; height: 200px;">
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div>
