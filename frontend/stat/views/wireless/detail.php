@@ -8,6 +8,7 @@
 
 $this->registerJsFile("/js/h_collapse.js",["depends"=>'frontend\assets\AppAsset']);
 $this->registerCssFile("/css/h_collapse.css",["depends"=>'frontend\assets\AppAsset']);
+$this->registerJsFile('/js/echarts/build/dist/echarts-all.js',['depends'=>'frontend\assets\AppAsset']);
 
 $js = <<<JS
         $("#refresh_perf").on("click",function(){

@@ -5,6 +5,7 @@ namespace app\topology\controllers;
 use app\models\DeviceAlarm;
 use app\models\DeviceIpfilter;
 use app\models\DeviceTask;
+use app\models\TopologyConfig;
 use app\models\WirelessDeviceInfo;
 use app\models\WirelessDeviceLink;
 use yii\base\View;
@@ -103,6 +104,12 @@ class DashboardController extends Controller
      * @return [String] json string
      */
     public function actionAjaxWlanRefresh(){
+        $nodes = TopologyConfig::getWlanLinkStatus();
+        $links = TopologyConfig::getWlanNodeStatus();
+
+        $data = array_merge($nodes,$links);
+        return  json_encode($data);
+
 
  $rand1 = rand(1, 2);
  $rand2 = rand(1, 2);
