@@ -101,44 +101,7 @@
 
     }; 
 
-    var events_type =  {
-        categories: ['有害程序', '网络攻击','信息破坏','信息安全','设备故障','安全预警','其他事件'],
-        series: [{
-            data: [{
-                name: 'Point 1',
-                color: '#1C9AB6',
-                y: 4
-            }, {
-                name: 'Point 2',
-                color: '#4BB097',
-                y: 18
-            },{
-                name: 'Point 2',
-                color: '#4E4168',
-                y: 13
-            },{
-                name: 'Point 2',
-                color: '#4C7EAC',
-                y: 5
-            },{
-                name: 'Point 2',
-                color: '#A75A70',
-                y: 8
-            },{
-                name: 'Point 2',
-                color: '#8BAE3D',
-                y: 11
-            },{
-                name: 'Point 2',
-                color: '#DE6756',
-                y: 6
-            }],
-            dataLabels:{
-                enabled: true,
-                align: 'top'
-            }
-        }]
-    };
+
     var containers = [];
     function renderEChart(id,chart,option){
         if(!containers[id]){
@@ -204,13 +167,14 @@
                         }
                     },
                     data: data,
+                    /*
                     markPoint: {
                         tooltip: {
                             trigger: 'item',
                             backgroundColor: 'rgba(0,0,0,0)'
                         },
                         data: markData
-                    }
+                    }*/
                 }
             ]
         };
@@ -274,7 +238,12 @@
                                 ];
                                 return colorList[params.dataIndex]
                             },
-                            barBorderRadius:[0,5,5,0]
+                            barBorderRadius:[0,5,5,0],
+                            label: {
+                                show: true,
+                                position: 'right',
+                                formatter: '{c}'
+                            }
                         }
                     },
                     name:'数量',
