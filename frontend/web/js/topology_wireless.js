@@ -192,7 +192,7 @@
             .attr("class", "main_node_link green_link")
             .attr("d", "M210,442L817,132L971,214L829,289L849,298")
             .attr("id", "main_link_r")
-            .on("mouseover", function() {
+            .on("click", function() {
                 PopupPanel.clearAll();
                 _showMainLinkDetail("r", d3.event );
             });  
@@ -202,7 +202,7 @@
             .attr("class", "main_node_link green_link")
             .attr("id", "main_link_g")
             .attr("d", "M638,670L1262,353L1049,245L1032,255")
-            .on("mouseover", function() {
+            .on("click", function() {
                 PopupPanel.clearAll();
                 _showMainLinkDetail("g", d3.event );
             });  
@@ -212,7 +212,7 @@
             .attr("class", "main_node_link blue_link")
             .attr("id", "main_link_b")
             .attr("d", "M1078,168L850,286L866,295")
-            .on("mouseover", function() {
+            .on("click", function() {
                 PopupPanel.clearAll();
                 _showMainLinkDetail("b", d3.event );
             });  
@@ -236,14 +236,10 @@
         ZSYFCEditor.updateCallback( function(){
 
             d3.selectAll(".element") 
-            .on("mouseover", function(data) {
+            .on("click", function(data) {
                 PopupPanel.clearAll();
                 _showNodeDetail(data, d3.event );
-            }).on("click", function(data){
-                var id  = ZSYFCEditor.getData()[ data[ ZSYFCEditorConfig['ID_KEY'] ] ]["data"]["id"];
-                 window.open("/stat/wireless/detail?id=" + id, "wlan-node-detail");
-            });  
- 
+            });   
 
             // Update switch status.
             var data = ZSYFCEditor.getData();

@@ -94,10 +94,15 @@ $this->registerJsFile('/js/d3.min.js',['depends'=>'frontend\assets\AppAsset']);
 		stroke-width: 1.4px;
 		fill: none;
 	}
+	.wire-network svg g.element_link path:hover{
+		stroke: #E4FCED;
+	}
 	.wire-network svg g.element_link[data-status="2"] path{
 		stroke: red !important;
 	}
-
+	.wire-network svg g.element_link[data-status="2"] path{
+		stroke: rgb(255, 100, 100) !important;
+	}
 	.wire-network .element_node {
 	    position: absolute;
 	    cursor: pointer;
@@ -151,8 +156,8 @@ $this->registerJsFile('/js/d3.min.js',['depends'=>'frontend\assets\AppAsset']);
 
 	.wire-network .element_node .core{
 		background:url(/images/wlan/core.png) no-repeat;
-		width:52px;
-		height:38px;
+		width:72px;
+		height:51px;
 	}
 	.wire-network .element_node[data-status="2"] .core{
 		background:url(/images/wlan/alarm/core.gif) no-repeat; 
@@ -287,7 +292,7 @@ $this->registerJsFile('/js/d3.min.js',['depends'=>'frontend\assets\AppAsset']);
                  <path d="M 702 361 L 759 329 L 1017 469 L 1001 477">
 			</g>
 			<g class="element_link" id="element_line_39">
-                 <path d="M 703 379 L 758 411 L 887 333 L 1071 430 L 1129 396">
+                 <path d="M 700 380 L 758 411 L 887 333 L 1071 430 L 1129 396">
 			</g>
 			<g class="element_link" id="element_line_40">
                  <path d="M 708 375 L 759 401 L 945 288">
@@ -551,7 +556,7 @@ $this->registerJsFile('/js/d3.min.js',['depends'=>'frontend\assets\AppAsset']);
         <div id="element_node_36" class="element_node" style="top:487px;left:439px;">
             <div class="firewall"></div>
         </div>
-        <div id="element_node_37" class="element_node" style="top:104px;left:681px;">
+        <div id="element_node_37" class="element_node" style="top:107px;left:684px;">
             <div class="firewall"></div>
         </div>
         <div id="element_node_38" class="element_node" style="top:142px;left:753px;">
@@ -563,10 +568,10 @@ $this->registerJsFile('/js/d3.min.js',['depends'=>'frontend\assets\AppAsset']);
         <div id="element_node_40" class="element_node" style="top:350px;left:1102px;">
             <div class="firewall"></div>
         </div> 
-        <div id="element_node_41" class="element_node" style="top:287px;left:553px;">
+        <div id="element_node_41" class="element_node" style="top:280px;left:543px;">
             <div class="core"></div>
         </div>
-        <div id="element_node_42" class="element_node" style="top:351px;left:666px;">
+        <div id="element_node_42" class="element_node" style="top:340px;left:648px;">
             <div class="core"></div>
         </div>
         <div id="element_node_43" class="element_node" style="top:462px;left:798px;">
