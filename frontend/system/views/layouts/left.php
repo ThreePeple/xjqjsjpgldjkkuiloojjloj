@@ -106,7 +106,7 @@ use yii\helpers\Url;
                 ?>
 
             </li>
-            <li class="treeview <?=($this->context->id == 'link'? "active":'')?>">
+            <!--<li class="treeview <?=($this->context->id == 'link'? "active":'')?>">
                 <a href="#">
                     <i class="fa fa-circle-o"></i> <span>链路管理</span>
                     <i class="fa fa-angle-left pull-right"></i>
@@ -118,7 +118,7 @@ use yii\helpers\Url;
                     </li>
 
                 </ul>
-            </li>
+            </li>-->
         </ul>
 
     </section>
