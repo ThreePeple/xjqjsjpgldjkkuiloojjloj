@@ -81,9 +81,7 @@ svg.ZSYFCEditor {
     max-height: 350px;
     min-width: 330px;
     overflow: auto;
-}
-
-
+} 
 .marquee {
     position:absolute;
     z-index:1000;
