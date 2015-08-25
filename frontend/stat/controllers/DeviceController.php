@@ -274,6 +274,9 @@ class DeviceController extends Controller
         $model = DeviceLink::find()
             ->where(["or",["and",["leftDevice"=>$d1,"rightDevice"=>$d2]],["and",["leftDevice"=>$d2,"rightDevice"=>$d1]]])
             ->one();
+        if(!$model){
+            return '';
+        }
         return $this->render('link-detail',[
         "model" => $model
         ]);

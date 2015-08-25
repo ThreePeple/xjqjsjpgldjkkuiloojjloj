@@ -74,11 +74,11 @@ $menuItems = [
         'url' => ['/input/config-set/index'],
         'active' => $active == 'input'
     ],
-    [
+    /*[
         'label'=> '报表统计',
         'url'=>['/report/report/index'],
         'active' => $active == 'report'
-    ],
+    ],*/
     [
         'label' => '系统管理',
         'url' => ['/system'],
