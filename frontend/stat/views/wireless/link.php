@@ -7,7 +7,10 @@
  */
 use yii\helpers\Html;
 use kartik\grid\GridView;
-$js = <<<JS
+
+
+if($categoryId != 1003){
+    $js = <<<JS
 var myChart = echarts.init(document.getElementById("wireless_link"));
 
    var option = {
@@ -59,9 +62,63 @@ var myChart = echarts.init(document.getElementById("wireless_link"));
         myChart.setOption(option)
         window.onresize = myChart.resize();
 JS;
-$this->registerJs($js);
+    $this->registerJs($js);
+}
 
 ?>
-<div class="device-info-view" style="width:780px;height:600px;" id="wireless_link">
 
+<div class="device-info-view" style="width:760px;height:600px;" id="wireless_link">
+<?php
+if($categoryId == 1003){
+ ?>
+    <h1><?= Html::encode("设备相关链路信息") ?></h1>
+    <?=
+    GridView::widget([
+        "dataProvider"=>$apProvider,
+        "pjax" => true,
+        "columns" => [
+            [
+                "label" => "ID",
+                "value" => "id",
+            ],
+            [
+                "label" =>"标签",
+                "value" => "label"
+            ],
+            [
+                "label" =>"系统名称",
+                "value" => "sysName"
+            ],
+            [
+                "label" => "状态",
+                "value" =>  function($model){
+                    $statusLabel = '正常';
+                    switch($model->status){
+                        case 1:
+                            $statusLabel="正常";
+                            break;
+                        case 2:
+                            $statusLabel="告警";
+                            break;
+                        default:
+                    }
+                    return $statusLabel;
+                }
+            ],
+            [
+                "label" => "IP",
+                "value" => "ipAddress"
+            ],
+            [
+                "label" => "物理位置",
+                "value" => "location"
+            ],
+
+        ],
+        "export"=>false
+    ]);
+    ?>
+    <?php
+}
+?>
 </div>

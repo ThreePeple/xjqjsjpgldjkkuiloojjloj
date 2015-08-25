@@ -179,34 +179,71 @@ class WirelessController extends Controller
         ]);
         $query->where(["deviceId"=>$id])->orderBy("faultTime desc")->limit(5);
 
-        $aps = WirelessDeviceAp::find()->where(["acDevId"=>$id])->all();
-
         $links = $nodes = [];
-
         $nodes[] = [
             "name" => $model->ip,
             "id" => $model->id
         ];
+        $apProvider = null;
+        if($model->categoryId == 1003){
+            /*
+            //控制器
+            $aps = WirelessDeviceAp::find()->where(["acDevId"=>$id])->all();
+            foreach($aps as $ap){
 
-        foreach($aps as $ap){
-
-            $nodes[] = [
-                "name" => $ap->ipAddress,
-                "id" => $ap->id
-            ];
-            $links[] = [
-                "source" =>  $model->ip,
-                "target" =>  $ap->ipAddress,
-                "weight" => 1
-            ];
+                $nodes[] = [
+                    "name" => $ap->ipAddress,
+                    "id" => $ap->id
+                ];
+                $links[] = [
+                    "source" =>  $model->ip,
+                    "target" =>  $ap->ipAddress,
+                    "weight" => 1
+                ];
+            }
+            */
+            $query = WirelessDeviceAp::find()->where(["acDevId"=>$id]);
+            $apProvider = new ActiveDataProvider([
+                "query" => $query,
+                "pagination" => [
+                    "pageSize" => 10
+                ]
+            ]);
+        }else{
+            $links = WirelessDeviceLink::find()->where(["or",["leftDevice"=>$id],["rightDevice"=>$id]])->all();
+            foreach ($links as $link) {
+                if($link->leftDevice == $id) {
+                    $node = $link->right;
+                }else{
+                    $node = $link->left;
+                }
+                if(!$node) continue;
+                $nodes[] = [
+                    "name" => $node->ip,
+                    "id" => $node->id
+                ];
+                $links[] = [
+                  "source"=> $model->ip,
+                    "target" => $node->ip,
+                    "weight"=> 0.9
+                ];
+                $links[] = [
+                    "source"=>$node->ip,
+                    "target" => $model->ip,
+                    "weight" => 1,
+                ];
+            }
         }
+
+
         return $this->render("detail_wlan",[
             'id'=>$id,
             "model"=>$model,
             "perflists" => $lists,
             "alarmProvider" =>$dataProvider,
             "nodes" =>$nodes,
-            "links" => $links
+            "links" => $links,
+            "apProvider" => $apProvider
         ]);
     }
     /**

@@ -87,7 +87,9 @@ $this->title = "设备详情";
                     <div class="unfold" style="display: none;">
                         <?=$this->render("link",[
                             "nodes"=>json_encode($nodes),
-                            "links" => json_encode($links)
+                            "links" => json_encode($links),
+                            "apProvider" =>$apProvider,
+                            "categoryId"=>$model->categoryId
                         ])?>
                     </div>
                 </li>
