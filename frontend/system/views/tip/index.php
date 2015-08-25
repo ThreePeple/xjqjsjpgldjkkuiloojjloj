@@ -6,12 +6,12 @@ use kartik\tabs\TabsX;
 
 $items = [
     [
-        'label'=>'<i class="glyphicon glyphicon-home"></i> 设备信息',
+        'label'=>'<i class="glyphicon glyphicon-cog"></i> 设备信息',
         'content'=>$content1,
         'active'=>true,
     ],
     [
-        'label'=>'<i class="glyphicon glyphicon-user"></i> 性能信息',
+        'label'=>'<i class="glyphicon glyphicon-tasks"></i> 性能信息',
         'content'=>$content2,
     ]
 ];
