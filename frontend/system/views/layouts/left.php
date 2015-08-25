@@ -99,7 +99,7 @@ use yii\helpers\Url;
                         ],
                         [
                             "label" => '<span class="fa fa-circle-o"></span> 消息发送</a> ',
-                            "url" => ['＃']
+                            "url" => ['#']
                         ],
 
                     ]
