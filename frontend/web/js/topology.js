@@ -126,15 +126,24 @@
             grid: {
                 borderWidth: 0,
                 y: 5,
-                y2: 5,
+                y2: 40,
                 x:10,
                 x2:10
             },
             xAxis: [
                 {
                     type: 'category',
-                    show: false,
-                    data: categories
+                    //show: false,
+                    data: categories,
+                    splitLine: false,
+                    axisTick: false,
+                    axisLine: {show :false},
+                    axisLabel: {
+                        textStyle: {
+                            color:'#fff'
+                        },
+                        rotate:45,
+                    }
                 }
             ],
             yAxis: [
@@ -161,7 +170,7 @@
                             label: {
                                 show: true,
                                 position: 'top',
-                                formatter: '{b}\n{c}'
+                                formatter: '{c}'
                             },
                             barBorderRadius: [5,5,5,5]
                         }
@@ -287,8 +296,13 @@
                             },
                             labelLine : {
                                 show : false
+                            },
+                            color: function(params){
+                                // build a color map as your need.
+                                //var colorList = ['#FF4500','#FF7F50','#FFD700','#87CEFF','#7F7F7F','#8BAE3D'];
+                                var colorList= colors;
+                                return colorList[params.dataIndex]
                             }
-
                         },
                         emphasis : {
                             label : {
@@ -296,14 +310,13 @@
                             },
                             labelLine : {
                                 show : true
+                            },
+                            color: function(params){
+                                // build a color map as your need.
+                                var colorList= colors;
+                                return colorList[params.dataIndex]
                             }
-                        },
-                        color: function(params){
-                            // build a color map as your need.
-                            var colorList = colors;
-                            return colorList[params.dataIndex]
                         }
-
                     },
                     data:data
                 }
