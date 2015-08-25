@@ -5,6 +5,7 @@ namespace app\stat\controllers;
 use app\models\InfoConfig;
 use app\models\ViewTemplate;
 use app\models\WirelessDeviceAlarm;
+use app\models\WirelessDeviceAp;
 use app\models\WirelessDeviceInterface;
 use app\models\WirelessDeviceLink;
 use app\models\WirelessDeviceTask;
@@ -178,18 +179,34 @@ class WirelessController extends Controller
         ]);
         $query->where(["deviceId"=>$id])->orderBy("faultTime desc")->limit(5);
 
-        $links = WirelessDeviceLink::find();
-        $links->where(["or",["leftDevice"=>$id],["rightDevice"=>$id]]);
-        $linkProvider = new ActiveDataProvider([
-            'query'=>$links
-        ]);
+        $aps = WirelessDeviceAp::find()->where(["acDevId"=>$id])->all();
 
+        $links = $nodes = [];
+
+        $nodes[] = [
+            "name" => $model->ip,
+            "id" => $model->id
+        ];
+
+        foreach($aps as $ap){
+
+            $nodes[] = [
+                "name" => $ap->ipAddress,
+                "id" => $ap->id
+            ];
+            $links[] = [
+                "source" =>  $model->ip,
+                "target" =>  $ap->ipAddress,
+                "weight" => 1
+            ];
+        }
         return $this->render("detail_wlan",[
             'id'=>$id,
             "model"=>$model,
             "perflists" => $lists,
             "alarmProvider" =>$dataProvider,
-            "links" =>$linkProvider,
+            "nodes" =>$nodes,
+            "links" => $links
         ]);
     }
     /**

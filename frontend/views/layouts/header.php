@@ -39,7 +39,7 @@ $menuItems = [
         'label' => '拓扑展示',
         'items' =>[
             [
-                'label' => '大厦拓扑概览',
+                'label' => '大厦网络楼层分布图',
                 'url' => ['/topology/dashboard/index'],
                 'active' => ""
             ],
@@ -49,12 +49,12 @@ $menuItems = [
                 "url" => "/topology/dashboard/wlan",
                 "items" => [
                     [
-                        "label"=>"大厦局域网1",
+                        "label"=>"数据中心网络拓扑图",
                         "url"=>["/topology/dashboard/wlan"],
                         "options" => ["class"=>($action == 'topology/dashboard/wlan'? 'active':'')]
                     ],
                     [
-                        "label"=>"大厦局域网2",
+                        "label"=>"局域网拓扑图",
                         "url"=>"/topology/dashboard/hub-compose",
                         "options" => ["class"=>($action == 'topology/dashboard/hub-compose'? 'active':'')]
                     ]

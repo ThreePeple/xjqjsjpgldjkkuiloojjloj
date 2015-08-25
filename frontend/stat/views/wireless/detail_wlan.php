@@ -8,6 +8,7 @@
 
 $this->registerJsFile("/js/h_collapse.js",["depends"=>'frontend\assets\AppAsset']);
 $this->registerCssFile("/css/h_collapse.css",["depends"=>'frontend\assets\AppAsset']);
+$this->registerJsFile('/js/echarts/build/dist/echarts-all.js',['depends'=>'frontend\assets\AppAsset']);
 
 $js = <<<JS
         $("#refresh_perf").on("click",function(){
@@ -85,7 +86,8 @@ $this->title = "设备详情";
                     </div>
                     <div class="unfold" style="display: none;">
                         <?=$this->render("link",[
-                            "dataProvider"=>$links
+                            "nodes"=>json_encode($nodes),
+                            "links" => json_encode($links)
                         ])?>
                     </div>
                 </li>

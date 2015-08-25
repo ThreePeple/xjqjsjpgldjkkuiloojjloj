@@ -63,11 +63,11 @@ class WirelessDeviceLink extends \yii\db\ActiveRecord
     }
 
     public function getLeft(){
-        return $this->hasOne(DeviceInfo::className(),["id"=>"leftDevice"]);
+        return $this->hasOne(WirelessDeviceInfo::className(),["id"=>"leftDevice"]);
     }
 
     public function getRight(){
-        return $this->hasOne(DeviceInfo::className(),["id"=>"rightDevice"]);
+        return $this->hasOne(WirelessDeviceInfo::className(),["id"=>"rightDevice"]);
     }
 
     public function getBandFormat(){

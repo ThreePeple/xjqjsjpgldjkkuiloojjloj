@@ -55,15 +55,15 @@ use yii\helpers\Url;
                     'encodeLabels' => false,
                     "items" => [
                         [
-                            "label" => '<span class="fa fa-circle-o"></span> 大厦拓扑模板</a> ',
+                            "label" => '<span class="fa fa-circle-o"></span> 大厦网络楼层分布图模板</a> ',
                             "url" => ['/system/template/building']
                         ],
                         [
-                            "label" => '<span class="fa fa-circle-o"></span> 大厦局域网1模板</a> ',
+                            "label" => '<span class="fa fa-circle-o"></span> 数据中心网络拓扑图模板</a> ',
                             "url" => ['/system/template/wlan']
                         ],
                         [
-                            "label" => '<span class="fa fa-circle-o"></span> 无线网络模板</a> ',
+                            "label" => '<span class="fa fa-circle-o"></span> 局域网拓扑图模板</a> ',
                             "url" => ['/system/template/wireless']
                         ],
                     ]

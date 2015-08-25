@@ -7,15 +7,14 @@
  */
 use yii\helpers\Html;
 use kartik\grid\GridView;
-
 $js = <<<JS
 var myChart = echarts.init(document.getElementById("wireless_link"));
 
-        var option = {
+   var option = {
             title : {
-                text: '德国队效力联盟',
-                x:'right',
-                y:'bottom'
+                text: '设备链路信息',
+                x:'center',
+                y:'top'
             },
             tooltip : {
                 trigger: 'item',
@@ -27,18 +26,8 @@ var myChart = echarts.init(document.getElementById("wireless_link"));
                     }
                 }
             },
-            toolbox: {
-                show : true,
-                feature : {
-                    restore : {show: true},
-                    magicType: {show: true, type: ['force', 'chord']},
-                    saveAsImage : {show: true}
-                }
-            },
-            legend: {
-                x: 'left',
-                data:['阿森纳', '拜仁慕尼黑', '多特蒙德']
-            },
+            toolbox: false,
+            legend: false,
             series : [
                 {
                     name: '无线设备链路',
@@ -51,56 +40,28 @@ var myChart = echarts.init(document.getElementById("wireless_link"));
                         normal : {
                             label : {
                                 rotate : true
-                            }
+                            },
+                            lineStyle:{
+                                color: '#fff'
+                            },
+                            color: 'green'
                         }
                     },
                     minRadius: 7,
                     maxRadius: 20,
                     // 使用 nodes links 表达和弦图
-                    nodes: [
-                        {name:'默特萨克'},
-                        {name:'厄齐尔'},
-                        {name:'波多尔斯基'},
-                        {name:'诺伊尔'},
-                        {name:'博阿滕'},
-                        {name:'施魏因施泰格'},
-                        {name:'拉姆'},
-                        {name:'克罗斯'},
-                        {name:'穆勒', symbol: 'star'},
-                        {name:'格策'},
-                        {name:'胡梅尔斯'},
-                        {name:'魏登费勒'},
-                        {name:'杜尔姆'},
-                        {name:'格罗斯克罗伊茨'},
-                        {name:'阿森纳'},
-                        {name:'拜仁慕尼黑'},
-                        {name:'多特蒙德'}
-                    ],
-                    links: [
-                        {source: '阿森纳', target: '默特萨克', weight: 1, name: '效力'},
-                        {source: '阿森纳', target: '厄齐尔', weight: 1, name: '效力'},
-                        {source: '阿森纳', target: '波多尔斯基', weight: 1, name: '效力'},
-                        {source: '拜仁慕尼黑', target: '诺伊尔', weight: 1, name: '效力'},
-                        {source: '拜仁慕尼黑', target: '博阿滕', weight: 1, name: '效力'},
-                        {source: '拜仁慕尼黑', target: '施魏因施泰格', weight: 1, name: '效力'},
-                        {source: '拜仁慕尼黑', target: '拉姆', weight: 1, name: '效力'},
-                        {source: '拜仁慕尼黑', target: '克罗斯', weight: 1, name: '效力'},
-                        {source: '拜仁慕尼黑', target: '穆勒', weight: 1, name: '效力'},
-                        {source: '拜仁慕尼黑', target: '格策', weight: 1, name: '效力'},
-                        {source: '多特蒙德', target: '胡梅尔斯', weight: 1, name: '效力'},
-                        {source: '多特蒙德', target: '魏登费勒', weight: 1, name: '效力'},
-                        {source: '多特蒙德', target: '杜尔姆', weight: 1, name: '效力'},
-                        {source: '多特蒙德', target: '格罗斯克罗伊茨', weight: 1, name: '效力'}
-                    ]
+                    nodes: $nodes,
+                    links: $links
                 }
             ]
         };
 
         myChart.setOption(option)
+        window.onresize = myChart.resize();
 JS;
 $this->registerJs($js);
 
 ?>
-<div class="device-info-view" style="height:600px;" id="wireless_link">
+<div class="device-info-view" style="width:780px;height:600px;" id="wireless_link">
 
 </div>
