@@ -156,8 +156,8 @@ $this->registerJsFile('/js/d3.min.js',['depends'=>'frontend\assets\AppAsset']);
 
 	.wire-network .element_node .core{
 		background:url(/images/wlan/core.png) no-repeat;
-		width:52px;
-		height:38px;
+		width:72px;
+		height:51px;
 	}
 	.wire-network .element_node[data-status="2"] .core{
 		background:url(/images/wlan/alarm/core.gif) no-repeat; 
@@ -556,7 +556,7 @@ $this->registerJsFile('/js/d3.min.js',['depends'=>'frontend\assets\AppAsset']);
         <div id="element_node_36" class="element_node" style="top:487px;left:439px;">
             <div class="firewall"></div>
         </div>
-        <div id="element_node_37" class="element_node" style="top:104px;left:681px;">
+        <div id="element_node_37" class="element_node" style="top:107px;left:684px;">
             <div class="firewall"></div>
         </div>
         <div id="element_node_38" class="element_node" style="top:142px;left:753px;">
@@ -568,10 +568,10 @@ $this->registerJsFile('/js/d3.min.js',['depends'=>'frontend\assets\AppAsset']);
         <div id="element_node_40" class="element_node" style="top:350px;left:1102px;">
             <div class="firewall"></div>
         </div> 
-        <div id="element_node_41" class="element_node" style="top:287px;left:553px;">
+        <div id="element_node_41" class="element_node" style="top:280px;left:543px;">
             <div class="core"></div>
         </div>
-        <div id="element_node_42" class="element_node" style="top:347px;left:658px;">
+        <div id="element_node_42" class="element_node" style="top:340px;left:648px;">
             <div class="core"></div>
         </div>
         <div id="element_node_43" class="element_node" style="top:462px;left:798px;">
