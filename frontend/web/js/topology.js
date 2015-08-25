@@ -306,10 +306,10 @@
                         },
                         emphasis : {
                             label : {
-                                show : true
+                                show : false
                             },
                             labelLine : {
-                                show : true
+                                show : false
                             },
                             color: function(params){
                                 // build a color map as your need.
