@@ -68,7 +68,7 @@ class TopologyConfig extends \yii\db\ActiveRecord
     public static function getWlanLinkStatus(){
         $rows = (new Query())
             ->from("topology_config a")
-            ->innerJoin("device_info b","on (a.device1 = b.ip or a.device2=b.ip)")
+            ->innerJoin("device_info b"," a.device1 = b.ip or a.device2=b.ip")
             ->where(["a.type_id"=>2])
             ->select(["link"=>"a.id","devId"=>"b.id"])
             ->all();
