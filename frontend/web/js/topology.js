@@ -175,7 +175,7 @@
                             barBorderRadius: [5,5,5,5]
                         }
                     },
-                    data: data,
+                    data: data
                     /*
                     markPoint: {
                         tooltip: {
