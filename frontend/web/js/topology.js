@@ -342,21 +342,7 @@
             } 
         );
 
-        $('.ZSYFCEditor').click( function (e) {
-            var $tg = $(e.target);
-            var data = ZSYFCEditor.getData();
-            if($tg.is(".shape")){
-                var d = d3.select(e.target).datum() || "";
-                if( d ){
-                    var key = d[ ZSYFCEditorConfig["ID_KEY"] ];
-                    if( data[key] ){
-                        var id = data[key]["data"]["id"];
-                        console.log( "Load page", "http://www.cnpc.com/?id=" + id );
-                        window.open( "/stat/device/detail?id=" + id, "building-node-detail" );
-                    }
-                }
-            }
-        }).mouseover( function(e){
+        $('.ZSYFCEditor').click( function(e){
             var $tg = $(e.target);
             var data = ZSYFCEditor.getData();
             if($tg.is(".shape")){
