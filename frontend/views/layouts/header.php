@@ -71,7 +71,7 @@ $menuItems = [
     ],
     [
         'label'=> '接入管理',
-        'url' => ['/input/config-set/index'],
+        'url' => ['/input/jumper/index'],
         'active' => $active == 'input'
     ],
     /*[
