@@ -16,7 +16,11 @@ use yii\widgets\DetailView;
     }
     .device-info-view.view tr:hover > *{
         background-color: #8Fe75B;
-    }
+    } 
+
+    table.table-responsive thead th{
+        text-align: center;
+    } 
 </style>
 <div class="device-info-view view">
 

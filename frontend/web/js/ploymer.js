@@ -14,8 +14,8 @@ function renderChart(id1,id2){
         dataType:'JSON',
         success:function(res){
             if(res.status){
-                var content = '<defs> <filter id="filter_blur" x="0" y="0"> <feGaussianBlur in="SourceGraphic" stdDeviation="1" /> </filter> </defs>'
-                $("#ZSYPolymerChart").html(content);
+                console.log("refresh content.");
+                $("#ZSYPolymerChart").find(">*").filter(":not(defs)").remove();
                 __data = res.data;
                 ZSYPolymerChart.init({data: __data, svgWidth:1300, svgHeight: 1000});
                 ZSYPolymerChart.render();
@@ -124,13 +124,9 @@ var _showNodeDetail = function(d, e, contentHtmlTpl) {
 
 function readyChartCallback(__data){
     d3.selectAll(".ZSYPolymerChart g.node text") 
-    .on("mouseover", function(data) { 
+    .on("click", function(data) { 
         PopupPanel.clearAll();
         _showNodeDetail(data, d3.event, "");
-    }).on("click", function(data){
-          d = data.data;
-         var id  = d["id"], device_id = d["device_id"]; 
-         window.open("/stat/device/wlan-detail?id=" + device_id, "hub-compose-node-detail");
     });  
     if(__data){
         __updateStatus(__data);
