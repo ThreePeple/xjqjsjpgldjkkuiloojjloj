@@ -85,18 +85,14 @@ svg.ZSYFCEditor {
 
 
 .marquee {
-  position:absolute;
-  z-index:1000;
-  width: 1000px;
-  overflow: hidden;
-  /*
-  border: 1px solid #ccc;
-  background: #ccc;
-  */
-  margin-left:330px;
-  margin-top: 20px;
-  color:#8DFFB5;
-  font-size: 20px;
+    position:absolute;
+    z-index:1000;
+    left: 350px;
+    right: 28px; 
+    overflow: hidden; 
+    margin-top: 20px;
+    color:#8DFFB5;
+    font-size: 20px;
 }
 CSS;
 $this->registerCss($css);
