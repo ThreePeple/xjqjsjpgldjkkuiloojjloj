@@ -299,8 +299,8 @@
                             },
                             color: function(params){
                                 // build a color map as your need.
-                                //var colorList = ['#FF4500','#FF7F50','#FFD700','#87CEFF','#7F7F7F','#8BAE3D'];
-                                var colorList= colors;
+                                var colorList = ['#FF4500','#FF7F50','#FFD700','#87CEFF','#7F7F7F','#8BAE3D'];
+                                //var colorList= colors;
                                 return colorList[params.dataIndex]
                             }
                         },
@@ -313,7 +313,7 @@
                             },
                             color: function(params){
                                 // build a color map as your need.
-                                var colorList= colors;
+                                var colorList= ['#FF6A6A','#FFB90F','#FFE4B5','#97FFFF','#C7C7C7','8BAE3D'];
                                 return colorList[params.dataIndex]
                             }
                         }
