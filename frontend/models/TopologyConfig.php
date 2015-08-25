@@ -80,7 +80,7 @@ class TopologyConfig extends \yii\db\ActiveRecord
         }
         $rows = (new Query())->from("device_link")
             ->where(["leftDevice"=>$ids,"rightDevice"=>$ids])
-            ->select(["d1","d2","status"])
+            ->select(["d1"=>"leftDevice","d2"=>"rightDevice","status"])
             ->all();
         $result = [];
         foreach($rows as $row){
