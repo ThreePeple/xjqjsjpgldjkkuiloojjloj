@@ -96,8 +96,8 @@ class DeviceInfo extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', '设备ID'),
-            'label' => Yii::t('app', '名称'),
+            'id' => Yii::t('app', 'ID'),
+            'label' => Yii::t('app', '设备名称'),
             'ip' => Yii::t('app', '设备IP'),
             'mask' => Yii::t('app', '设备掩码'),
             'status' => Yii::t('app', '设备状态'),

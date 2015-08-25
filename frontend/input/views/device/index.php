@@ -14,7 +14,7 @@ use app\models\DeviceInfo;
             "columns" => [
                 [
                     "attribute"=>"id",
-                    "width" =>"36px"
+                    "width" =>"40px"
                 ],
                 [
                     "attribute" => "label",
@@ -58,7 +58,7 @@ use app\models\DeviceInfo;
                 [
                     'attribute'=>'status',
                     'vAlign'=>'middle',
-                    'width'=>'180px',
+                    'width'=>'90px',
                     'value'=>function ($model, $key, $index, $widget) {
                             return isset(DeviceInfo::$status_titles[$model->status])? DeviceInfo::$status_titles[$model->status] : DeviceInfo::$status_titles[0];
                         },
@@ -81,7 +81,9 @@ use app\models\DeviceInfo;
                 ]*/
                 [
                     "class" => '\kartik\grid\ActionColumn',
-                    'header' => ''
+                    'header' => '',
+                    'template' => '{delete}',
+                    'width' => '40px'
                 ]
             ],
             'panel' => [
