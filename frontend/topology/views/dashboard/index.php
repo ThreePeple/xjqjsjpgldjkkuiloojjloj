@@ -121,7 +121,7 @@ $js = <<<JS
             reloadData();
         })
         .marquee({
-            duration: 5000,
+            duration: 10000,
             duplicated: false,
             pauseOnHover: true
         })
