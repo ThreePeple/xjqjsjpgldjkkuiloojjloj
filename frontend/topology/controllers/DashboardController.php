@@ -6,6 +6,7 @@ use app\models\DeviceAlarm;
 use app\models\DeviceIpfilter;
 use app\models\DeviceTask;
 use app\models\TopologyConfig;
+use app\models\WirelessDeviceAp;
 use app\models\WirelessDeviceInfo;
 use app\models\WirelessDeviceLink;
 use yii\base\View;
@@ -19,6 +20,7 @@ use app\models\DeviceInfo;
 use Yii;
 use app\models\DeviceLink;
 use yii\helpers\ArrayHelper;
+use yii\web\Response;
 
 class DashboardController extends Controller
 {
@@ -230,7 +232,47 @@ abc;
         return $this->render('ac-ap');
     }
     public function actionAjaxAcAp(){
-
+        $area = Yii::$app->request->post("area");
+        $polymers = [
+            [
+                "id" => "p1",
+                "label" => '192.168.0.4',
+                "children" =>[]
+            ]
+        ];
+        /*
+        $rows = (new Query())
+            ->from("wireless_device_ap a")
+            ->leftJoin("wireless_device_link b","((a.id=b.leftDevice and a.acDevId=b.rightDevice) or (a.id=b
+            .rightDevice and a.acDevId=b.leftDevice))")
+            ->where(["a.acIpAddress"=>'192.168.0.4',"a.area"=>$area])
+            ->select(["label"=>"ipAddress","id"=>"CONCAT('id',a.id)","group"=>"CONCAT('group',a.side,':',CONCAT('id',a.id))","status"=>"a.status","device_id"=>"a.id","linkStatus"=>"b.status","side"=>"a.side"])
+            ->all();
+        */
+        $rows = WirelessDeviceAp::find()
+            ->where(["acIpAddress"=>'192.168.0.4',"area"=>$area])
+            ->select(["label"=>"ipAddress","id"=>"CONCAT('id',id)","group"=>"CONCAT('group',side,':',CONCAT('id',id))","status"=>"status","device_id"=>"id","side"=>"side"])
+            ->asArray()->all();
+        $groups = $links = [];
+        $count = count($rows);
+        foreach($rows as $k=>$one){
+            $group = "group".($k<$count/2 ? 1:2);
+            $polymers[0]["children"][] = $group.':'.$one["id"];
+            $links[] = [
+                "from"=> $one["id"],
+                "to" => 'p1',
+                "status" => 1
+            ];
+            $groups[$group][] = $one;
+        }
+        return json_encode([
+            "status"=> 1,
+            "data" => [
+                "groups" => $groups,
+                "polymers" => $polymers,
+                "links" => $links
+            ]
+        ]);
     }
 
     /**
