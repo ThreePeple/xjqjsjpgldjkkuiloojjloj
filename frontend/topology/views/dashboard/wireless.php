@@ -92,7 +92,10 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 		min-width: 350px;
 		overflow: auto;
 	}
-
+	svg.ZSYFCEditor .element text.title{
+		fill: #fff;
+		font-weight: bold;
+	}
 	path.main_node_link{
 		stroke-width: 3px !important; 
 	}
