@@ -35,6 +35,9 @@ svg.ZSYFCEditor {
 	left: 0;
 	top: 0;
 }
+svg.ZSYFCEditor .element{
+    stroke: #fff;
+}
 .wlan-editor-container svg.ZSYFCEditor {
 	background: url(../images/wlan_bg.png); 
 }
