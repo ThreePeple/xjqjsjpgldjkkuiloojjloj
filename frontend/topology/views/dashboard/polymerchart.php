@@ -53,7 +53,8 @@ svg{
 .ZSYPolymerChart .link-path{
 	fill: transparent;
 	stroke: green;
-	stroke-width: 1px;
+	stroke-width: 2px;
+	stroke-linecap: round;
 }
 .ZSYPolymerChart .link-path[data-status="2"]{
 	stroke: red;
@@ -73,7 +74,7 @@ svg{
 
 .ZSYPolymerChart .link-path.hover{
 	stroke: rgb(30, 255, 30);
-	stroke-width: 1px;
+	stroke-width: 2px;
 } 
 .ZSYPolymerChart .link-path[data-status="2"].hover{
 	stroke: rgb(255,100,100);
@@ -97,7 +98,9 @@ svg{
 }
 
 .fixedbox{
-	background: none;position: fixed;z-index:100;margin-top: 100px;width: 160px;
+	background: none;position: fixed;
+	z-index:100;margin-top: 100px;
+	width: 176px;
 	box-shadow: 0 0 3px 1px #111;
 	background-color: #363636;
 }
@@ -117,6 +120,7 @@ svg{
 	background-color: rgba(255,255,255, 0.2);
 	margin: 5px 0;
 	border-radius: 5px;
+	float:left;
 }
 .fixedbox .box-body .splitter{
 	margin: 10px 0;
