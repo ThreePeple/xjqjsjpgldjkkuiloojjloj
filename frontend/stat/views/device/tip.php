@@ -14,7 +14,7 @@ $dataProvider = new \yii\data\ArrayDataProvider([
 <?php
 if(!empty($deviceConfig)){
 ?>
-    <h4>基础信息：</h4>
+    <h4>基础信息：<?=\yii\helpers\Html::a('查看详情',\yii\helpers\Url::toRoute(["/stat/device/detail","id"=>$model->id]),["class"=>"btn btn-link","target"=>"_blank"])?></h4>
     <table class="table" border="0">
         <tbody>
         <?php
