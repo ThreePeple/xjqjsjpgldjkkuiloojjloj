@@ -64,7 +64,26 @@ $menuItems = [
             '<li role="separator" class="divider"></li>',
             [
                 'label' => '无线网络',
-                'url' => ['/topology/dashboard/wireless']
+                'url' => ['/topology/dashboard/wireless'],
+                "items" => [
+                    [
+                        "label"=>"核心区域拓扑图",
+                        "url"=>["/topology/dashboard/wireless"],
+                        "options" => ["class"=>($action == 'topology/dashboard/wireless'? 'active':'')]
+                    ],
+                    [
+                        "label"=>"接入网络拓扑图",
+                        "url"=>"/topology/dashboard/wireless-hub",
+                        "options" => ["class"=>($action == 'topology/dashboard/wireless-hub'? 'active':'')]
+                    ],
+                    [
+                        "label"=>"AC/AP拓扑图",
+                        "url"=>"/topology/dashboard/ac-ap",
+                        "options" => ["class"=>($action == 'topology/dashboard/ac-ap'? 'active':'')]
+                    ]
+                ],
+                'active' => in_array($action,['topology/dashboard/wireless','topology/dashboard/wireless-hub',
+                    'topology/dashboard/ac-ap'])
             ],
         ],
         'active' => $active == 'topology'

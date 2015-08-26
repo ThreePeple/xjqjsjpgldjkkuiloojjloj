@@ -208,6 +208,32 @@ abc;
     }
 
     /**
+     * 无线网： 接入网络拓扑
+     */
+    public function actionWirelessHub(){
+        return $this->render("wireless_hub");
+    }
+    public function actionAjaxWirelessHub(){
+        $id1 = Yii::$app->request->post("id1");
+        $id2 = Yii::$app->request->post("id2");
+        $data = WirelessDeviceLink::getPolymerData($id1,$id2);
+
+        return Json::encode([
+            'status'=> 1,
+            "data" => $data
+        ]);
+    }
+    /**
+     * AC / AP
+     */
+    public function actionAcAp(){
+        return $this->render('ac-ap');
+    }
+    public function actionAjaxAcAp(){
+
+    }
+
+    /**
      * 区域设备链路图
      *
     $nodes = [

@@ -2,20 +2,18 @@
  * Created by jsj on 15/8/18.
  */
 
-var __detailUrl = '/stat/device/ajax-device-tip';
+var __detailUrl = '/stat/wireless/ajax-device-tip';
 
-function renderChart(id1,id2){
+function renderChart(url,params){
     var __data;
-
     $.ajax({
-        url : '/topology/dashboard/ajax-get-hub',
-        data:{"id1":id1,"id2":id2},
+        url : url,
+        data: params,
         type:"POST",
         dataType:'JSON',
         success:function(res){
             if(res.status){
-                var content = '<defs> <filter id="filter_blur" x="0" y="0"> <feGaussianBlur in="SourceGraphic" stdDeviation="1" /> </filter> </defs>'
-                $("#ZSYPolymerChart").html(content);
+                $("#ZSYPolymerChart").find(">*").filter(":not(defs)").remove();
                 __data = res.data;
                 ZSYPolymerChart.init({data: __data, svgWidth:1300, svgHeight: 1000});
                 ZSYPolymerChart.render();
@@ -26,11 +24,12 @@ function renderChart(id1,id2){
 
 }
 
-function changeCore(group,id1,id2){
-    $("#events_type button[group='"+group+"']").removeClass("btn-primary").addClass("btn-default");
-    $("#events_type button[group='"+(group+1>2?1:group+1)+"']").removeClass("btn-default").addClass("btn-primary");
-    renderChart(id1,id2)
+function changeArea(id){
+    $("#events_type button[id="+id+"]]").removeClass("btn-primary").addClass("btn-default");
+    $("#events_type button[id="+id+"]]").removeClass("btn-default").addClass("btn-primary");
+    renderChart('/topology/dashboard/ac-ap',{id:id})
 }
+
 var __updateStatus = function ( data ){
     var groups = data["groups"];
     var links = data["links"];
@@ -104,7 +103,7 @@ var _showNodeDetail = function(d, e, contentHtmlTpl) {
             // nodeDetail_.json : fail data, nodeDetail.json: ok data.
             var id  = d["data"]["id"], device_id = d["data"]["device_id"];
             $.get(__detailUrl, {
-                id: id,
+                id: device_id,
                 device_id: device_id
             }, function(j) {
                 $content.find("div.popup_content").html(j);
@@ -124,20 +123,11 @@ var _showNodeDetail = function(d, e, contentHtmlTpl) {
 
 function readyChartCallback(__data){
     d3.selectAll(".ZSYPolymerChart g.node text") 
-    .on("mouseover", function(data) { 
+    .on("click", function(data) { 
         PopupPanel.clearAll();
         _showNodeDetail(data, d3.event, "");
-    }).on("click", function(data){
-          d = data.data;
-         var id  = d["id"], device_id = d["device_id"]; 
-         window.open("/stat/wireless/detail?id=" + id + "&device_id=" + device_id, "hub-compose-node-detail");
-<<<<<<< HEAD
-    });
-}
-=======
     });  
     if(__data){
         __updateStatus(__data);
     }
 }
->>>>>>> 414400ea7c0a0114b6740e8e240cd02f2bfe02ad
