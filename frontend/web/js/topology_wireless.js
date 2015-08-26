@@ -9,22 +9,22 @@
 
     var alarmImageMap = { 
         "ac": { 
-            "2": "/images/icons3/alarm/ac.gif" 
+            "2": "/images/icons3/warning/ac.svg" 
         },
         "switch": { 
-            "2": "/images/icons3/alarm/switch.gif"
+            "2": "/images/icons3/warning/switch.svg"
         },
         "server": { 
-            "2": "/images/icons3/alarm/server.gif"
+            "2": "/images/icons3/warning/server.svg"
         },
         "firewall": { 
-            "2": "/images/icons3/alarm/firewall.gif"
+            "2": "/images/icons3/warning/firewall.svg"
         }, 
         "wireless": { 
-            "2": "/images/icons3/alarm/wireless.gif"
+            "2": "/images/icons3/warning/wireless.svg"
         },
         "coreSwitch":{ 
-            "2": "/images/icons3/alarm/core.gif"
+            "2": "/images/icons3/warning/core.svg"
         } 
     };
     var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
