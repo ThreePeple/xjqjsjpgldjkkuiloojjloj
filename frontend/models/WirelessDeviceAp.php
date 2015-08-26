@@ -55,24 +55,24 @@ class WirelessDeviceAp extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'label' => 'Label',
+            'label' => '标签',
             'apAlias' => 'Ap Alias',
             'isFit' => 'Is Fit',
             'sysName' => 'Sys Name',
             'status' => 'Status',
-            'ipAddress' => 'Ip Address',
+            'ipAddress' => 'IP地址',
             'type' => 'Type',
             'onlineStatus' => 'Online Status',
-            'macAddress' => 'Mac Address',
-            'softwareVersion' => 'Software Version',
-            'hardwareVersion' => 'Hardware Version',
-            'onlineClientCount' => 'Online Client Count',
+            'macAddress' => 'MAC地址',
+            'softwareVersion' => '软件版本',
+            'hardwareVersion' => '硬件版本',
+            'onlineClientCount' => '在线客户端数量',
             'serialId' => 'Serial ID',
             'acLabel' => 'Ac Label',
             'acIpAddress' => 'Ac Ip Address',
             'acDevId' => 'Ac Dev ID',
-            'location' => 'Location',
-            'connectType' => 'Connect Type',
+            'location' => '物理位置',
+            'connectType' => '链接类型',
         ];
     }
 }
