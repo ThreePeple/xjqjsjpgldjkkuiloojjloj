@@ -11,21 +11,8 @@ $dataProvider = new \yii\data\ArrayDataProvider([
     "allModels" => $deviceConfig
 ]);
 ?>
-<style>
-.popup_content h4{
-    font-size: 16px;
-    font-weight: bold;
-}
-.popup_content a.detail-link,
-.popup_content a.detail-link:hover{
-    color: #fff;
-}
-a.detail-link{
-    float: right;
-    padding: 0 5px 0 0;
-    text-decoration: underline;
-}
-</style>
+<link type="text/css" rel="stylesheet" href="/css/node_detail_popup.css"></link>
+<div class="wireless-popup">
 <?php
 if(!empty($deviceConfig)){
 ?>
@@ -40,7 +27,7 @@ if(!empty($deviceConfig)){
             }else{
                 $value = $model->{$attribute};
             }
-            echo '<tr><th style="border-top:0;text-align:right;padding:1px 8px 1px;width: 200px">'.$key.'</th><td style="border-top:0;padding:1px 8px 1px;">'.$value.'</td></tr>';
+            echo '<tr><th style=" text-align:left;padding:1px 8px 1px;width: 200px" class="title">'.$key.':</th><td  class="content" style=" padding:1px 8px 1px;">'.$value.'</td></tr>';
         }
         ?>
         </tbody>
@@ -58,7 +45,7 @@ if(!empty($perfConfig)){
         <?php
         foreach($perfConfig as $key=>$id){
             $value = isset($perfData[$id])?$perfData[$id]:'';
-            echo '<tr><th style="border-top:0;text-align:right;padding:1px 8px 1px; width:200px">'.$key.'</th><td style="border-top:0;padding:1px 8px 1px;">'.$value.'</td></tr>';
+            echo '<tr><th style=" text-align:left;padding:1px 8px 1px; width:200px" class="title">'.$key.':</th><td class="content" style=" padding:1px 8px 1px;">'.$value.'</td></tr>';
         }
         ?>
         </tbody>
@@ -66,3 +53,4 @@ if(!empty($perfConfig)){
 <?php
 }
 ?>
+</div>

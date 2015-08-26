@@ -11,10 +11,11 @@ $dataProvider = new \yii\data\ArrayDataProvider([
     "allModels" => $deviceConfig
 ]);
 ?>
+<link type="text/css" rel="stylesheet" href="/css/node_detail_popup.css"></link>
 <?php
 if(!empty($deviceConfig)){
 ?>
-    <h4>基础信息：<?=\yii\helpers\Html::a('查看详情',\yii\helpers\Url::toRoute(["/stat/device/detail","id"=>$model->id]),["class"=>"btn btn-link","target"=>"_blank"])?></h4>
+    <h4>基础信息：<?=\yii\helpers\Html::a('查看详情',\yii\helpers\Url::toRoute(["/stat/device/detail","id"=>$model->id]),["class"=>"btn btn-link detail-link","target"=>"_blank"])?></h4>
     <table class="table" border="0">
         <tbody>
         <?php
@@ -24,7 +25,7 @@ if(!empty($deviceConfig)){
             }else{
                 $value = $model->{$attribute};
             }
-            echo '<tr><th style="border-top:0;text-align:right;padding:1px 8px 1px;width: 180px">'.$key.'</th><td style="border-top:0;padding:1px 8px 1px;">'.$value.'</td></tr>';
+            echo '<tr><th class="title" style="text-align:left;padding:1px 8px 1px;width: 180px">'.$key.'</th><td  class="content" style="padding:1px 8px 1px;">'.$value.'</td></tr>';
         }
         ?>
         </tbody>
@@ -42,7 +43,7 @@ if(!empty($perfConfig)){
         <?php
         foreach($perfConfig as $key=>$id){
             $value = isset($perfData[$id])?$perfData[$id]:'';
-            echo '<tr><th style="border-top:0;text-align:right;padding:1px 8px 1px; width:180px">'.$key.'</th><td style="border-top:0;padding:1px 8px 1px;">'.$value.'</td></tr>';
+            echo '<tr><th  class="title" style="text-align:left;padding:1px 8px 1px; width:180px">'.$key.'</th><td class="content" style="padding:1px 8px 1px;">'.$value.'</td></tr>';
         }
         ?>
         </tbody>

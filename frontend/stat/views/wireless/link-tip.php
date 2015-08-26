@@ -9,6 +9,7 @@ use yii\helpers\Html;
 use kartik\grid\GridView;
 
 ?>
+<link type="text/css" rel="stylesheet" href="/css/node_detail_popup.css"></link>
 <div class="device-info-view">
 
     <h4><?= Html::encode("链路信息") ?></h4>
