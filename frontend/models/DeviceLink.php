@@ -133,7 +133,10 @@ class DeviceLink extends \yii\db\ActiveRecord
     }
 
     /**
-     * 获取组网链路信息
+     * 获取链路接口介入速率
      */
-
+    public function getLinkspeed(){
+        return DeviceTask::find()->where(["devId"=>$this->rightDevice,"taskId"=>1])->orderBy("instId desc")->select
+        ("dataVal")->asArray()->scalar();
+    }
 }
