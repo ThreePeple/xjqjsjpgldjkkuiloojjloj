@@ -96,7 +96,7 @@
         var offsetX = 90,
             offsetY = 65;
         
-        var className = "nodeDetail"; 
+        var className = "nodeDetail wireless"; 
 
         var _updateContent = function(html) {
             return contentTpl.replace("{content}", html);
