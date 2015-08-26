@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\Query;
 
 /**
  * This is the model class for table "wireless_device_link".
@@ -93,5 +94,62 @@ class WirelessDeviceLink extends \yii\db\ActiveRecord
         $query->andWhere("status>1");
         $count = $query->count();
         return $count>0? 2 : 1;
+    }
+
+    public static function getPolymerData($id1,$id2){
+        $polymers = [];
+
+        $models = WirelessDeviceInfo::find()->where(["id"=>[$id1,$id2]])->all();
+        $n =1 ;
+        foreach($models as $model){
+            $polymers[$model->id] = [
+                'id' => 'p'.$n,
+                'label' => $model->label,
+                "children" => []
+            ];
+            $n++;
+        }
+
+        $filterIds = DeviceIpfilter::find()->where(["type_id"=>DeviceIpfilter::TYPE_WIRELESS])->select("ip")->column();
+        $links = [];
+
+        $group1 = (new Query())
+            ->from("wireless_device_link a")
+            ->leftJoin("wireless_device_info b","a.leftDevice = b.id")
+            ->where(['and',["a.rightDevice"=>[$id1,$id2],"b.ip"=>$filterIds],["not",["a.leftDevice"=>[$id1,$id2]]]])
+            ->select(["label"=>"b.ip","id"=>"CONCAT('id',b.id)","group"=>"CONCAT('group1:',CONCAT('id',b.id))","status"=>"b.status",'polymer_id'=>"a.rightDevice","device_id"=>"b.id","linkStatus"=>"a.status"])
+            ->groupBy('a.leftDevice')
+            ->all();
+        foreach($group1 as $one){
+            $polymers[$one["polymer_id"]]["children"][] = $one["group"];
+
+            $links[] = [
+                "from"=> $one["id"],
+                "to" => $polymers[$one["polymer_id"]]["id"],
+                "status" => $one["linkStatus"]
+            ];
+        }
+
+        $group2 = (new Query())
+            ->from("wireless_device_link a")
+            ->leftJoin("wireless_device_info b","a.rightDevice = b.id")
+            ->where(["and",["a.leftDevice"=>[$id1,$id2],"b.ip"=>$filterIds],["not",["a.rightDevice"=>[$id1,$id2]]]])
+            ->select(["label"=>"b.ip","id"=>"CONCAT('id',b.id)","group"=>"CONCAT('group2:',CONCAT('id',b.id))","status"=>"b.status","polymer_id"=>"a.leftDevice","device_id"=>"b.id","linkStatus"=>"a.status"])
+            ->groupBy('a.rightDevice')
+            ->all();
+        foreach($group2 as $one){
+            $polymers[$one["polymer_id"]]["children"][] = $one["group"];
+            $links[] = [
+                "from"=> $one["id"],
+                "to" => $polymers[$one["polymer_id"]]["id"],
+                "status" => $one["linkStatus"]
+            ];
+        }
+
+        return [
+            "groups" => ["group1"=>$group1,"group2"=>$group2],
+            "polymers" => array_values($polymers),
+            "links" => $links
+        ];
     }
 }
