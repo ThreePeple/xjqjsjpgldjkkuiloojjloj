@@ -100,7 +100,7 @@ svg{
 .fixedbox{
 	background: none;position: fixed;
 	z-index:100;margin-top: 100px;
-	width: 176px;
+	width: 95px;
 	box-shadow: 0 0 3px 1px #111;
 	background-color: #363636;
 }
@@ -129,22 +129,32 @@ CSS;
 
 $this->registerCss($css);
 
+/*
 $group = $groups[1];
 $id1 = isset($group[0])?$group[0]:0;
 $id2 = isset($group[1])?$group[1]:0;
-
+*/
 $js = <<<JS
 
-    renderChart($id1,$id2)
+    renderChart(681,731)
 JS;
 $this->registerJs($js);
 ?>
 <div class="box fixedbox">
     <div class="box-header" style="text-align: center">
-        <h3 class="box-title">聚汇交换机</h3>
+        <h3 class="box-title">区域</h3>
     </div><!-- /.box-header -->
     <div class="box-body" id="events_type">
+        <div class="group">
+            <?=\yii\helpers\Html::button('A/B区',["class"=>"btn btn-default","style"=>"margin:5px;","id"=>681,"group"=>1,"onclick"=>"changeCore(1,681,731)"]);?>
+
+        </div>
+        <div class="group">
+            <?= \yii\helpers\Html::button('C/D区',["class"=>"btn btn-primary","style"=>"margin:5px;","id"=>766,"group"=>2,"onclick"=>"changeCore(2,766,731)"]);?>
+
+        </div>
         <?php
+        /*
 	        $currentIndex = 0;
 	        foreach($polymers as $id=>$item){
 	        	$currentIndex++;
@@ -167,6 +177,7 @@ $this->registerJs($js);
 	            		echo "</div>";
 	            	}
 	        }
+        */
         ?>
     </div><!-- /.box-body -->
 </div><!-- /.box -->

@@ -136,7 +136,7 @@ $('.marquee').marquee({
     duplicated: false
 });*/
 JS;
-$this->registerJs($js);
+//$this->registerJs($js);
 ?>
 <div class="row" style="margin-top:50px;min-height: 700px;position:relative;">
     <div class="col-md-3" style="margin-top: 10px;position:relative; z-index:2">

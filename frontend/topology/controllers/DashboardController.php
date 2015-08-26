@@ -147,6 +147,7 @@ abc;
      * 有线网络2   交换机组网
      */
     public function actionHubCompose(){
+       /* 页面写死IP 不需要获取数据了
         $rows = DeviceInfo::find()->where(["categoryId"=>12])->select(["id","label"])->asArray()->all();
         $first = 0;
         if(!empty($rows)){
@@ -157,7 +158,7 @@ abc;
             ->from("device_ipfilter a")
             ->leftJoin("device_info b","a.ip = b.ip")
             ->where(["a.ip"=>$ips])
-            ->select(["b.id","b.label","group"=>"IF(b.ip='10.253.1.11' or b.ip='10.253.1.12',1,2)"])
+            ->select(["b.id","b.label","b.ip","group"=>"IF(b.ip='10.253.1.11' or b.ip='10.253.1.12',1,2)"])
             ->orderBy("group asc")
             ->all();
         //$rows = DeviceIpfilter::find()->where(["ip"=>$ips])->select(["ip","label","group"=>"IF(ip='10.253.1.11' or ip='10.253.1.13',1,2)"])->asArray()->all();
@@ -169,9 +170,10 @@ abc;
             $groups[$row["group"]][] = $row["id"];
 
         }
+       */
         return $this->render('polymerchart',[
-            "polymers" => $data,
-            "groups" => $groups
+          //  "polymers" => $data,
+           // "groups" => $groups
         ]);
     }
 
