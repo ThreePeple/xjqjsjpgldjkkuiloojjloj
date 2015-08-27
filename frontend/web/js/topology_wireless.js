@@ -96,7 +96,7 @@
         var offsetX = 90,
             offsetY = 65;
         
-        var className = "nodeDetail wireless"; 
+        var className = "nodeDetail"; 
 
         var _updateContent = function(html) {
             return contentTpl.replace("{content}", html);
@@ -187,7 +187,7 @@
     };
 
     var _mockMainLinkPath = function(){
-     /*
+        /*
         d3.select("svg.ZSYFCEditor")
             .insert("path", "g.svg-container")
             .attr("class", "main_node_link green_link")
@@ -212,7 +212,7 @@
             .insert("path", "g.svg-container")
             .attr("class", "main_node_link blue_link")
             .attr("id", "main_link_b")
-            .attr("d", "M1073,170L859,285L877,295")
+            .attr("d", "M765,319L305,528L382,560")
             .on("click", function() {
                 PopupPanel.clearAll();
                 _showMainLinkDetail("b", d3.event );
