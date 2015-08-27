@@ -8,7 +8,7 @@ use yii\helpers\Url;
 /* @var $searchModel app\models\DeviceAlarmSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Device Alarms';
+$this->title = $title;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="device-alarm-index">
@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
         'panel' => [
-            'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-globe"></i> 设备告警列表</h3>',
+            'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-globe"></i> '.$title.'</h3>',
             'type'=>'default',
             'before'=>Html::a('<i class="glyphicon glyphicon-repeat"></i> 刷新列表', ['index'], ['class' => 'btn btn-info']),
         ],

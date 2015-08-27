@@ -89,6 +89,10 @@ use yii\helpers\Url;
                             "label" => '<span class="fa fa-circle-o"></span> 告警查询</a> ',
                             "url" => ['/system/device-alarm/index']
                         ],
+                        [
+                            "label" => '<span class="fa fa-circle-o"></span> 无线设备告警查询</a> ',
+                            "url" => ['/system/device-alarm/wireless-list']
+                        ],
                         /*
                         [
                             "label" => '<span class="fa fa-circle-o"></span> 条件设置</a> ',

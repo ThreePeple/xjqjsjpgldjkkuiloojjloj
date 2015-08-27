@@ -2,6 +2,7 @@
 
 namespace app\system\controllers;
 
+use app\models\WirelessDeviceAlarmSearch;
 use Yii;
 use app\models\DeviceAlarm;
 use app\models\DeviceAlarmSearch;
@@ -38,6 +39,18 @@ class DeviceAlarmController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'title' => "设备告警列表"
+        ]);
+    }
+
+    public function actionWirelessList(){
+        $searchModel = new WirelessDeviceAlarmSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'title' => "无线设备告警列表"
         ]);
     }
 
