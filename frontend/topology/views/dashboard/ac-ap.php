@@ -80,12 +80,52 @@ svg{
 	stroke: rgb(255,100,100);
 }
 
+.box{
+  color: #fff;
+  position: relative;
+  border-radius: 3px;
+  border: 1px solid #454545;
+  margin-bottom: 20px;
+  width: 100%;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+.box-header{
+    color: #939393;
+}
 .nodeDetail .popup_content{
 	max-height: 350px;
 	min-width: 330px;
 	overflow: auto;
 }
 
+.fixedbox{
+	background: none;position: fixed;
+	z-index:100;margin-top: 100px;
+	width: 80px;
+	box-shadow: 0 0 3px 1px #111;
+	background-color: #363636;
+}
+.fixedbox .box-header{
+	padding: 6px 10px;
+}
+.fixedbox .box-body{
+	padding: 2px 10px;
+}
+.fixedbox .box-body .vs{
+	text-align: center;
+	position: relative;
+	margin: -6px 0;
+	display: none;
+}
+.fixedbox .box-body .group{
+	background-color: rgba(255,255,255, 0.2);
+	margin: 5px 0;
+	border-radius: 5px;
+	float:left;
+}
+.fixedbox .box-body .splitter{
+	margin: 10px 0;
+}
 
 CSS;
 
@@ -93,12 +133,33 @@ $this->registerCss($css);
 
 
 $js = <<<JS
-
-    renderChart({id1:3809,id2:3810})
+    renderChart('/topology/dashboard/ajax-ac-ap',{"area":1});
+    setDetailUrl('/stat/wireless/ajax-ap-tip');
 JS;
 $this->registerJs($js);
 ?>
 
+<div class="box fixedbox">
+    <div class="box-header" style="text-align: center">
+        <h3 class="box-title">区域</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body" id="areas">
+        <div class="group">
+            <?=\yii\helpers\Html::button('A区',["class"=>"btn btn-default","style"=>"margin:5px;","id"=>1,"group"=>1,"onclick"=>"changeArea(1)"]);?>
+        </div>
+        <div class="group">
+            <?=\yii\helpers\Html::button('B区',["class"=>"btn btn-primary","style"=>"margin:5px;","id"=>2,"group"=>2,
+                "onclick"=>"changeArea(2)"]);?>
+        </div>
+        <div class="group">
+            <?=\yii\helpers\Html::button('C区',["class"=>"btn btn-primary","style"=>"margin:5px;","id"=>3,"group"=>3,"onclick"=>"changeArea(3)"]);?>
+        </div>
+        <div class="group">
+            <?=\yii\helpers\Html::button('D区',["class"=>"btn btn-primary","style"=>"margin:5px;","id"=>4,"group"=>4,"onclick"=>"changeArea(4)"]);?>
+        </div>
+
+    </div><!-- /.box-body -->
+</div><!-- /.box -->
 <div style=" margin-top: 50px">
     <svg id="ZSYPolymerChart">
         <defs>

@@ -9,6 +9,7 @@ class ConfigSetController extends \yii\web\Controller
     public $enableCsrfValidation = false;
     public function actionIndex()
     {
+        // TODO接口取数据
         $data = [
             [
                 "ip" => "10.6.251.21",
@@ -34,6 +35,10 @@ class ConfigSetController extends \yii\web\Controller
     }
 
     public function actionDelete($id){
+        //todo
+    }
 
+    public function actionSend(){
+        //TODO
     }
 }

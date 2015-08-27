@@ -279,6 +279,18 @@ class WirelessController extends Controller
         ]);
     }
 
+    public function actionAjaxApTip(){
+        $this->layout = false;
+        $id = Yii::$app->request->get("id");
+        $ap = WirelessDeviceAp::findOne($id);
+        if(!$ap){
+            return '';
+        }
+        return $this->render("ap-tip",[
+            "model" => $ap
+        ]);
+    }
+
     /**
      * 无线区域点击链路展示TIP 信息
      */

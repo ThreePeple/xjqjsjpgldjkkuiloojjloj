@@ -94,7 +94,7 @@ $this->registerCss($css);
 
 $js = <<<JS
 
-    renderChart('/topology/dashboard/ajax-ac-ap',{id1:3809,id2:3810})
+    renderChart('/topology/dashboard/ajax-wireless-hub',{id1:3809,id2:3810})
 JS;
 $this->registerJs($js);
 ?>

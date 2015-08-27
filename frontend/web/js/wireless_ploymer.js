@@ -6,6 +6,7 @@ var __detailUrl = '/stat/wireless/ajax-device-tip';
 
 function renderChart(url,params){
     var __data;
+
     $.ajax({
         url : url,
         data: params,
@@ -24,10 +25,14 @@ function renderChart(url,params){
 
 }
 
+function setDetailUrl(url){
+    __detailUrl = url;
+}
+
 function changeArea(id){
-    $("#events_type button[id="+id+"]]").removeClass("btn-primary").addClass("btn-default");
-    $("#events_type button[id="+id+"]]").removeClass("btn-default").addClass("btn-primary");
-    renderChart('/topology/dashboard/ac-ap',{id:id})
+    $("#areas button[id="+id+"]").removeClass("btn-primary").addClass("btn-default");
+    $("#areas button[id!="+id+"]").removeClass("btn-default").addClass("btn-primary");
+    renderChart('/topology/dashboard/ajax-ac-ap',{"area":id})
 }
 
 var __updateStatus = function ( data ){
