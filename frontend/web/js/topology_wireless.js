@@ -187,6 +187,7 @@
     };
 
     var _mockMainLinkPath = function(){
+     /*
         d3.select("svg.ZSYFCEditor")
             .insert("path", "g.svg-container")
             .attr("class", "main_node_link green_link")
@@ -206,12 +207,12 @@
                 PopupPanel.clearAll();
                 _showMainLinkDetail("g", d3.event );
             });  
-        
+        */
         d3.select("svg.ZSYFCEditor")
             .insert("path", "g.svg-container")
             .attr("class", "main_node_link blue_link")
             .attr("id", "main_link_b")
-            .attr("d", "M1078,168L850,286L866,295")
+            .attr("d", "M1073,170L859,285L877,295")
             .on("click", function() {
                 PopupPanel.clearAll();
                 _showMainLinkDetail("b", d3.event );
