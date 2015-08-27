@@ -152,4 +152,11 @@ class WirelessDeviceLink extends \yii\db\ActiveRecord
             "links" => $links
         ];
     }
+    /**
+     * 获取链路接口介入速率
+     */
+    public function getLinkspeed(){
+        return WirelessDeviceTask::find()->where(["devId"=>$this->rightDevice,"taskId"=>1])->orderBy("instId desc")->select
+        ("dataVal")->asArray()->scalar();
+    }
 }

@@ -20,35 +20,27 @@ use kartik\grid\GridView;
         "striped" => false,
         "columns" => [
             [
-                "label" => "ID",
-                "value" => "id",
+                "label" => "左接口",
+                "value" => "leftIfDesc",
             ],
             [
-                "label" =>"链路左接口描述",
+                "label" =>"左接口描述",
                 "value" => "leftIfDesc"
+            ],
+            [
+                "label" => "右接口",
+                "value" => "rightIfDesc",
             ],
             [
                 "label" =>"链路右接口描述",
                 "value" => "rightIfDesc"
             ],
             [
-                "label" => "状态",
-                "value" =>  function($model){
-                    $statusLabel = '正常';
-                    switch($model->status){
-                        case 1:
-                            $statusLabel="正常";
-                            break;
-                        case 2:
-                            $statusLabel="告警";
-                            break;
-                        default:
-                    }
-                    return $statusLabel;
-                }
+                "label" => "接收速率",
+                "value" => 'linkspeed'
             ],
             [
-                "label" => "链路带宽",
+                "label" => "带宽",
                 "value" => "bandWidth"
             ],
         ],
