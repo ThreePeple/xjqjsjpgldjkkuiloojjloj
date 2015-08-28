@@ -79,10 +79,10 @@
         data = config.data;
 
         svgWidth = config.svgWidth || 900;
-        svgHeight = config.svgHeight || 900;
-        circleRadius = 160;
+        svgHeight = config.svgHeight || 900; 
+        circleRadius = 220;
 
-        polymerWidth = 150;
+        polymerWidth = 120;
         polymerHeight = 35;
 
 
@@ -91,11 +91,11 @@
 
         groupCenterXY["group1"] = {
             x: (svgWidth - groupsHPadding) / 2 - circleRadius,
-            y: (svgHeight - groupsVPadding) / 2 - circleRadius
+            y:  svgHeight/2
         };
         groupCenterXY["group2"] = {
             x: (svgWidth + groupsHPadding) / 2 + circleRadius,
-            y: (svgHeight - groupsVPadding) / 2 - circleRadius
+            y: svgHeight/2
         };
 
         polymer2CenterX = polymer1CenterX = svgWidth / 2;
