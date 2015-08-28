@@ -117,6 +117,13 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 	path.main_node_link[data-status="2"]:hover{
 		stroke: rgb(  255, 100,100 ) !important;
 	}
+	embed.embed-helper{
+		height:1px;
+		width:1px;
+		position: absolute;
+		left: -200000px;
+		overflow: hidden;
+	}
 </style>
 <script type="text/single-html-template" id="switch_node_detail">
     <ul> 

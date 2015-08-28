@@ -9,22 +9,22 @@
 
     var alarmImageMap = { 
         "ac": { 
-            "2": "/images/icons3/alarm/ac.gif" 
+            "2": "http://www.cnpc.com/topology/dashboard/image-base64?fileName=icons3/ac.png" 
         },
         "switch": { 
-            "2": "/images/icons3/alarm/switch.gif"
+            "2": "http://www.cnpc.com/topology/dashboard/image-base64?fileName=icons3/switch.png"
         },
         "server": { 
-            "2": "/images/icons3/alarm/server.gif"
+            "2": "http://www.cnpc.com/topology/dashboard/image-base64?fileName=icons3/server.png"
         },
         "firewall": { 
-            "2": "/images/icons3/alarm/firewall.gif"
+            "2": "http://www.cnpc.com/topology/dashboard/image-base64?fileName=icons3/firewall.png"
         }, 
         "wireless": { 
-            "2": "/images/icons3/alarm/wireless.gif"
+            "2": "http://www.cnpc.com/topology/dashboard/image-base64?fileName=icons3/wireless.png"
         },
         "coreSwitch":{ 
-            "2": "/images/icons3/alarm/core.gif"
+            "2": "http://www.cnpc.com/topology/dashboard/image-base64?fileName=icons3/core.png"
         } 
     };
     var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
@@ -37,13 +37,13 @@
                 "imgSrc": "/images/icons3/ac.png" 
             },
             "switch": {
-                "rx": 42.5,
-                "ry": 32.5,
+                "rx": 20,
+                "ry": 20,
                 "imgSrc": "/images/icons3/switch.png"
             },
             "server": {
-                "rx": 17,
-                "ry": 25,
+                "rx": 15,
+                "ry": 19.5,
                 "imgSrc": "/images/icons3/server.png"
             },
             "firewall": {
@@ -52,8 +52,8 @@
                 "imgSrc": "/images/icons3/firewall.png"
             }, 
             "wireless": {
-                "rx": 25,
-                "ry": 24,
+                "rx": 13.5,
+                "ry": 16,
                 "imgSrc": "/images/icons3/wireless.png"
             },
             "coreSwitch":{
@@ -185,6 +185,16 @@
            shape.attr("href", alarmImageMap[shapeType]["2"]);
         }
     };
+
+    /**
+        使用 embed 标签钩子，使得img的src支持svg。
+        测试： chrome 46支持。
+     */
+    ( function () {
+        Object.keys(alarmImageMap).forEach( function ( type ){
+            $("<embed class='embed-helper'></embed>").attr("src", alarmImageMap[type]["2"]).appendTo(document.body);
+        } );
+    })();
 
     var _mockMainLinkPath = function(){
         /*

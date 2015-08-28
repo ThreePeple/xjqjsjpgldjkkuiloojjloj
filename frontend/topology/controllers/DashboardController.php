@@ -136,6 +136,39 @@ abc;
 
     }
 
+    public function actionImageBase64($fileName){
+        $statusImgFileName = __DIR__ . "/../../web/images/warning.png";
+
+        $absFileName = __DIR__ . "/../../web/images/". $fileName;
+        if(file_exists($absFileName)){  
+            list($bgWidth, $bgHeight, $bgType ) = getimagesize($absFileName); 
+        
+            $data = file_get_contents($absFileName);
+
+            $bgDataUri = 'data:image/' . $bgType . ';base64,' . base64_encode($data);
+
+            list($sImgWidth, $sImgHeight, $sImgType ) = getimagesize($statusImgFileName); 
+            
+            $data = file_get_contents($statusImgFileName);
+
+            $statusImgDataUri = 'data:image/' . $sImgType . ';base64,' . base64_encode($data);
+            header("Content-Type: image/svg+xml");
+
+            echo ($this->renderPartial('_nodeSVG', 
+                            array(
+                                "bgImgDataUri" => $bgDataUri,
+                                "statusImgDataUri" => $statusImgDataUri,
+                                "bgImageWidth" => $bgWidth,
+                                "bgImageHeight" => $bgHeight,
+                                "statusImageWidth" => $sImgWidth,
+                                "statusImageHeight" => $sImgHeight
+                            ), true ) ); 
+            
+            return;
+        }
+        return "<Invalid Path>"; 
+    }
+
     /**
      * 有线网络
      * @return string

@@ -58,13 +58,13 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
             "imgSrc": "/images/icons3/ac.png" 
         },
         "switch": {
-            "rx": 42.5,
-            "ry": 32.5,
+            "rx": 20,
+            "ry": 20,
             "imgSrc": "/images/icons3/switch.png"
         },
         "server": {
-            "rx": 17,
-            "ry": 25,
+            "rx": 15,
+            "ry": 19.5,
             "imgSrc": "/images/icons3/server.png"
         },
         "firewall": {
@@ -73,8 +73,8 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
             "imgSrc": "/images/icons3/firewall.png"
         }, 
         "wireless": {
-            "rx": 25,
-            "ry": 24,
+            "rx": 13.5,
+            "ry": 16,
             "imgSrc": "/images/icons3/wireless.png"
         },
         "coreSwitch":{
