@@ -9,24 +9,25 @@
 
     var alarmImageMap = { 
         "ac": { 
-            "2": "http://www.cnpc.com/topology/dashboard/image-base64?fileName=icons3/ac.png" 
+            "2": "/images/icons3/alarm/ac.gif" 
         },
         "switch": { 
-            "2": "http://www.cnpc.com/topology/dashboard/image-base64?fileName=icons3/switch.png"
+            "2": "/images/icons3/alarm/switch.gif"
         },
         "server": { 
-            "2": "http://www.cnpc.com/topology/dashboard/image-base64?fileName=icons3/server.png"
+            "2": "/images/icons3/alarm/server.gif"
         },
         "firewall": { 
-            "2": "http://www.cnpc.com/topology/dashboard/image-base64?fileName=icons3/firewall.png"
+            "2": "/images/icons3/alarm/firewall.gif"
         }, 
         "wireless": { 
-            "2": "http://www.cnpc.com/topology/dashboard/image-base64?fileName=icons3/wireless.png"
+            "2": "/images/icons3/alarm/wireless.gif"
         },
         "coreSwitch":{ 
-            "2": "http://www.cnpc.com/topology/dashboard/image-base64?fileName=icons3/core.png"
+            "2": "/images/icons3/alarm/core.gif"
         } 
     };
+
     var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
         "ID_KEY": "__id__",
         "singleMode": true,
@@ -185,17 +186,7 @@
            shape.attr("href", alarmImageMap[shapeType]["2"]);
         }
     };
-
-    /**
-        使用 embed 标签钩子，使得img的src支持svg。
-        测试： chrome 46支持。
-     */
-    ( function () {
-        Object.keys(alarmImageMap).forEach( function ( type ){
-            $("<embed class='embed-helper'></embed>").attr("src", alarmImageMap[type]["2"]).appendTo(document.body);
-        } );
-    })();
-
+ 
     var _mockMainLinkPath = function(){
         /*
         d3.select("svg.ZSYFCEditor")
@@ -222,7 +213,7 @@
             .insert("path", "g.svg-container")
             .attr("class", "main_node_link blue_link")
             .attr("id", "main_link_b")
-            .attr("d", "M765,319L305,528L382,560")
+            .attr("d", "M1014,312L640,529L688,550")
             .on("click", function() {
                 PopupPanel.clearAll();
                 _showMainLinkDetail("b", d3.event );
