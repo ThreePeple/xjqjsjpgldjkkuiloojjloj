@@ -265,6 +265,7 @@
     }
 
     function loadAlarmLevelPie(data,categories,colors){
+
         var option = {
             title : false,
             tooltip : {
@@ -288,7 +289,7 @@
                     type:'pie',
                     radius : [20, '88%'],
                     center : ['40%', '50%'],
-                    roseType : 'radius',
+                    //roseType : 'radius',
                     itemStyle : {
                         normal : {
                             label : {
