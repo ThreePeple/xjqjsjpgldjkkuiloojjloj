@@ -108,6 +108,11 @@
             var myChart = echarts.init(document.getElementById(id));
             containers[id] = myChart;
         }
+        $.extend(option,{
+            textStyle:{
+                fontFamily: '"microsoft yahei", STHeitiSC-Light, Roboto, _H_Helvetica, sans-serif, Arial'
+            }
+        })
         containers[id].setOption(option);
     }
 
