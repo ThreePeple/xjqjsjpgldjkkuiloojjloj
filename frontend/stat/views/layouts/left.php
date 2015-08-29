@@ -36,44 +36,23 @@ use yii\helpers\Url;
                 'encodeLabels' => false,
                 'options' => ['class' => 'sidebar-menu'],
                 'items' => [
-                    '<li class="header">查询统计</li>',
+                    '<li class="header">统计查询</li>',
                 ],
             ]
         );
         ?>
-
-        <ul class="sidebar-menu">
-            <li class="active">
-                <a href="<?=Url::toRoute(['/stat/device'])?>">
-                    <i class="fa fa-circle-o"></i> <span>设备运行状态</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-circle-o"></i> <span>链路运行状态</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-circle-o"></i> <span>设备分析</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-circle-o"></i> <span>链路分析</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-circle-o"></i> <span>链路检测</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-circle-o"></i> <span>告警查询</span>
-                </a>
-            </li>
-        </ul>
+        <?=
+        Nav::widget(
+            [
+                'encodeLabels' => false,
+                'options' => ['class' => 'sidebar-menu'],
+                'items' => [
+                    ["label" => '<span class="fa fa-circle-o"></span> 有线设备查询',"url" => ['/stat/device/index']],
+                    ["label" => '<span class="fa fa-circle-o"></span> 无线设备查询',"url" => ['/stat/wireless/index']],
+                ],
+            ]
+        );
+        ?>
 
     </section>
 

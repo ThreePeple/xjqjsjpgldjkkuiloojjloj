@@ -49,7 +49,7 @@ use yii\helpers\Url;
                 'items' => [
                     ["label" => '<span class="fa fa-circle-o"></span> 配置信息下发',"url" => ['/input/config-set/index']],
                     ["label" => '<span class="fa fa-circle-o"></span> 跳线管理',"url" => ['/input/jumper/index']],
-                    ["label" => '<span class="fa fa-circle-o"></span> 设备信息查询',"url" => ['/input/device/index']],
+                    ["label" => '<span class="fa fa-circle-o"></span> 接入查询',"url" => ['/input/device/index']],
                 ],
             ]
         );

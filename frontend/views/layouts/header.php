@@ -93,11 +93,23 @@ $menuItems = [
         'url' => ['/input/jumper/index'],
         'active' => $active == 'input'
     ],
-    /*[
-        'label'=> '报表统计',
-        'url'=>['/report/report/index'],
-        'active' => $active == 'report'
-    ],*/
+    [
+        'label'=> '统计查询',
+        'url' =>['/stat/device/index'],
+        /*
+        'items' =>[
+            [
+                'label' => '有线设备查询',
+                'url' => ['/stat/device/index'],
+            ],
+            [
+                'label' => '无线设备查询',
+                'url' => ['/stat/wireless/index'],
+            ],
+        ],
+        */
+        'active' => $active == 'stat'
+    ],
     [
         'label' => '系统管理',
         'url' => ['/system'],
