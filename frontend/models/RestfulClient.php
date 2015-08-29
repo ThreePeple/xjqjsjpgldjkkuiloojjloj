@@ -96,13 +96,14 @@ class RestfulClient {
         }
         $url = $this->buildUrl($url,$params);
         curl_setopt($this->ch,CURLOPT_URL,$url);
+        Yii::trace(print_r(curl_getinfo($this->ch),true),"curl/request");
         $this->data = curl_exec($this->ch);
         $error_code = curl_errno($this->ch);
         if($error_code == 0) {
             $this->error_code = $error_code;
             $this->error      = curl_error($this->ch);
         }
-        Yii::getLogger()->log($this->data,Logger::LEVEL_TRACE,'curl\return');
+        Yii::trace($this->data,'curl/return');
         curl_close($this->ch);
 
         $this->parseResult();
