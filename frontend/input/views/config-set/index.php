@@ -72,11 +72,12 @@ use yii\helpers\Html;
   </div>
   <div class="form-group">
     <label for="mac">MAC:</label>
-    <input type="email" class="form-control" id="mac" placeholder="">
+    <input type="email" class="form-control" id="mac" name="mac" placeholder="">
   </div>
   <button type="submit" class="btn btn-default">下发配置</button>
 </form>',
             ],
+            /*
             'toolbar' => [
                 [
                     "content" => Html::button('<i class="glyphicon glyphicon-download-alt"></i> 删除选择项',[
@@ -86,7 +87,7 @@ use yii\helpers\Html;
                 ],
                 '{export}',
                 '{toggleData}'
-            ],
+            ],*/
             "export" => [
                 'label' => "导出数据",
                 'showConfirmAlert'=>false,
