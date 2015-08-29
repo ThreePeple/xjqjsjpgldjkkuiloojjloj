@@ -12,6 +12,8 @@ use app\models\WirelessDeviceInfo;
  */
 class WirelessSearch extends WirelessDeviceInfo
 {
+    public $series;
+    public $model;
     /**
      * @inheritdoc
      */
@@ -20,6 +22,7 @@ class WirelessSearch extends WirelessDeviceInfo
         return [
             [['id', 'status', 'categoryId', 'supportPing', 'webMgrPort', 'configPollTime', 'statePollTime', 'positionX', 'positionY', 'symbolType', 'series_id'], 'integer'],
             [['label', 'ip', 'mask', 'sysName', 'location', 'sysOid', 'runtime', 'lastPoll', 'typeName', 'symbolDesc', 'mac', 'phyName', 'phyCreateTime', 'model_id', 'interfaces', 'category', 'update_time', 'series_name', 'model_name'], 'safe'],
+            [['series','model'],'safe']
         ];
     }
 
@@ -39,9 +42,12 @@ class WirelessSearch extends WirelessDeviceInfo
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params,$ips=[])
     {
         $query = WirelessDeviceInfo::find();
+        $query->joinWith(['series','model']);
+
+        $query->andFilterWhere(["ip"=>$ips]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,7 +62,7 @@ class WirelessSearch extends WirelessDeviceInfo
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
+            'device_info.id' => $this->id,
             'status' => $this->status,
             'lastPoll' => $this->lastPoll,
             'categoryId' => $this->categoryId,
@@ -87,7 +93,9 @@ class WirelessSearch extends WirelessDeviceInfo
             ->andFilterWhere(['like', 'interfaces', $this->interfaces])
             ->andFilterWhere(['like', 'category', $this->category])
             ->andFilterWhere(['like', 'series_name', $this->series_name])
-            ->andFilterWhere(['like', 'model_name', $this->model_name]);
+            ->andFilterWhere(['like', 'model_name', $this->model_name])
+            ->andFilterWhere(['like', 'device_model.name', $this->model])
+            ->andFilterWhere(['like', 'device_series.name', $this->series]);
 
         return $dataProvider;
     }

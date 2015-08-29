@@ -3,6 +3,7 @@
 namespace app\stat\controllers;
 
 use app\models\DeviceInterface;
+use app\models\DeviceIpfilter;
 use app\models\InfoConfig;
 use app\models\TopologyConfig;
 use Yii;
@@ -52,8 +53,9 @@ class DeviceController extends Controller
      */
     public function actionIndex()
     {
+        $ips = DeviceIpfilter::getIdsByType([DeviceIpfilter::TYPE_WLAN,DeviceIpfilter::TYPE_POLYMER]);
         $searchModel = new DeviceInfoSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$ips);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

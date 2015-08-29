@@ -49,7 +49,7 @@ class DeviceInfoSearch extends DeviceInfo
         $query = DeviceInfo::find();
         $query->joinWith(['series','model']);
 
-        $query->andWhere(["ip"=>$ips]);
+        $query->andFilterWhere(["ip"=>$ips]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

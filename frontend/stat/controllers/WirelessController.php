@@ -2,6 +2,7 @@
 
 namespace app\stat\controllers;
 
+use app\models\DeviceIpfilter;
 use app\models\InfoConfig;
 use app\models\ViewTemplate;
 use app\models\WirelessDeviceAlarm;
@@ -53,8 +54,9 @@ class WirelessController extends Controller
      */
     public function actionIndex()
     {
+        $ips = DeviceIpfilter::getIdsByType(DeviceIpfilter::TYPE_WIRELESS);
         $searchModel = new WirelessSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$ips);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
