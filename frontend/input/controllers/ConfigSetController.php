@@ -53,6 +53,8 @@ class ConfigSetController extends \yii\web\Controller
 
         if($client->hasErrors()){
             echo '<script>alert("操作失败")</script>';
+            \Yii::$app->end();
+
         }else{
             $this->redirect('index');
         }
