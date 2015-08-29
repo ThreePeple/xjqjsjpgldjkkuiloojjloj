@@ -60,12 +60,17 @@ class RestfulClient {
         return $this->error_code;
     }
 
-    public function get($url,$query){
+    public function get($url,$query=[]){
         $this->request("GET",$url,$query);
         return $this;
     }
 
-    public function request($method,$url,$params=[]){
+    public function post($url,$post){
+        $this->request('POST',$url,[],$post);
+        return $this;
+    }
+
+    public function request($method,$url,$params=[],$post=[]){
         $this->clear();
 
         $this->ch = curl_init();
@@ -84,19 +89,21 @@ class RestfulClient {
         switch ($method){
             case 'POST' :
                 curl_setopt($this->ch,CURLOPT_POST, 1);
-                curl_setopt($this->ch,CURLOPT_POSTFIELDS, $params);
+                curl_setopt($this->ch,CURLOPT_POSTFIELDS, $post);
                 break;
             default :
                 break;
         }
         $url = $this->buildUrl($url,$params);
         curl_setopt($this->ch,CURLOPT_URL,$url);
+        Yii::trace(print_r(curl_getinfo($this->ch),true),"curl/request");
         $this->data = curl_exec($this->ch);
-        if ($this->data === false || $this->data === null) {
-            $this->error_code = curl_errno($this->ch);
+        $error_code = curl_errno($this->ch);
+        if($error_code == 0) {
+            $this->error_code = $error_code;
             $this->error      = curl_error($this->ch);
         }
-        Yii::getLogger()->log($this->data,Logger::LEVEL_TRACE,'curl\return');
+        Yii::trace($this->data,'curl/return');
         curl_close($this->ch);
 
         $this->parseResult();

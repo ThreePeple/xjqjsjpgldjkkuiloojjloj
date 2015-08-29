@@ -2,6 +2,7 @@
 
 namespace app\system\controllers;
 
+use app\models\WirelessDeviceAlarm;
 use app\models\WirelessDeviceAlarmSearch;
 use Yii;
 use app\models\DeviceAlarm;
@@ -61,8 +62,9 @@ class DeviceAlarmController extends Controller
      */
     public function actionView($id)
     {
+        $type = Yii::$app->request->get("type");
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($id,$type),
         ]);
     }
 
@@ -123,9 +125,11 @@ class DeviceAlarmController extends Controller
      * @return DeviceAlarm the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($id,$type=null)
     {
-        if (($model = DeviceAlarm::findOne($id)) !== null) {
+        if($type ==2 && ($model = WirelessDeviceAlarm::findOne($id)) !== null){
+            return $model;
+        }elseif (($model = DeviceAlarm::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

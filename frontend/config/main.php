@@ -23,6 +23,13 @@ return [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
+                'api' => [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['trace','info','error', 'warning'],
+                    'logVars' =>[],
+                    'categories' => ['curl/*'],
+                    'logFile' => '@app/runtime/logs/curl.log',
+                ],
             ],
         ],
         'errorHandler' => [

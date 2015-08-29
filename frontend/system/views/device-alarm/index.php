@@ -20,7 +20,6 @@ $this->params['breadcrumbs'][] = $this->title;
         "filterModel" => $searchModel,
         'pjax'=> true,
         "columns" => [
-            'deviceId',
             'deviceIp',
             'deviceName',
             // 'alarmLevel',
@@ -54,13 +53,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => '\kartik\grid\ActionColumn',
                 'width' => '50px',
                 'header' => '',
-                'template' => '{delete}'
+                'template' => '{view}',
+                'buttons' => [
+                    "view" => function($url,$model,$key){
+                        $url = ($model instanceof app\models\WirelessDeviceAlarm)? Url::toRoute(['view',
+                            "type"=>2,"id"=>$model->id]):
+                        $url;
+                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url);
+                    }
+                ],
             ],
         ],
         'panel' => [
             'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-globe"></i> '.$title.'</h3>',
             'type'=>'default',
-            'before'=>Html::a('<i class="glyphicon glyphicon-repeat"></i> 刷新列表', ['index'], ['class' => 'btn btn-info']),
+            'before'=>Html::a('<i class="glyphicon glyphicon-repeat"></i> 刷新列表', ['/'
+                .$this->context->action->getUniqueId
+            ()],
+                ['class' => 'btn
+            btn-info']),
         ],
         "export"=>false,
     ]);
