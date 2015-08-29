@@ -42,6 +42,8 @@ class WirelessDeviceAlarmSearch extends WirelessDeviceAlarm
     public function search($params)
     {
         $query = WirelessDeviceAlarm::find();
+        
+        $query->andWhere(['not',["deviceId"=>0]]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

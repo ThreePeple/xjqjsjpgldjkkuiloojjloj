@@ -42,6 +42,7 @@ class DeviceAlarmSearch extends DeviceAlarm
     public function search($params)
     {
         $query = DeviceAlarm::find();
+        $query->andWhere(['not',["deviceId"=>0]]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
