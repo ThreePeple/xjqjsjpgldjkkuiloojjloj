@@ -13,8 +13,8 @@ use app\models\DeviceInfo;
             'pjax'=> true,
             "columns" => [
                 [
-                    "attribute"=>"id",
-                    "width" =>"40px"
+                    "attribute" => "ip",
+                    "width" =>"75px"
                 ],
                 [
                     "attribute" => "label",
@@ -22,37 +22,28 @@ use app\models\DeviceInfo;
                             return Html::a($model->label,Url::toRoute(['/input/device/view',"id"=>$model->id]));
                         },
                     "format" => 'raw',
-                    "width" => "10%"
                 ],
                 [
                     "attribute" => "typeName",
-                    "width" => "10%"
                 ],
                 [
                     "label" => '<a href="javascript:void(0)">设备系列</a>',
                     'encodeLabel'=> false,
                     "attribute" => 'series',
                     "value" => "series.name",
-                    "width" => "10%"
                 ],
                 [
                     "label" => '<a href="javascript:void(0)">设备型号</a>',
                     'encodeLabel'=> false,
                     "attribute" => 'model',
                     "value" => 'model.name',
-                    "width" => "10%"
                 ],
-                [
-                    "attribute" => "ip",
-                    "width" =>"75px"
-                ],
+
                 [
                     "attribute" => "mask",
-                    "width" =>"75px"
                 ],
                 [
                     "attribute" => "mac",
-                    "width" =>"100px"
                 ],
                 //"phyCreateTime",
                 [
@@ -79,15 +70,17 @@ use app\models\DeviceInfo;
                         },
                     "format" => "raw"
                 ]*/
+                /*
                 [
                     "class" => '\kartik\grid\ActionColumn',
                     'header' => '',
                     'template' => '{delete}',
                     'width' => '40px'
                 ]
+                */
             ],
             'panel' => [
-                'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-globe"></i> 设备列表</h3>',
+                'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-globe"></i> 接入设备查询</h3>',
                 'type'=>'default',
                 'before'=>Html::a('<i class="glyphicon glyphicon-repeat"></i> 刷新列表', ['index'], ['class' => 'btn btn-info']),
             ],

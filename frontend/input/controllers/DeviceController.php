@@ -11,6 +11,7 @@ namespace app\input\controllers;
 
 use app\models\DeviceInfo;
 use app\models\DeviceInfoSearch;
+use app\models\DeviceIpfilter;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -46,8 +47,10 @@ class DeviceController extends Controller{
      */
     public function actionIndex()
     {
+        $ips = DeviceInfo::find()->where(["categoryId"=>"1001"])->select("ip")->column();
+        $ips = array_merge($ips,DeviceIpfilter::getIdsByType(DeviceIpfilter::TYPE_POLYMER));
         $searchModel = new DeviceInfoSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$ips);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

@@ -55,4 +55,5 @@ class DeviceIpfilter extends \yii\db\ActiveRecord
     public static function getIdsByType($type_id){
         return self::find()->where(["type_id"=>$type_id])->select("ip")->asArray()->column();
     }
+
 }

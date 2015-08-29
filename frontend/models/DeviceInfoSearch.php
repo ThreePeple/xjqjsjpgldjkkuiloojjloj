@@ -40,12 +40,17 @@ class DeviceInfoSearch extends DeviceInfo
      *
      * @param array $params
      *
+     * @param array $ips 过滤IP列表
+     *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params,$ips=[])
     {
         $query = DeviceInfo::find();
         $query->joinWith(['series','model']);
+
+        $query->andWhere(["ip"=>$ips]);
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
