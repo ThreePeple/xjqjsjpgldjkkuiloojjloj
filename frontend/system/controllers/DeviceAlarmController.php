@@ -119,6 +119,14 @@ class DeviceAlarmController extends Controller
     }
 
     /**
+     * 消息设置 告警条件设置   发送人    发送设置
+     */
+    public function actionSmsConfig(){
+
+
+    }
+
+    /**
      * Finds the DeviceAlarm model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id

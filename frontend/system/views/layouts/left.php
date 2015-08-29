@@ -76,7 +76,7 @@ use yii\helpers\Url;
                 </ul>-->
             </li>
             <li class="<?=($this->context->id == 'tip'? "active":'')?>"><a href="<?=Url::toRoute('/system/tip/index')?>"><span class="fa fa-circle-o"></span> 提示信息设置</a>
-            <li class="treeview <?=($this->context->id == 'device-alarm'? "active":'')?>">
+            <li class="treeview <?=(in_array($this->context->id,['device-alarm',"sms"])? "active":'')?>">
                 <a href="#">
                     <i class="fa fa-circle-o"></i> <span>告警管理</span>
                     <i class="fa fa-angle-left pull-right"></i>
@@ -94,16 +94,12 @@ use yii\helpers\Url;
                             "url" => ['/system/device-alarm/wireless-list']
                         ],
                         [
-                            "label" => '<span class="fa fa-circle-o"></span> 条件设置</a> ',
-                            "url" => ["#"]
+                            "label" => '<span class="fa fa-circle-o"></span> 消息设置</a> ',
+                            "url" => ["/system/sms/index"]
                         ],
                         [
                             "label" => '<span class="fa fa-circle-o"></span> 消息模版</a> ',
                             "url" => ["#"]
-                        ],
-                        [
-                            "label" => '<span class="fa fa-circle-o"></span> 消息发送</a> ',
-                            "url" => ['#']
                         ],
                     ]
                 ])
