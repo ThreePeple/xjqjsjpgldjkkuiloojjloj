@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use frontend\models\DeviceModel;
+use frontend\models\DeviceSeries;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;
