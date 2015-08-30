@@ -5,10 +5,6 @@ $this->registerCssFile('/css/style.css');
 $this->registerCssFile('/css/building-editor.css',['depends'=>'frontend\assets\AppAsset']);
 
 $this->registerJsFile('/js/popuppanel.js',['depends'=>'frontend\assets\AppAsset']);
-/*
-$this->registerJsFile('/js/highcharts.js',['depends'=>'frontend\assets\AppAsset']);
-$this->registerJsFile('/js/highcharts-more.js',['depends'=>'frontend\assets\AppAsset']);
-*/
 $this->registerJsFile('/js/echarts/build/dist/echarts-all.js',['depends'=>'frontend\assets\AppAsset']);
 
 
@@ -81,7 +77,7 @@ svg.ZSYFCEditor {
     max-height: 350px;
     min-width: 330px;
     overflow: auto;
-} 
+}
 .marquee {
     position:absolute;
     z-index:1000;
@@ -115,6 +111,7 @@ $js = <<<JS
             reloadData();
         })
         .marquee({
+
             duration: 10000,
             duplicated: false,
             pauseOnHover: true
@@ -122,19 +119,6 @@ $js = <<<JS
     }
     reloadData();
 
-/*
-$('.marquee').marquee({
-    //speed in milliseconds of the marquee
-    duration: 5000,
-    //gap in pixels between the tickers
-    gap: 50,
-    //time in milliseconds before the marquee will start animating
-    delayBeforeStart: 0,
-    //'left' or 'right'
-    direction: 'left',
-    //true or false - should the marquee be duplicated to show an effect of continues flow
-    duplicated: false
-});*/
 JS;
 //$this->registerJs($js);
 ?>
