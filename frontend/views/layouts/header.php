@@ -94,7 +94,7 @@ $menuItems = [
         'active' => $active == 'input'
     ],
     [
-        'label'=> '设备查询',
+        'label'=> '查询统计',
         'url' =>['/stat/device/index'],
         /*
         'items' =>[
