@@ -68,7 +68,6 @@ class SmsController extends Controller
         $model = new SmsConfig();
         if($model->load(Yii::$app->request->post())){
             $model->setAlarmCondition();
-            $model->setReceivers(Yii::$app->request->post('SmsConfig')['receiverSelect']);
             if($model->save()){
                 return $this->redirect(['index']);
             }
@@ -89,7 +88,6 @@ class SmsController extends Controller
 
         if($model->load(Yii::$app->request->post())){
             $model->setAlarmCondition();
-            $model->setReceivers(Yii::$app->request->post('SmsConfig')['receiverSelect']);
             if($model->save()){
                 return $this->redirect(['index']);
             }

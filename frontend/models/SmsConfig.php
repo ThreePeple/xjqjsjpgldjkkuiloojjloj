@@ -37,7 +37,7 @@ class SmsConfig extends \yii\db\ActiveRecord
             [['alarmSet', 'alarmCondition'], 'string'],
             [['smsTemplate_id'], 'integer'],
             [['create_time', 'update_time'], 'safe'],
-            [['receivers', 'smsTemplate_id'], 'required']
+            [['receiverSelect', 'smsTemplate_id'], 'required']
         ];
     }
 
@@ -57,7 +57,7 @@ class SmsConfig extends \yii\db\ActiveRecord
         ];
     }
 
-    public function setReceivers($vals){
+    public function setReceiverSelect($vals){
         $this->receivers = implode(',',$vals);
     }
 
