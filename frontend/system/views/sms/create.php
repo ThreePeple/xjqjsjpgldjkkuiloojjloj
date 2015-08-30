@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model frontend\models\SmsConfig */
 
-$this->title = 'Create Sms Config';
+$this->title = '消息设置';
 $this->params['breadcrumbs'][] = ['label' => 'Sms Configs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

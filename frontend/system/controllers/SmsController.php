@@ -74,18 +74,21 @@ class SmsController extends Controller
         ];
 
         $model = new SmsConfig();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-                "levels" => $levels,
-                "categorys" => $categorys,
-                "users" => $users,
-                "templates" => $templates
-            ]);
+        if($model->load(Yii::$app->request->post())){
+            $model->setAlarmCondition();
+            $model->setReceivers(Yii::$app->request->post('SmsConfig')['receivers']);
+            if($model->save()){
+                return $this->redirect(['index']);
+            }
         }
+
+        return $this->render('create', [
+            'model' => $model,
+            "levels" => $levels,
+            "categorys" => $categorys,
+            "users" => $users,
+            "templates" => $templates
+        ]);
     }
 
     /**

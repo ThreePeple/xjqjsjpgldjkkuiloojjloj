@@ -19,6 +19,13 @@ ConEditor.init({
     categories: $categories,
     levels: $levels
 });
+
+$('#saveConfig').on("click",function(){
+var conditions = ConEditor.getConditions();
+$('#alarmSet').val(JSON.stringify(conditions));
+$('#sms_config_set').submit();
+return false;
+})
 JS;
 
 $this->registerJs($js);
@@ -40,7 +47,8 @@ $this->registerCss($css);
 
 <?php
 $form=ActiveForm::begin([
-    'type' => ActiveForm::TYPE_INLINE
+    'type' => ActiveForm::TYPE_INLINE,
+    'id' => 'sms_config_set'
 
 ]);
 ?>
@@ -66,7 +74,6 @@ $form=ActiveForm::begin([
                 'options' => ['placeholder' => '选择消息模版'],
                 'pluginOptions' => [
                     'allowClear' => true,
-                    'multiple' => true
                 ],
             ])?>
         </div>
@@ -77,7 +84,9 @@ $form=ActiveForm::begin([
 
         </div>
     </div>
-
+    <?=$form->field($model,"alarmSet")->hiddenInput(["id"=>"alarmSet"])?>
+    <?=$form->field($model,"id")->hiddenInput();?>
+    <?=Html::button("保存设置",["class"=>"btn btn-primary","id"=>"saveConfig"])?>
 
 </div>
 <?php

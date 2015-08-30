@@ -157,33 +157,23 @@
     }
 
     /**
-     * 添加一个新条件
-     * @constructor
-     */
-    function AddItem(){
-
-    }
-
-    /**
-     * 删除一个新条件
-     * @param id
-     * @constructor
-     */
-    function DelItem(id){
-
-    }
-
-    /**
      * 获取条件结果
      */
-    function getCondtions(){
-
+    function getConditions(){
+        var items = $('#'+configs["containerId"]).find('.form-group');
+        var results = [];
+        $.each(items,function(k,item){
+            var obj = {};
+            obj['contain'] = $(item).find('.condition-contain').val();
+            obj['key'] = $(item).find('.condition-key').val();
+            obj['val'] = $(item).find('.condition-val').val();
+            results.push(obj);
+        })
+        return results;
     }
 
     exportFun('init',init);
-    exportFun('AddItem',AddItem);
-    exportFun('DelItem',DelItem);
-    exportFun('getCondtions',getCondtions);
+    exportFun('getConditions',getConditions);
 
     window[ns] = ConditionEditor
 })('ConEditor');
