@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\db\Query;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "wireless_device_link".
@@ -158,5 +159,75 @@ class WirelessDeviceLink extends \yii\db\ActiveRecord
     public function getLinkspeed(){
         return WirelessDeviceTask::find()->where(["devId"=>$this->rightDevice,"taskId"=>1])->orderBy("instId desc")->select
         ("dataVal")->asArray()->scalar();
+    }
+
+    /**
+     * 获取Echarts 和弦图数据
+     */
+    public function getEData($id1,$id2){
+        $links = [];
+        $nodes = WirelessDeviceInfo::find()->where(["id"=>[$id1,$id2]])->select(["id","name"=>"label"])->asArray()
+            ->all();
+
+        $filterIds = DeviceIpfilter::find()->where(["type_id"=>DeviceIpfilter::TYPE_WIRELESS])->select("ip")->column();
+
+        $lefts = (new Query())
+            ->from('wireless_device_link a')
+            ->leftJoin("wireless_device_info b","a.leftDevice = b.id")
+            ->where(['and',["a.rightDevice"=>[$id1,$id2],"b.ip"=>$filterIds],["not",["a.leftDevice"=>[$id1,$id2]]]])
+            ->select(["leftDevice","rightDevice","name"=>"b.ip","id"=>"b.id"])
+            ->all();
+
+        $rows = (new Query())
+            ->from('wireless_device_link a')
+            ->leftJoin("wireless_device_info b","a.rightDevice = b.id")
+            ->where(["and",["a.leftDevice"=>[$id1,$id2],"b.ip"=>$filterIds],["not",["a.rightDevice"=>[$id1,$id2]]]])
+            ->select(["leftDevice","rightDevice","name"=>"b.ip","id"=>"b.id"])
+            ->all();
+
+        $rows = array_merge($lefts,$rows);
+
+        $tmp = ArrayHelper::map($nodes,"id","name");
+
+        foreach($rows as $row){
+            $nodes[] = [
+                "id" => $row["id"],
+                "name" => $row["name"],
+            ];
+            if(isset($tmp[$row["leftDevice"]])){
+                $source = $tmp[$row["leftDevice"]];
+                $target = $row["name"];
+            }else{
+                $source = $tmp[$row["rightDevice"]];
+                $target = $row["name"];
+            }
+
+            $links[] = [
+                'source' => $source,
+                'target' => $target,
+                'weight' => 1,
+                'itemStyle' => [
+                    'normal' => [
+                        'color' => 'green',
+                        'width' => 2,
+                    ]
+                ]
+            ];
+            $links[] = [
+                'source' => $target,
+                'target' => $source,
+                'weight' => 0.9,
+                'itemStyle' => [
+                    'normal' => [
+                        'color' => 'green',
+                        'width' => 2
+                    ]
+                ]
+            ];
+        }
+        return [
+            "nodes" => $nodes,
+            "links" => $links
+        ];
     }
 }

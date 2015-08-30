@@ -6,6 +6,9 @@
  * Time: 12:37
  */
 
+$this->registerJsFile('/js/echarts/build/dist/echarts-all.js',['depends'=>'frontend\assets\AppAsset']);
+/*
+
 $this->registerCssFile("/css/popuppanel.css",["depends"=> 'frontend\assets\AppAsset']);
 $this->registerJsFile("/js/popuppanel.js",["depends"=> 'frontend\assets\AppAsset']);
 
@@ -107,5 +110,79 @@ $this->registerJs($js);
             </filter>
         </defs>
     </svg>
+</div>
+
+*/
+
+$css = <<<CSS
+html,body{
+	background-color: #252525;
+}
+CSS;
+$this->registerCss($css);
+$js = <<<JS
+
+    $.ajax({
+        url:'/topology/dashboard/ajax-wireless-ehub',
+        type:'post',
+        data: {'id1':3809,"id2":3810},
+        dataType:'json',
+        success:function(data){
+            if(data.status==1){
+                renderChart(data.data.nodes,data.data.links)
+            }
+        }
+    })
+JS;
+$this->registerJs($js);
+
+?>
+<script>
+    function renderChart(nodes,links){
+
+        var myChart = echarts.init(document.getElementById("wireless_hub"));
+        var option = {
+            title : {
+                text: '接入网络拓扑图',
+                x:'center',
+                y:'top'
+            },
+            toolbox: false,
+            legend: false,
+            series : [
+                {
+                    name: '',
+                    type:'chord',
+                    sort : 'ascending',
+                    sortSub : 'descending',
+                    ribbonType: false,
+                    radius: '80%',
+                    itemStyle : {
+                        normal : {
+                            label : {
+                                rotate : true,
+                                textStyle:{
+                                    color: '#fff'
+                                }
+                            },
+                            color: 'green'
+                        }
+                    },
+
+                    minRadius: 7,
+                    maxRadius: 20,
+                    // 使用 nodes links 表达和弦图
+                    nodes: nodes,
+                    links: links
+                }
+            ]
+        };
+
+        myChart.setOption(option)
+        window.onresize = myChart.resize();
+    }
+</script>
+<div class="row">
+    <div class="col-md-12" style="margin-top: 60px; height: 950px;" id="wireless_hub"></div>
 </div>
 

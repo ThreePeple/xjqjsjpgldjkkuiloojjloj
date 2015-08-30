@@ -258,6 +258,15 @@ abc;
             "data" => $data
         ]);
     }
+    public function actionAjaxWirelessEhub(){
+        $id1 = Yii::$app->request->post("id1");
+        $id2 = Yii::$app->request->post("id2");
+        $data = WirelessDeviceLink::getEData($id1,$id2);
+        return Json::encode([
+            'status'=> 1,
+            "data" => $data
+        ]);
+    }
     /**
      * AC / AP
      */
