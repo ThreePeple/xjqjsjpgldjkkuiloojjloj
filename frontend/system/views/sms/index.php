@@ -27,8 +27,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 "value" => 'users'
             ],
             [
-                'class' => 'yii\grid\ActionColumn',
-
+                'class' => 'kartik\grid\ActionColumn',
+                'template' => '{update}&nbsp;&nbsp;{delete}',
+                'header' => ''
             ],
         ],
         'panel' => [

@@ -18,13 +18,50 @@
     //下拉框模版
     var itemTemplate = '<select name="{NAME}" id="{ID}" class="{CLASS}">{SELECTED}</select>';
 
-    var renderItem = function(){
+    var init = function(c){
+        configs = $.extend(configs,c);
+        renderButton();
+
+        var sets = configs["sets"];
+        var length = sets.length;
+        for(var i=0; i<length;i++){
+            renderItem(sets[i]);
+        }
+        if(length ==0){
+            renderItem();
+        }
+        $(".condition-contain").select2({
+            data: configs["relations"],
+            placeholder: "请选择"
+        });
+        $(".condition-key").select2({
+            data: configs["keys"],
+            placeholder: "请选择"
+        });
+        var valSelects = $(".condition-val");
+        $.each(valSelects,function(k,item){
+            if($(item).is("select")){
+                $(item).select2({
+                    data: configs["categories"],
+                    placeholder: "请选择"
+                })
+            }
+        })
+        /*
+        $(".condition-val").select2({
+            data: configs["categories"],
+            placeholder: "请选择"
+        });*/
+        bindEvent();
+    }
+
+    var renderItem = function(data){
         itemIndex ++;
         var html = [];
         html.push('<div class="form-group" _index="'+itemIndex+'">');
-        html.push(renderSelect("condition_contain",'','condition-contain'));
-        html.push(renderSelect("condition_key",'','condition-key'));   //LEVEL | CATEGORY
-        html.push(renderSelect("condition_val",'','condition-val'));
+        html.push(renderSelect("condition_contain",data,'condition-contain'));
+        html.push(renderSelect("condition_key",data,'condition-key'));   //LEVEL | CATEGORY
+        html.push(renderSelect("condition_val",data,'condition-val'));
         //删除按钮或图标
         if(itemIndex!=1){
             html.push('<span class="glyphicon glyphicon-trash delete" aria-hidden="true"></span>')
@@ -94,41 +131,22 @@
             var index = renderItem();
             $item = $('.form-group[_index='+index+']');
             $item.find(".condition-contain").select2({
-                data: configs["relations"]
+                data: configs["relations"],
+                placeholder: "请选择"
             });
             $item.find(".condition-key").select2({
-                data: configs["keys"]
+                data: configs["keys"],
+                placeholder: "请选择"
             });
             $item.find(".condition-val").select2({
-                data: configs["categories"]
+                data: configs["categories"],
+                placeholder: "请选择"
             });
             $item.find('.delete').on('click',function(){
                 $(this).parent(".form-group").remove();
             })
             $item.find(".condition-key").on('change',changeHandle)
         });
-    }
-
-    var init = function(c){
-        configs = $.extend(configs,c);
-        renderButton();
-
-        var sets = configs["sets"];
-        var length = sets.length;
-        for(var i=0; i<length;i++){
-            renderItem();
-        }
-        renderItem();
-        $(".condition-contain").select2({
-            data: configs["relations"]
-        });
-        $(".condition-key").select2({
-            data: configs["keys"]
-        });
-        $(".condition-val").select2({
-            data: configs["categories"]
-        });
-        bindEvent();
     }
 
     var renderSelect = function(name,selected,className,id){
@@ -138,15 +156,50 @@
         if(!className){
             className = 'condition-selected';
         }
+        var tpl = itemTemplate;
         if(selected){
-            itemTemplate.replace(/\{SELECTED\}/,'<option value="'+selected[0]+'" selected>'+selected[1]+'</option>')
+            var text = '';
+            var val = '';
+            switch(name){
+                case 'condition_contain':
+                    val = selected["contain"];
+                    text = getTextByVal(configs["relations"],val);
+                    break;
+                case 'condition_key':
+                    val = selected["key"];
+                    text = getTextByVal(configs["keys"],val);
+                    break;
+                case 'condition_val':
+                    if(selected["key"] ==1){
+                        val = selected["val"];
+                        text = getTextByVal(configs["categories"],val);
+                    }else if(selected["key"] == 2){
+                        val = selected["val"];
+                        text = getTextByVal(configs["levels"],val);
+                    }else{
+                        return  '<input type="text" class="condition-val form-control" value="'+selected['val']+'" style="width:200px;">';
+                    }
+            }
+
+            tpl = tpl.replace(/\{SELECTED\}/,'<option value="'+val+'" selected="selected" > '+text+' </option>')
         }else{
-            itemTemplate.replace(/\{SELECTED\}/,' ')
+            tpl = tpl.replace(/\{SELECTED\}/,' ')
         }
-        return itemTemplate.replace(/\{NAME\}/,name)
+        return tpl.replace(/\{NAME\}/,name)
             .replace(/\{ID\}/,id)
             .replace(/\{CLASS\}/,className);
 
+    }
+
+    var getTextByVal = function(data,val){
+        var text= '';
+        $.each(data,function(k,item){
+            if(item["id"] == val){
+                text = item["text"];
+                return false;
+            }
+        })
+        return text;
     }
     var getUniqueId = function(){
         num++;

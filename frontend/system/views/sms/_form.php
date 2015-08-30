@@ -13,11 +13,14 @@ $levels = json_encode($levels);
 $this->registerCssFile('/js/select2/css/select2.min.css',["depends"=>'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/select2/js/select2.min.js',["depends"=>'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/sms_condition.js',["depends"=>'frontend\assets\AppAsset']);
+
+$sets = empty($model->alarmSet)? json_encode([]) : $model->alarmSet;
 $js = <<<JS
 ConEditor.init({
     containerId:'condition',
     categories: $categories,
-    levels: $levels
+    levels: $levels,
+    sets: $sets
 });
 
 $('#saveConfig').on("click",function(){
@@ -56,8 +59,9 @@ $form=ActiveForm::begin([
     <div class="panel panel-default">
         <div class="panel-heading">接收用户</div>
         <div class="panel-body">
-            <?=$form->field($model,"receivers")->widget(Select2::className(),[
+            <?=$form->field($model,"receiverSelect")->widget(Select2::className(),[
                 "data" => $users,
+
                 'options' => ['placeholder' => '选择接收用户'],
                 'pluginOptions' => [
                     'allowClear' => true,

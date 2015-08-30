@@ -135,4 +135,8 @@ class SmsConfig extends \yii\db\ActiveRecord
     public function getTemplate(){
         return '默认模版';
     }
+
+    public function getReceiverSelect(){
+        return explode(',',$this->receivers);
+    }
 }

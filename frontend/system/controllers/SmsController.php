@@ -65,30 +65,16 @@ class SmsController extends Controller
      */
     public function actionCreate()
     {
-        $levels =AlarmLevel::find()->select(["id","text"=>"desc"])->asArray()->all();
-        $categorys =AlarmCategory::find()->select(["id","text"=>"subDesc"])->asArray()->all();
-        $users = ArrayHelper::map(User::find()->select(["id","username"])->all(),'id','username');
-        //TODO 从数据库读取模版
-        $templates = [
-            "1"=>'默认模版'
-        ];
-
         $model = new SmsConfig();
         if($model->load(Yii::$app->request->post())){
             $model->setAlarmCondition();
-            $model->setReceivers(Yii::$app->request->post('SmsConfig')['receivers']);
+            $model->setReceivers(Yii::$app->request->post('SmsConfig')['receiverSelect']);
             if($model->save()){
                 return $this->redirect(['index']);
             }
         }
-
-        return $this->render('create', [
-            'model' => $model,
-            "levels" => $levels,
-            "categorys" => $categorys,
-            "users" => $users,
-            "templates" => $templates
-        ]);
+        $data = array_merge(['model'=>$model],$this->getViewData());
+        return $this->render('create', $data);
     }
 
     /**
@@ -101,13 +87,33 @@ class SmsController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if($model->load(Yii::$app->request->post())){
+            $model->setAlarmCondition();
+            $model->setReceivers(Yii::$app->request->post('SmsConfig')['receiverSelect']);
+            if($model->save()){
+                return $this->redirect(['index']);
+            }
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            $data = array_merge(['model'=>$model],$this->getViewData());
+
+            return $this->render('update',$data);
         }
+    }
+
+    private function getViewData(){
+        $levels =AlarmLevel::find()->select(["id","text"=>"desc"])->asArray()->all();
+        $categorys =AlarmCategory::find()->select(["id","text"=>"subDesc"])->asArray()->all();
+        $users = ArrayHelper::map(User::find()->select(["id","username"])->all(),'id','username');
+        //TODO 从数据库读取模版
+        $templates = [
+            "1"=>'默认模版'
+        ];
+        return [
+            "levels" => $levels,
+            "categorys" => $categorys,
+            "users" => $users,
+            "templates" => $templates
+        ];
     }
 
     /**
