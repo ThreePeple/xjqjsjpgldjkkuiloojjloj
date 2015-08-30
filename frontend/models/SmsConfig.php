@@ -107,13 +107,13 @@ class SmsConfig extends \yii\db\ActiveRecord
             $tmp = '';
             switch ($item["key"]) {
                 case 1:
-                    $tmp = AlarmCategory::find()->where(["id"=>$item["val"]])->select('subDesc')->scalar();
+                    $tmp = '告警类型:'.AlarmCategory::find()->where(["id"=>$item["val"]])->select('subDesc')->scalar();
                     break;
                 case 2:
-                    $tmp = AlarmLevel::find()->where(["id"=>$item["val"]])->select('desc')->scalar();
+                    $tmp = '告警等级:'.AlarmLevel::find()->where(["id"=>$item["val"]])->select('desc')->scalar();
                     break;
                 case 3:
-                    $tmp = '关键字：'.$item['val'];
+                    $tmp = '关键字:'.$item['val'];
                     break;
                 default:
                     continue;
@@ -124,7 +124,7 @@ class SmsConfig extends \yii\db\ActiveRecord
                 $conditions[] = ' 不包含(' . $tmp . ')';
             }
         }
-        return implode(';',$conditions);
+        return implode(';  ',$conditions);
     }
 
     public function getUsers(){
