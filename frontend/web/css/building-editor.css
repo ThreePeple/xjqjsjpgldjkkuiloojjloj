@@ -14,22 +14,18 @@
 	padding: 0;
 	background-color: #353535;
 	border: 1px solid #a0a0a0;
-	width: 1366px;
-	height: 768px;
+	width: 1280px;
+	height: 940px;
 	position: relative;
 	box-sizing: border-box
 }
-.wlan-editor-container{
-	width: 1440px;
-	height: 1200px;
+.wlan-editor-container{ 
 }
-.wireless-editor-container{
-  width: 1521px;
-  height: 773px;
+.wireless-editor-container{ 
 }
 
 svg.ZSYFCEditor {
-	background: url(../images/building.png);
+	background: url(../images/building.png) right -896px;
 	border: none;
 	position: absolute;
 	left: 0;
@@ -39,10 +35,10 @@ svg.ZSYFCEditor .element{
     stroke: #fff;
 }
 .wlan-editor-container svg.ZSYFCEditor {
-	background: url(../images/wlan_bg.png); 
+	background: url(../images/wlan_bg.png) right bottom; 
 }
 .wireless-editor-container svg.ZSYFCEditor {
-	background: url(../images/wireless_bg.png); 
+	background: url(../images/wireless_bg.png) right bottom;  
 }
 .buidling-editor-container text.title {
 	fill: #fff;
