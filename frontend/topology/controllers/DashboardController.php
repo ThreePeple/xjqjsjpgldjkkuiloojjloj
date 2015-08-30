@@ -269,7 +269,7 @@ abc;
         $polymers = [
             [
                 "id" => "p1",
-                "label" => '192.168.0.4',
+                "label" => 'WLAN_AC_A',
                 "children" =>[]
             ]
         ];
@@ -284,7 +284,7 @@ abc;
         */
         $rows = WirelessDeviceAp::find()
             ->where(["acIpAddress"=>'192.168.0.4',"area"=>$area])
-            ->select(["label"=>"ipAddress","id"=>"CONCAT('id',id)","group"=>"CONCAT('group',side,':',CONCAT('id',id))","status"=>"status","device_id"=>"id","side"=>"side"])
+            ->select(["label"=>"label","id"=>"CONCAT('id',id)","group"=>"CONCAT('group',side,':',CONCAT('id',id))","status"=>"status","device_id"=>"id","side"=>"side"])
             ->orderBy("ipAddress asc")
             ->asArray()->all();
         $groups = $links = [];
