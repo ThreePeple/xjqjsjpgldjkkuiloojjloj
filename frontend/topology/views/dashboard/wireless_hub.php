@@ -7,11 +7,14 @@
  */
 
 $this->registerJsFile('/js/echarts/build/dist/echarts-all.js',['depends'=>'frontend\assets\AppAsset']);
-/*
+
 
 $this->registerCssFile("/css/popuppanel.css",["depends"=> 'frontend\assets\AppAsset']);
 $this->registerJsFile("/js/popuppanel.js",["depends"=> 'frontend\assets\AppAsset']);
 
+$this->registerJsFile('/js/wireless_ploymer.js',["depends"=> 'frontend\assets\AppAsset']);
+
+/*
 $this->registerJsFile('/js/d3.min.js',["depends"=> 'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/ZSYPolymerChart.js',["depends"=> 'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/wireless_ploymer.js',["depends"=> 'frontend\assets\AppAsset']);
@@ -138,52 +141,9 @@ $this->registerJs($js);
 
 ?>
 <script>
-    var ecConfig = require('echarts/config');
-    
-    function renderChart(nodes,links){
 
-        var myChart = echarts.init(document.getElementById("wireless_hub"));
-        var option = {
-            title : {
-                text: '接入网络拓扑图',
-                x:'center',
-                y:'top'
-            },
-            toolbox: false,
-            legend: false,
-            series : [
-                {
-                    name: '',
-                    type:'chord',
-                    sort : 'ascending',
-                    sortSub : 'descending',
-                    ribbonType: false,
-                    radius: '80%',
-                    itemStyle : {
-                        normal : {
-                            label : {
-                                rotate : true,
-                                textStyle:{
-                                    color: '#fff'
-                                }
-                            },
-                            color: 'green'
-                        }
-                    },
 
-                    minRadius: 7,
-                    maxRadius: 20,
-                    // 使用 nodes links 表达和弦图
-                    nodes: nodes,
-                    links: links
-                }
-            ]
-        };
 
-        myChart.setOption(option)
-        myChart.on()
-        window.onresize = myChart.resize();
-    }
 </script>
 <div class="row">
     <div class="col-md-12" style="margin-top: 60px; height: 950px;" id="wireless_hub"></div>
