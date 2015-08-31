@@ -10,7 +10,7 @@ $js=<<<JS
         data,
         {
             svg: d3.select("svg.ZSYFCEditor"),
-            width: 1521,
+            width: 1280,
             height: 773
         } 
     );

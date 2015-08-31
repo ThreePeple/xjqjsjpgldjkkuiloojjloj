@@ -178,7 +178,61 @@
             }
         }).init().show(x, y);
     };    
+   var _showPathDetail = function(d, e, contentHtmlTpl) {  
+        var $tg = $(e.target); 
 
+        var offset = $tg.offset();
+        var x = offset.left,
+            y = offset.top;
+
+        var contentTpl = '<div class="popupBody">' +
+            '<div class="popup_close" title="关闭">&nbsp;</div>' +
+            '<div class="popup_content" >{content}</div>' +
+            '</div>';
+
+        var offsetX = 90,
+            offsetY = 65;
+        
+        var className = "nodeDetail";
+
+        var _parseData = function(data) {
+            if (data) {
+                for (var p in data) {
+                    contentHtmlTpl = contentHtmlTpl.replace('{' + p + '}', data[p]);
+                }
+                return contentHtmlTpl;
+            }
+            return "<span class='none'>No data.</span>";
+        };
+        var _updateContent = function(html) {
+            return contentTpl.replace("{content}", html);
+        };
+        var popPanel = new PopupPanel({
+            className: 'modalessDialog' + (className ? " " + className : ""),
+            offsetX: offsetX,
+            offsetY: offsetY,
+            destroy: true,
+            animate: false,
+            closeHandler: function() {},
+            content: contentTpl,
+            initInterface: function($content) {
+                var inst = this;
+                $content.click(function(e) {
+                    if ($(e.target).is('div.popup_close'))
+                        inst.close(true);
+                });
+
+                $content.find("div.popup_content").html(_updateContent("loading..."));  
+                $.get(detailUrl, {
+                    from: d["from"],
+                    to: d["to"]
+                }, function(j) {
+                    $content.find("div.popup_content").html(j);
+                    popPanel.refresh();  
+                }, 'html');
+            }
+        }).init().show(x, y);
+    }; 
     var _updateImage = function (shape, shapeType, s){  
         if( s == '1' ){
            shape.attr("href", ZSYFCEditorConfig["shape"][shapeType]["imgSrc"] );
@@ -229,7 +283,7 @@
             {},
             {
                 svg: d3.select("svg.ZSYFCEditor"),
-                width: 1521,
+                width: 1280,
                 height: 773
             } 
         );
@@ -242,6 +296,12 @@
                 PopupPanel.clearAll();
                 _showNodeDetail(data, d3.event );
             });   
+            
+            d3.selectAll("path.node_link")
+            .on("click", function(data) {
+                PopupPanel.clearAll();
+                _showPathDetail(data, d3.event);
+            });  
 
             // Update switch status.
             var data = ZSYFCEditor.getData();
@@ -255,7 +315,7 @@
             
         } ); 
 
-        _mockMainLinkPath();
+        // _mockMainLinkPath();
 
         var pathIdPrefix = "ZSYFCEditor_Path";
         var _updateLinksStatus = function (links){

@@ -23,6 +23,9 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 
 ?>
 <style>
+	body{
+		background-color: #252525;
+	}
 	.wireless-network{
 		position: relative;
 	}
@@ -61,8 +64,12 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 	.wireless-network a[data-area-id="f"]{
   -webkit-transform: translate(1000px, 211px)rotate(27deg);
 	}
-	svg.ZSYFCEditor {
-	 	background: url(/images/wireless_bg_index.png) !important;
+	svg.ZSYFCEditor { 
+		position: static !important;
+		left: auto !important;
+		top: auto !important;
+		margin:50px auto 0;
+		display: block;
 	}
 	.buidling-editor-container text.title{
 		display: none;
@@ -144,7 +151,7 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
     	<a data-area-id="e" title="D区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>4,'type'=>ViewTemplate::TYPE_WIFI])?>"></a>
     	<a data-area-id="f" title="E区" href="<?=Url::toRoute(['/topology/dashboard/device-area','area'=>5,'type'=>ViewTemplate::TYPE_WIFI])?>"></a>
   -->    
-        <svg class="ZSYFCEditor" oncontextmenu="return false;" style="  background: url(/images/wireless_bg.png) no-repeat; margin-top: 50px;">
+        <svg class="ZSYFCEditor" oncontextmenu="return false;">
             <defs> 
             </defs>
             <g class="svg-container"></g>
