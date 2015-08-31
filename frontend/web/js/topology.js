@@ -343,7 +343,7 @@
                 dataType:'json',
                 success:function(res){
                     loadDeviceChart(res.device.data,res.device.markData,res.device.categories);
-                    loadAlarmTypeChart(res.alarmType.data,res.alarmType.categories,res.alarmType.colors);
+                    //loadAlarmTypeChart(res.alarmType.data,res.alarmType.categories,res.alarmType.colors);
                     loadAlarmLevelPie(res.alarmLevel.data,res.alarmLevel.categories,res.alarmLevel.colors);
                     setTimeout(reloadChart,30000);
                 }
