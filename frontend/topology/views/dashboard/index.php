@@ -102,20 +102,29 @@ $js = <<<JS
             dataType: 'html',
             success:function(htm){
                 mq.html(htm);
-                $('#marquee').marquee('update')
+                marquee()
             }
         })
     }
-    mq.marquee({
-        aftershow:function(ul,li){
-            var count = $(ul).find('li').length;
-            var index = $("li",ul).index(li);
-            //console.log(count,index);
-            if(count == (index+1)){
-                reloadData();
-            }
+    var counter = 0;
+    function marquee(){
+        if(counter){
+            $('#marquee').marquee('update')
+        }else{
+            mq.marquee({
+                aftershow:function(ul,li){
+                    var count = $(ul).find('li').length;
+                    var index = $("li",ul).index(li);
+                    //console.log(count,index);
+                    if(count == (index+1)){
+                        reloadData();
+                    }
+                },
+                pauseOnHover:true
+            });
         }
-    });
+    }
+reloadData();
 JS;
 $this->registerJs($js);
 ?>
@@ -148,9 +157,6 @@ $this->registerJs($js);
                 <div class="box-body" id="itemType" style="width:300px; height: 200px;">
                     <ul class="marquee" id="marquee" style="width: 240px;height:100px;border:0;background-color:
                     transparent;">
-                        <li>Lorem ipsum dolor sit amet.</li>
-                        <li>Fusce tincidunt adipiscing,massa.</li>
-                        <li>Mauris ullamcorper euismod leo.</li>
                     </ul>
                 </div>
             </div>
