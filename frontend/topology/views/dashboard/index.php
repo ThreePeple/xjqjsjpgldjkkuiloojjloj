@@ -94,35 +94,28 @@ $this->registerCss($css);
 
 $js = <<<JS
 
-    var \$mq = $('.marquee');
+    var mq = $('#marquee');
     function reloadData(){
         $.ajax({
             url:'/topology/dashboard/get-marquee-data',
             type:'get',
             dataType: 'html',
             success:function(htm){
-                \$mq.html(htm);
-//                \$mq.marquee('destroy')
-                $("#marquee").marquee();
+                mq.html(htm);
+                $('#marquee').marquee('update')
             }
         })
     }
-    var counter = 0;
-    function marquee(){
-        \$mq.bind('finished', function(){
-            reloadData();
-        })
-        .marquee({
-            duration: 5000,
-            duplicated: true,
-            gap: 1000,
-            pauseOnHover: true
-        })
-    }
-    reloadData();
-
-
-
+    mq.marquee({
+        aftershow:function(ul,li){
+            var count = $(ul).find('li').length;
+            var index = $("li",ul).index(li);
+            //console.log(count,index);
+            if(count == (index+1)){
+                reloadData();
+            }
+        }
+    });
 JS;
 $this->registerJs($js);
 ?>
