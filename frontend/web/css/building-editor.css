@@ -25,7 +25,7 @@
 }
 
 svg.ZSYFCEditor {
-	background: url(../images/building.png) right -896px;
+	background: url(../images/building.png) no-repeat right -896px;
 	border: none;
 	position: absolute;
 	left: 0;
@@ -35,10 +35,10 @@ svg.ZSYFCEditor .element{
     stroke: #fff;
 }
 .wlan-editor-container svg.ZSYFCEditor {
-	background: url(../images/wlan_bg.png) right bottom; 
+	background: url(../images/wlan_bg.png) no-repeat right bottom; 
 }
 .wireless-editor-container svg.ZSYFCEditor {
-	background: url(../images/wireless_bg.png) right bottom;  
+	background: url(../images/wireless_bg.png) no-repeat right bottom;  
 }
 .buidling-editor-container text.title {
 	fill: #fff;
