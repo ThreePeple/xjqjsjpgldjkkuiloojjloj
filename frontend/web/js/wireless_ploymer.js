@@ -136,3 +136,123 @@ function readyChartCallback(__data){
         __updateStatus(__data);
     }
 }
+
+
+/* ---------ECHART-------**/
+function renderChart(nodes,links){
+    var myChart = echarts.init(document.getElementById("wireless_hub"));
+    var option = {
+        title : {
+            text: '接入网络拓扑图',
+            x:'center',
+            y:'top'
+        },
+        toolbox: false,
+        legend: false,
+        series : [
+            {
+                name: '',
+                type:'chord',
+                sort : 'ascending',
+                sortSub : 'descending',
+                ribbonType: false,
+                radius: '80%',
+                itemStyle : {
+                    normal : {
+                        label : {
+                            rotate : true,
+                            textStyle:{
+                                color: '#fff'
+                            }
+                        },
+                        color: 'green'
+                    }
+                },
+
+                minRadius: 7,
+                maxRadius: 20,
+                // 使用 nodes links 表达和弦图
+                nodes: nodes,
+                links: links
+            }
+        ]
+    };
+
+    myChart.setOption(option)
+    myChart.on(echarts.config.EVENT.CLICK,clickHandler)
+
+    //myChart.on(echarts.config.EVENT.HOVER,hoverHandler)
+
+    window.onresize = myChart.resize();
+}
+function hoverHandler(params){
+
+}
+function clickHandler(params){
+    console.log(params);
+    PopupPanel.clearAll();
+    showDetail(params, params.event, "");
+}
+
+var showDetail = function(d, e, contentHtmlTpl) {
+
+    var x = e.pageX,
+        y = e.pageY;
+
+    var contentTpl = '<div class="popupBody">' +
+        '<div class="popup_close" title="关闭">&nbsp;</div>' +
+        '<div class="popup_content" >{content}</div>' +
+        '</div>';
+
+    var offsetX = 10,
+        offsetY = 10;
+
+    var className = "nodeDetail";
+
+    var _parseData = function(data) {
+        if (data) {
+            for (var p in data) {
+                contentHtmlTpl = contentHtmlTpl.replace('{' + p + '}', data[p]);
+            }
+            return contentHtmlTpl;
+        }
+        return "<span class='none'>No data.</span>";
+    };
+    var _updateContent = function(html) {
+        return contentTpl.replace("{content}", html);
+    };
+    var popPanel = new PopupPanel({
+        className: 'modalessDialog' + (className ? " " + className : ""),
+        offsetX: offsetX,
+        offsetY: offsetY,
+        destroy: true,
+        animate: false,
+        closeHandler: function() {},
+        content: contentTpl,
+        initInterface: function($content) {
+            var inst = this;
+            $content.click(function(e) {
+                if ($(e.target).is('div.popup_close'))
+                    inst.close(true);
+            });
+
+            $content.find("div.popup_content").html(_updateContent("loading..."));
+            // nodeDetail_.json : fail data, nodeDetail.json: ok data.
+            var id  = d["data"]["id"], device_id = d["data"]["id"];
+            $.get(__detailUrl, {
+                id: device_id,
+                device_id: device_id
+            }, function(j) {
+                $content.find("div.popup_content").html(j);
+                popPanel.refresh();
+                return;
+                if (j.result == 1) {
+                    $content.find("div.popup_content").html(_updateContent(_parseData(j.data)));
+                } else {
+                    $content.find("div.popup_content").html(_updateContent(j.msg));
+                }
+                popPanel.refresh();
+            }, 'html');
+        }
+    }).init().show(x, y);
+};

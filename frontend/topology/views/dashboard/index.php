@@ -94,35 +94,37 @@ $this->registerCss($css);
 
 $js = <<<JS
 
-    var \$mq = $('.marquee');
+    var mq = $('#marquee');
     function reloadData(){
         $.ajax({
             url:'/topology/dashboard/get-marquee-data',
             type:'get',
             dataType: 'html',
             success:function(htm){
-                \$mq.html(htm);
-//                \$mq.marquee('destroy')
-                $("#marquee").marquee();
+                mq.html(htm);
+                marquee()
             }
         })
     }
     var counter = 0;
     function marquee(){
-        \$mq.bind('finished', function(){
-            reloadData();
-        })
-        .marquee({
-            duration: 5000,
-            duplicated: true,
-            gap: 1000,
-            pauseOnHover: true
-        })
+        if(counter){
+            $('#marquee').marquee('update')
+        }else{
+            mq.marquee({
+                aftershow:function(ul,li){
+                    var count = $(ul).find('li').length;
+                    var index = $("li",ul).index(li);
+                    //console.log(count,index);
+                    if(count == (index+1)){
+                        reloadData();
+                    }
+                },
+                pauseOnHover:true
+            });
+        }
     }
-    reloadData();
-
-
-
+reloadData();
 JS;
 $this->registerJs($js);
 ?>
@@ -155,9 +157,6 @@ $this->registerJs($js);
                 <div class="box-body" id="itemType" style="width:300px; height: 200px;">
                     <ul class="marquee" id="marquee" style="width: 240px;height:100px;border:0;background-color:
                     transparent;">
-                        <li>Lorem ipsum dolor sit amet.</li>
-                        <li>Fusce tincidunt adipiscing,massa.</li>
-                        <li>Mauris ullamcorper euismod leo.</li>
                     </ul>
                 </div>
             </div>
