@@ -5,7 +5,7 @@
    
     var detailUrl = '/stat/wireless/ajax-device-tip'; 
 
-    var mainLinkDetailUrl = '/stat/wireless/ajax-link-tip';
+    //var mainLinkDetailUrl = '/stat/wireless/ajax-link-tip';
 
     var alarmImageMap = { 
         "ac": { 
@@ -120,7 +120,8 @@
                 $content.find("div.popup_content").html(_updateContent("loading..."));  
                 var id  = ZSYFCEditor.getData()[ d[ ZSYFCEditorConfig['ID_KEY'] ] ]["data"]["id"];
                 $.get(detailUrl, {
-                    id: id
+                    id: id,
+                    fromWhere: "node",
                 }, function(j) {
                     $content.find("div.popup_content").html(j);
                     popPanel.refresh();  
@@ -224,6 +225,7 @@
 
                 $content.find("div.popup_content").html(_updateContent("loading..."));  
                 $.get(detailUrl, {
+                    fromWhere: "path",
                     from: d["from"],
                     to: d["to"]
                 }, function(j) {
@@ -290,6 +292,7 @@
 
 
         ZSYFCEditor.updateCallback( function(){
+            var data = ZSYFCEditor.getData();
 
             d3.selectAll(".element") 
             .on("click", function(data) {
@@ -298,13 +301,16 @@
             });   
             
             d3.selectAll("path.node_link")
-            .on("click", function(data) {
+            .on("click", function(d) {
                 PopupPanel.clearAll();
-                _showPathDetail(data, d3.event);
+                var _d = {};
+                _d["from"] = data[ d["from"] ]["data"]["id"];
+                _d["to"] = data[ d["to"] ]["data"]["id"];
+
+                _showPathDetail(_d, d3.event);
             });  
 
             // Update switch status.
-            var data = ZSYFCEditor.getData();
             var keys = Object.keys( data ), s, imgSrc; 
             keys.forEach( function ( id ){
                 ZSYFCEditor.callFN("shape", id, function (){
