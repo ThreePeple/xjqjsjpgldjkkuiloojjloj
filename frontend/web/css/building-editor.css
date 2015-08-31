@@ -17,11 +17,18 @@
 	width: 1280px;
 	height: 940px;
 	position: relative;
-	box-sizing: border-box
+	box-sizing: border-box;
 }
-.wlan-editor-container{ 
+.buidling-editor-container.editor-grid-helper{
+	height: 934px;
+	background: url(../images/building.png) no-repeat right 45px;
 }
-.wireless-editor-container{ 
+.wlan-editor-container.editor-grid-helper{ 
+	background: url(../images/wlan_bg.png) no-repeat right bottom; 
+}
+.wireless-editor-container.editor-grid-helper{ 
+	height: 773px;
+	background: url(../images/wireless_bg.png) no-repeat right bottom;  
 }
 
 svg.ZSYFCEditor {
@@ -31,15 +38,21 @@ svg.ZSYFCEditor {
 	left: 0;
 	top: 0;
 }
-svg.ZSYFCEditor .element{
-    stroke: #fff;
-}
 .wlan-editor-container svg.ZSYFCEditor {
 	background: url(../images/wlan_bg.png) no-repeat right bottom; 
 }
 .wireless-editor-container svg.ZSYFCEditor {
 	background: url(../images/wireless_bg.png) no-repeat right bottom;  
 }
+
+.editor-grid-helper svg.ZSYFCEditor {
+	background: url(../images/editor_grid_bg.png) no-repeat left top !important;
+}
+
+svg.ZSYFCEditor .element{
+    stroke: #fff;
+}
+
 .buidling-editor-container text.title {
 	fill: #fff;
 	text-anchor: middle;

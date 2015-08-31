@@ -127,7 +127,7 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
         <?=Html::button("重置模版",["class"=>"btn btn-info","id"=>"resetTplDataBtn"])?>   
     </div>
 </div> 
-<div class="buidling-editor-container wireless-editor-container">
+<div class="buidling-editor-container wireless-editor-container editor-grid-helper">
 	<svg class="ZSYFCEditor" oncontextmenu="return false;" >
 		<defs> 
 		</defs>
