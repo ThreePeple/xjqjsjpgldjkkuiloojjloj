@@ -72,7 +72,7 @@ use yii\helpers\Html;
   </div>
   <div class="form-group">
     <label for="mac">MAC:</label>
-    <input type="email" class="form-control" id="mac" name="mac" placeholder="">
+    <input type="text" class="form-control" id="mac" name="mac" placeholder="">
   </div>
   <button type="submit" class="btn btn-default">下发配置</button>
 </form>',
