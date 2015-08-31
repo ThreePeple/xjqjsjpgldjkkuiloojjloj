@@ -8,8 +8,10 @@ use yii\bootstrap\NavBar;
 
 $css = <<<CSS
         .dropdown-menu{ padding: 1px 0;}
+        .dropdown.open > .dropdown-menu{ -webkit-animation: open_topology_submenu 0.2s; }
+        @-webkit-keyframes open_topology_submenu { from { margin-top: -15px; opacity: 0;; } 95% { margin-top: -3px; opacity: 0.9; } to { margin-top: 0; opacity: 1; }  }
         .dropdown:hover .menu-top{display:block;}
-        .dropdown.open a.dropdown-toggle{z-index: 1100;box-shadow: 0 0 8px 0px #fff; background-color: #fff !important; color: #080808 !important; }
+        .dropdown.open a.dropdown-toggle{z-index: 1100;box-shadow: 0 0 8px 0px #fff; background-color: rgba(255,255,255,0.987) !important; color: #080808 !important; }
         .dropdown-submenu{position:relative;}
         .dropdown-menu li > a {padding-top: 9px; padding-bottom: 9px; }
         .dropdown-menu .divider{ margin: 0 !important;}
