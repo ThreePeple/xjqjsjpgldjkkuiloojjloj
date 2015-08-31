@@ -138,6 +138,8 @@ $this->registerJs($js);
 
 ?>
 <script>
+    var ecConfig = require('echarts/config');
+    
     function renderChart(nodes,links){
 
         var myChart = echarts.init(document.getElementById("wireless_hub"));
@@ -179,6 +181,7 @@ $this->registerJs($js);
         };
 
         myChart.setOption(option)
+        myChart.on()
         window.onresize = myChart.resize();
     }
 </script>
