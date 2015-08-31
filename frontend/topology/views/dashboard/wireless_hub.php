@@ -140,11 +140,7 @@ JS;
 $this->registerJs($js);
 
 ?>
-<script>
 
-
-
-</script>
 <div class="row">
     <div class="col-md-12" style="margin-top: 60px; height: 950px;" id="wireless_hub"></div>
 </div>
