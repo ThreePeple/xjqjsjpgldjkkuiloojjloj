@@ -174,6 +174,7 @@
                 $content.find("div.popup_content").html(_updateContent("loading..."));  
                 var id  = ZSYFCEditor.getData()[ d[ ZSYFCEditorConfig['ID_KEY'] ] ]["data"]["id"];
                 $.get(detailUrl, {
+                    fromWhere: "node",
                     id: id
                 }, function(j) {
                     $content.find("div.popup_content").html(j);
@@ -229,6 +230,7 @@
 
                 $content.find("div.popup_content").html(_updateContent("loading..."));  
                 $.get(detailUrl, {
+                    fromWhere: "path",
                     from: d["from"],
                     to: d["to"]
                 }, function(j) {
@@ -261,6 +263,7 @@
         ); 
 
         ZSYFCEditor.updateCallback( function(){
+            var data = ZSYFCEditor.getData(); 
 
             d3.selectAll(".element") 
             .on("click", function(data) {
@@ -269,14 +272,20 @@
             });   
 
             d3.selectAll("path.node_link")
-            .on("click", function(data) {
-                PopupPanel.clearAll();
-                _showPathDetail(data, d3.event, _getNodeDetailTpl());
+            .on("click", function(d) {
+                try{
+                    PopupPanel.clearAll();
+                    var _d = {};
+                    _d["from"] = data[ d["from"] ]["data"]["id"];
+                    _d["to"] = data[ d["to"] ]["data"]["id"];
+                    _showPathDetail(_d, d3.event, _getNodeDetailTpl()); 
+                }catch(e){
+                    console.log(e);
+                }
             });   
 
 
             // Update switch status.
-            var data = ZSYFCEditor.getData();
             var keys = Object.keys( data ), s, imgSrc; 
             keys.forEach( function ( id ){
                 ZSYFCEditor.callFN("shape", id, function (){
