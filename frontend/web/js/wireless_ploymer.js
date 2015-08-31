@@ -139,7 +139,7 @@ function readyChartCallback(__data){
 
 
 /* ---------ECHART-------**/
-function renderChart(nodes,links){
+function renderEChart(nodes,links){
     var myChart = echarts.init(document.getElementById("wireless_hub"));
     var option = {
         title : {

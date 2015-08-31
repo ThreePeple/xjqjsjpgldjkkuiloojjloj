@@ -132,7 +132,7 @@ $js = <<<JS
         dataType:'json',
         success:function(data){
             if(data.status==1){
-                renderChart(data.data.nodes,data.data.links)
+                renderEChart(data.data.nodes,data.data.links)
             }
         }
     })
