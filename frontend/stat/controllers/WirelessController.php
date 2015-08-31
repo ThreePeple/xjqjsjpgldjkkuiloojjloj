@@ -263,6 +263,11 @@ class WirelessController extends Controller
     public function actionAjaxDeviceTip(){
         $this->layout = false;
         $id = Yii::$app->request->get("id");
+        $fromWhere = Yii::$app->request->get("fromWhere");
+        if($fromWhere=='path'){
+            return $this->pathDetail(Yii::$app->request->get("from"),Yii::$app->request->get("to"));
+        }
+
         $device = WirelessDeviceInfo::find()->with(["type","model"])->where(["id"=>$id])->one();
         $deviceConfig =ArrayHelper::map(InfoConfig::getTipConfig(1),"key","value");
         $perfConfig = ArrayHelper::map(InfoConfig::getTipConfig(2),"key","value");
@@ -278,6 +283,17 @@ class WirelessController extends Controller
             "deviceConfig"=>$deviceConfig,
             "perfConfig" => $perfConfig,
             "perfData" => $perfData
+        ]);
+    }
+
+    private function pathDetail($from,$to){
+        $model = WirelessDeviceLink::find()->where(["or",["leftDevice"=>$from,"rightDevice"=>$to],["leftDevice"=>$to,
+            "rightDevice"=>$from]])->one();
+        if(!$model){
+            return '';
+        }
+        return $this->render("link-detail",[
+            "model"=>$model
         ]);
     }
 
