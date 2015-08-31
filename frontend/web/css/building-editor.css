@@ -12,7 +12,7 @@
 .buidling-editor-container {
 	margin: 0;
 	padding: 0;
-	background-color: #353535;
+	background-color: #252525;
 	border: 1px solid #a0a0a0;
 	width: 1280px;
 	height: 940px;
@@ -24,6 +24,7 @@
 	background: url(../images/building.png) no-repeat right 45px;
 }
 .wlan-editor-container.editor-grid-helper{ 
+	height: 940px;
 	background: url(../images/wlan_bg.png) no-repeat right bottom; 
 }
 .wireless-editor-container.editor-grid-helper{ 
