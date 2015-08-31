@@ -106,14 +106,23 @@ class DeviceTask extends \yii\db\ActiveRecord
                 $data[$deviceId]=[];
                 $data[$deviceId][] = $row["label"].'('.$row["ip"].')';
             }
-            $data[$deviceId][] = $row["key"].':'.$row["value"];
+            $data[$deviceId][] = [$row["key"],$row["value"]];
         }
 
         $html =[];
         foreach($data as $id=>$item){
-            $html[] = implode('&nbsp;&nbsp;',$item);
+            $table = [];
+            $table[] = '<table>';
+            $table[] = '<tr><th colspan="2">'.$item[0].'</th></tr>';
+            foreach($item as $i=>$d){
+                if($i==0) continue;
+                $table[]= '<tr><th>'.$d[0].'</th><td>'.$d[1].'</td></tr>';
+            }
+            $table[] = '</table>';
+            $html[] = implode("\n",$table);
         }
-        return implode('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',$html);
+        //return implode('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',$html);
+        return '<li>'.implode('</li><li>',$html).'</li>';
     }
 
 }

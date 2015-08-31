@@ -19,7 +19,10 @@ $this->registerJsFile('/js/ZSYFCLinePathPosition.js',['depends'=>'frontend\asset
 $this->registerJsFile('/js/ZSYFCHelperPosition.js',['depends'=>'frontend\assets\AppAsset']); 
 $this->registerJsFile('/js/ZSYFCLinkline.js',['depends'=>'frontend\assets\AppAsset']); 
 $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset']);
-$this->registerJsFile('/js/jQuery.marquee/jquery.marquee.js',['depends'=>'frontend\assets\AppAsset']);
+
+//$this->registerJsFile('/js/jQuery.marquee/jquery.marquee.js',['depends'=>'frontend\assets\AppAsset']);
+$this->registerJsFile('/js/marquee/lib/jquery.marquee.min.js',['depends'=>'frontend\assets\AppAsset']);
+$this->registerCssFile('/js/marquee/css/jquery.marquee.css',['depends'=>'frontend\assets\AppAsset']);
 
 
 $css = <<<CSS
@@ -79,19 +82,18 @@ svg.ZSYFCEditor {
     overflow: auto;
 }
 .marquee {
-    position:absolute;
-    z-index:1000;
-    left: 350px;
-    right: 28px; 
+    width: 180px;
+    height:200px;
     overflow: hidden; 
-    margin-top: 20px;
     color:#8DFFB5;
     font-size: 20px;
+    background-color: #000000;
 }
 CSS;
 $this->registerCss($css);
 
 $js = <<<JS
+
     var \$mq = $('.marquee');
     function reloadData(){
         $.ajax({
@@ -100,8 +102,8 @@ $js = <<<JS
             dataType: 'html',
             success:function(htm){
                 \$mq.html(htm);
-                \$mq.marquee('destroy')
-                marquee()
+//                \$mq.marquee('destroy')
+                $("#marquee").marquee();
             }
         })
     }
@@ -111,16 +113,18 @@ $js = <<<JS
             reloadData();
         })
         .marquee({
-
-            duration: 10000,
-            duplicated: false,
+            duration: 5000,
+            duplicated: true,
+            gap: 1000,
             pauseOnHover: true
         })
     }
     reloadData();
 
+
+
 JS;
-//$this->registerJs($js);
+$this->registerJs($js);
 ?>
 <div class="row" style="margin-top:50px;min-height: 700px;position:relative;">
     <div class="col-md-3" style="margin-top: 10px;position:relative; z-index:2">
@@ -144,13 +148,19 @@ JS;
             </div><!-- /.box -->
         </div>
         <div class="col-md-12">
-            <div class="box"  style="background: none;">
+            <div class="box"  style="background: none;border:0;">
                 <div class="box-header">
-                    <h3 class="box-title">告警类型</h3>
-                </div><!-- /.box-header -->
+                    <h3 class="box-title">设备性能指标</h3>
+                </div>
                 <div class="box-body" id="itemType" style="width:300px; height: 200px;">
-                </div><!-- /.box-body -->
-            </div><!-- /.box -->
+                    <ul class="marquee" id="marquee" style="width: 240px;height:100px;border:0;background-color:
+                    transparent;">
+                        <li>Lorem ipsum dolor sit amet.</li>
+                        <li>Fusce tincidunt adipiscing,massa.</li>
+                        <li>Mauris ullamcorper euismod leo.</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
     <div class="main">
@@ -165,5 +175,5 @@ JS;
             </svg>
         </div> 
     </div>
-    <div class="marquee"></div>
+
 </div>
