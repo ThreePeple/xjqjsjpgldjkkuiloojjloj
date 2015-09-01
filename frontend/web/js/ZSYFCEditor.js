@@ -1,5 +1,5 @@
 ! function(ns) {
-    
+
     var console = ZSYFCEditorUtil.console;
 
     var document = window.document;
@@ -52,9 +52,9 @@
                 return "ZSYFCEditor_Element" + String(idx);
             throw "Invalid parameter.";
         },
-        "pathId": function (idx){
-            if( idx != undefined )
-                return "ZSYFCEditor_Path" + String( idx );
+        "pathId": function(idx) {
+            if (idx != undefined)
+                return "ZSYFCEditor_Path" + String(idx);
             throw "Invalid parameter.";
         }
     };
@@ -96,55 +96,70 @@
     var linkPathPusher_ = {
         "startD_": null,
         "endD_": null,
-        "points_": [],
+        "startOffset_": null,
+        /* 起点坐标offset，距离设备中心的坐标差 */
+            "endOffset_": null,
+        /* 终点坐标offset，距离设备中心的坐标差 */
+            "points_": [],
         "clear": function() {
             this["startD_"] = null;
             this["endD_"] = null;
+            this["startOffset_"] = null;
+            this["endOffset_"] = null;
             this["points_"].length = 0;
             // Hide link helper
             gLinkHelperPath_.classed("on", false).attr("d", "M0,0");
-
+            return this;
         },
-        "push": function(point) {
-            // TODO: check point forward( eg: D Or array[x, y] ).
+        "push": function(node, xy) {
+            // TODO: check node forward( eg: D Or array[x, y] ).
             // Node data.
-            if (point && typeof point == 'object' && hasOwnProp_(point, ID_KEY)) {
+            if (node && typeof node == 'object' && hasOwnProp_(node, ID_KEY)) {
                 if (this["startD_"] == null) {
-                    this["startD_"] = point;
+                    this["startD_"] = node;
+                    this["startOffset_"] = xy;
                 } else {
-                    if (this["startD_"] != point) {
-                        this["endD_"] = point;
+                    if (this["startD_"] != node) {
+                        this["endD_"] = node;
+                        this["endOffset_"] = xy;
                         this["completeChoosen_"]();
                     }
                 }
-            } else {
-                // Has chosen startD, then point ...
-                if (this["startD_"] && Array.isArray(point)) { // Normal point(x,y)
-                    this["points_"].push(point);
+            } else { // node = null
+                // Has chosen startD, then node ...
+                if (this["startD_"] && Array.isArray(xy)) { // Normal node(x,y)
+                    this["points_"].push(xy);
                 }
             }
+            return this;
         },
-        "pop": function (){
-            if(this["points_"].length){
+        "pop": function() {
+            if (this["points_"].length) {
                 this["points_"].pop();
             } else {
                 this["clear"]();
             }
+            return this;
         },
         "drawChoosenTrackingPoints": function(x, y) {
-            if (this["startD_"]) {// Has chosen startD
+            if (this["startD_"]) { // Has chosen startD
                 x = pointValue_(x);
                 y = pointValue_(y);
                 var path_ = [],
                     x_, y_;
                 gLinkHelperPath_.classed("on", true);
-                path_.push("M" + this["startD_"]["cx"] + "," + this["startD_"]["cy"]);
-                if( gMode_ == 'polyline' ){
+                // If polyline,  from user clicked-xy drawn
+                if (gMode_ == 'polyline') {
+                    path_.push("M" + (this["startD_"]["cx"] - this["startOffset_"][0]) + "," + (this["startD_"]["cy"] - this["startOffset_"][1]));
+                } else {
+                    path_.push("M" + this["startD_"]["cx"] + "," + this["startD_"]["cy"]);
+                }
+                if (gMode_ == 'polyline') {
                     this["points_"].forEach(function(point) {
                         x_ = pointValue_(point[0]);
                         y_ = pointValue_(point[1]);
                         path_.push("L" + x_ + "," + y_);
-                    }); 
+                    });
                 }
                 path_.push("L" + x + "," + y);
                 gLinkHelperPath_.attr("d", path_.join(""));
@@ -158,26 +173,27 @@
             switch (gMode_) {
                 case "line":
                     line = new linkLine_["base"]["Line"]();
-                    line.startD(this["startD_"]);
-                    line.endD(this["endD_"]);
+                    line.startD(this["startD_"]); // TODO:  , this["startOffset_"]
+                    line.endD(this["endD_"]); // TODO:  , this["endOffset_"]
                     gLinkHelperPath_.classed("on", false).attr("d", "M0,0");
-                    dataFactory_.makeLink( this["startD_"], this["endD_"], line.toPlainData() );
+                    dataFactory_.makeLink(this["startD_"], this["endD_"], line.toPlainData());
                     repaint_();
                     this.clear();
                     break;
                 case "polyline":
                     line = new linkLine_["base"]["Polyline"]();
-                    line.startD(this["startD_"]);
+                    line.startD(this["startD_"], this["startOffset_"]);
                     this["points_"].forEach(function(point) {
                         line.linkPoints(point);
                     });
-                    line.endD(this["endD_"]);
+                    line.endD(this["endD_"], this["endOffset_"]);
                     gLinkHelperPath_.classed("on", false).attr("d", "M0,0");
-                    dataFactory_.makeLink( this["startD_"], this["endD_"], line.toPlainData() );
+                    dataFactory_.makeLink(this["startD_"], this["endD_"], line.toPlainData());
                     repaint_();
                     this.clear();
                     break;
             }
+            return this;
         }
     };
 
@@ -197,74 +213,75 @@
                 // New id.
                 return String(cursor_);
             },
-            "removeItem": function( d ){
-                var delKey = d[ID_KEY]; 
+            "removeItem": function(d) {
+                var delKey = d[ID_KEY];
                 gData_.removeItem(delKey);
 
                 // Remove relative links.
                 var data = gData_.getData();
-                var keys = Object.keys( data ), itm, link, key;
-                for( var i = 0, len = keys.length ; i < len; i++ ){
-                    key  = keys[i];
+                var keys = Object.keys(data),
+                    itm, link, key;
+                for (var i = 0, len = keys.length; i < len; i++) {
+                    key = keys[i];
                     itm = data[key];
-                    if( itm["links"] ){
-                       len1 = itm["links"].length;
-                       while( --len1 > -1 ){
-                            link = itm["links"][ len1 ];
-                            if( link["data"]["from"] == delKey || link["data"]["to"] == delKey ){
-                                itm["links"].splice( len1, 1 );
+                    if (itm["links"]) {
+                        len1 = itm["links"].length;
+                        while (--len1 > -1) {
+                            link = itm["links"][len1];
+                            if (link["data"]["from"] == delKey || link["data"]["to"] == delKey) {
+                                itm["links"].splice(len1, 1);
                             }
-                       }
+                        }
                     }
                 }
             },
-            "unlink": function (fromD, toD){ 
+            "unlink": function(fromD, toD) {
                 var unlinkSourceId = fromD,
                     unlinkTargetId = toD;
-                if( typeof fromD == 'object' ){
-                    unlinkSourceId = fromD[ID_KEY]; 
+                if (typeof fromD == 'object') {
+                    unlinkSourceId = fromD[ID_KEY];
                 }
-                if( typeof toD == 'object' ){
-                    unlinkTargetId = toD[ID_KEY]; 
+                if (typeof toD == 'object') {
+                    unlinkTargetId = toD[ID_KEY];
                 }
-                var source = gData_.getItem( unlinkSourceId );
-                if( source ){
+                var source = gData_.getItem(unlinkSourceId);
+                if (source) {
                     var links = source["links"];
-                    if( links ){
-                       var len1 = links.length, link; 
-                       while( --len1 > -1 ){
-                            link = links[ len1 ];
-                            if( link["data"]["from"] == unlinkSourceId 
-                                && link["data"]["to"] == unlinkTargetId ){
-                                links.splice( len1, 1 ); 
+                    if (links) {
+                        var len1 = links.length,
+                            link;
+                        while (--len1 > -1) {
+                            link = links[len1];
+                            if (link["data"]["from"] == unlinkSourceId && link["data"]["to"] == unlinkTargetId) {
+                                links.splice(len1, 1);
                                 return true;
                             }
-                       } 
+                        }
                     }
                 }
-                return false; 
+                return false;
             },
             "makeLink": function(d, tgDatum, linkData) {
                 var _key = this.getId(tgDatum);
                 var ownerKey = this.getId(d);
                 var data = gData_.getItem(ownerKey);
-                
+
                 var from = linkData["data"]["from"],
                     to = linkData["data"]["to"];
 
-                if (data && gData_.hasItem(_key) && from == ownerKey ) {
+                if (data && gData_.hasItem(_key) && from == ownerKey) {
                     data["links"] = data["links"] || [];
                     var found = false;
                     data["links"].forEach(function(link) {
-                        if (link["data"]["from"] == from && link["data"]["to"] == to ) {
+                        if (link["data"]["from"] == from && link["data"]["to"] == to) {
                             found = true;
                         }
                     });
-                    console.log( "Make link: found = ", found );
+                    console.log("Make link: found = ", found);
                     if (found === false)
                         data["links"].push(linkData);
                 } else {
-                    console.log( "Make link failure.", data, gData_.hasItem(_key), from, ownerKey );
+                    console.log("Make link failure.", data, gData_.hasItem(_key), from, ownerKey);
                 }
             },
             "addNew": function(shapeType, data) {
@@ -282,7 +299,7 @@
             "stringify": function() {
                 return JSON.stringify(gData_.getData());
             },
-            "toData": function (){
+            "toData": function() {
                 return gData_.getData();
             }
         };
@@ -427,7 +444,7 @@
             }
         },
         "shapeRemoveClickEvent": function(d) {
-            dataFactory_.removeItem( d );
+            dataFactory_.removeItem(d);
             repaint_();
         },
         "shapeTitleClickEvent": function(d) {
@@ -496,12 +513,12 @@
                 .attr("y", shape["cy"]() + shape["ry"]() + titleFontSize_)
                 .text(shape["title"]() || "<No Title>");
 
-            if(!ZSYFCEditorConfig["singleMode"])
+            if (!ZSYFCEditorConfig["singleMode"])
                 titleTxt.on("click", events_["shapeTitleClickEvent"]);
 
-            var element = shape.render(g); 
+            var element = shape.render(g);
 
-            if(!ZSYFCEditorConfig["singleMode"])
+            if (!ZSYFCEditorConfig["singleMode"])
                 element.call(events_["dragProxy"]())
                 .on("mousedown", events_["shapeSelectedClickEvent"]);
 
@@ -519,20 +536,20 @@
             }
 
             // Close btn.
-            if(!ZSYFCEditorConfig["singleMode"]){
+            if (!ZSYFCEditorConfig["singleMode"]) {
                 var cg = g.append("g")
                     .attr("transform", "matrix(1,0,0,1," +
                         (shape.cx() + shape.rx() - closeSquareD_ / 2) +
                         "," + (shape.cy() - shape.ry() - closeSquareD_ / 2) + ")")
                     .attr("class", "remove")
                     .on("click", events_["shapeRemoveClickEvent"]);
-                makeCloseBtn_(cg); 
+                makeCloseBtn_(cg);
             }
         }
     };
 
     function bindEvents_(svg) {
-        if(ZSYFCEditorConfig["singleMode"])
+        if (ZSYFCEditorConfig["singleMode"])
             return;
 
         svg.on("click", function() {
@@ -551,11 +568,15 @@
                 var element = $(target).closest("g.element")[0];
                 if (element) {
                     data = d3.select(element).datum();
-                    linkPathPusher_.push(data);
+
+                    // 第二参数为距离设备中心的坐标差。
+                    // offsetX: centerX - x
+                    // offsetY: centerY - y
+                    linkPathPusher_.push(data, [data["cx"] - x, data["cy"] - y]);
                 } else {
-                    linkPathPusher_.push([x, y]);
+                    linkPathPusher_.push(null, [x, y]);
                 }
-                console.log("svg click: ", x, y, target, element, data); 
+                console.log("svg click: ", x, y, target, element, data);
             }
         }).on("mousemove", function() {
             var event = d3.event,
@@ -569,21 +590,21 @@
             x += document.body.scrollLeft;
             y += document.body.scrollTop;
             if (gMode_ != "drag") { // line or polyline mode
-                linkPathPusher_.drawChoosenTrackingPoints( x,  y);
+                linkPathPusher_.drawChoosenTrackingPoints(x, y);
             }
-        }).on("mousedown", function (){
+        }).on("mousedown", function() {
             var event = d3.event,
                 target = event.target,
                 data;
             // Select mode, and press mouse's right button
-            if( gMode_ != "drag" && event.which === 3 ){
+            if (gMode_ != "drag" && event.which === 3) {
                 linkPathPusher_.pop();
             }
-        }); 
+        });
 
-        $(svg.node()).bind("dblclick", function (event){ 
+        $(svg.node()).bind("dblclick", function(event) {
             var $target = $(event.target);
-            if($target.is("path.node_link")){
+            if ($target.is("path.node_link")) {
                 var from = $target.data("from"),
                     to = $target.data("to")
                 var r = dataFactory_.unlink(from, to);
@@ -602,10 +623,10 @@
 
         // Init helper( with path element )
         gLinkHelperPath_ = svg.append("path")
-            .attr("class", "link_drag_helper"); 
-        
+            .attr("class", "link_drag_helper");
+
         svg.append("g")
-            .attr("class", "svg-container");  
+            .attr("class", "svg-container");
 
         bindEvents_(svg);
 
@@ -627,34 +648,36 @@
         // Pare data.
         renderSVG_();
     }
-    function resetEditor_(){
+
+    function resetEditor_() {
         // Init closure variables.
         gData_.setData({});
         d = parseData_(gData_.getData());
         gBindData_ = d["nodes"];
-        gLinkData_ = d["links"]; 
+        gLinkData_ = d["links"];
         window.console.log(gBindData_, gLinkData_)
         // Pare data.
-        repaint_();        
+        repaint_();
     };
+
     function exportFn_reset_(userConfirm) {
         userConfirm = userConfirm === true ? true : false;
-        if(userConfirm){
-            if( window.confirm("是否重新创建模版？") ){
+        if (userConfirm) {
+            if (window.confirm("是否重新创建模版？")) {
                 resetEditor_();
             }
         } else {
             resetEditor_();
         }
 
-    }    
+    }
 
     function exportFn_updateData_(d) {
         // Init closure variables.
         gData_.setData(d);
         d = parseData_(gData_.getData());
         gBindData_ = d["nodes"];
-        gLinkData_ = d["links"]; 
+        gLinkData_ = d["links"];
         // Pare data.
         repaint_();
     }
@@ -682,8 +705,8 @@
             nodes.push(d["attributes"]);
         });
 
-        var pathData_, 
-            from, 
+        var pathData_,
+            from,
             to;
 
         keys.forEach(function(k, i) {
@@ -691,21 +714,29 @@
             d.links && d.links.forEach(function(c, i) {
                 from = c["data"]["from"];
                 to = c["data"]["to"];
-                if( gData_.hasItem( to ) ){
+                if (gData_.hasItem(to)) {
                     pathData_ = linkLine_.getPathData(c);
                     if (pathData_) {
-                        links.push({ from: from, to: to, pathData: pathData_ });
+                        links.push({
+                            from: from,
+                            to: to,
+                            pathData: pathData_
+                        });
                     } else {
                         console.log("parse data: unknown link-value.", c, k);
-                    } 
+                    }
                 }
             });
         });
 
 
         // Find max key-value.
-        _ids.sort(function(a,b){ if(a<b) return -1; else if( a>b ) return 1; else return 0; }); 
-        var _max = _ids.pop(); 
+        _ids.sort(function(a, b) {
+            if (a < b) return -1;
+            else if (a > b) return 1;
+            else return 0;
+        });
+        var _max = _ids.pop();
         // Init some constants
         dataFactory_.init(_max || 1);
 
@@ -742,11 +773,11 @@
         gLinkData_ = d["links"];
         var arr = gBindData_;
 
-        var elementContainer = 
+        var elementContainer =
 
-        gSVG_.selectAll(".node_link").remove();
+            gSVG_.selectAll(".node_link").remove();
 
-        var glinkPath =  gSVG_.selectAll(".node_link")
+        var glinkPath = gSVG_.selectAll(".node_link")
             .data(gLinkData_);
 
         var shape = gSVG_.selectAll(".element").data(arr);
@@ -759,12 +790,18 @@
 
         glinkPath.enter().append("path")
             .attr("class", "node_link")
-            .attr("data-from", function( d ){ return d.from; })
-            .attr("data-to", function( d ){ return d.to; })
-            .attr("id", function ( d ){ return elementID_["pathId"]( d.from + '_' + d.to );   } )
+            .attr("data-from", function(d) {
+                return d.from;
+            })
+            .attr("data-to", function(d) {
+                return d.to;
+            })
+            .attr("id", function(d) {
+                return elementID_["pathId"](d.from + '_' + d.to);
+            })
             .attr("d", function(d) {
-                return d.pathData ;
-            }); 
+                return d.pathData;
+            });
 
         var g = gNodeEnter_.append("g")
             .attr("data-shape-type", function(d) {
@@ -781,9 +818,9 @@
                 shapeFactory_["render"](d, d3.select(this));
             });
 
-        gNodeExit_.transition().remove(); 
+        gNodeExit_.transition().remove();
 
-        if( refreshCallback_ )
+        if (refreshCallback_)
             refreshCallback_();
     }
     // Repaint
@@ -813,7 +850,7 @@
     // Get data-json-string
     function exportFn_toDataJson_(stringify) {
         var stringifyData = dataFactory_['stringify']();
-        if(stringify)
+        if (stringify)
             return stringifyData;
         return dataFactory_['toData']();
     }
@@ -832,26 +869,26 @@
         linkPathPusher_.clear();
     }
 
-    function exportFn_getDom_( nodeType, id ){
-        switch( nodeType ){
+    function exportFn_getDom_(nodeType, id) {
+        switch (nodeType) {
             case "shape":
-                return d3.select('#' + elementID_["elementId"](id) + ' .shape' ).node(); 
+                return d3.select('#' + elementID_["elementId"](id) + ' .shape').node();
                 break;
         }
         return null;
     }
 
-    function exportFn_applyFn_( nodeType, id, applyFn ){
-        if( !applyFn )
+    function exportFn_applyFn_(nodeType, id, applyFn) {
+        if (!applyFn)
             return false;
-        switch( nodeType ){
+        switch (nodeType) {
             case "shape":
-                d3.select('#' + elementID_["elementId"](id) + ' .shape' ).call( applyFn ); 
+                d3.select('#' + elementID_["elementId"](id) + ' .shape').call(applyFn);
                 return true;
             default:
                 return false;
         }
-    }   
+    }
 
     // --------------------------------------------
     // Export fn(s) for external invoking
@@ -861,16 +898,18 @@
     exportLabel_("updateData", exportFn_updateData_);
     exportLabel_("reset", exportFn_reset_);
     exportLabel_('getData', exportFn_toDataJson_);
-    exportLabel_("updateCallback", function(fn){ refreshCallback_ = fn });
+    exportLabel_("updateCallback", function(fn) {
+        refreshCallback_ = fn
+    });
     exportLabel_("getDOM", exportFn_getDom_);
-    exportLabel_("callFN", exportFn_applyFn_ );
+    exportLabel_("callFN", exportFn_applyFn_);
 
     // Only for edit mode.
-    if(!ZSYFCEditorConfig["singleMode"]){
+    if (!ZSYFCEditorConfig["singleMode"]) {
         exportLabel_('addShape', exportFn_AddNewShape_);
         exportLabel_('switchMode', exportFn_switchMode_);
     }
-    
+
     //---------------------------------------------
     // Export object.
     //---------------------------------------------

@@ -200,13 +200,16 @@
 
     var Polyline = function() {
         this.startD_ = null;
+        this.startOffset_ = null;
         this.linkPoints_ = [];
         this.endD_ = null;
+        this.endOffset_ = null;
     };
 
-    Polyline.prototype.startD = function(d) {
+    Polyline.prototype.startD = function(d, xy) {
         if (d) {
             this.startD_ = d;
+            this.startOffset_ = xy;
             return this;
         }
         return this.startD_;
@@ -221,14 +224,21 @@
         }
         return this.linkPoints_;
     };
-    Polyline.prototype.endD = function(d) {
+    Polyline.prototype.endD = function(d, xy) {
         if (d) {
             this.endD_ = d;
+            this.endOffset_ = xy;
             return this;
         }
         return this.endD_;
     };
+
     // SVG: path data.
+    // ---------------------------------------------------------------------
+    //  UPDATE:
+    //      2015/9/1  折线（起点、终点）设备，衔接点为用户点击时的x、y坐标。
+    //      
+    // ---------------------------------------------------------------------
     Polyline.prototype.pathData = function() {
         var which,
             sourceShape,
@@ -247,6 +257,7 @@
 
 
         var points_ = firstAndLastPoint_(this.linkPoints_);
+
         if(points_){
         	// Point:{first} compare to Point:{first + 1}
 	        x = points_[0][0];
@@ -259,8 +270,8 @@
 	        );
 
 	        b = {
-	            cx: sourcePos[which[0]][5],
-	            cy: sourcePos[which[0]][4],
+	            cx: sourceShape.cy() - this.startOffset_[1] , // sourcePos[which[0]][5],
+	            cy: sourceShape.cx() - this.startOffset_[0] , // sourcePos[which[0]][4],
 	            linkPoint: which[0],
 	            rx: 0,
 	            ry: 0
@@ -276,8 +287,8 @@
 	        );
 
 	        a = {
-	            cx: targetPos[which[1]][5],
-	            cy: targetPos[which[1]][4],
+	            cx: targetShape.cy() - this.endOffset_[1], // targetPos[which[1]][5],
+	            cy: targetShape.cx() - this.endOffset_[0], // targetPos[which[1]][4],
 	            linkPoint: which[1],
 	            rx: 0,
 	            ry: 0
@@ -285,16 +296,16 @@
 
         } else { // Only link source And target point.
 	        a = {
-	            cx: targetPos[which[1]][5],
-	            cy: targetPos[which[1]][4],
+	            cx: targetShape.cy() - this.endOffset_[1], // targetPos[which[1]][5],
+	            cy: targetShape.cx() - this.endOffset_[0], // targetPos[which[1]][4],
 	            linkPoint: which[1],
 	            rx: sourceShape.rx(),
 	            ry: sourceShape.ry()
 	        };
 
 	        b = {
-	            cx: sourcePos[which[0]][5],
-	            cy: sourcePos[which[0]][4],
+	            cx: sourceShape.cy() - this.startOffset_[1] , // sourcePos[which[0]][5],
+	            cy: sourceShape.cx() - this.startOffset_[0] , // sourcePos[which[0]][4],
 	            linkPoint: which[0],
 	            rx: targetShape.rx(),
 	            ry: targetShape.ry()
@@ -310,33 +321,41 @@
     };
 
     Polyline.prototype.toPlainData = function() {
-        var v1 = key_(this.startD_),
-            v2 = key_(this.endD_);
-        if (v1 == null || v2 == null) {
+        var v1_ = key_(this.startD_),
+            v2_ = key_(this.endD_);
+
+        var toOffset_ = this.endOffset_,
+            fromOffset_ = this.startOffset_;
+        
+        if (v1_ == null || v2_ == null) {
             throw "Polyline: init startD_/endD_ firstly.";
         }
-        var _j = {
+
+        var j_ = {
             "type": "polyline",
             "data": {
-                "from": v1,
+                "from": v1_,
+                "fromOffset": fromOffset_,
                 "linkPoints": this.linkPoints_,
-                "to": v2
+                "to": v2_,
+                "toOffset": toOffset_
             }
         };
-        return _j;
+        return j_;
     };
+
     Polyline.instanceFromData = function(d) {
         if (typeof d != 'object' || d["type"] != "polyline" || typeof d["data"] != 'object') {
             return null;
         }
 
         var l = new Polyline();
-        l.startD(gData_.getItem(d['data']['from'])["attributes"]);
+        l.startD(gData_.getItem(d['data']['from'])["attributes"], d["data"]["fromOffset"] );
         // Set points.
         d["data"]["linkPoints"].forEach(function(point) {
             l.linkPoints(point);
         })
-        l.endD(gData_.getItem(d['data']['to'])["attributes"]);
+        l.endD(gData_.getItem(d['data']['to'])["attributes"], d["data"]["toOffset"] );
         return l;
     };
 
