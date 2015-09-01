@@ -58,18 +58,18 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
             "imgSrc": "/images/icons2/router.png" 
         },
         "switch": {
-            "rx": 23,
-            "ry": 16.5,
+            "rx": 26.5,
+            "ry": 20,
             "imgSrc": "/images/icons2/switch.png"
         },
         "server": {
-            "rx": 17,
-            "ry": 25,
+            "rx": 21.5,
+            "ry": 31,
             "imgSrc": "/images/icons2/server.png"
         },
         "firewall": {
-            "rx": 19,
-            "ry": 18,
+            "rx": 23,
+            "ry": 27,
             "imgSrc": "/images/icons2/firewall.png"
         },
         "driver": {
@@ -103,13 +103,13 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
             "imgSrc": "/images/icons2/pc.png"
         },
         "coreSwitch":{
-            "rx": 26.5,
-            "ry": 27.5,
+            "rx": 32.5,
+            "ry": 23,
             "imgSrc": "/images/icons2/core.png"
         },
         "mainSwitch":{
-            "rx": 28,
-            "ry": 18,
+            "rx": 32.5,
+            "ry": 23,
             "imgSrc": "/images/icons2/mainSwitch.png"
         }
     }

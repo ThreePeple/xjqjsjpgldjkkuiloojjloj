@@ -85,6 +85,8 @@ svg.ZSYFCEditor path.link_drag_helper{
 	visibility: hidden;
  	stroke-dasharray: 5,5; 
 	marker-end: url(#ZSYFCEditor_MarkerArrow);
+	stroke-width: 2px;
+	stroke-linecap: round;
 }
 svg.ZSYFCEditor path.link_drag_helper.on{
 	visibility: visible; 
