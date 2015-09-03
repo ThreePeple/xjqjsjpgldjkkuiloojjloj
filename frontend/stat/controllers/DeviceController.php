@@ -17,7 +17,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\Json;
 use app\models\DeviceInterfaceTask;
 use app\models\DeviceTask;
-use app\models\DeviceAlarm;
+use frontend\models\DeviceAlarm;
 use yii\data\ActiveDataProvider;
 use app\models\DeviceLink;
 

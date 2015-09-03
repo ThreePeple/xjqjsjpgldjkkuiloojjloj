@@ -5,7 +5,7 @@ namespace app\system\controllers;
 use app\models\WirelessDeviceAlarm;
 use app\models\WirelessDeviceAlarmSearch;
 use Yii;
-use app\models\DeviceAlarm;
+use frontend\models\DeviceAlarm;
 use app\models\DeviceAlarmSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

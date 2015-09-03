@@ -2,7 +2,7 @@
 
 namespace app\topology\controllers;
 
-use app\models\DeviceAlarm;
+use frontend\models\DeviceAlarm;
 use app\models\DeviceIpfilter;
 use app\models\DeviceTask;
 use app\models\TopologyConfig;

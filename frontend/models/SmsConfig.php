@@ -6,6 +6,8 @@ use app\models\AlarmCategory;
 use app\models\AlarmLevel;
 use app\models\User;
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\BaseActiveRecord;
 
 /**
  * This is the model class for table "sms_config".
@@ -20,6 +22,24 @@ use Yii;
  */
 class SmsConfig extends \yii\db\ActiveRecord
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    BaseActiveRecord::EVENT_BEFORE_INSERT => ['create_time', 'update_time'],
+                    BaseActiveRecord::EVENT_BEFORE_UPDATE => 'update_time',
+                ],
+                'value' => function($event){
+                    return date('Y-m-d H:i:s');
+                },
+            ],
+        ];
+    }
     /**
      * @inheritdoc
      */
