@@ -6,6 +6,7 @@ use app\models\AlarmCategory;
 use app\models\AlarmLevel;
 use app\models\DeviceCategory;
 use app\models\User;
+use frontend\models\SmsTemplate;
 use Yii;
 use frontend\models\SmsConfig;
 use frontend\models\SmsConfigSearch;
@@ -102,10 +103,9 @@ class SmsController extends Controller
         $levels =AlarmLevel::find()->select(["id","text"=>"desc"])->asArray()->all();
         $categorys =AlarmCategory::find()->select(["id","text"=>"subDesc"])->asArray()->all();
         $users = ArrayHelper::map(User::find()->select(["id","username"])->all(),'id','username');
-        //TODO 从数据库读取模版
-        $templates = [
-            "1"=>'默认模版'
-        ];
+
+        $templates = SmsTemplate::find()->select(["id","name"])->asArray()->all();
+        $templates = ArrayHelper::map($templates,'id','name');
         return [
             "levels" => $levels,
             "categorys" => $categorys,

@@ -61,7 +61,6 @@ $form=ActiveForm::begin([
         <div class="panel-body">
             <?=$form->field($model,"receiverSelect")->widget(Select2::className(),[
                 "data" => $users,
-
                 'options' => ['placeholder' => '选择接收用户'],
                 'pluginOptions' => [
                     'allowClear' => true,
