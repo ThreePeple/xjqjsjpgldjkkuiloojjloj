@@ -43,6 +43,15 @@ use yii\db\Query;
  */
 class DeviceAlarm extends \yii\db\ActiveRecord
 {
+    static $template_fields = [
+        '__ALARM_LEVEL__' => 'alarmLevel',
+        '__ALARM_CATEGORY__' => 'alarmCategory',
+        '__EVENT_NAME__' => 'eventName',
+        '__ALARM_REASON__' => 'reason',
+        '__ALARM_DESC__' => 'alarmDesc',
+        '__DEVICE_NAME__' => 'deviceName',
+        '__DEVICE_IP__' => 'deviceIp',
+    ];
     /**
      * @inheritdoc
      */
