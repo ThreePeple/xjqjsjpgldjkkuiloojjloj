@@ -28,8 +28,8 @@
 	background: url(../images/wlan_bg.png) no-repeat right bottom; 
 }
 .wireless-editor-container.editor-grid-helper{ 
-	height: 773px;
-	background: url(../images/wireless_bg.png) no-repeat right bottom;  
+	height: 926px;
+	background: url(../images/wireless_bg.png) no-repeat right -50px;  
 }
 
 svg.ZSYFCEditor {
@@ -43,7 +43,7 @@ svg.ZSYFCEditor {
 	background: url(../images/wlan_bg.png) no-repeat right bottom; 
 }
 .wireless-editor-container svg.ZSYFCEditor {
-	background: url(../images/wireless_bg.png) no-repeat right bottom;  
+	background: url(../images/wireless_bg.png) no-repeat right -50px;  
 }
 
 .editor-grid-helper svg.ZSYFCEditor {
