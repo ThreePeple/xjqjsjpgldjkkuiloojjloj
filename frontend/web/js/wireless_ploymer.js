@@ -16,7 +16,16 @@ function renderChart(url,params){
             if(res.status){
                 $("#ZSYPolymerChart").find(">*").filter(":not(defs)").remove();
                 __data = res.data;
-                ZSYPolymerChart.init({data: __data, svgWidth:1300, svgHeight: 1000});
+                ZSYPolymerChart.init({
+                    data: __data, 
+                    svgWidth:1250, 
+                    svgHeight: 946,
+                    circleRadius: 180,
+                    from: Math.PI * 5 / 12,
+                    to: Math.PI *  19 / 12 , 
+                    polymerWidth: 100,
+                    groupsHPadding: -80
+                });
                 ZSYPolymerChart.render();
                 readyChartCallback(__data);
             }

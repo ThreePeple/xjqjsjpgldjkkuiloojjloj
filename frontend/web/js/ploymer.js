@@ -17,7 +17,9 @@ function renderChart(id1,id2){
                 console.log("refresh content.");
                 $("#ZSYPolymerChart").find(">*").filter(":not(defs)").remove();
                 __data = res.data;
-                ZSYPolymerChart.init({data: __data, svgWidth:1200, svgHeight: 1000});
+                ZSYPolymerChart.init({data: __data, svgWidth:1200, svgHeight: 1000, 
+                    polymerWidth: 110,
+                    groupsHPadding: 70});
                 ZSYPolymerChart.render();
                 readyChartCallback(__data);
             }

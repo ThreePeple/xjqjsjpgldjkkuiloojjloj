@@ -21,14 +21,13 @@
 
     var groupCenterXY = {};
 
-    var fromAngle = function(pi) {
-            var angle = pi * 180 / Math.PI;
-            return angle;
-        }(Math.PI / 4),
-        toAngle = function(pi) {
-            var angle = pi * 180 / Math.PI;
-            return angle;
-        }(Math.PI * 7 / 4);
+    var angle_ =  function(pi) {
+        var angle = pi * 180 / Math.PI;
+        return angle; 
+    };
+
+    var fromAngle = angle_(Math.PI / 4),
+        toAngle = angle_(Math.PI * 7 / 4);
 
     var bezierCurveData = function() {
         var points;
@@ -80,14 +79,19 @@
 
         svgWidth = config.svgWidth || 900;
         svgHeight = config.svgHeight || 900; 
-        circleRadius = 220;
+        circleRadius = config.circleRadius || 220;
 
-        polymerWidth = 120;
-        polymerHeight = 35;
+        if( config.from && config.to ){
+            fromAngle = angle_(config.from);
+            toAngle = angle_(config.to); 
+        }
+
+        polymerWidth = config.polymerWidth || 120;
+        polymerHeight = config.polymerHeight || 35;
 
 
-        groupsHPadding = polymerWidth - 10,
-        groupsVPadding = polymerHeight ;
+        groupsHPadding = config.groupsHPadding || ( polymerWidth - 10),
+        groupsVPadding = config.groupsVPadding || polymerHeight ;
 
         groupCenterXY["group1"] = {
             x: (svgWidth - groupsHPadding) / 2 - circleRadius,
