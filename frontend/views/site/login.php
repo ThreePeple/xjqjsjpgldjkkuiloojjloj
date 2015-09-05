@@ -18,7 +18,15 @@ $fieldOptions2 = [
     'inputTemplate' => "{input}<span class='fa fa-lock form-control-feedback'></span>"
 ];
 ?>
-
+<style>
+.login-page {
+	background-color:#252525;
+}
+.login-box-body{
+	border-radius: 10px; 
+    box-shadow: 0 0 15px 0 #fff; 
+}
+</style>
 <div class="login-box">
     <div class="login-logo">
         <a href="#"><span class="logo"><img src="/images/logo_80.png"/></span>  中石油网管系统</a>
