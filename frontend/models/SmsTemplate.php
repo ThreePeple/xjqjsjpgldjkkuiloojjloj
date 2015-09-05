@@ -27,6 +27,7 @@ class SmsTemplate extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [["name","content"],'required'],
             [['content'], 'string','max'=>255],
             [['name'], 'string', 'max' => 100],
         ];
