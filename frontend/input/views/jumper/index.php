@@ -59,12 +59,24 @@ $this->registerJs($js);
         }
     }
 </script>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">查询</h3>
+            </div>
+            <div class="panel-body">
+                <?=$this->render("_search",["model"=>$model]);?>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row" >
     <div class="col-md-12">
         <?=
         GridView::widget([
             "dataProvider"=>$dataProvider,
-            'filterModel' => $model,
+           //∂ 'filterModel' => $model,
             "id" => "jumper-list",
 
             //'pjax' => true,
