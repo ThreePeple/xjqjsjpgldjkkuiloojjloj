@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use app\models\DeviceIpfilter;
 use Yii;
 use yii\db\Query;
 
