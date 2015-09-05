@@ -19,7 +19,7 @@ html,body{
 }
 svg{
     font-size: 12px;
-    margin: 90px auto 0;
+    margin: 70px auto 0;
     display: block;
 }
 .ZSYPolymerChart .shape.shape0{
