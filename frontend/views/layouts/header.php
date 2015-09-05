@@ -26,6 +26,10 @@ $css = <<<CSS
         @-webkit-keyframes open_submenu { from { margin-left: -20px; opacity: 0;; } 90% { margin-left: 5px; opacity: 0.9; } to { margin-left: 0; opacity: 1; }  }
         .dropdown-submenu .pull-left{float:none;}
         .dropdown-submenu.pull-left > .dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
+		a.btn-logout{ padding: 6px 0 !important; text-align: center;  }
+		.navbar-nav>.user-menu>.dropdown-menu{
+			width: 150px;
+		}
 CSS;
 $this->registerCss($css);
 ?>
@@ -137,7 +141,7 @@ $menuItems = [
                             '.Html::a(
         '退出登录',
         ['/site/logout'],
-        ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
+        ['data-method' => 'post', 'data-confirm' => '退出系统？', 'class' => 'btn btn-default btn-flat btn-logout']
     ) .'
                         </li>
                     </ul>
