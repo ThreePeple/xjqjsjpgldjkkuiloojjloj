@@ -187,7 +187,7 @@ $this->registerJs($js);
                         'cssFile' => ''
                     ]
                 ]
-            ]
+            ],
         ]);
         ?>
     </div>
