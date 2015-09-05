@@ -100,7 +100,7 @@ class DeviceInfo extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'label' => Yii::t('app', '设备名称'),
-            'ip' => Yii::t('app', '设备IP'),
+            'ip' => Yii::t('app', '设备 IP'),
             'mask' => Yii::t('app', '设备掩码'),
             'status' => Yii::t('app', '设备状态'),
             'sysName' => Yii::t('app', '系统名称'),

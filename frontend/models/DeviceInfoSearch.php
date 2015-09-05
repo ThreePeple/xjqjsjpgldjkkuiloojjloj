@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\DeviceInfo;
+use yii\helpers\ArrayHelper;
 
 /**
  * DeviceInfoSearch represents the model behind the search form about `app\models\DeviceInfo`.
@@ -24,6 +25,13 @@ class DeviceInfoSearch extends DeviceInfo
             [['label', 'ip', 'mask', 'sysName', 'location', 'sysOid', 'runtime', 'lastPoll', 'typeName', 'symbolDesc', 'mac', 'phyName', 'phyCreateTime', 'model', 'interfaces', 'category', 'update_time'], 'safe'],
             [['series','model'],'safe']
         ];
+    }
+
+    public function attributeLabels(){
+        return ArrayHelper::merge(parent::attributeLabels(),[
+           "series" => "设备系列",
+            "model" => "设备型号"
+        ]);
     }
 
     /**
