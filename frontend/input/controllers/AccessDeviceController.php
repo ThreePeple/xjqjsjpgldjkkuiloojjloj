@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\input\controllers;
+namespace app\input\controllers;
 
 use Yii;
 use frontend\models\AccessDeviceInfo;

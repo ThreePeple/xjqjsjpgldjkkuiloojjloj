@@ -63,7 +63,7 @@ $this->registerJs($js);
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">查询</h3>
+                <h3 class="panel-title">筛选</h3>
             </div>
             <div class="panel-body">
                 <?=$this->render("_search",["model"=>$model]);?>

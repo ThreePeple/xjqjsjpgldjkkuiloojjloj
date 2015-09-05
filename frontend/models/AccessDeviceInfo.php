@@ -47,14 +47,14 @@ class AccessDeviceInfo extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'deviceId' => 'Device ID',
-            'deviceIp' => 'Device Ip',
-            'ifIndex' => 'If Index',
-            'ifDesc' => 'If Desc',
+            'deviceId' => '定位地址',
+            'deviceIp' => '设备 IP',
+            'ifIndex' => '接口索引',
+            'ifDesc' => '接口描述',
             'vlanId' => 'Vlan ID',
-            'learnIp' => 'Learn Ip',
-            'learnMac' => 'Learn Mac',
-            'status' => 'Status',
+            'learnIp' => '学习的IP地址',
+            'learnMac' => '学习的MAC地址',
+            'status' => '状态',
             'update_time' => 'Update Time',
         ];
     }

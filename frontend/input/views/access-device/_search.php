@@ -13,31 +13,28 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
+        'options' => [
+            "class" => 'form-inline'
+        ]
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'deviceId') ?>
 
     <?= $form->field($model, 'deviceIp') ?>
 
-    <?= $form->field($model, 'ifIndex') ?>
+    <?php  echo $form->field($model, 'vlanId') ?>
 
-    <?= $form->field($model, 'ifDesc') ?>
+    <?php  echo $form->field($model, 'learnIp') ?>
 
-    <?php // echo $form->field($model, 'vlanId') ?>
-
-    <?php // echo $form->field($model, 'learnIp') ?>
-
-    <?php // echo $form->field($model, 'learnMac') ?>
+    <?php  echo $form->field($model, 'learnMac') ?>
 
     <?php // echo $form->field($model, 'status') ?>
 
     <?php // echo $form->field($model, 'update_time') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('搜索', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('重置', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
