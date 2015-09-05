@@ -26,6 +26,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'point') ?>
 
+    <?= $form->field($model, 'tag') ?>
+
     <div class="">
         <?= Html::submitButton('查询', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('重置', ['class' => 'btn btn-default']) ?>
