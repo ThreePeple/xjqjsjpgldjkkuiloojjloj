@@ -176,7 +176,7 @@ function renderEChart(nodes, links) {
                             color: '#fff'
                         }
                     },
-                    color: 'green'
+                    color: '#F5994E'
                 }
             },
 

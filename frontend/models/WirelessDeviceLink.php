@@ -169,6 +169,20 @@ class WirelessDeviceLink extends \yii\db\ActiveRecord
         $nodes = WirelessDeviceInfo::find()->where(["id"=>[$id1,$id2]])->select(["id","name"=>"label"])->asArray()
             ->all();
 
+        array_walk($nodes,function(&$val,$key,$id1){
+            $nodeStyle= [];
+           if($val["id"]== $id1){
+               $nodeStyle['normal'] = [
+                   'color' => 'green'
+               ];
+           }else{
+               $nodeStyle['normal'] = [
+                   'color' => '#59678C'
+               ];
+           }
+            $val["itemStyle"] = $nodeStyle;
+        },$id1);
+
         $filterIds = DeviceIpfilter::find()->where(["type_id"=>DeviceIpfilter::TYPE_WIRELESS])->select("ip")->column();
 
         $lefts = (new Query())
@@ -202,13 +216,19 @@ class WirelessDeviceLink extends \yii\db\ActiveRecord
                 $target = $row["name"];
             }
 
+            if($row['leftDevice'] == $id1 || $row["rightDevice"]==$id1){
+                $color = 'green';
+            }else{
+                $color = 'blue';
+            }
+
             $links[] = [
                 'source' => $source,
                 'target' => $target,
                 'weight' => 1,
                 'itemStyle' => [
                     'normal' => [
-                        'color' => 'green',
+                        'color' => $color,
                         'width' => 2,
                     ]
                 ]
@@ -219,7 +239,7 @@ class WirelessDeviceLink extends \yii\db\ActiveRecord
                 'weight' => 0.9,
                 'itemStyle' => [
                     'normal' => [
-                        'color' => 'green',
+                        'color' => $color,
                         'width' => 2
                     ]
                 ]
