@@ -78,6 +78,6 @@ class LoginForm extends Model
 
     public function attributeLabels()
     {
-        return array( "username" => "请输入用户名", "password" => "请输入密码", "rememberMe" => "记住我" );
+        return array( "username" => "用户名", "password" => "密码", "rememberMe" => "记住我" );
     }
 }
