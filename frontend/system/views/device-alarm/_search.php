@@ -7,7 +7,11 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\DeviceAlarmSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
+<style>
+    .form-inline .form-group{
+        vertical-align: inherit;
+    }
+</style>
 <div class="device-alarm-search">
 
     <?php $form = ActiveForm::begin([

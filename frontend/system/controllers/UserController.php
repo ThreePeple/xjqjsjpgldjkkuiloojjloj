@@ -1,64 +1,71 @@
 <?php
-/**
- * Created by PhpStorm.
- * Author: Shengjun
- * CreateTime: 15-7-14.上午10:46
- * Description:
- */
 
 namespace app\system\controllers;
 
-use yii\data\ActiveDataProvider;
-use yii\web\Controller;
 use Yii;
 use app\models\User;
-use yii\helpers\Url;
+use app\models\UserSearch;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
+use yii\helpers\Url;
 
-class UserController extends Controller {
 
-    /**
-     * @inheritdoc
-     */
+/**
+ * UserController implements the CRUD actions for User model.
+ */
+class UserController extends Controller
+{
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'delete' => ['post'],
                 ],
             ],
         ];
     }
 
-    public function actionIndex(){
-        $query = User::find();
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                "pageSize"  => 10
-            ]
-        ]);
-        return $this->render("index",[
-            'dataProvider'=>$dataProvider,
+    /**
+     * Lists all User models.
+     * @return mixed
+     */
+    public function actionIndex()
+    {
+        $searchModel = new UserSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
-    public function actionCreate(){
+    /**
+     * Displays a single User model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionView($id)
+    {
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    /**
+     * Creates a new User model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate()
+    {
         $model = new User();
+
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model,['username']);
@@ -76,4 +83,59 @@ class UserController extends Controller {
         ]);
     }
 
-} 
+    /**
+     * Updates an existing User model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $attributes = ['name','phone','email'];
+            return ActiveForm::validate($model,$attributes);
+        }
+        if(Yii::$app->request->isPost){
+            $model->load(Yii::$app->request->post());
+            $attributes = ['name','phone','email'];
+            if( $model->save(true,$attributes)){
+                return $this->redirect(Url::toRoute(['/system/user/index']));
+            }
+        }
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Deletes an existing User model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Finds the User model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param integer $id
+     * @return User the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = User::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+}

@@ -6,19 +6,6 @@ use kartik\grid\GridView;
 use yii\helpers\Html;
 
 ?>
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">筛选</h3>
-            </div>
-            <div class="panel-body">
-                <?=$this->render("_search",["model"=>$searchModel]);?>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="row" >
     <div class="col-md-12">
         <?=
@@ -30,12 +17,7 @@ use yii\helpers\Html;
                 "name",
                 "phone",
                 "email",
-                [
-                    'class' => '\kartik\grid\ActionColumn',
-                    'width' => '80px',
-                    'header' => '',
-                    'template' => '{update}  {delete}',
-                ],
+
             ],
             'panel' => [
                 'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-globe"></i> 用户列表</h3>',
