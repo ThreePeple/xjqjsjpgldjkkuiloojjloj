@@ -79,6 +79,10 @@ svg{
 .ZSYPolymerChart .link-path[data-status="2"].hover{
 	stroke: rgb(255,100,100);
 }
+.ZSYPolymerChart_rendered .left .node g.text{      
+	-webkit-transform-origin: 50% 50%;
+    -webkit-transform: rotate(180deg);
+}
 
 .box{
   color: #fff;
