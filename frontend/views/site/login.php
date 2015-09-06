@@ -44,11 +44,46 @@ $fieldOptions2 = [
 	margin-left: -10px;
 	text-shadow: 0 0 30px yellow;
 }
+.animated {
+	-webkit-animation-duration: 1s;
+	animation-duration: 1s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both
+}  
+.bounce {
+	-webkit-animation-name: bounce; 
+	-webkit-transform-origin: center bottom;
+	transform-origin: center bottom
+}
+@-webkit-keyframes bounce {
+	0%, 100%, 20%, 53%, 80% {
+		-webkit-animation-timing-function: cubic-bezier(0.215, .61, .355, 1);
+		animation-timing-function: cubic-bezier(0.215, .61, .355, 1);
+		-webkit-transform: translate3d(0, 0, 0);
+		transform: translate3d(0, 0, 0)
+	}
+	40%, 43% {
+		-webkit-animation-timing-function: cubic-bezier(0.755, .050, .855, .060);
+		animation-timing-function: cubic-bezier(0.755, .050, .855, .060);
+		-webkit-transform: translate3d(0, -30px, 0);
+		transform: translate3d(0, -30px, 0)
+	}
+	70% {
+		-webkit-animation-timing-function: cubic-bezier(0.755, .050, .855, .060);
+		animation-timing-function: cubic-bezier(0.755, .050, .855, .060);
+		-webkit-transform: translate3d(0, -15px, 0);
+		transform: translate3d(0, -15px, 0)
+	}
+	90% {
+		-webkit-transform: translate3d(0, -4px, 0);
+		transform: translate3d(0, -4px, 0)
+	}
+} 
 </style>
 <div class="login-box">
     <div class="login-logo">
         <span class="logo"><img src="/images/logo_80.png"/></span>
-		<i>中石油网管系统</i>
+		<i id="app_title">中石油网管系统</i>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
@@ -82,3 +117,18 @@ $fieldOptions2 = [
     </div>
     <!-- /.login-box-body -->
 </div><!-- /.login-box -->
+
+
+<?php
+$js = <<<abc
+$( function () { 
+    $('#app_title')
+		.addClass('bounce animated')
+		.one('webkitAnimationEnd', function(){
+				$(this).removeClass('bounce animated');
+		});
+});
+abc;
+
+$this->registerJs($js);
+?>
