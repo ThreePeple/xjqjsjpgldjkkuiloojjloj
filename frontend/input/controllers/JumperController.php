@@ -138,8 +138,11 @@ class JumperController extends \yii\web\Controller
             $data[$i]["wire_frame"] = $item[2];
             $data[$i]["wire_position"] = $item[3];
             $data[$i]["point"] = $item[4];
+            $data[$i]["tag"] = $item[5];
+            /*
             $data[$i]["insert_no"] = $item[5];
             $data[$i]["tag"] = $this->getTagByIP($item[0],$item[5]);
+            */
         }
         return $data;
     }
