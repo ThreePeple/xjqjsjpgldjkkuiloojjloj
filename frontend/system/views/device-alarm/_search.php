@@ -15,15 +15,12 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
-
-    <?= $form->field($model, 'OID') ?>
-
-    <?= $form->field($model, 'originalTypeDesc') ?>
-
-    <?= $form->field($model, 'deviceId') ?>
-
     <?= $form->field($model, 'deviceIp') ?>
+
+    <?= $form->field($model, 'deviceName') ?>
+
+    <?= $form->field($model, 'alarmLevelDesc') ?>
+
 
     <?php // echo $form->field($model, 'deviceName') ?>
 

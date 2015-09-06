@@ -21,9 +21,9 @@
 
     var groupCenterXY = {};
 
-    var angle_ =  function(pi) {
+    var angle_ = function(pi) {
         var angle = pi * 180 / Math.PI;
-        return angle; 
+        return angle;
     };
 
     var fromAngle = angle_(Math.PI / 4),
@@ -78,28 +78,28 @@
         data = config.data;
 
         svgWidth = config.svgWidth || 900;
-        svgHeight = config.svgHeight || 900; 
+        svgHeight = config.svgHeight || 900;
         circleRadius = config.circleRadius || 220;
 
-        if( config.from && config.to ){
+        if (config.from && config.to) {
             fromAngle = angle_(config.from);
-            toAngle = angle_(config.to); 
+            toAngle = angle_(config.to);
         }
 
         polymerWidth = config.polymerWidth || 120;
         polymerHeight = config.polymerHeight || 35;
 
 
-        groupsHPadding = config.groupsHPadding || ( polymerWidth - 10),
-        groupsVPadding = config.groupsVPadding || polymerHeight ;
+        groupsHPadding = config.groupsHPadding || (polymerWidth - 10),
+        groupsVPadding = config.groupsVPadding || polymerHeight;
 
         groupCenterXY["group1"] = {
             x: (svgWidth - groupsHPadding) / 2 - circleRadius,
-            y:  svgHeight/2
+            y: svgHeight / 2
         };
         groupCenterXY["group2"] = {
             x: (svgWidth + groupsHPadding) / 2 + circleRadius,
-            y: svgHeight/2
+            y: svgHeight / 2
         };
 
         polymer2CenterX = polymer1CenterX = svgWidth / 2;
@@ -121,7 +121,7 @@
         // Group 1
         var group1 = polymerChart.append("g")
             .attr("transform", "translate(" + groupCenterXY["group1"]["x"] + "," + groupCenterXY["group1"]["y"] + ")");
-        
+
         // Group 2
         // TODO : 179.38, not 180 ?
         var group2 = polymerChart.append("g")
@@ -129,8 +129,8 @@
 
         _renderPolymers();
         _renderGroup("group1", data.groups, group1);
-        _renderGroup("group2", data.groups, group2, true); 
-        _renderLinks(data.polymers,linkParent); 
+        _renderGroup("group2", data.groups, group2, true);
+        _renderLinks(data.polymers, linkParent);
         _bindEvents();
     };
 

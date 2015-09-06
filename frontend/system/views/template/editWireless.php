@@ -54,7 +54,7 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
     "shape": { 
         "ac": {
             "rx": 19,
-            "ry": 19,
+            "ry": 21,
             "imgSrc": "/images/icons3/ac.png" 
         },
         "switch": {

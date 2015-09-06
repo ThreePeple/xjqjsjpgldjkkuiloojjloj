@@ -16,7 +16,8 @@ use yii\helpers\Html;
                 "username",
                 "name",
                 "phone",
-                "email"
+                "email",
+
             ],
             'panel' => [
                 'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-globe"></i> 用户列表</h3>',

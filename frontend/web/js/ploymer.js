@@ -4,22 +4,29 @@
 
 var __detailUrl = '/stat/device/ajax-device-tip';
 
-function renderChart(id1,id2){
+function renderChart(id1, id2) {
     var __data;
 
     $.ajax({
-        url : '/topology/dashboard/ajax-get-hub',
-        data:{"id1":id1,"id2":id2},
-        type:"POST",
-        dataType:'JSON',
-        success:function(res){
-            if(res.status){
+        url: '/topology/dashboard/ajax-get-hub',
+        data: {
+            "id1": id1,
+            "id2": id2
+        },
+        type: "POST",
+        dataType: 'JSON',
+        success: function(res) {
+            if (res.status) {
                 console.log("refresh content.");
                 $("#ZSYPolymerChart").find(">*").filter(":not(defs)").remove();
                 __data = res.data;
-                ZSYPolymerChart.init({data: __data, svgWidth:1200, svgHeight: 1000, 
+                ZSYPolymerChart.init({
+                    data: __data,
+                    svgWidth: 1200,
+                    svgHeight: 1000,
                     polymerWidth: 110,
-                    groupsHPadding: 70});
+                    groupsHPadding: 70
+                });
                 ZSYPolymerChart.render();
                 readyChartCallback(__data);
             }
@@ -28,38 +35,38 @@ function renderChart(id1,id2){
 
 }
 
-function changeCore(group,id1,id2){
-    $("#events_type button[group='"+group+"']").removeClass("btn-primary").addClass("btn-default");
-    $("#events_type button[group='"+(group+1>2?1:group+1)+"']").removeClass("btn-default").addClass("btn-primary");
-    renderChart(id1,id2)
+function changeCore(group, id1, id2) {
+    $("#events_type button[group='" + group + "']").removeClass("btn-primary").addClass("btn-default");
+    $("#events_type button[group='" + (group + 1 > 2 ? 1 : group + 1) + "']").removeClass("btn-default").addClass("btn-primary");
+    renderChart(id1, id2)
 }
-var __updateStatus = function ( data ){
+var __updateStatus = function(data) {
     var groups = data["groups"];
     var links = data["links"];
     var keys;
 
-    Object.keys(groups).forEach( function ( group ){
-        groups[group].forEach( function ( d ) {
-            d3.select("#" + d["id"] ).attr("data-status", d["status"]);
-        } );
-    } )
+    Object.keys(groups).forEach(function(group) {
+        groups[group].forEach(function(d) {
+            d3.select("#" + d["id"]).attr("data-status", d["status"]);
+        });
+    })
 
     var from, to, status;
 
-    links.forEach( function ( link ){
+    links.forEach(function(link) {
         from = link["from"];
         to = link["to"];
         status = link["status"];
-        d3.select( '#' + [ to, '_', from ].join('') ).attr("data-status", status);
-    } );
+        d3.select('#' + [to, '_', from].join('')).attr("data-status", status);
+    });
 };
 
 
-var _showNodeDetail = function(d, e, contentHtmlTpl) { 
+var _showNodeDetail = function(d, e, contentHtmlTpl) {
     var $tg = $(e.target);
     if (false == $tg.is(".node")) {
         $tg = $tg.closest(".node");
-    } 
+    }
 
     var offset = $tg.offset();
     var x = offset.left,
@@ -72,7 +79,7 @@ var _showNodeDetail = function(d, e, contentHtmlTpl) {
 
     var offsetX = 90,
         offsetY = 65;
-    
+
     var className = "nodeDetail";
 
     var _parseData = function(data) {
@@ -102,15 +109,16 @@ var _showNodeDetail = function(d, e, contentHtmlTpl) {
                     inst.close(true);
             });
 
-            $content.find("div.popup_content").html(_updateContent("loading...")); 
+            $content.find("div.popup_content").html(_updateContent("loading..."));
             // nodeDetail_.json : fail data, nodeDetail.json: ok data.
-            var id  = d["data"]["id"], device_id = d["data"]["device_id"];
+            var id = d["data"]["id"],
+                device_id = d["data"]["device_id"];
             $.get(__detailUrl, {
                 id: device_id,
                 device_id: device_id
             }, function(j) {
                 $content.find("div.popup_content").html(j);
-                popPanel.refresh(); 
+                popPanel.refresh();
                 return;
                 if (j.result == 1) {
                     $content.find("div.popup_content").html(_updateContent(_parseData(j.data)));
@@ -121,16 +129,16 @@ var _showNodeDetail = function(d, e, contentHtmlTpl) {
             }, 'html');
         }
     }).init().show(x, y);
-}; 
+};
 
 
-function readyChartCallback(__data){
-    d3.selectAll(".ZSYPolymerChart g.node text") 
-    .on("click", function(data) { 
-        PopupPanel.clearAll();
-        _showNodeDetail(data, d3.event, "");
-    });  
-    if(__data){
+function readyChartCallback(__data) {
+    d3.selectAll(".ZSYPolymerChart g.node text")
+        .on("click", function(data) {
+            PopupPanel.clearAll();
+            _showNodeDetail(data, d3.event, "");
+        });
+    if (__data) {
         __updateStatus(__data);
     }
 }

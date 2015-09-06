@@ -4,12 +4,26 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use app\models\WirelessDeviceInfo;
 ?>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">筛选</h3>
+            </div>
+            <div class="panel-body">
+                <?=$this->render("_search",["model"=>$searchModel]);?>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row" >
     <div class="col-md-12">
         <?=
         GridView::widget([
             "dataProvider"=>$dataProvider,
-            "filterModel" => $searchModel,
+           // "filterModel" => $searchModel,
             'pjax'=> true,
             "columns" => [
                 [
