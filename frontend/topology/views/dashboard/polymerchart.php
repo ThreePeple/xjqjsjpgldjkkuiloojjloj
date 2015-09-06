@@ -22,6 +22,8 @@ svg{
     margin: 0 auto 0;
     display: block;
 }
+.ZSYPolymerChart .left .node text{ 
+}
 .ZSYPolymerChart .shape.shape0{
 	fill: #60c0dd;
 }

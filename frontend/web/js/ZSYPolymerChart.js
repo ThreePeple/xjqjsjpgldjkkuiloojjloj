@@ -120,11 +120,13 @@
 
         // Group 1
         var group1 = polymerChart.append("g")
+            .attr("class", "left")
             .attr("transform", "translate(" + groupCenterXY["group1"]["x"] + "," + groupCenterXY["group1"]["y"] + ")");
 
         // Group 2
         // TODO : 179.38, not 180 ?
         var group2 = polymerChart.append("g")
+            .attr("class", "right")
             .attr("transform", "rotate(179.38)translate(" + (-1 * groupCenterXY["group2"]["x"]) + "," + (-1 * groupCenterXY["group2"]["y"]) + ")");
 
         _renderPolymers();
