@@ -34,7 +34,7 @@ $fieldOptions2 = [
 	height: 108px;
 }
 .login-logo .logo{
-	margin: 0 6px 0 9px;
+	margin: 0 6px 0 6px;
 	float: left;
 }
 .login-logo  i{
