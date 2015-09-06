@@ -43,40 +43,41 @@ $fieldOptions2 = [
 	line-height: 85px;
 	margin-left: -10px;
 	text-shadow: 0 0 30px yellow;
+	opacity: 0;
+}
+.login-logo  i.shown{
+	opacity: 1;
 }
 .animated {
 	-webkit-animation-duration: 1s;
-	animation-duration: 1s;
 	-webkit-animation-fill-mode: both;
-	animation-fill-mode: both
-}  
+} 
 .bounce {
 	-webkit-animation-name: bounce; 
-	-webkit-transform-origin: center bottom;
-	transform-origin: center bottom
+	-webkit-transform-origin: center bottom; 
 }
 @-webkit-keyframes bounce {
 	0%, 100%, 20%, 53%, 80% {
 		-webkit-animation-timing-function: cubic-bezier(0.215, .61, .355, 1);
-		animation-timing-function: cubic-bezier(0.215, .61, .355, 1);
-		-webkit-transform: translate3d(0, 0, 0);
-		transform: translate3d(0, 0, 0)
-	}
+ 		-webkit-transform: translate3d(0, 0, 0);
+ 	}
+	0%{
+		opacity: 0.35;
+	} 
 	40%, 43% {
+		opacity: 0.8;
 		-webkit-animation-timing-function: cubic-bezier(0.755, .050, .855, .060);
-		animation-timing-function: cubic-bezier(0.755, .050, .855, .060);
-		-webkit-transform: translate3d(0, -30px, 0);
-		transform: translate3d(0, -30px, 0)
-	}
+ 		-webkit-transform: translate3d(0, -30px, 0);
+ 	}
 	70% {
 		-webkit-animation-timing-function: cubic-bezier(0.755, .050, .855, .060);
-		animation-timing-function: cubic-bezier(0.755, .050, .855, .060);
-		-webkit-transform: translate3d(0, -15px, 0);
-		transform: translate3d(0, -15px, 0)
-	}
+ 		-webkit-transform: translate3d(0, -15px, 0);
+ 	}
 	90% {
 		-webkit-transform: translate3d(0, -4px, 0);
-		transform: translate3d(0, -4px, 0)
+	}
+	100%{
+		opacity: 1;
 	}
 } 
 </style>
@@ -125,7 +126,7 @@ $( function () {
     $('#app_title')
 		.addClass('bounce animated')
 		.one('webkitAnimationEnd', function(){
-				$(this).removeClass('bounce animated');
+				$(this).addClass("shown").removeClass('bounce animated');
 		});
 });
 abc;
