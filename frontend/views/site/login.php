@@ -26,10 +26,29 @@ $fieldOptions2 = [
 	border-radius: 10px; 
     box-shadow: 0 0 15px 0 #fff; 
 }
+.login-logo, .register-logo {
+    margin-bottom: -8px;
+}
+.login-logo{ 
+	color: #fff;
+	height: 108px;
+}
+.login-logo .logo{
+	margin: 0 6px 0 9px;
+	float: left;
+}
+.login-logo  i{
+	margin-top: 10px;
+	font-style: normal;
+	line-height: 85px;
+	margin-left: -10px;
+	text-shadow: 0 0 30px yellow;
+}
 </style>
 <div class="login-box">
     <div class="login-logo">
-        <a href="#"><span class="logo"><img src="/images/logo_80.png"/></span>  中石油网管系统</a>
+        <span class="logo"><img src="/images/logo_80.png"/></span>
+		<i>中石油网管系统</i>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
