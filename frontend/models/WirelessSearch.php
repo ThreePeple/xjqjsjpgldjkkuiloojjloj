@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\WirelessDeviceInfo;
+use yii\helpers\ArrayHelper;
 
 /**
  * WirelessSearch represents the model behind the search form about `app\models\WirelessDeviceInfo`.
@@ -24,6 +25,13 @@ class WirelessSearch extends WirelessDeviceInfo
             [['label', 'ip', 'mask', 'sysName', 'location', 'sysOid', 'runtime', 'lastPoll', 'typeName', 'symbolDesc', 'mac', 'phyName', 'phyCreateTime', 'model_id', 'interfaces', 'category', 'update_time', 'series_name', 'model_name'], 'safe'],
             [['series','model'],'safe']
         ];
+    }
+
+    public function attributeLabels(){
+        return ArrayHelper::merge(parent::attributeLabels(),[
+            "series" => "设备系列",
+            "model" => "设备型号"
+        ]);
     }
 
     /**

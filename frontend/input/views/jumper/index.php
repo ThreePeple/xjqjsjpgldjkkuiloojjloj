@@ -107,10 +107,6 @@ $this->registerJs($js);
                     'attribute' => 'point',
                 ],
                 [
-                    "attribute"=>"insert_no",
-                    "hidden" => true,
-                ],
-                [
                     'class'=>'kartik\grid\EditableColumn',
                     'attribute' => 'tag',
                     /*
