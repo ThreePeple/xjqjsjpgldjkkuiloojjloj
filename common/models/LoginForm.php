@@ -75,4 +75,9 @@ class LoginForm extends Model
 
         return $this->_user;
     }
+
+    public function attributeLabels()
+    {
+        return array( "username" => "请输入用户名", "password" => "请输入密码", "rememberMe" => "记住我" );
+    }
 }
