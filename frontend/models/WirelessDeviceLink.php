@@ -177,7 +177,7 @@ class WirelessDeviceLink extends \yii\db\ActiveRecord
                ];
            }else{
                $nodeStyle['normal'] = [
-                   'color' => '#59678C'
+                   'color' => 'blue'
                ];
            }
             $val["itemStyle"] = $nodeStyle;
