@@ -42,79 +42,86 @@ $fieldOptions2 = [
 	font-style: normal;
 	line-height: 85px;
 	margin-left: -10px;
-	text-shadow: 0 0 30px yellow;
-	opacity: 0;
+	text-shadow: 0 0 30px yellow; 
 }
 .login-logo  i.shown{
 	opacity: 1;
 }
 .animated {
 	-webkit-animation-duration: 1s;
+	animation-duration: 1s;
 	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
 } 
-.bounce {
-	-webkit-animation-name: bounce; 
-	-webkit-transform-origin: center bottom; 
+.animated.bounceIn{
+	-webkit-animation-duration:.75s;
+	animation-duration:.75s;
 }
-@-webkit-keyframes bounce {
-	0%, 100%, 20%, 53%, 80% {
-		-webkit-animation-timing-function: cubic-bezier(0.215, .61, .355, 1);
- 		-webkit-transform: translate3d(0, 0, 0);
- 	}
+.bounceIn{
+	-webkit-animation-name:bounceIn;
+	animation-name:bounceIn
+}
+@-webkit-keyframes bounceIn{
+	0%,100%,20%,40%,60%,80%{
+		-webkit-animation-timing-function:cubic-bezier(0.215,.61,.355,1);
+		animation-timing-function:cubic-bezier(0.215,.61,.355,1)
+	}
 	0%{
-		opacity: 0.35;
-	} 
-	40%, 43% {
-		opacity: 0.8;
-		-webkit-animation-timing-function: cubic-bezier(0.755, .050, .855, .060);
- 		-webkit-transform: translate3d(0, -30px, 0);
- 	}
-	70% {
-		-webkit-animation-timing-function: cubic-bezier(0.755, .050, .855, .060);
- 		-webkit-transform: translate3d(0, -15px, 0);
- 	}
-	90% {
-		-webkit-transform: translate3d(0, -4px, 0);
+		opacity:0;
+		-webkit-transform:scale3d(.3,.3,.3);
+		transform:scale3d(.3,.3,.3)
+	}
+	20%{
+		-webkit-transform:scale3d(1.1,1.1,1.1);
+		transform:scale3d(1.1,1.1,1.1)
+	}
+	40%{
+		-webkit-transform:scale3d(.9,.9,.9);
+		transform:scale3d(.9,.9,.9)
+	}
+	60%{
+		opacity:1;
+		-webkit-transform:scale3d(1.03,1.03,1.03);
+		transform:scale3d(1.03,1.03,1.03)
+	}
+	80%{
+		-webkit-transform:scale3d(.97,.97,.97);
+		transform:scale3d(.97,.97,.97)
 	}
 	100%{
-		opacity: 1;
+		opacity:1;
+		-webkit-transform:scale3d(1,1,1);
+		transform:scale3d(1,1,1)
 	}
-} 
+}
 </style>
 <div class="login-box">
     <div class="login-logo">
-        <span class="logo"><img src="/images/logo_80.png"/></span>
-		<i id="app_title">中石油网管系统</i>
+        <span class="logo"><img src="/images/logo_80.png" width="80" height="77" alt="中石油网管系统" title="中石油网管系统" /></span>
+		<i id="app_title" title="中石油网管系统">中石油网管系统</i>
     </div>
     <!-- /.login-logo -->
-    <div class="login-box-body">
-
-        <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
-
-        <?= $form
-            ->field($model, 'username', $fieldOptions1)
-            ->label(false)
-            ->textInput(['placeholder' => $model->getAttributeLabel('username')]) ?>
-
-        <?= $form
-            ->field($model, 'password', $fieldOptions2)
-            ->label(false)
-            ->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
-
-        <div class="row">
-            <div class="col-xs-8">
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
-            </div>
-            <!-- /.col -->
-            <div class="col-xs-4">
-                <?= Html::submitButton('登录', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
-            </div>
-            <!-- /.col -->
-        </div>
-
-
-        <?php ActiveForm::end(); ?>
-
+    <div class="login-box-body"> 
+        <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?> 
+			<?= $form
+				->field($model, 'username', $fieldOptions1)
+				->label(false)
+				->textInput(['placeholder' => $model->getAttributeLabel('username')]) ?> 
+			<?= $form
+				->field($model, 'password', $fieldOptions2)
+				->label(false)
+				->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
+			<div class="row">
+				<div class="col-xs-8">
+					<?= $form->field($model, 'rememberMe')->checkbox() ?>
+				</div>
+				<!-- /.col -->
+				<div class="col-xs-4">
+					<?= Html::submitButton('登录', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
+				</div>
+				<!-- /.col -->
+			</div> 
+        <?php ActiveForm::end(); ?> 
     </div>
     <!-- /.login-box-body -->
 </div><!-- /.login-box -->
@@ -124,9 +131,9 @@ $fieldOptions2 = [
 $js = <<<abc
 $( function () { 
     $('#app_title')
-		.addClass('bounce animated')
+		.addClass('bounceIn animated')
 		.one('webkitAnimationEnd', function(){
-				$(this).addClass("shown").removeClass('bounce animated');
+				$(this).removeClass('bounceIn animated');
 		});
 });
 abc;
