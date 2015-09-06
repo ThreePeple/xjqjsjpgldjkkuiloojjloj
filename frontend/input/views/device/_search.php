@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\DeviceInfoSearch */
@@ -13,17 +14,41 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
+        'options' => [
+            'class' => 'form-inline'
+        ]
     ]); ?>
-
-    <?= $form->field($model, 'id') ?>
-
-    <?= $form->field($model, 'label') ?>
 
     <?= $form->field($model, 'ip') ?>
 
+    <?= $form->field($model, 'label') ?>
+
+    <?= $form->field($model, 'typeName') ?>
+
+    <?= $form->field($model, 'series') ?>
+
+    <?= $form->field($model, 'model') ?>
+
     <?= $form->field($model, 'mask') ?>
 
-    <?= $form->field($model, 'status') ?>
+    <?= $form->field($model, 'mac') ?>
+
+    <?= $form->field($model, 'status',['options'=>['class'=>'form-group']])->widget
+    (Select2::className(),[
+        "data" => [
+            '-1' =>'未管理',
+            '0' => '未知',
+            '1' => '正常',
+            '2' => '警告',
+            '3' => '次要',
+            '4' => '重要',
+            '5' => '严重',
+        ],
+        'options' => ['placeholder' => '选择状态'],
+        'pluginOptions' => [
+            'allowClear' => true,
+            'width' => '200'
+        ]]) ?>
 
     <?php // echo $form->field($model, 'sysName') ?>
 
@@ -71,9 +96,9 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'update_time') ?>
 
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+    <div class="">
+        <?= Html::submitButton('查询', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('重置', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

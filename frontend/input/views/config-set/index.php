@@ -3,19 +3,20 @@
 
 use kartik\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 ?>
 <script>
-    function deleteBatch(){
+    function batchOper(url,confirmText){
         var keys = $("#config-list").yiiGridView("getSelectedRows");
         if(keys.length == 0) {
             alert("请选择项目");
             return false;
         }
 
-        if(confirm("确认要删除所选项目吗？")){
+        if(confirm(confirmText)){
             $.ajax({
-                url: "/input/config-set/delete-batch",
+                url: url,
                 type: "POST",
                 data: {"ids":keys},
                 dataType: "json",
@@ -40,12 +41,16 @@ use yii\helpers\Html;
             'pjax' => true,
             "columns" => [
                 [
+                    'class'=>'kartik\grid\CheckboxColumn',
+                    'headerOptions'=>['class'=>'kartik-sheet-style'],
+                ],
+                [
                     'label' => 'IP',
-                    "value" => 'ip'
+                    "value" => 'learnIp'
                 ],
                 [
                     'label' => "MAC",
-                    "value" => "mac"
+                    "value" => "learnMac"
                 ],
                 [
                     "label" => "状态",
@@ -54,17 +59,33 @@ use yii\helpers\Html;
                 [
                     "class" => '\kartik\grid\ActionColumn',
                     'header' => '',
-                    'template' => '{delete}',
-                    'width' => '40px'
-                ],
-                [
-                    'class'=>'kartik\grid\CheckboxColumn',
-                    'headerOptions'=>['class'=>'kartik-sheet-style'],
+                    'template' => '{bind}{unbind}',
+                    'width' => '40px',
+                    'buttons' => [
+                        'bind' => function($url,$model,$key){
+                            return $model->status == 1? Html::a('绑定',Url::toRoute(['/input/config-set/bind',
+                                'ip'=>$model->learnIp,'mac'=>$model->learnMac,'id'=>$model->id])) : '';
+                        },
+                        'unbind' => function($url,$model,$key){
+                            return $model->status == 0? Html::a('取消绑定',Url::toRoute(['/input/config-set/unbind',
+                                'id'=>$model->id])) : '';
+                        }
+                    ]
                 ]
             ],
             'panel' => [
                 'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-globe"></i> 下发配置管理</h3>',
                 'type'=>'default',
+                'before' => Html::button('绑定',['class'=>'btn btn-primary','id'=>'batchBind',"onclick"=>'batchOper("'.Url::toRoute(['/input/config-set/batch-bind'])
+                        .'","确认要绑定所选项目吗？")']).' '.Html::button('取消绑定',
+                        ['class'=>'btn
+                btn-primary','id'=>'batchUnbind',"onclick"=>'batchOper("'.Url::toRoute(['/input/config-set/batch-unbind'])
+                            .'","确认要删除绑定所选项目吗？")']).' '.Html::button
+                    ('自动扫描',
+                        ['class'=>'btn
+                btn-primary',
+                        'id'=>'autoScan'])
+                /*
                 'before'=> '<form class="form-inline" action="/input/config-set/send">
   <div class="form-group">
     <label for="IP">IP:</label>
@@ -75,7 +96,7 @@ use yii\helpers\Html;
     <input type="text" class="form-control" id="mac" name="mac" placeholder="">
   </div>
   <button type="submit" class="btn btn-default">下发配置</button>
-</form>',
+</form>',       */
             ],
             /*
             'toolbar' => [
@@ -88,6 +109,8 @@ use yii\helpers\Html;
                 '{export}',
                 '{toggleData}'
             ],*/
+            "export" =>false
+            /*
             "export" => [
                 'label' => "导出数据",
                 'showConfirmAlert'=>false,
@@ -111,7 +134,7 @@ use yii\helpers\Html;
                         'cssFile' => ''
                     ]
                 ]
-            ]
+            ]*/
         ]);
         ?>
     </div>
