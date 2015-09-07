@@ -32,36 +32,36 @@
         "ID_KEY": "__id__",
         "singleMode": true,
         "shape": { 
-            "ac": {
-                "rx": 19,
-                "ry": 21,
-                "imgSrc": "/images/icons3/ac.png" 
-            },
-            "switch": {
-                "rx": 20,
-                "ry": 20,
-                "imgSrc": "/images/icons3/switch.png"
-            },
-            "server": {
-                "rx": 15,
-                "ry": 19.5,
-                "imgSrc": "/images/icons3/server.png"
-            },
-            "firewall": {
-                "rx": 44.5,
-                "ry": 34,
-                "imgSrc": "/images/icons3/firewall.png"
-            }, 
-            "wireless": {
-                "rx": 13.5,
-                "ry": 16,
-                "imgSrc": "/images/icons3/wireless.png"
-            },
-            "coreSwitch":{
-                "rx": 26.5,
-                "ry": 27.5,
-                "imgSrc": "/images/icons3/core.png"
-            }
+					"ac": {
+						"rx": 25,
+						"ry": 27.5,
+						"imgSrc": "/images/icons3/ac.png" 
+					},
+					"switch": {
+						"rx": 27.5,
+						"ry": 27.5,
+						"imgSrc": "/images/icons3/switch.png"
+					},
+					"server": {
+						"rx": 25,
+						"ry": 32.5,
+						"imgSrc": "/images/icons3/server.png"
+					},
+					"firewall": {
+						"rx": 55,
+						"ry": 42,
+						"imgSrc": "/images/icons3/firewall.png"
+					}, 
+					"wireless": {
+						"rx": 20,
+						"ry": 23.5,
+						"imgSrc": "/images/icons3/wireless.png"
+					},
+					"coreSwitch":{
+						"rx": 30,
+						"ry": 31,
+						"imgSrc": "/images/icons3/core.png"
+					}
         }
 
     }; 
