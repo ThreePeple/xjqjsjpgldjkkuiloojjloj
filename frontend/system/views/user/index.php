@@ -32,9 +32,17 @@ use yii\helpers\Html;
                 "email",
                 [
                     'class' => '\kartik\grid\ActionColumn',
-                    'width' => '80px',
+                    'width' => '120px',
                     'header' => '',
-                    'template' => '{update}  {delete}',
+                    'template' => '{reset} {update}  {delete}',
+                    'buttons' =>[
+                        'reset' => function($url,$model,$key){
+                            return Html::a('<span class="glyphicon glyphicon-lock"></span>',
+                                \yii\helpers\Url::toRoute(['/system/user/reset-password', 'id'=>$model->id]),
+                                ["title"=>'重置密码']
+                                );
+                        }
+                    ]
                 ],
             ],
             'panel' => [

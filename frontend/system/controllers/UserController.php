@@ -123,6 +123,21 @@ class UserController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionResetPassword($id){
+        $model = $this->findModel($id);
+
+        if(Yii::$app->request->isPost){
+            $model->load(Yii::$app->request->post());
+            $model->setPassword($model->password_set);
+            if( $model->save()){
+                return $this->redirect(Url::toRoute(['/system/user/index']));
+            }
+        }
+        return $this->render('reset-password', [
+            'model' => $model,
+        ]);
+    }
+
     /**
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
