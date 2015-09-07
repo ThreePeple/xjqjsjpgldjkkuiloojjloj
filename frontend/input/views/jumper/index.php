@@ -107,12 +107,9 @@ $this->registerJs($js);
                     'attribute' => 'point',
                 ],
                 [
-                    "attribute"=>"insert_no",
-                    "hidden" => true,
-                ],
-                [
                     'class'=>'kartik\grid\EditableColumn',
                     'attribute' => 'tag',
+                    /*
                     'editableOptions' => [
                         "inputType" => \kartik\editable\Editable::INPUT_HIDDEN,
                         //"beforeInput" => Html::label('点位标签'),
@@ -129,7 +126,7 @@ $this->registerJs($js);
                     ],
                     "contentOptions" => [
                         "class" => 'skip-export'
-                    ]
+                    ]*/
                 ],
                 [
                     'label' => '',

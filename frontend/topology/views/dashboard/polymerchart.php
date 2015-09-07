@@ -125,6 +125,11 @@ svg{
 .fixedbox .box-body .splitter{
 	margin: 10px 0;
 }
+.ZSYPolymerChart_rendered .left .node g.text{      
+	-webkit-transform-origin: 50% 50%;
+    -webkit-transform: rotate(180deg);
+}
+
 CSS;
 
 $this->registerCss($css);

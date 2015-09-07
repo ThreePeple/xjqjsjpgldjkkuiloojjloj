@@ -7,23 +7,27 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\DeviceAlarmSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
+<style>
+    .form-inline .form-group{
+        vertical-align: inherit;
+    }
+</style>
 <div class="device-alarm-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
+        'options' =>[
+            'class' => 'form-inline'
+        ]
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
-
-    <?= $form->field($model, 'OID') ?>
-
-    <?= $form->field($model, 'originalTypeDesc') ?>
-
-    <?= $form->field($model, 'deviceId') ?>
-
     <?= $form->field($model, 'deviceIp') ?>
+
+    <?= $form->field($model, 'deviceName') ?>
+
+    <?= $form->field($model, 'alarmLevelDesc') ?>
+
 
     <?php // echo $form->field($model, 'deviceName') ?>
 
@@ -80,8 +84,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'originalType') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('查询', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('重置', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

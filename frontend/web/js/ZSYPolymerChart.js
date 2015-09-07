@@ -120,11 +120,13 @@
 
         // Group 1
         var group1 = polymerChart.append("g")
+            .attr("class", "left")
             .attr("transform", "translate(" + groupCenterXY["group1"]["x"] + "," + groupCenterXY["group1"]["y"] + ")");
 
         // Group 2
         // TODO : 179.38, not 180 ?
         var group2 = polymerChart.append("g")
+            .attr("class", "right")
             .attr("transform", "rotate(179.38)translate(" + (-1 * groupCenterXY["group2"]["x"]) + "," + (-1 * groupCenterXY["group2"]["y"]) + ")");
 
         _renderPolymers();
@@ -132,6 +134,14 @@
         _renderGroup("group2", data.groups, group2, true);
         _renderLinks(data.polymers, linkParent);
         _bindEvents();
+        
+        /* 
+         * Fixed: 
+         *   chrome(版本 44.0.2403.155 m), g.text下的transform无法正确显示（错位），
+         *   故而增加 ZSYPolymerChart_rendered
+         *
+         */
+        polymerChart.attr("class", "ZSYPolymerChart ZSYPolymerChart_rendered");
     };
 
     var _highlightNode = function(d, highlight) {
@@ -325,7 +335,7 @@
                 })
                 .attr("class", "node");
 
-            nodes.append("circle")
+            nodes.append("g").append("circle")
                 .attr("r", nodeCircleRadius)
                 .attr("title", function(d) {
                     return d.data.label;
@@ -336,7 +346,9 @@
                 .attr('cx', 1)
                 .attr("cy", -4);
 
-            nodes.append("text")
+            nodes.append("g")
+            .attr("class","text") 
+            .append("text")
                 .attr("dx", 2.5 * nodeCircleRadius)
                 .attr("dy", 0)
                 .text(function(d) {
@@ -357,7 +369,7 @@
                 })
                 .attr("class", "node");
 
-            nodes.append("circle")
+            nodes.append("g").append("circle")
                 .attr("r", nodeCircleRadius)
                 .attr("title", function(d) {
                     return d.data.label;
@@ -368,7 +380,9 @@
                 .attr('cx', 1)
                 .attr("cy", -4);
 
-            nodes.append("text")
+            nodes.append("g")
+            .attr("class","text") 
+            .append("text")
                 .attr("dx", 2.5 * nodeCircleRadius)
                 .attr("dy", 0)
                 .text(function(d) {

@@ -76,7 +76,7 @@ class User extends \common\models\User
 
     public function attributeHints(){
         return [
-            "username" => '登录使用的用户名',
+            //"username" => '登录使用的用户名',
             "password_set" => "登录密码,6-12个字符,支持0-9A-Za-z$#-_等字符^",
         ];
     }
@@ -108,4 +108,5 @@ class User extends \common\models\User
             ],
         ];
     }
+
 }

@@ -80,11 +80,11 @@ use yii\helpers\Url;
                         .'","确认要绑定所选项目吗？")']).' '.Html::button('取消绑定',
                         ['class'=>'btn
                 btn-primary','id'=>'batchUnbind',"onclick"=>'batchOper("'.Url::toRoute(['/input/config-set/batch-unbind'])
-                            .'","确认要删除绑定所选项目吗？")']).' '.Html::button
+                            .'","确认要删除绑定所选项目吗？")'])/*.' '.Html::button
                     ('自动扫描',
                         ['class'=>'btn
                 btn-primary',
-                        'id'=>'autoScan'])
+                        'id'=>'autoScan'])*/
                 /*
                 'before'=> '<form class="form-inline" action="/input/config-set/send">
   <div class="form-group">
