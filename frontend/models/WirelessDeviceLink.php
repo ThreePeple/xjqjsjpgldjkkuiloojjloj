@@ -177,7 +177,7 @@ class WirelessDeviceLink extends \yii\db\ActiveRecord
                ];
            }else{
                $nodeStyle['normal'] = [
-                   'color' => 'blue'
+                   'color' => '#45d3c9'
                ];
            }
             $val["itemStyle"] = $nodeStyle;
@@ -219,7 +219,7 @@ class WirelessDeviceLink extends \yii\db\ActiveRecord
             if($row['leftDevice'] == $id1 || $row["rightDevice"]==$id1){
                 $color = 'green';
             }else{
-                $color = 'blue';
+                $color = '#45d3c9';
             }
 
             $links[] = [

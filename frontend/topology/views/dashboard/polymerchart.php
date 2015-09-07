@@ -44,7 +44,7 @@ svg{
 	stroke: red;
 }
 .ZSYPolymerChart .node text{
-	fill: gray;
+	fill: #cdcdcd;
 	font-size: 15px;
 }
 .ZSYPolymerChart .node circle{

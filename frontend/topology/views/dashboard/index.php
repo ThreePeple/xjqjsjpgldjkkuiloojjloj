@@ -29,6 +29,9 @@ $css = <<<CSS
 body{
     background-color: rgb(37,37,37) !important;
 }
+.wrap{
+    min-height: 996px;
+}
 .box{
   color: #fff;
   position: relative;
@@ -50,6 +53,9 @@ body{
 }
 .buidling-editor-container text.title {
     display: none;
+}
+.main{
+    height: 940px;
 }
 svg.ZSYFCEditor { 
     left: auto;
