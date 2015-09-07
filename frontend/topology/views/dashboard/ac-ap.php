@@ -9,6 +9,7 @@
 $this->registerCssFile("/css/popuppanel.css",["depends"=> 'frontend\assets\AppAsset']);
 $this->registerJsFile("/js/popuppanel.js",["depends"=> 'frontend\assets\AppAsset']);
 
+$this->registerCssFile('/css/style.css');
 $this->registerJsFile('/js/d3.min.js',["depends"=> 'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/ZSYPolymerChart.js',["depends"=> 'frontend\assets\AppAsset']);
 $this->registerJsFile('/js/wireless_ploymer.js',["depends"=> 'frontend\assets\AppAsset']);

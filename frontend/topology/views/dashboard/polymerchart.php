@@ -7,6 +7,9 @@
  */
 
 $this->registerCssFile("/css/popuppanel.css",["depends"=> 'frontend\assets\AppAsset']);
+
+$this->registerCssFile('/css/style.css');
+
 $this->registerJsFile("/js/popuppanel.js",["depends"=> 'frontend\assets\AppAsset']);
 
 $this->registerJsFile('/js/d3.min.js',["depends"=> 'frontend\assets\AppAsset']);

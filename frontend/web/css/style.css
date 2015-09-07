@@ -7,8 +7,20 @@ body.ZSYFCEditor_shape_moving{
 body.ZSYFCEditor_link_moving{
 	cursor: default;
 }
+
+.wrap{
+    min-height: 996px;
+}
 footer.footer{
 	color: #cdcdcd;
+	height: 28px;
+	overflow: hidden;
+}
+footer.footer p{
+	margin: 0 !important;
+}
+footer.footer .pull-right{
+	line-height: 28px;
 }
 .jppopuppanel.modify_title{
 	margin-top: 10px;

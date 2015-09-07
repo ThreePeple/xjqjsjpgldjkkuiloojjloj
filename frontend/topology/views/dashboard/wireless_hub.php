@@ -12,6 +12,7 @@ $this->registerJsFile('/js/echarts/build/dist/echarts-all.js',['depends'=>'front
 $this->registerCssFile("/css/popuppanel.css",["depends"=> 'frontend\assets\AppAsset']);
 $this->registerJsFile("/js/popuppanel.js",["depends"=> 'frontend\assets\AppAsset']);
 
+$this->registerCssFile('/css/style.css');
 $this->registerJsFile('/js/wireless_ploymer.js',["depends"=> 'frontend\assets\AppAsset']);
 
 /*
