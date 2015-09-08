@@ -48,7 +48,10 @@ use yii\helpers\Html;
                                 );
                         },
                         'delete' => function($url,$model,$key){
-                            return $model->id==1? '' : Html::a('<span class="glyphicon glyphicon-trash"></span>',
+                            return ($model->id==1 || $model->id == Yii::$app->user->identity->getId())? '' : Html::a
+                            ('<span
+                            class="glyphicon
+                            glyphicon-trash"></span>',
                                 \yii\helpers\Url::toRoute(['/system/user/delete', 'id'=>$model->id]),
                                 ["title"=>'删除']
                             );
