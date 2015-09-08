@@ -15,7 +15,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
-use app\models\DeviceInterfaceTask;
+use frontend\models\DeviceInterfaceTask;
 use app\models\DeviceTask;
 use frontend\models\DeviceAlarm;
 use yii\data\ActiveDataProvider;

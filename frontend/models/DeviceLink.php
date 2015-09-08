@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use frontend\models\DeviceInfo;
 use Yii;
 use yii\db\Query;
 
