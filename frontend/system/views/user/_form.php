@@ -12,7 +12,7 @@ use yii\helpers\Html;
 
 ?>
 <div class="panel panel-default">
-    <div class="panel-heading"><h3 class="panel-title"><i class="glyphicon glyphicon-plus"></i>
+    <div class="panel-heading"><h3 class="panel-title"><i class="glyphicon glyphicon-pencil"></i>
             <?=$this->title?></h3></div>
     <div class="panel-body">
         <?php
@@ -65,6 +65,8 @@ use yii\helpers\Html;
             <div class="page-header">
                 <h3>基础信息<small></small></h3>
             </div>
+            <?= $form->field($model, "role")->dropDownList(['admin'=>'管理员','operator'=>'普通用户'])?>
+
             <?=$form->field($model,"name", [
                 'feedbackIcon' => [
                     'prefix' => 'fa fa-',

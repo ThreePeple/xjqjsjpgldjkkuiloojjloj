@@ -9,7 +9,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 ?>
 <div class="panel panel-default">
-    <div class="panel-heading"><h3 class="panel-title"><i class="glyphicon glyphicon-plus"></i>
+    <div class="panel-heading"><h3 class="panel-title"><i class="glyphicon glyphicon-pencil"></i>
             修改密码</h3></div>
 <div class="panel-body">
     <?php

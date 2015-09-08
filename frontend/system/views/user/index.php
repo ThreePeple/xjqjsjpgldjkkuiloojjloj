@@ -25,8 +25,12 @@ use yii\helpers\Html;
         GridView::widget([
             "dataProvider"=>$dataProvider,
             "columns" => [
-                'id',
                 "username",
+                [
+                    'label' => Html::a('角色','javascript:void(0)'),
+                    'value' => 'roleShow',
+                    'encodeLabel'=> false,
+                ],
                 "name",
                 "phone",
                 "email",

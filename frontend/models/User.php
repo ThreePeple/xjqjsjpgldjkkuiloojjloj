@@ -48,7 +48,8 @@ class User extends \common\models\User
             [["username"],'unique','message'=>'用户名{attribute}已存在'],
             [['password_set'],'match','pattern'=>'/^[\d\w*\$#^-_]{6,12}$/'],
             [['password_confirm'],'compare','compareAttribute'=>'password_set'],
-            [["email"],'email']
+            [["email"],'email'],
+            [['role'],'in','range'=>['admin','operator']]
         ];
     }
 
@@ -71,13 +72,14 @@ class User extends \common\models\User
             'password_confirm' =>  Yii::t('app', '确认密码'),
             'name' =>  Yii::t('app', '姓名'),
             'phone' =>  Yii::t('app', '手机'),
+            'role' => "角色"
         ];
     }
 
     public function attributeHints(){
         return [
             //"username" => '登录使用的用户名',
-            "password_set" => "登录密码,6-12个字符,支持0-9A-Za-z$#-_等字符^",
+            "password_set" => "登录密码,6-12个字符,支持0-9A-Za-z$#-_^等字符",
         ];
     }
 
@@ -109,4 +111,31 @@ class User extends \common\models\User
         ];
     }
 
+    public function getRole(){
+        $auth = Yii::$app->authManager;
+        $roles = $auth->getRolesByUser($this->id);
+        return array_key_exists('admin',$roles)? 'admin':'operator';
+    }
+
+    public function setRole($roleName){
+        $auth = Yii::$app->authManager;
+        if(!$auth->getAssignment($roleName,$this->id)){
+            $auth->revokeAll($this->id);
+            $role = $auth->getRole($roleName);
+            if(!$role){
+                $role = $auth->createRole($roleName);
+            }
+            $auth->assign($role,$this->id);
+        }
+    }
+
+    public function getRoleShow(){
+        $role = $this->getRole();
+        switch($role){
+            case 'admin':
+                return '管理员';
+            default:
+                return '普通用户';
+        }
+    }
 }
