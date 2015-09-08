@@ -7,7 +7,11 @@ use yii\widgets\ActiveForm;
 /* @var $model frontend\models\AccessDeviceInfoSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
+<style>
+    .form-inline .form-group{
+        vertical-align: inherit;
+    }
+</style>
 <div class="access-device-info-search">
 
     <?php $form = ActiveForm::begin([

@@ -61,7 +61,7 @@ use yii\helpers\Url;
                 'learnIp',
                 'learnMac',
                 [
-                    "label" => "状态",
+                    "label" => "是否被管理",
                     "value" => "status"
                 ],
                 [
