@@ -33,7 +33,7 @@ class ApiController extends Controller
         $query=[
             'resPrivilegeFilter'=>false,
             'start'=>0,
-            'orderBy'=>id,
+            'orderBy'=>'id',
             'desc'=>false,
             'size'=>500,
             'total'=>false,
@@ -71,7 +71,49 @@ class ApiController extends Controller
      */
     public function actionIpmaclearn()
     {
-
+        $host=Yii::$app->params['wireless_api_host'];
+        $api_path=Constants::IP_MAC_LEARN;
+        $url=$host.$api_path."/";
+        $query=[
+            'start'=>0,
+            'desc'=>false,
+            'size'=>500,
+            'total'=>false,
+        ];
+        $devices=$this->getDevices();
+        if(empty($devices))
+        {
+            echo "找不到对应设备/n";
+            exit;
+        }
+        foreach($devices as $device)
+        {
+            $url=$url.$device['id'];
+            $client=(new RestfulClient())->get($url,$query);
+            if(!$client->hasErrors())
+            {
+                $data = $client->getData();
+                // var_dump($data['device']);
+                if(isset($data['ipMacLearnResult']))
+                {
+                    foreach($data['ipMacLearnResult'] as $_data)
+                    {
+                        if($this->importIpMacLearn($_data))
+                            echo $_data['learnIp']." import ok\n";
+                        else
+                        {
+                            echo $_data['learnIp']." import fail\n";
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                var_dump($client->getError());
+                Yii::error($client->getError(),'console/actionIpmaclearn');
+            }
+        }
     }
 
     ///////////////////私有函数////////////////////////
@@ -85,7 +127,7 @@ class ApiController extends Controller
         {
             //初始化
             $param=$this->initParams($param);
-            //对原始处理进行特殊处理
+            //对原始数据进行特殊处理
             //类型映射
             $map_id=$this->getDeviceMapCategoryID($param['ip']);
             $param['categoryId']=empty($map_id)?$param['categoryId']:$map_id;
@@ -243,15 +285,48 @@ class ApiController extends Controller
     /**
      * 从表中获取有线设备信息
      */
-    private function getDevices()
+    private function getDevices($ipAry)
     {
-        $devices=DeviceInfo::find();
+        $query=DeviceInfo::find();
+        if(!empty($ipAry))
+        {
+            $query->where(['ip'=>$ipAry]);
+        }
+        return $query->all();
     }
     /**
      * 从表中获取无线设备信息
      */
-    private function getWirelessDevices()
+    private function getWirelessDevices($ipAry)
     {
+        $query=WirelessDeviceInfo::find();
+        if(!empty($ipAry))
+        {
+            $query->where(['ip'=>$ipAry]);
+        }
+        return $query->all();
+    }
 
+    /**
+     * @param $deviceId 设备ID
+     */
+    private function importIpMacLearn($param)
+    {
+        try
+        {
+            $sql="insert into `access_device_info`(deviceId,`deviceIp`,ifIndex,ifDesc,vlanId,learnIp,learnMac,status)";
+            $sql.=" values(".$param['deviceId'].",'".$param['deviceIp']."',".$param['ifIndex'].",'".$param['ifDesc']."',".$param['vlanId'].",";
+            $sql.="'".$param['learnIp']."','".$param['learnMac']."',0) on duplicate key update ";
+            $sql.="ifIndex=".$param['ifIndex'].",ifDesc='".$param['ifDesc']."',vlanId=".$param['vlanId'];
+            $cmd = Yii::$app->db->createCommand($sql);
+            $cmd->execute();
+            return true;
+        }
+        catch(Exception $e)
+        {
+            var_dump($e->getMessage());
+            Yii::error($e->getMessage(),'console/importWirelessDevice');
+            return false;
+        }
     }
 }
