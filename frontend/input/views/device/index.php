@@ -2,7 +2,7 @@
 use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use app\models\DeviceInfo;
+use frontend\models\DeviceInfo;
 ?>
 <div class="row">
     <div class="col-md-12">

@@ -7,7 +7,7 @@ use app\models\WirelessDeviceCategory;
 use app\models\WirelessDeviceInfo;
 use yii\base\Exception;
 use yii\helpers\Json;
-use app\models\DeviceInfo;
+use frontend\models\DeviceInfo;
 use yii\helpers\ArrayHelper;
 use app\models\ViewTemplate;
 use Yii;
