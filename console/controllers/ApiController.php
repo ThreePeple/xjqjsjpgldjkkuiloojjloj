@@ -71,7 +71,7 @@ class ApiController extends Controller
      */
     public function actionIpmaclearn()
     {
-        $host=Yii::$app->params['wireless_api_host'];
+        $host=Yii::$app->params['api_host'];
         $api_path=Constants::IP_MAC_LEARN;
         $url=$host.$api_path."/";
         $query=[
