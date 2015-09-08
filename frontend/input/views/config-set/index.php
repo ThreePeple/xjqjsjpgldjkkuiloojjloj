@@ -31,6 +31,19 @@ use yii\helpers\Url;
         }
     }
 </script>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">筛选</h3>
+            </div>
+            <div class="panel-body">
+                <?=$this->render("_search",["model"=>$searchModel]);?>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row" >
     <div class="col-md-12">
         <?=
@@ -44,14 +57,9 @@ use yii\helpers\Url;
                     'class'=>'kartik\grid\CheckboxColumn',
                     'headerOptions'=>['class'=>'kartik-sheet-style'],
                 ],
-                [
-                    'label' => 'IP',
-                    "value" => 'learnIp'
-                ],
-                [
-                    'label' => "MAC",
-                    "value" => "learnMac"
-                ],
+                'deviceIp',
+                'learnIp',
+                'learnMac',
                 [
                     "label" => "状态",
                     "value" => "status"
@@ -67,7 +75,7 @@ use yii\helpers\Url;
                                 'ip'=>$model->learnIp,'mac'=>$model->learnMac,'id'=>$model->id])) : '';
                         },
                         'unbind' => function($url,$model,$key){
-                            return $model->status == 0? Html::a('取消绑定',Url::toRoute(['/input/config-set/unbind',
+                            return $model->status == 0? Html::a('释放',Url::toRoute(['/input/config-set/unbind',
                                 'id'=>$model->id])) : '';
                         }
                     ]
@@ -76,15 +84,15 @@ use yii\helpers\Url;
             'panel' => [
                 'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-globe"></i> 下发配置管理</h3>',
                 'type'=>'default',
-                'before' => Html::button('绑定',['class'=>'btn btn-primary','id'=>'batchBind',"onclick"=>'batchOper("'.Url::toRoute(['/input/config-set/batch-bind'])
-                        .'","确认要绑定所选项目吗？")']).' '.Html::button('取消绑定',
+                'before' => Html::button('批量绑定',['class'=>'btn btn-primary','id'=>'batchBind',"onclick"=>'batchOper("'.Url::toRoute(['/input/config-set/batch-bind'])
+                        .'","确认要绑定所选项目吗？")']).' '.Html::button('批量释放',
                         ['class'=>'btn
                 btn-primary','id'=>'batchUnbind',"onclick"=>'batchOper("'.Url::toRoute(['/input/config-set/batch-unbind'])
-                            .'","确认要删除绑定所选项目吗？")'])/*.' '.Html::button
-                    ('自动扫描',
+                            .'","确认要释放所选项目吗？")']).' '.Html::a
+                    ('刷新',Url::toRoute(["/input/config-set/index"]),
                         ['class'=>'btn
                 btn-primary',
-                        'id'=>'autoScan'])*/
+                        'id'=>'autoScan'])
                 /*
                 'before'=> '<form class="form-inline" action="/input/config-set/send">
   <div class="form-group">

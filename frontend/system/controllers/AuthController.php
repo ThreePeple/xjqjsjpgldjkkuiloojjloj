@@ -2,7 +2,10 @@
 
 namespace app\system\controllers;
 
-class AuthController extends \yii\web\Controller
+use Yii;
+use yii\web\Controller;
+
+class AuthController extends Controller
 {
     public function actionIndex()
     {

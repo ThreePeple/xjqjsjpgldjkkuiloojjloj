@@ -32,6 +32,7 @@ class ConfigSetController extends \yii\web\Controller
         $dataProvider = $model->search(Yii::$app->request->queryParams);
         return $this->render("index",[
             'dataProvider'=>$dataProvider,
+            'searchModel' => $model
         ]);
     }
 
