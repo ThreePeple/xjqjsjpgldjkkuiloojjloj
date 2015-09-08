@@ -5,11 +5,33 @@ namespace app\system\controllers;
 use app\models\InfoConfig;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
+use yii\filters\AccessControl;
 use yii\helpers\Json;
 use yii\web\Response;
 
 class TipController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access'=>[
+                'class'=>AccessControl::className(),
+                'rules' =>[
+                    [
+                        'allow'=>true,
+                        'roles' => ['admin']
+                    ],
+                    [
+                        'allow' => false,
+                        'roles'=>['operator'],
+                        'denyCallback' => function($rule,$action){
+                            return $this->redirect(['/site/login']);
+                        }
+                    ],
+                ]
+            ]
+        ];
+    }
     public function actionIndex()
     {
         $content1 = $this->getContent(1);

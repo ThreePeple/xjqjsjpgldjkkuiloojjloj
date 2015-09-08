@@ -5,6 +5,7 @@ namespace app\system\controllers;
 use Yii;
 use app\models\User;
 use app\models\UserSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -21,6 +22,28 @@ class UserController extends Controller
     public function behaviors()
     {
         return [
+            'access'=>[
+                'class'=>AccessControl::className(),
+                'rules' =>[
+
+                    [
+                        'actions'=>['index'],
+                        'allow' => true,
+                        'roles' => ['@']
+                    ],
+                    [
+                        'allow'=>true,
+                        'roles' => ['admin']
+                    ],
+                    [
+                        'allow' => false,
+                        'roles'=>['operator'],
+                        'denyCallback' => function($rule,$action){
+                            return $this->redirect(['/site/login']);
+                        }
+                    ],
+                ]
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -36,6 +59,7 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
+        var_dump(Yii::$app->user->can('admin'));
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

@@ -37,6 +37,7 @@ use yii\helpers\Html;
                 [
                     'class' => '\kartik\grid\ActionColumn',
                     'width' => '120px',
+                    'hidden' => !Yii::$app->user->can('admin'),
                     'header' => '',
                     'template' => '{reset} {update}  {delete}',
                     'buttons' =>[
@@ -45,6 +46,12 @@ use yii\helpers\Html;
                                 \yii\helpers\Url::toRoute(['/system/user/reset-password', 'id'=>$model->id]),
                                 ["title"=>'重置密码']
                                 );
+                        },
+                        'delete' => function($url,$model,$key){
+                            return $model->id==1? '' : Html::a('<span class="glyphicon glyphicon-trash"></span>',
+                                \yii\helpers\Url::toRoute(['/system/user/delete', 'id'=>$model->id]),
+                                ["title"=>'删除']
+                            );
                         }
                     ]
                 ],
@@ -52,7 +59,11 @@ use yii\helpers\Html;
             'panel' => [
                 'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-globe"></i> 用户列表</h3>',
                 'type'=>'default',
-                'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> 创建用户', ['create'], ['class' => 'btn btn-primary']),
+                'before'=>Yii::$app->user->can('admin') ? Html::a('<i class="glyphicon glyphicon-plus"></i> 创建用户',
+                ['create'],
+                        ['class' =>
+                        'btn
+                btn-primary']) : '',
             ],
             "export"=>false,
         ]);

@@ -5,6 +5,7 @@ namespace app\system\controllers;
 use Yii;
 use frontend\models\SmsTemplate;
 use app\models\SmsTemplateSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -17,6 +18,28 @@ class SmsTemplateController extends Controller
     public function behaviors()
     {
         return [
+            'access'=>[
+                'class'=>AccessControl::className(),
+                'rules' =>[
+
+                    [
+                        'actions'=>['index'],
+                        'allow' => true,
+                        'roles' => ['@']
+                    ],
+                    [
+                        'allow'=>true,
+                        'roles' => ['admin']
+                    ],
+                    [
+                        'allow' => false,
+                        'roles'=>['operator'],
+                        'denyCallback' => function($rule,$action){
+                            return $this->redirect(['/site/login']);
+                        }
+                    ],
+                ]
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -25,7 +48,6 @@ class SmsTemplateController extends Controller
             ],
         ];
     }
-
     /**
      * Lists all SmsTemplate models.
      * @return mixed

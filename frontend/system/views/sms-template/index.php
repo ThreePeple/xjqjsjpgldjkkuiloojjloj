@@ -19,13 +19,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'content:ntext',
             [
-                'class' => 'yii\grid\ActionColumn'
+                'class' => 'kartik\grid\ActionColumn',
+                'hidden' => !Yii::$app->user->can('admin'),
+
             ],
         ],
         'panel' => [
             'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-globe"></i> 消息模版列表</h3>',
             'type'=>'default',
-            'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> 新建模版', ['create'], ['class' => 'btn btn-primary']),
+            'before'=>Yii::$app->user->can('admin') ? Html::a('<i class="glyphicon glyphicon-plus"></i> 新建模版',
+                ['create'], ['class' => 'btn btn-primary']) : ''
         ],
         'export' => false
     ]); ?>

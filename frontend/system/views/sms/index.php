@@ -29,13 +29,15 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'kartik\grid\ActionColumn',
                 'template' => '{update}&nbsp;&nbsp;{delete}',
+                'hidden' => !Yii::$app->user->can('admin'),
                 'header' => ''
             ],
         ],
         'panel' => [
             'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-globe"></i> 消息设置列表</h3>',
             'type'=>'default',
-            'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> 新建配置', ['create'], ['class' => 'btn btn-primary']),
+            'before'=>Yii::$app->user->can('admin') ? Html::a('<i class="glyphicon glyphicon-plus"></i> 新建配置',
+                ['create'], ['class' => 'btn btn-primary']) : '',
         ],
         'export' => false
     ]); ?>

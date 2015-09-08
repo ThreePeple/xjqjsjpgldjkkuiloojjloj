@@ -33,13 +33,16 @@ use yii\helpers\Url;
 
         <ul class="sidebar-menu">
             <li class="<?=($this->context->id == 'user'? "active":'')?>"><a href="<?=Url::toRoute('/system/user/index')?>"><span class="fa fa-circle-o"></span> 用户管理</a>
-            <li class="treeview <?=($this->context->id == 'template'? "active":'')?>">
+            <?php
+            if(Yii::$app->user->can("admin")){
+            ?>
+            <li class="treeview <?= ($this->context->id == 'template' ? "active" : '') ?>">
                 <a href="#">
                     <i class="fa fa-circle-o"></i> <span>模板管理</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
-                <?=Nav::widget([
-                    "options" => ["class"=>"treeview-menu"],
+                <?= Nav::widget([
+                    "options" => ["class" => "treeview-menu"],
                     'encodeLabels' => false,
                     "items" => [
                         [
@@ -63,7 +66,12 @@ use yii\helpers\Url;
                     <li><a href="/system/template/wireless"><span class="fa fa-circle-o"></span> 无线网络模板</a> </li>
                 </ul>-->
             </li>
-            <li class="<?=($this->context->id == 'tip'? "active":'')?>"><a href="<?=Url::toRoute('/system/tip/index')?>"><span class="fa fa-circle-o"></span> 提示信息设置</a>
+            <li class="<?= ($this->context->id == 'tip' ? "active" : '') ?>"><a
+                    href="<?= Url::toRoute('/system/tip/index') ?>"><span class="fa fa-circle-o"></span> 提示信息设置</a>
+            </li>
+            <?php
+            }
+            ?>
             <li class="treeview <?=(in_array($this->context->id,['device-alarm',"sms",'sms-template'])? "active":'')?>">
                 <a href="#">
                     <i class="fa fa-circle-o"></i> <span>告警管理</span>

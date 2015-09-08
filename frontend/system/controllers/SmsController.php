@@ -10,6 +10,7 @@ use frontend\models\SmsTemplate;
 use Yii;
 use frontend\models\SmsConfig;
 use frontend\models\SmsConfigSearch;
+use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -23,6 +24,28 @@ class SmsController extends Controller
     public function behaviors()
     {
         return [
+            'access'=>[
+                'class'=>AccessControl::className(),
+                'rules' =>[
+
+                    [
+                        'actions'=>['index'],
+                        'allow' => true,
+                        'roles' => ['@']
+                    ],
+                    [
+                        'allow'=>true,
+                        'roles' => ['admin']
+                    ],
+                    [
+                        'allow' => false,
+                        'roles'=>['operator'],
+                        'denyCallback' => function($rule,$action){
+                            return $this->redirect(['/site/login']);
+                        }
+                    ],
+                ]
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

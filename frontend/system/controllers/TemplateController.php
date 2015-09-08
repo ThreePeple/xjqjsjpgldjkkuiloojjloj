@@ -6,6 +6,7 @@ use app\models\DeviceCategory;
 use app\models\WirelessDeviceCategory;
 use app\models\WirelessDeviceInfo;
 use yii\base\Exception;
+use yii\filters\AccessControl;
 use yii\helpers\Json;
 use frontend\models\DeviceInfo;
 use yii\helpers\ArrayHelper;
@@ -15,6 +16,27 @@ use app\models\Area;
 
 class TemplateController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access'=>[
+                'class'=>AccessControl::className(),
+                'rules' =>[
+                    [
+                        'allow'=>true,
+                        'roles' => ['admin']
+                    ],
+                    [
+                        'allow' => false,
+                        'roles'=>['operator'],
+                        'denyCallback' => function($rule,$action){
+                            return $this->redirect(['/site/login']);
+                        }
+                    ],
+                ]
+            ]
+        ];
+    }
     public function actionBuilding()
     {
         $lists = DeviceInfo::getSelect2List(ViewTemplate::TYPE_BUILD);
