@@ -6,6 +6,9 @@ use yii\console\Controller;
 use frontend\models\DeviceCategoryMap;
 use frontend\models\DeviceSeries;
 use frontend\models\DeviceModel;
+use frontend\models\AccessDeviceInfo;
+use frontend\models\DeviceInfo;
+use frontend\models\WirelessDeviceInfo;
 use yii\log\Logger;
 use yii\base\Exception;
 use Yii;
@@ -25,6 +28,7 @@ class ApiController extends Controller
     public function actionWirelessDeviceSourceTask()
     {
        $host=Yii::$app->params['wireless_api_host'];
+        //无线设备数据
        $api_path=Constants::WIRELESS_DEVICE;
         $query=[
             'resPrivilegeFilter'=>false,
@@ -62,11 +66,17 @@ class ApiController extends Controller
         }
     }
 
+    /**
+     * 查询当前接入设备
+     */
+    public function actionIpmaclearn()
+    {
+
+    }
 
     ///////////////////私有函数////////////////////////
     /**
      * 导入无线设备数据
-     * @param $data
      */
     private function importWirelessDevice($_data)
     {
@@ -142,7 +152,6 @@ class ApiController extends Controller
 
     /**
      * 提取设备系列id，并得到系列名称
-     * @param $series_url
      */
     private function getDeviceSeries($series_url)
     {
@@ -166,7 +175,6 @@ class ApiController extends Controller
     }
     /**
      * 提取设备型号id，并得到型号名称
-     * @param $series_url
      */
     private function getDeviceModel($model_url)
     {
@@ -230,5 +238,20 @@ class ApiController extends Controller
             $param['phyCreateTime']='';
         }
         return $param;
+    }
+
+    /**
+     * 从表中获取有线设备信息
+     */
+    private function getDevices()
+    {
+        $devices=DeviceInfo::find();
+    }
+    /**
+     * 从表中获取无线设备信息
+     */
+    private function getWirelessDevices()
+    {
+
     }
 }

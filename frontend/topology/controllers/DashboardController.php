@@ -16,7 +16,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use app\models\ViewTemplate;
 use yii\helpers\Json;
-use app\models\DeviceInfo;
+use frontend\models\DeviceInfo;
 use Yii;
 use app\models\DeviceLink;
 use yii\helpers\ArrayHelper;

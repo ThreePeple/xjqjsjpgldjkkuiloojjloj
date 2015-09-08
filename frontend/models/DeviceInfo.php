@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use frontend\models\DeviceModel;
 use frontend\models\DeviceSeries;

@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-use app\models\DeviceInfo;
+use frontend\models\DeviceInfo;
 use app\models\DeviceLink;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;

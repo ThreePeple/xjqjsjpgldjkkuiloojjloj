@@ -9,8 +9,8 @@
 namespace app\input\controllers;
 
 
-use app\models\DeviceInfo;
-use app\models\DeviceInfoSearch;
+use frontend\models\DeviceInfo;
+use frontend\models\DeviceInfoSearch;
 use app\models\DeviceIpfilter;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
