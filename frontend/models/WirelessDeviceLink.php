@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use frontend\models\DeviceIpfilter;
+use frontend\models\WirelessDeviceInfo;
 use Yii;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;

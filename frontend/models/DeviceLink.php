@@ -3,6 +3,7 @@
 namespace app\models;
 
 use frontend\models\DeviceInfo;
+use frontend\models\DeviceIpfilter;
 use Yii;
 use yii\db\Query;
 
