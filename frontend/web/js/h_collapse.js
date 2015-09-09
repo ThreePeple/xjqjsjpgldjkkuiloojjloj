@@ -15,5 +15,5 @@ $(function() {
             200);
         $(this).siblings().find(".unfold").hide();
         $(this).siblings().find(".fold").show();
-    })
+    }).filter(":first").trigger("click");
 })
