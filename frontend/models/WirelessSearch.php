@@ -5,7 +5,7 @@ namespace frontend\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\WirelessDeviceInfo;
+//use frontend\models\WirelessDeviceInfo;
 use yii\helpers\ArrayHelper;
 
 /**
