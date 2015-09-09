@@ -37,7 +37,7 @@ class SmsController extends Controller{
             $alarms = DeviceAlarm::find()
                 ->where(['and','serial_num > '.$LastId,'faultTime>='.strtotime($config->update_time)])
                 ->andWhere($condition)
-                ->select(array_merge(DeviceAlarm::$template_fields,["serial_num"=>"serial_num"]))
+                ->select(array_merge(SmsTemplate::$template_fields,["serial_num"=>"serial_num"]))
                 ->asArray()
                 ->all();
 

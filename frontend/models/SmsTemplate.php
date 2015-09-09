@@ -13,6 +13,15 @@ use Yii;
  */
 class SmsTemplate extends \yii\db\ActiveRecord
 {
+    static $template_fields = [
+        '__ALARM_LEVEL__' => 'alarmLevel',
+        '__ALARM_CATEGORY__' => 'alarmCategory',
+        '__EVENT_NAME__' => 'eventName',
+        '__ALARM_REASON__' => 'reason',
+        '__ALARM_DESC__' => 'alarmDesc',
+        '__DEVICE_NAME__' => 'deviceName',
+        '__DEVICE_IP__' => 'deviceIp',
+    ];
     /**
      * @inheritdoc
      */
@@ -42,5 +51,20 @@ class SmsTemplate extends \yii\db\ActiveRecord
             'content' => '内容',
             'name' => '名称',
         ];
+    }
+
+    public function attributeHints(){
+        return [
+            //"username" => '登录使用的用户名',
+        ];
+    }
+
+    public function getMacroVariables(){
+        $micros = [];
+        $model = new DeviceAlarm();
+        foreach(self::$template_fields as $micro=>$field){
+            $micros[$micro] = $model->getAttributeLabel($field);
+        }
+        return $micros;
     }
 }
