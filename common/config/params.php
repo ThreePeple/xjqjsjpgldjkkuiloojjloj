@@ -13,6 +13,6 @@ return [
             "user" => 'admin',
             "pwd" => '2233@dzm',
         ],
-
     ],
+    'sms_soap' => 'http://10.8.125.9:8022/SendMSMService/Service.svc?wsdl'
 ];

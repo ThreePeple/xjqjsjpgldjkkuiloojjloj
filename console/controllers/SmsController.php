@@ -37,7 +37,7 @@ class SmsController extends Controller{
             $alarms = DeviceAlarm::find()
                 ->where(['and','serial_num > '.$LastId,'faultTime>='.strtotime($config->update_time)])
                 ->andWhere($condition)
-                ->select(array_merge(DeviceAlarm::$template_fields,["serial_num"=>"serial_num"]))
+                ->select(array_merge(SmsTemplate::$template_fields,["serial_num"=>"serial_num"]))
                 ->asArray()
                 ->all();
 
@@ -62,9 +62,17 @@ class SmsController extends Controller{
      */
     public function actionSend(){
         $lists = SmsList::find()->where(["status"=>0])->all();
-        foreach($lists as $msg){
-            //调用短信接口 发送短信
-            //设置list 状态
+        $wsdl = Yii::$app->params["sms_soap"];
+        $soapClient = new \SoapClient($wsdl);
+        foreach($lists as $sms){
+            $r = $soapClient->sendSMS($sms->receivers,$sms->content);
+            $sms->send_times = $sms->send_times+1;
+            $sms->status = $r;
+            if($sms->send_times>5 && $sms->status==0){
+                //发送超过5次 失败的设置为失败状态 不在尝试发送
+                $sms->status= 2;
+            }
+            $sms->save(false);
         }
     }
 
