@@ -134,13 +134,31 @@ class ApiController extends Controller
 
             //echo '22'.$map_id;die;
             //处理设备系列
-            $series=$this->getDeviceSeries($param['series']);
-            $param['series_id']=$series['series_id'];
-            $param['series_name']=$series['series_name'];
+           // var_dump($param);die;
+            if(isset($param['series']))
+            {
+                $series=$this->getDeviceSeries($param['series']);
+                $param['series_id']=$series['series_id'];
+                $param['series_name']=$series['series_name'];
+            }
+            else
+            {
+                $param['series_id']=0;
+                $param['series_name']='';
+            }
             //处理设备型号
-            $models=$this->getDeviceModel($param['model']);
-            $param['model_id']=$models['model_id'];
-            $param['model_name']=$models['model_name'];
+            if(isset($param['model']))
+            {
+                $models=$this->getDeviceModel($param['model']);
+                $param['model_id']=$models['model_id'];
+                $param['model_name']=$models['model_name'];
+            }
+            else
+            {
+                $param['model_id']=0;
+                $param['model_name']='';
+            }
+            $param['mac']=isset($param['mac'])?$param['mac']:'';
 
 
 
