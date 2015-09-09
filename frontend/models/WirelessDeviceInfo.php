@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use app\models\WirelessDeviceInterface;
 use frontend\models\DeviceModel;
 use frontend\models\DeviceSeries;
 use Yii;
