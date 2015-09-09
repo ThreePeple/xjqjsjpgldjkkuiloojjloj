@@ -10,6 +10,12 @@ use yii\widgets\ActiveForm;
 <style>
     .form-inline .form-group{
         vertical-align: inherit;
+        margin-right: 15px;
+    }
+    .form-inline .form-group label.control-label:after{
+        content: ":";
+        display: inline-block;
+        margin: 0 2px;
     }
 </style>
 <div class="device-alarm-search">

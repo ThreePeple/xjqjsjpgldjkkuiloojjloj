@@ -26,11 +26,11 @@ $this->title = "设备详情";
 ?>
 
 
-<div class="item_box box10" style="margin-top: 50px;">
+<div class="item_box box10 h_collapse_container" style="margin-top: 50px;">
     <div class="item_box_wp">
         <div class="voice_2">
             <ul>
-                <li class="li1" id="li1" style="width: 880px;">
+                <li class="li1" id="li1" >
                     <div class="fold" style="display: none;">
                         <span class="img"></span>
                         <span class="txt">设备详细信息</span>
@@ -41,7 +41,7 @@ $this->title = "设备详情";
                         ])?>
                     </div>
                 </li>
-                <li class="li2" style="width: 100px;">
+                <li class="li2" >
                     <div class="fold" style="display: block;">
                         <span class="img"></span>
                         <span class="txt">设备性能指标</span>
@@ -53,7 +53,7 @@ $this->title = "设备详情";
                         ])?>
                     </div>
                 </li>
-                <li class="li3" style="width: 100px;">
+                <li class="li3" >
                     <div class="fold" style="display: block;">
                         <span class="img"></span>
                         <span class="txt">设备告警信息</span>
@@ -64,7 +64,7 @@ $this->title = "设备详情";
                         ])?>
                     </div>
                 </li>
-                <li class="li4" style="width: 100px;">
+                <li class="li4" >
                     <div class="fold" style="display: block;">
                         <span class="img"></span>
                         <span class="txt">设备接口信息</span>
