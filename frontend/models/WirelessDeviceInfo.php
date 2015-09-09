@@ -3,8 +3,8 @@
 namespace frontend\models;
 
 use app\models\WirelessDeviceInterface;
-use frontend\models\DeviceModel;
-use frontend\models\DeviceSeries;
+//use frontend\models\DeviceModel;
+//use frontend\models\DeviceSeries;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\db\Query;

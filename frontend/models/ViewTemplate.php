@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use frontend\models\WirelessDeviceInfo;
 use Yii;
 use frontend\models\DeviceInfo;
 use app\models\DeviceLink;
