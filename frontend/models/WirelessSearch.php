@@ -1,11 +1,11 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\WirelessDeviceInfo;
+use frontend\models\WirelessDeviceInfo;
 use yii\helpers\ArrayHelper;
 
 /**

@@ -4,7 +4,7 @@ namespace frontend\models;
 
 use app\models\DeviceCategory;
 use app\models\DeviceInterface;
-use app\models\DeviceIpfilter;
+use frontend\models\DeviceIpfilter;
 use frontend\models\DeviceModel;
 use frontend\models\DeviceSeries;
 use Yii;

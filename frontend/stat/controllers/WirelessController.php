@@ -2,7 +2,7 @@
 
 namespace app\stat\controllers;
 
-use app\models\DeviceIpfilter;
+use frontend\models\DeviceIpfilter;
 use app\models\InfoConfig;
 use app\models\ViewTemplate;
 use app\models\WirelessDeviceAlarm;
@@ -11,8 +11,8 @@ use app\models\WirelessDeviceInterface;
 use app\models\WirelessDeviceLink;
 use app\models\WirelessDeviceTask;
 use Yii;
-use app\models\WirelessDeviceInfo;
-use app\models\WirelessSearch;
+use frontend\models\WirelessDeviceInfo;
+use frontend\models\WirelessSearch;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\filters\AccessControl;

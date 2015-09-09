@@ -11,7 +11,7 @@ namespace app\input\controllers;
 
 use frontend\models\DeviceInfo;
 use frontend\models\DeviceInfoSearch;
-use app\models\DeviceIpfilter;
+use frontend\models\DeviceIpfilter;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;

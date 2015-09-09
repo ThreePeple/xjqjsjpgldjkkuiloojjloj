@@ -3,8 +3,8 @@
 namespace app\system\controllers;
 
 use app\models\DeviceCategory;
-use app\models\WirelessDeviceCategory;
-use app\models\WirelessDeviceInfo;
+use frontend\models\WirelessDeviceCategory;
+use frontend\models\WirelessDeviceInfo;
 use yii\base\Exception;
 use yii\filters\AccessControl;
 use yii\helpers\Json;

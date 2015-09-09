@@ -236,5 +236,4 @@ class WirelessDeviceInfo extends \yii\db\ActiveRecord
                 return '<span style="color:#00F">未知</span>';
         }
     }
-
 }

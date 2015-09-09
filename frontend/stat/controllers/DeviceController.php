@@ -3,7 +3,7 @@
 namespace app\stat\controllers;
 
 use app\models\DeviceInterface;
-use app\models\DeviceIpfilter;
+use frontend\models\DeviceIpfilter;
 use app\models\InfoConfig;
 use app\models\TopologyConfig;
 use Yii;

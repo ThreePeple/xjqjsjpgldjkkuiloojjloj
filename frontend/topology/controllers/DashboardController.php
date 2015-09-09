@@ -3,11 +3,11 @@
 namespace app\topology\controllers;
 
 use frontend\models\DeviceAlarm;
-use app\models\DeviceIpfilter;
+use frontend\models\DeviceIpfilter;
 use app\models\DeviceTask;
 use app\models\TopologyConfig;
 use app\models\WirelessDeviceAp;
-use app\models\WirelessDeviceInfo;
+use frontend\models\WirelessDeviceInfo;
 use app\models\WirelessDeviceLink;
 use yii\base\View;
 use yii\db\Query;

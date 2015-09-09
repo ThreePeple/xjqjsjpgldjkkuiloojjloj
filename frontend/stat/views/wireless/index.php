@@ -2,7 +2,7 @@
 use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use app\models\WirelessDeviceInfo;
+use frontend\models\WirelessDeviceInfo;
 ?>
 
 <div class="row">

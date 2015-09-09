@@ -303,7 +303,7 @@ class ApiController extends Controller
     /**
      * 从表中获取有线设备信息
      */
-    private function getDevices($ipAry)
+    private function getDevices($ipAry=array())
     {
         $query=DeviceInfo::find();
         if(!empty($ipAry))
@@ -315,7 +315,7 @@ class ApiController extends Controller
     /**
      * 从表中获取无线设备信息
      */
-    private function getWirelessDevices($ipAry)
+    private function getWirelessDevices($ipAry=array())
     {
         $query=WirelessDeviceInfo::find();
         if(!empty($ipAry))
