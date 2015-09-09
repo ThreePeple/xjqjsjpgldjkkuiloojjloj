@@ -29,7 +29,7 @@ class ApiController extends Controller
     {
        $host=Yii::$app->params['wireless_api_host'];
         //无线设备数据
-       $api_path=Constants::WIRELESS_DEVICE;
+       $api_path=Constants::DEVICE;
         $query=[
             'resPrivilegeFilter'=>false,
             'start'=>0,
@@ -40,11 +40,11 @@ class ApiController extends Controller
         ];
         //设备信息列表
         $url=$host.$api_path;
-        $client=(new RestfulClient())->get($url,$query);
+        $client=(new RestfulClient("http_basic"))->get($url,$query);
         if(!$client->hasErrors())
         {
             $data = $client->getData();
-           // var_dump($data['device']);
+           // var_dump($data['device']);die;
             if(isset($data['device']))
             {
                 foreach($data['device'] as $_data)
@@ -65,7 +65,49 @@ class ApiController extends Controller
             Yii::error($client->getError(),'console/actionWirelessDeviceSourceTask');
         }
     }
-
+    /**
+     * 有线设备相关资源任务
+     */
+    public function actionDeviceSourceTask()
+    {
+        $host=Yii::$app->params['api_host'];
+        //无线设备数据
+        $api_path=Constants::DEVICE;
+        $query=[
+            'resPrivilegeFilter'=>false,
+            'start'=>0,
+            'orderBy'=>'id',
+            'desc'=>false,
+            'size'=>500,
+            'total'=>false,
+        ];
+        //设备信息列表
+        $url=$host.$api_path;
+        $client=(new RestfulClient("http_basic"))->get($url,$query);
+        if(!$client->hasErrors())
+        {
+            $data = $client->getData();
+            // var_dump($data['device']);
+            if(isset($data['device']))
+            {
+                foreach($data['device'] as $_data)
+                {
+                    if($this->importDevice($_data,"device_info"))
+                        echo $_data['ip']." import ok\n";
+                    else
+                    {
+                        echo $_data['ip']." import fail\n";
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            var_dump($client->getError());
+            Yii::error($client->getError(),'console/actionWirelessDeviceSourceTask');
+        }
+    }
     /**
      * 查询当前接入设备
      */
@@ -74,6 +116,7 @@ class ApiController extends Controller
         $host=Yii::$app->params['api_host'];
         $api_path=Constants::IP_MAC_LEARN;
         $url=$host.$api_path."/";
+        echo $url;
         $query=[
             'start'=>0,
             'desc'=>false,
@@ -89,11 +132,11 @@ class ApiController extends Controller
         foreach($devices as $device)
         {
             $url=$url.$device['id'];
-            $client=(new RestfulClient())->get($url,$query);
+            $client=(new RestfulClient("http_imc"))->get($url,$query);
             if(!$client->hasErrors())
             {
                 $data = $client->getData();
-                // var_dump($data['device']);
+                 var_dump($data);
                 if(isset($data['ipMacLearnResult']))
                 {
                     foreach($data['ipMacLearnResult'] as $_data)
@@ -116,6 +159,83 @@ class ApiController extends Controller
         }
     }
 
+    /**
+     * 无线设备链路数据
+     */
+    public function actionWirelessDeviceLink()
+    {
+        $host=Yii::$app->params['wireless_api_host'];
+        //无线设备数据
+        $api_path=Constants::DEVICE_LINK;
+        $query=[
+            'topoId'=>1,
+            'total'=>false,
+        ];
+        //设备链路信息列表
+        $url=$host.$api_path;
+        $client=(new RestfulClient("http_basic"))->get($url,$query);
+        if(!$client->hasErrors())
+        {
+            $data = $client->getData();
+            if(isset($data['deviceLink']))
+            {
+                foreach($data['deviceLink'] as $_data)
+                {
+                    if($this->importDeviceLink($_data))
+                        echo $_data['id']." import ok\n";
+                    else
+                    {
+                        echo $_data['id']." import fail\n";
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            var_dump($client->getError());
+            Yii::error($client->getError(),'console/actionWirelessDeviceLink');
+        }
+    }
+    /**
+     * 有线设备链路数据
+     */
+    public function actionDeviceLink()
+    {
+        $host=Yii::$app->params['api_host'];
+        //无线设备数据
+        $api_path=Constants::DEVICE_LINK;
+        $query=[
+            'topoId'=>1,
+            'total'=>false,
+        ];
+        //设备链路信息列表
+        $url=$host.$api_path;
+        $client=(new RestfulClient("http_imc"))->get($url,$query);
+        if(!$client->hasErrors())
+        {
+            $data = $client->getData();
+            // var_dump($data['deviceLink']);
+            if(isset($data['deviceLink']))
+            {
+                foreach($data['deviceLink'] as $_data)
+                {
+                    if($this->importDeviceLink($_data,"device_link"))
+                        echo $_data['id']." import ok\n";
+                    else
+                    {
+                        echo $_data['id']." import fail\n";
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            var_dump($client->getError());
+            Yii::error($client->getError(),'console/actionDeviceLink');
+        }
+    }
     ///////////////////私有函数////////////////////////
     /**
      * 导入无线设备数据
@@ -162,24 +282,6 @@ class ApiController extends Controller
 
 
 
-/*            $sql="insert into `wireless_device_info`(id,`label`,ip,mask,status,sysName,location,sysOid,runtime,lastPoll,categoryId,supportPing,";
-            $sql.="webMgrPort,configPollTime,statePollTime,typeName,symbolType,symbolDesc,mac,phyName,phyCreateTime,series_id,model_id,";
-            $sql.="series_name,model_name,statusDesc)";
-            $sql.=" values(".$param['id'].",'".$param['label']."','".$param['ip']."','".$param['mask']."',".$param['status'].",'".$param['sysName']."',";
-            $sql.="'".$param['location']."','".$param['sysOid']."','".$param['runtime']."','".$param['lastPoll']."',".$param['categoryId'].",".$param['supportPing'];
-            $sql.=",".$param['webMgrPort'].",".$param['configPollTime'].",".$param['statePollTime'].",'".$param['typeName']."',".$param['symbolType'];
-            $sql.=",'".$param['symbolDesc']."','".$param['mac']."','".$param['phyName']."','".$param['phyCreateTime']."',".$param['series_id'];
-            $sql.=",".$param['model_id'].",'".$param['series_name']."','".$param['model_name']."') on duplicate key update ";
-            $sql.="id=".$param['id'].",label='".$param['label']."',mask='".$param['mask']."',status=".$param['status'].",sysName='".$param['sysName']."',";
-            $sql.="location='".$param['location']."',sysOid='".$param['sysOid']."',runtime='".$param['runtime']."',lastPoll='".$param['lastPoll']."'";
-            $sql.=",categoryId=".$param['categoryId'].",supportPing=".$param['supportPing'].",webMgrPort=".$param['webMgrPort'].",configPollTime=";
-            $sql.=$param['configPollTime'].",statePollTime=".$param['statePollTime'].",typeName='".$param['typeName']."',symbolType=".$param['symbolType'];
-            $sql.=",'".$param['symbolDesc']."',mac='".$param['mac']."',phyName='".$param['phyName']."',phyCreateTime='".$param['phyCreateTime']."'";
-            $sql.=",series_id=".$param['series_id'].",model_id=".$param['model_id'].",series_name='".$param['series_name']."',model_name='".$param['model_name']."'";
-            $sql.=",statusDesc='".$param['statusDesc']."'";*/
-            //echo $sql;die;
-
-
             $sql="insert into `wireless_device_info`(id,`label`,ip,mask,status,sysName,location,sysOid,categoryId";
             $sql.=",typeName,symbolType,symbolDesc,mac,statusDesc)";
             $sql.=" values(".$param['id'].",'".$param['label']."','".$param['ip']."','".$param['mask']."',".$param['status'].",'".$param['sysName']."',";
@@ -200,7 +302,69 @@ class ApiController extends Controller
         }
 
     }
+    /**
+     * 导入设备数据
+     */
+    private function importDevice($_data)
+    {
+        $param=$_data;
+        try
+        {
+            //初始化
+            $param=$this->initParams($param);
+            //对原始数据进行特殊处理
+            //类型映射
+            $map_id=$this->getDeviceMapCategoryID($param['ip']);
+            $param['categoryId']=empty($map_id)?$param['categoryId']:$map_id;
 
+            //echo '22'.$map_id;die;
+            //处理设备系列
+            // var_dump($param);die;
+            if(isset($param['series']))
+            {
+                $series=$this->getDeviceSeries($param['series']);
+                $param['series_id']=$series['series_id'];
+                $param['series_name']=$series['series_name'];
+            }
+            else
+            {
+                $param['series_id']=0;
+                $param['series_name']='';
+            }
+            //处理设备型号
+            if(isset($param['model']))
+            {
+                $models=$this->getDeviceModel($param['model']);
+                $param['model_id']=$models['model_id'];
+                $param['model_name']=$models['model_name'];
+            }
+            else
+            {
+                $param['model_id']=0;
+                $param['model_name']='';
+            }
+            $param['mac']=isset($param['mac'])?$param['mac']:'';
+
+            $sql="insert into `device_info`(id,`label`,ip,mask,status,sysName,location,sysOid,categoryId";
+            $sql.=",typeName,symbolType,symbolDesc,mac,statusDesc)";
+            $sql.=" values(".$param['id'].",'".$param['label']."','".$param['ip']."','".$param['mask']."',".$param['status'].",'".$param['sysName']."',";
+            $sql.="'".$param['location']."','".$param['sysOid']."',".$param['categoryId'].",'".$param['typeName']."',".$param['symbolType'];
+            $sql.=",'".$param['symbolDesc']."','".$param['mac']."','".$param['statusDesc']."') on duplicate key update ";
+            $sql.="id=".$param['id'].",label='".$param['label']."',mask='".$param['mask']."',status=".$param['status'].",sysName='".$param['sysName']."',";
+            $sql.="location='".$param['location']."',sysOid='".$param['sysOid']."',categoryId=".$param['categoryId'];
+            $sql.=",symbolType=".$param['symbolType'].",symbolDesc='".$param['symbolDesc']."',mac='".$param['mac']."',statusDesc='".$param['statusDesc']."'";
+            $cmd = Yii::$app->db->createCommand($sql);
+            $cmd->execute();
+            return true;
+        }
+        catch(Exception $e)
+        {
+            var_dump($e->getMessage());
+            Yii::error($e->getMessage(),'console/importWirelessDevice');
+            return false;
+        }
+
+    }
     /**
      * 得到设备映射的类型ID
      */
@@ -231,7 +395,6 @@ class ApiController extends Controller
             }
         }
         return $result;
-
     }
     /**
      * 提取设备型号id，并得到型号名称
@@ -256,7 +419,19 @@ class ApiController extends Controller
         return $result;
 
     }
-
+    /**
+     * 提取设备URL中的id
+     */
+    private function getDeviceUrlID($device_url)
+    {
+        $device_id=0;
+        if(!empty($device_url))
+        {
+            $pos=strripos($device_url,'/');
+            $device_id=substr($device_url,$pos+1);
+        }
+        return $device_id;
+    }
     /**
      * 初始化字段
      * @param $_param
@@ -344,6 +519,92 @@ class ApiController extends Controller
         {
             var_dump($e->getMessage());
             Yii::error($e->getMessage(),'console/importWirelessDevice');
+            return false;
+        }
+    }
+    /**
+     * 导入设备链路数据
+     * 通过列表接口获取链路ID，再通过单条数据接口通过id获取左右设备id
+     */
+    private function importDeviceLink($_data,$tableName="wireless_device_link")
+    {
+        $param=[];
+        if(empty($_data) || !isset($_data['id']))
+        {
+            return false;
+        }
+        try
+        {
+            //根据列表的ID,获取详细信息
+            $host =$tableName=="wireless_device_link"?Yii::$app->params['wireless_api_host']:Yii::$app->params['api_host'];
+            //无线设备数据
+            $api_path=Constants::DEVICE_LINK;
+            $query=[
+                'topoId'=>1
+            ];
+            //设备链路信息
+            $url=$host.$api_path."/".$_data['id'];
+            $authkey=$tableName=="wireless_device_link"?"http_basic":"http_imc";
+            $client=(new RestfulClient($authkey))->get($url,$query);
+            if(!$client->hasErrors())
+            {
+                $data = $client->getData();
+                //var_dump($data);
+                if(isset($data))
+                {
+                    $param=$data;
+                }
+            }
+            else
+            {
+                var_dump($client->getError());
+                Yii::error($client->getError(),'console/actionDeviceLink');
+                return false;
+            }
+            if(isset($param['leftDevice']))
+            {
+                $leftDevice_id=$this->getDeviceUrlID($param['leftDevice']);
+                $param['leftDevice']=$leftDevice_id;
+            }
+            else
+            {
+                $param['leftDevice']=0;
+            }
+            if(isset($param['rightDevice']))
+            {
+                $rightDevice_id=$this->getDeviceUrlID($param['rightDevice']);
+                $param['rightDevice']=$rightDevice_id;
+            }
+            else
+            {
+                $param['rightDevice']=0;
+            }
+            if(!isset($param['leftSymbolName']))
+            {
+                $param['leftSymbolName']='';
+            }
+            if(!isset($param['rightSymbolName']))
+            {
+                $param['rightSymbolName']='';
+            }
+            $sql="insert into `".$tableName."`(id,`label`,`type`,leftSymbolId,leftSymbolName,leftIfDesc,rightSymbolId,rightSymbolName,";
+            $sql.="rightIfDesc,status,bandWidth,leftDevice,rightDevice)";
+            $sql.=" values(".$param['id'].",'".$param['label']."',".$param['type'].",".$param['leftSymbolId'].",'".$param['leftSymbolName']."','".$param['leftIfDesc']."',";
+            $sql.=$param['rightSymbolId'].",'".$param['rightSymbolName']."','".$param['rightIfDesc']."',".$param['status'].",'".$param['bandWidth']."',";
+            $sql.=$param['leftDevice'].",".$param['rightDevice'].") on duplicate key update ";
+            $sql.="label='".$param['label']."',`type`=".$param['type'].",leftSymbolId=".$param['leftSymbolId'].",leftSymbolName='".$param['leftSymbolName']."',";
+            $sql.="leftIfDesc='".$param['leftIfDesc']."',rightSymbolId=".$param['rightSymbolId'].",rightSymbolName='".$param['rightSymbolName']."'";
+            $sql.=",rightIfDesc='".$param['rightIfDesc']."',status=".$param['status'].",bandWidth='".$param['bandWidth']."',leftDevice=".$param['leftDevice'];
+            $sql.=",rightDevice=".$param['rightDevice'];
+            $cmd = Yii::$app->db->createCommand($sql);
+          //var_dump($sql);die;
+            $cmd->execute();
+            return true;
+        }
+        catch(Exception $e)
+        {
+            var_dump($e->getMessage());
+            Yii::error($e->getMessage(),'console/imporDeviceLink');
             return false;
         }
     }
