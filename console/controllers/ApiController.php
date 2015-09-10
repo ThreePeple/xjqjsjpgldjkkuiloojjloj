@@ -243,20 +243,17 @@ class ApiController extends Controller
     public function actionTask()
     {
         $host=Yii::$app->params['wireless_api_host'];
-        //无线设备数据
         $api_path=Constants::TASK;
        /* $query=[
             'orderBy'=>'taskId',
             'desc'=>false,
         ];*/
-        //设备链路信息列表
         $url=$host.$api_path;
         echo $url."\n";
         $client=(new RestfulClient("http_basic"))->get($url);
         if(!$client->hasErrors())
         {
             $data = $client->getData();
-            echo count($data);
             if(isset($data['task']))
             {
                 foreach($data['task'] as $_data)
@@ -275,6 +272,170 @@ class ApiController extends Controller
         {
             var_dump($client->getError());
             Yii::error($client->getError(),'console/actionTask');
+        }
+    }
+    /**
+     * 无线设备性能指标汇总信息
+     */
+    public function actionWirelessDeviceTask()
+    {
+        //获取无线设备
+        $devices=$this->getWirelessDevices();
+        //指标配置项
+        $task_ids=Constants::$TASKS;
+        $host=Yii::$app->params['wireless_api_host'];
+        $api_path=Constants::DEVICE_TASK;
+        $url=$host.$api_path;
+        echo $url."\n";
+        if(empty($devices))
+        {
+           echo " devices are not found!";
+            exit;
+        }
+        //遍历所有设备和指定指标项
+        foreach($devices as $device)
+        {
+            $device_id=$device['id'];
+            foreach($task_ids as $task_id)
+            {
+
+                $query=[
+                    'taskId'=>$task_id,
+                    'devId'=>$device_id,
+                    'dataGranularity'=>0
+                ];
+                $client=(new RestfulClient("http_basic"))->get($url,$query);
+                if(!$client->hasErrors())
+                {
+                    $data = $client->getData();
+                    if(isset($data['perfSummaryData']) && isset($data['perfSummaryData']['taskId']))
+                    {
+                        $_data=$data['perfSummaryData'];
+                        if($this->importDeviceTask($_data))
+                        {
+                            sleep(0.5);
+                            echo $_data['devId']."&".$_data['taskId']." import ok\n";
+                        }
+
+                        else
+                        {
+                            echo $_data['devId']."&".$_data['taskId']." import fail\n";
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    var_dump($client->getError());
+                    Yii::error($client->getError(),'console/actionTask');
+                }
+            }
+        }
+    }
+    /**
+     * 有线设备性能指标汇总信息
+     */
+    public function actionDeviceTask()
+    {
+        //获取无线设备
+        $devices=$this->getDevices();
+        //指标配置项
+        $task_ids=Constants::$TASKS;
+        $host=Yii::$app->params['api_host'];
+        $api_path=Constants::DEVICE_TASK;
+        $url=$host.$api_path;
+        echo $url."\n";
+        if(empty($devices))
+        {
+            echo " devices are not found!";
+            exit;
+        }
+        //遍历所有设备和指定指标项
+        foreach($devices as $device)
+        {
+            $device_id=$device['id'];
+            foreach($task_ids as $task_id)
+            {
+
+                $query=[
+                    'taskId'=>$task_id,
+                    'devId'=>$device_id,
+                    'dataGranularity'=>0
+                ];
+                $client=(new RestfulClient("http_imc"))->get($url,$query);
+                if(!$client->hasErrors())
+                {
+                    $data = $client->getData();
+                    if(isset($data['perfSummaryData']) && isset($data['perfSummaryData']['taskId']))
+                    {
+                        $_data=$data['perfSummaryData'];
+                        if($this->importDeviceTask($_data,'device_task_summary'))
+                        {
+                            sleep(0.5);
+                            echo $_data['devId']."&".$_data['taskId']." import ok\n";
+                        }
+
+                        else
+                        {
+                            echo $_data['devId']."&".$_data['taskId']." import fail\n";
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    var_dump($client->getError());
+                    Yii::error($client->getError(),'console/actionTask');
+                }
+            }
+        }
+    }
+    /**
+     * 无线设备告警信息
+     */
+    public function actionWirelessDeviceAlarm()
+    {
+        //获取无线设备
+        $alarms=$this->getDevicesAlarmList();
+        $host=Yii::$app->params['api_host'];
+        $api_path=Constants::DEVICE_ALARM;
+        $url=$host.$api_path;
+        echo $url."\n";
+        if(empty($alarms))
+        {
+            echo " alarms are not found!";
+            exit;
+        }
+        //遍历所有告警项
+        foreach($alarms as $alarm)
+        {
+            $alarm_id=$alarm['id'];
+            $url.="/".$alarm_id;
+            $client=(new RestfulClient("http_basic"))->get($url);
+            if(!$client->hasErrors())
+            {
+                $data = $client->getData();
+                if(isset($data['alarm']))
+                {
+                    $_data=$data['alarm'];
+                    if($this->importDeviceAlarm($_data))
+                    {
+                        sleep(0.5);
+                        echo $_data['deviceIp']." import ok\n";
+                    }
+
+                    else
+                    {
+                        echo $_data['deviceIp']." import fail\n";
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                var_dump($client->getError());
+                Yii::error($client->getError(),'console/actionWirelessDeviceAlarm');
+            }
         }
     }
     ///////////////////私有函数////////////////////////
@@ -668,6 +829,37 @@ class ApiController extends Controller
             $sql.="alarmOneThresholdFirst=".$param['alarmOneThresholdFirst'].",alarmOneThresholdSecond=".$param['alarmOneThresholdSecond'].",";
             $sql.="alarmTwoTimes=".$param['alarmTwoTimes'].",componentID=".$param['componentID'].",unitId=".$param['unitId'].",";
             $sql.="sumId=".$param['sumId'].",groupId=".$param['groupId'];
+            $cmd = Yii::$app->db->createCommand($sql);
+            $cmd->execute();
+            return true;
+        }
+        catch(Exception $e)
+        {
+            var_dump($e->getMessage());
+            Yii::error($e->getMessage(),'console/importTask');
+            return false;
+        }
+    }
+
+    /**
+     * 导入设备性能指标
+     * @param $param 数据参数
+     * @param string $tableName 无线和有线的标记
+     * @return bool
+     */
+    private function importDeviceTask($param,$tableName='wireless_device_task_summary')
+    {
+        try
+        {
+            $sql="insert into ".$tableName." (taskId,`taskName`,devId,instId,objIndex,objIndexDesc,averageValue,maximumValue,minimumValue,";
+            $sql.="currentValue,summaryValue)";
+            $sql.=" values(".$param['taskId'].",'".$param['taskName']."',".$param['devId'].",".$param['instId'].",'".$param['objIndex']."',";
+            $sql.="'".$param['objIndexDesc']."','".$param['averageValue']."','".$param['maximumValue']."','".$param['minimumValue']."',";
+            $sql.="'".$param['currentValue']."','".$param['summaryValue']."'";
+            $sql.=") on duplicate key update ";
+            $sql.="instId=".$param['instId'].",objIndex='".$param['objIndex']."',objIndexDesc='".$param['objIndexDesc']."',";
+            $sql.="averageValue='".$param['averageValue']."',maximumValue='".$param['maximumValue']."',";
+            $sql.="minimumValue='".$param['minimumValue']."',currentValue='".$param['currentValue']."',summaryValue='".$param['summaryValue']."'";
             $cmd = Yii::$app->db->createCommand($sql);
             $cmd->execute();
             return true;
