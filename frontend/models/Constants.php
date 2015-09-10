@@ -7,8 +7,8 @@
  */
 namespace frontend\models;
 class Constants {
-    //无线
-    const WIRELESS_DEVICE='plat/res/device';
-    //有线
+    const DEVICE='plat/res/device';//设备信息列表
+    const DEVICE_LINK='plat/res/link';//链路信息列表
     const IP_MAC_LEARN='/res/access/ipMacLearn';//查询设备当前的接入信息列表
+
 }
