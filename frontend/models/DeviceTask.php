@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use frontend\models\DeviceIpfilter;
 use Yii;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
