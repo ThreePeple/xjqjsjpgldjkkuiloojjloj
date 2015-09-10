@@ -83,7 +83,7 @@ class ApiController extends Controller
         ];
         //设备信息列表
         $url=$host.$api_path;
-        $client=(new RestfulClient("http_basic"))->get($url,$query);
+        $client=(new RestfulClient("http_imc"))->get($url,$query);
         if(!$client->hasErrors())
         {
             $data = $client->getData();
@@ -234,6 +234,47 @@ class ApiController extends Controller
         {
             var_dump($client->getError());
             Yii::error($client->getError(),'console/actionDeviceLink');
+        }
+    }
+
+    /**
+     * 性能指标基础信息
+     */
+    public function actionTask()
+    {
+        $host=Yii::$app->params['wireless_api_host'];
+        //无线设备数据
+        $api_path=Constants::TASK;
+       /* $query=[
+            'orderBy'=>'taskId',
+            'desc'=>false,
+        ];*/
+        //设备链路信息列表
+        $url=$host.$api_path;
+        echo $url."\n";
+        $client=(new RestfulClient("http_basic"))->get($url);
+        if(!$client->hasErrors())
+        {
+            $data = $client->getData();
+            echo count($data);
+            if(isset($data['task']))
+            {
+                foreach($data['task'] as $_data)
+                {
+                    if($this->importTask($_data))
+                        echo $_data['taskId']." import ok\n";
+                    else
+                    {
+                        echo $_data['taskId']." import fail\n";
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            var_dump($client->getError());
+            Yii::error($client->getError(),'console/actionTask');
         }
     }
     ///////////////////私有函数////////////////////////
@@ -605,6 +646,36 @@ class ApiController extends Controller
         {
             var_dump($e->getMessage());
             Yii::error($e->getMessage(),'console/imporDeviceLink');
+            return false;
+        }
+    }
+
+    /**
+     * 导入性能指标
+     * @param $param
+     * @return bool
+     */
+    private function importTask($param)
+    {
+        try
+        {
+            $sql="insert into `task`(taskId,`taskName`,taskDescr,tempId,alarmOneThresholdFirst,alarmOneThresholdSecond,alarmTwoTimes,componentID,";
+            $sql.="unitId,sumId,groupId)";
+            $sql.=" values(".$param['taskId'].",'".$param['taskName']."','".$param['taskDescr']."','".$param['tempId']."',".$param['alarmOneThresholdFirst'].",";
+            $sql.=$param['alarmOneThresholdSecond'].",".$param['alarmTwoTimes'].",".$param['componentID'].",".$param['unitId'].",".$param['sumId'].",".$param['groupId'];
+            $sql.=") on duplicate key update ";
+            $sql.="taskName='".$param['taskName']."',taskDescr='".$param['taskDescr']."',tempId='".$param['tempId']."',";
+            $sql.="alarmOneThresholdFirst=".$param['alarmOneThresholdFirst'].",alarmOneThresholdSecond=".$param['alarmOneThresholdSecond'].",";
+            $sql.="alarmTwoTimes=".$param['alarmTwoTimes'].",componentID=".$param['componentID'].",unitId=".$param['unitId'].",";
+            $sql.="sumId=".$param['sumId'].",groupId=".$param['groupId'];
+            $cmd = Yii::$app->db->createCommand($sql);
+            $cmd->execute();
+            return true;
+        }
+        catch(Exception $e)
+        {
+            var_dump($e->getMessage());
+            Yii::error($e->getMessage(),'console/importTask');
             return false;
         }
     }
