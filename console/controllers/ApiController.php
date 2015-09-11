@@ -397,7 +397,7 @@ class ApiController extends Controller
     {
         //获取无线设备
         $alarms=$this->getDevicesAlarmList();
-        $host=Yii::$app->params['api_host'];
+        $host=Yii::$app->params['wireless_api_host'];
         $api_path=Constants::DEVICE_ALARM;
         $url=$host.$api_path;
         echo $url."\n";
@@ -853,6 +853,68 @@ class ApiController extends Controller
         {
             $sql="insert into ".$tableName." (taskId,`taskName`,devId,instId,objIndex,objIndexDesc,averageValue,maximumValue,minimumValue,";
             $sql.="currentValue,summaryValue)";
+            $sql.=" values(".$param['taskId'].",'".$param['taskName']."',".$param['devId'].",".$param['instId'].",'".$param['objIndex']."',";
+            $sql.="'".$param['objIndexDesc']."','".$param['averageValue']."','".$param['maximumValue']."','".$param['minimumValue']."',";
+            $sql.="'".$param['currentValue']."','".$param['summaryValue']."'";
+            $sql.=") on duplicate key update ";
+            $sql.="instId=".$param['instId'].",objIndex='".$param['objIndex']."',objIndexDesc='".$param['objIndexDesc']."',";
+            $sql.="averageValue='".$param['averageValue']."',maximumValue='".$param['maximumValue']."',";
+            $sql.="minimumValue='".$param['minimumValue']."',currentValue='".$param['currentValue']."',summaryValue='".$param['summaryValue']."'";
+            $cmd = Yii::$app->db->createCommand($sql);
+            $cmd->execute();
+            return true;
+        }
+        catch(Exception $e)
+        {
+            var_dump($e->getMessage());
+            Yii::error($e->getMessage(),'console/importTask');
+            return false;
+        }
+    }
+
+    /**
+     * 获取告警列表
+     */
+    private function getDevicesAlarmList($tableName="wireless_device_alarm")
+    {
+        $param=[];
+        $host =$tableName=="wireless_device_alarm"?Yii::$app->params['wireless_api_host']:Yii::$app->params['api_host'];
+        $api_path=Constants::DEVICE_ALARM;
+        $query=[
+            'topoId'=>1
+        ];
+        $url=$host.$api_path;
+        $authkey=$tableName=="wireless_device_alarm"?"http_basic":"http_imc";
+        $client=(new RestfulClient($authkey))->get($url,$query);
+        if(!$client->hasErrors())
+        {
+            $data = $client->getData();
+            if(isset($data['alarm']))
+            {
+                $param=$data['alarm'];
+            }
+        }
+        else
+        {
+            var_dump($client->getError());
+            Yii::error($client->getError(),'console/getDevicesAlarmList');
+            return [];
+        }
+        return $param;
+    }
+
+    /**
+     * 导入设备告警
+     * @param $_data
+     * @param string $tableName
+     */
+    private function importDeviceAlarm($param,$tableName='wireless_device_alarm')
+    {
+        try
+        {
+            $sql="insert into ".$tableName." (id,,`OID`,originalTypeDesc,deviceId,deviceIp,deviceName,alarmLevel,alarmCategory,alarmCategoryDesc,";
+            $sql.="faultTime,faultTimeDesc,recTime,recTimeDesc,recStatus,recStatusDesc,ackUserName,alarmDesc,somState,remark,eventName,";
+            $sql.="reason,defineType,customAlarmLevel,specificId,originalType";
             $sql.=" values(".$param['taskId'].",'".$param['taskName']."',".$param['devId'].",".$param['instId'].",'".$param['objIndex']."',";
             $sql.="'".$param['objIndexDesc']."','".$param['averageValue']."','".$param['maximumValue']."','".$param['minimumValue']."',";
             $sql.="'".$param['currentValue']."','".$param['summaryValue']."'";
