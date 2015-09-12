@@ -4,13 +4,13 @@ Navicat MySQL Data Transfer
 Source Server         : localhost
 Source Server Version : 50611
 Source Host           : localhost:3306
-Source Database       : cnpc_1
+Source Database       : cnpc
 
 Target Server Type    : MYSQL
 Target Server Version : 50611
 File Encoding         : 65001
 
-Date: 2015-09-13 02:24:44
+Date: 2015-09-13 02:48:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -443,7 +443,8 @@ CREATE TABLE `device_alarm` (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '自动记录时间',
   `specificId` int(11) DEFAULT '0' COMMENT '事件id',
   `originalType` int(11) DEFAULT NULL COMMENT '告警来源类型',
-  PRIMARY KEY (`serial_num`)
+  PRIMARY KEY (`serial_num`),
+  UNIQUE KEY `index_unique` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -825,31 +826,31 @@ CREATE TABLE `device_info` (
   `mask` varchar(255) NOT NULL DEFAULT '',
   `status` int(2) NOT NULL DEFAULT '1' COMMENT '-1-未管理0-未知1-正常2-警告3-次要4-重要5-严重',
   `statusDesc` varchar(64) NOT NULL,
-  `sysName` varchar(255) NOT NULL,
-  `location` varchar(255) NOT NULL,
-  `sysOid` varchar(255) NOT NULL,
-  `runtime` varchar(255) NOT NULL,
-  `lastPoll` datetime NOT NULL,
+  `sysName` varchar(255) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  `sysOid` varchar(255) DEFAULT NULL,
+  `runtime` varchar(255) DEFAULT NULL,
+  `lastPoll` datetime DEFAULT NULL,
   `categoryId` int(11) NOT NULL DEFAULT '0',
-  `supportPing` tinyint(1) unsigned zerofill NOT NULL DEFAULT '0' COMMENT '是否支持PING，0-不支持1-支持',
-  `webMgrPort` int(11) NOT NULL DEFAULT '0',
-  `configPollTime` int(11) NOT NULL DEFAULT '0',
-  `statePollTime` int(11) NOT NULL DEFAULT '0',
-  `typeName` varchar(255) NOT NULL,
-  `positionX` int(11) NOT NULL DEFAULT '0',
-  `positionY` int(11) NOT NULL,
-  `symbolType` tinyint(2) NOT NULL DEFAULT '0',
-  `symbolDesc` text NOT NULL,
-  `mac` varchar(255) NOT NULL,
-  `phyName` varchar(255) NOT NULL,
-  `phyCreateTime` datetime NOT NULL,
-  `series_id` int(11) NOT NULL DEFAULT '0',
-  `model_id` varchar(255) NOT NULL,
-  `interfaces` text NOT NULL,
-  `category` varchar(255) NOT NULL COMMENT '设备类型',
-  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `series_name` varchar(255) NOT NULL,
-  `model_name` varchar(255) NOT NULL,
+  `supportPing` tinyint(1) unsigned zerofill DEFAULT '0' COMMENT '是否支持PING，0-不支持1-支持',
+  `webMgrPort` int(11) DEFAULT '0',
+  `configPollTime` int(11) DEFAULT '0',
+  `statePollTime` int(11) DEFAULT '0',
+  `typeName` varchar(255) DEFAULT NULL,
+  `positionX` int(11) DEFAULT '0',
+  `positionY` int(11) DEFAULT NULL,
+  `symbolType` tinyint(2) DEFAULT '0',
+  `symbolDesc` text,
+  `mac` varchar(255) DEFAULT NULL,
+  `phyName` varchar(255) DEFAULT NULL,
+  `phyCreateTime` datetime DEFAULT NULL,
+  `series_id` int(11) DEFAULT '0',
+  `model_id` varchar(255) DEFAULT NULL,
+  `interfaces` text,
+  `category` varchar(255) DEFAULT NULL COMMENT '设备类型',
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `series_name` varchar(255) DEFAULT NULL,
+  `model_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_index` (`ip`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
@@ -2988,7 +2989,8 @@ CREATE TABLE `device_task` (
   `sumCount` int(11) DEFAULT '0' COMMENT '汇总计数',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_unique` (`devId`,`taskId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7952 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -2997,7 +2999,6 @@ CREATE TABLE `device_task` (
 INSERT INTO `device_task` VALUES ('1', null, '283', null, '4', '内存利用率(%)', '47.95', null, null, '0', '48', '49', '1487', '0', '2015-09-10 12:23:29', '7850');
 INSERT INTO `device_task` VALUES ('2', null, '269', null, '4', '内存利用率(%)', '47.80', null, null, '0', '48', '48', '1481', '0', '2015-09-10 12:23:09', '7851');
 INSERT INTO `device_task` VALUES ('3', null, '283', null, '1', '接口接收速率(bps)', '749503.50', null, null, '0', '4154', '1917455', '18091665', '0', '2015-09-10 12:23:33', '7852');
-INSERT INTO `device_task` VALUES ('4', null, '269', null, '4', '内存利用率(%)', '48.51', null, null, '0', '48', '49', '1503', '0', '2015-09-10 12:23:38', '7853');
 INSERT INTO `device_task` VALUES ('6', null, '4', null, '4', '内存利用率(%)', '48.55', null, null, '0', '49', '49', '1505', '0', '2015-08-25 01:49:54', '7854');
 INSERT INTO `device_task` VALUES ('7', null, '9', null, '4', '内存利用率(%)', '48.39', null, null, '0', '48', '49', '1501', '0', '2015-08-25 01:49:54', '7855');
 INSERT INTO `device_task` VALUES ('8', null, '10', null, '4', '内存利用率(%)', '48.51', null, null, '0', '48', '49', '1504', '0', '2015-08-25 01:49:54', '7856');
@@ -3017,45 +3018,23 @@ INSERT INTO `device_task` VALUES ('26', null, '23', null, '4', '内存利用率(
 INSERT INTO `device_task` VALUES ('27', null, '24', null, '4', '内存利用率(%)', '48.38', null, null, '0', '48', '48', '1500', '0', '2015-08-25 01:49:54', '7870');
 INSERT INTO `device_task` VALUES ('1962', null, '18', null, '1', '接口接收速率(bps)', '8312.22', null, null, '0', '4554', '107932', '330063', '0', '2015-08-25 01:47:38', '7871');
 INSERT INTO `device_task` VALUES ('1963', null, '12', null, '1', '接口接收速率(bps)', '17245.88', null, null, '0', '6229', '1075851', '1782239', '0', '2015-08-25 01:47:38', '7872');
-INSERT INTO `device_task` VALUES ('2024', null, '16', null, '1', '接口接收速率(bps)', '31925.26', null, null, '0', '1788', '74543', '607749', '0', '2015-08-25 01:47:38', '7873');
 INSERT INTO `device_task` VALUES ('2025', null, '9', null, '1', '接口接收速率(bps)', '382628.14', null, null, '0', '4288', '493238', '6442065', '0', '2015-08-25 01:47:38', '7874');
-INSERT INTO `device_task` VALUES ('2092', null, '25', null, '1', '接口接收速率(bps)', '19407.99', null, null, '0', '2147', '281333', '1518873', '0', '2015-08-25 01:47:38', '7875');
-INSERT INTO `device_task` VALUES ('2394', null, '3', null, '1', '接口接收速率(bps)', '79393.52', null, null, '0', '56562', '136302', '2596719', '0', '2015-08-25 01:47:38', '7876');
-INSERT INTO `device_task` VALUES ('2638', null, '24', null, '1', '接口接收速率(bps)', '976177.42', null, null, '0', '71984', '13280880', '45816837', '0', '2015-08-25 01:47:38', '7877');
 INSERT INTO `device_task` VALUES ('2639', null, '3', null, '1', '接口接收速率(bps)', '112965.43', null, null, '0', '56695', '130088', '3053292', '0', '2015-08-25 01:47:38', '7878');
 INSERT INTO `device_task` VALUES ('2640', null, '8', null, '1', '接口接收速率(bps)', '236656.32', null, null, '0', '56694', '1411824', '15740300', '0', '2015-08-25 01:47:38', '7879');
 INSERT INTO `device_task` VALUES ('2641', null, '2', null, '1', '接口接收速率(bps)', '112965.40', null, null, '0', '56696', '130088', '3053303', '0', '2015-08-25 01:47:38', '7880');
 INSERT INTO `device_task` VALUES ('3295', null, '24', null, '1', '接口接收速率(bps)', '79448.63', null, null, '0', '56575', '136318', '2597529', '0', '2015-08-25 01:47:38', '7881');
-INSERT INTO `device_task` VALUES ('3296', null, '8', null, '1', '接口接收速率(bps)', '79482.71', null, null, '0', '56614', '136360', '2598863', '0', '2015-08-25 01:47:38', '7882');
-INSERT INTO `device_task` VALUES ('3297', null, '2', null, '1', '接口接收速率(bps)', '190608.14', null, null, '0', '58109', '920587', '9267810', '0', '2015-08-25 01:47:38', '7883');
-INSERT INTO `device_task` VALUES ('3298', null, '4', null, '1', '接口接收速率(bps)', '112965.51', null, null, '0', '56696', '130088', '3053335', '0', '2015-08-25 01:47:38', '7884');
 INSERT INTO `device_task` VALUES ('3300', null, '6', null, '1', '接口接收速率(bps)', '3677269.44', null, null, '0', '68141', '5605854', '40355574', '0', '2015-08-25 01:47:38', '7885');
-INSERT INTO `device_task` VALUES ('3301', null, '16', null, '1', '接口接收速率(bps)', '960131.28', null, null, '0', '56882', '2011179', '22518850', '0', '2015-08-25 01:47:38', '7886');
-INSERT INTO `device_task` VALUES ('3302', null, '10', null, '1', '接口接收速率(bps)', '112957.16', null, null, '0', '56695', '130087', '3053173', '0', '2015-08-25 01:47:38', '7887');
-INSERT INTO `device_task` VALUES ('3303', null, '18', null, '1', '接口接收速率(bps)', '377864.65', null, null, '0', '63883', '7048648', '24065600', '0', '2015-08-25 01:47:38', '7888');
-INSERT INTO `device_task` VALUES ('3306', null, '19', null, '1', '接口接收速率(bps)', '661361.48', null, null, '0', '59953', '2653881', '27697347', '0', '2015-08-25 01:47:38', '7889');
-INSERT INTO `device_task` VALUES ('3307', null, '23', null, '1', '接口接收速率(bps)', '112946.55', null, null, '0', '56695', '130080', '3052908', '0', '2015-08-25 01:47:38', '7890');
-INSERT INTO `device_task` VALUES ('3308', null, '20', null, '1', '接口接收速率(bps)', '640381.72', null, null, '0', '56730', '719168', '11404436', '0', '2015-08-25 01:47:38', '7891');
-INSERT INTO `device_task` VALUES ('3309', null, '29', null, '1', '接口接收速率(bps)', '753730.88', null, null, '0', '61497', '3722697', '34942940', '0', '2015-08-25 01:47:38', '7892');
-INSERT INTO `device_task` VALUES ('3311', null, '25', null, '1', '接口接收速率(bps)', '917888.95', null, null, '0', '57728', '7499722', '52637620', '0', '2015-08-25 01:47:38', '7893');
 INSERT INTO `device_task` VALUES ('3316', null, '13', null, '1', '接口接收速率(bps)', '3598935.14', null, null, '0', '63418', '19314960', '138610923', '0', '2015-08-25 01:47:38', '7894');
-INSERT INTO `device_task` VALUES ('3330', null, '12', null, '1', '接口接收速率(bps)', '112946.43', null, null, '0', '56695', '130084', '3052901', '0', '2015-08-25 01:47:38', '7895');
 INSERT INTO `device_task` VALUES ('3331', null, '19', null, '1', '接口接收速率(bps)', '112956.57', null, null, '0', '56695', '130085', '3053151', '0', '2015-08-25 01:47:38', '7896');
 INSERT INTO `device_task` VALUES ('3333', null, '23', null, '1', '接口接收速率(bps)', '0.00', null, null, '0', '0', '0', '0', '0', '2015-08-25 01:47:38', '7897');
 INSERT INTO `device_task` VALUES ('3344', null, '25', null, '1', '接口接收速率(bps)', '0.00', null, null, '0', '0', '0', '0', '0', '2015-08-25 01:47:38', '7898');
 INSERT INTO `device_task` VALUES ('3345', null, '20', null, '1', '接口接收速率(bps)', '125138.21', null, null, '0', '56697', '857377', '4016171', '0', '2015-08-25 01:47:38', '7899');
-INSERT INTO `device_task` VALUES ('3346', null, '9', null, '1', '接口接收速率(bps)', '0.00', null, null, '0', '0', '0', '0', '0', '2015-08-25 01:47:38', '7900');
 INSERT INTO `device_task` VALUES ('3350', null, '22', null, '1', '接口接收速率(bps)', '0.00', null, null, '0', '0', '0', '0', '0', '2015-08-25 01:47:38', '7901');
 INSERT INTO `device_task` VALUES ('3361', null, '16', null, '1', '接口接收速率(bps)', '0.00', null, null, '0', '0', '0', '0', '0', '2015-08-25 01:47:38', '7902');
-INSERT INTO `device_task` VALUES ('3364', null, '21', null, '1', '接口接收速率(bps)', '0.00', null, null, '0', '0', '0', '0', '0', '2015-08-25 01:47:38', '7903');
-INSERT INTO `device_task` VALUES ('3368', null, '10', null, '1', '接口接收速率(bps)', '0.00', null, null, '0', '0', '0', '0', '0', '2015-08-25 01:47:38', '7904');
 INSERT INTO `device_task` VALUES ('3415', null, '29', null, '1', '接口接收速率(bps)', '112946.73', null, null, '0', '56696', '130084', '3052926', '0', '2015-08-25 01:47:38', '7905');
-INSERT INTO `device_task` VALUES ('3443', null, '4', null, '1', '接口接收速率(bps)', '0.00', null, null, '0', '0', '0', '0', '0', '2015-08-25 01:47:38', '7906');
 INSERT INTO `device_task` VALUES ('5177', null, '21', null, '1', '接口接收速率(bps)', '112957.21', null, null, '0', '56695', '130087', '3053178', '0', '2015-08-25 01:47:38', '7907');
 INSERT INTO `device_task` VALUES ('7153', null, '10', null, '1', '接口接收速率(bps)', '419006.39', null, null, '0', '4288', '1431645', '14336741', '0', '2015-08-25 01:47:38', '7908');
 INSERT INTO `device_task` VALUES ('7154', null, '4', null, '1', '接口接收速率(bps)', '0.00', null, null, '0', '0', '0', '0', '0', '2015-08-25 01:47:38', '7909');
-INSERT INTO `device_task` VALUES ('7848', null, '23', null, '1', '接口接收速率(bps)', '445098.70', null, null, '0', '5207', '693451', '8772788', '0', '2015-08-25 01:47:38', '7910');
-INSERT INTO `device_task` VALUES ('7849', null, '22', null, '1', '接口接收速率(bps)', '127429.08', null, null, '0', '2123', '1629825', '3495955', '0', '2015-08-25 01:47:38', '7911');
 INSERT INTO `device_task` VALUES ('9', null, '12', null, '6', '设备响应时间(ms)', '10.38', null, null, '0', '10', '11', '316', '0', '2015-08-25 02:01:18', '7912');
 INSERT INTO `device_task` VALUES ('14', null, '16', null, '6', '设备响应时间(ms)', '9.49', null, null, '0', '9', '10', '292', '0', '2015-08-25 02:01:18', '7913');
 INSERT INTO `device_task` VALUES ('24', null, '29', null, '6', '设备响应时间(ms)', '10.16', null, null, '0', '10', '11', '309', '0', '2015-08-25 02:01:18', '7914');
