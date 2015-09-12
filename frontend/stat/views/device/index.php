@@ -32,9 +32,6 @@ use frontend\models\DeviceInfo;
                 ],
                 [
                     "attribute" => "label",
-                    "value" => function($model){
-                        return Html::a($model->label,Url::toRoute(['/input/device/view',"id"=>$model->id]));
-                    },
                     "format" => 'raw',
                 ],
                 [
