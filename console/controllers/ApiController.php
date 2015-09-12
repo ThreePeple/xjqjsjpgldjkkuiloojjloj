@@ -400,7 +400,6 @@ class ApiController extends Controller
         $host=Yii::$app->params['wireless_api_host'];
         $api_path=Constants::DEVICE_ALARM;
         $url=$host.$api_path;
-        echo $url."\n";
         if(empty($alarms))
         {
             echo " alarms are not found!";
@@ -415,9 +414,9 @@ class ApiController extends Controller
             if(!$client->hasErrors())
             {
                 $data = $client->getData();
-                if(isset($data['alarm']))
+                if(isset($data))
                 {
-                    $_data=$data['alarm'];
+                    $_data=$data;
                     if($this->importDeviceAlarm($_data))
                     {
                         sleep(0.5);
@@ -444,11 +443,11 @@ class ApiController extends Controller
     public function actionDeviceAlarm()
     {
         //获取无线设备
-        $alarms=$this->getDevicesAlarmList();
+        $alarms=$this->getDevicesAlarmList('device_alarm');
         $host=Yii::$app->params['api_host'];
         $api_path=Constants::DEVICE_ALARM;
         $url=$host.$api_path;
-        echo $url."\n";
+        //echo $url."\n";
         if(empty($alarms))
         {
             echo " alarms are not found!";
@@ -458,14 +457,15 @@ class ApiController extends Controller
         foreach($alarms as $alarm)
         {
             $alarm_id=$alarm['id'];
-            $url.="/".$alarm_id;
-            $client=(new RestfulClient("http_imc"))->get($url);
+            $_url=$url."/".$alarm_id;
+           // echo $_url."\n";
+            $client=(new RestfulClient("http_imc"))->get($_url);
             if(!$client->hasErrors())
             {
                 $data = $client->getData();
-                if(isset($data['alarm']))
+                if(isset($data))
                 {
-                    $_data=$data['alarm'];
+                    $_data=$data;
                     if($this->importDeviceAlarm($_data,'device_alarm'))
                     {
                         sleep(0.5);
@@ -899,6 +899,12 @@ class ApiController extends Controller
     {
         try
         {
+            $param['averageValue']=isset($param['averageValue'])?$param['averageValue']:'0';
+            $param['maximumValue']=isset($param['maximumValue'])?$param['maximumValue']:'0';
+            $param['minimumValue']=isset($param['minimumValue'])?$param['minimumValue']:'0';
+            $param['currentValue']=isset($param['currentValue'])?$param['currentValue']:'0';
+            $param['summaryValue']=isset($param['summaryValue'])?$param['summaryValue']:'0';
+
             $sql="insert into ".$tableName." (taskId,`taskName`,devId,instId,objIndex,objIndexDesc,averageValue,maximumValue,minimumValue,";
             $sql.="currentValue,summaryValue)";
             $sql.=" values(".$param['taskId'].",'".$param['taskName']."',".$param['devId'].",".$param['instId'].",'".$param['objIndex']."',";
@@ -929,7 +935,8 @@ class ApiController extends Controller
         $host =$tableName=="wireless_device_alarm"?Yii::$app->params['wireless_api_host']:Yii::$app->params['api_host'];
         $api_path=Constants::DEVICE_ALARM;
         $query=[
-            'topoId'=>1
+            'operatorName'=>'admin',
+            'desc'=>false
         ];
         $url=$host.$api_path;
         $authkey=$tableName=="wireless_device_alarm"?"http_basic":"http_imc";
@@ -962,7 +969,7 @@ class ApiController extends Controller
         {
             $sql="replace into ".$tableName." (id,`OID`,originalTypeDesc,deviceId,deviceIp,deviceName,alarmLevel,alarmLevelDesc,alarmCategory,alarmCategoryDesc,";
             $sql.="faultTime,faultTimeDesc,recTime,recTimeDesc,recStatus,recStatusDesc,ackUserName,alarmDesc,somState,remark,eventName,";
-            $sql.="reason,defineType,customAlarmLevel,specificId,originalType";
+            $sql.="reason,defineType,customAlarmLevel,specificId,originalType)";
             $sql.=" values(".$param['id'].",'".$param['OID']."','".$param['originalTypeDesc']."',".$param['deviceId'].",'".$param['deviceIp']."',";
             $sql.="'".$param['deviceName']."',".$param['alarmLevel'].",'".$param['alarmLevelDesc']."',".$param['alarmCategory'].",";
             $sql.="'".$param['alarmCategoryDesc']."',".$param['faultTime'].",'".$param['faultTimeDesc']."',".$param['recTime'].",";
