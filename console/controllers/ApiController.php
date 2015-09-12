@@ -438,6 +438,54 @@ class ApiController extends Controller
             }
         }
     }
+    /**
+     * 有线设备告警信息
+     */
+    public function actionDeviceAlarm()
+    {
+        //获取无线设备
+        $alarms=$this->getDevicesAlarmList();
+        $host=Yii::$app->params['api_host'];
+        $api_path=Constants::DEVICE_ALARM;
+        $url=$host.$api_path;
+        echo $url."\n";
+        if(empty($alarms))
+        {
+            echo " alarms are not found!";
+            exit;
+        }
+        //遍历所有告警项
+        foreach($alarms as $alarm)
+        {
+            $alarm_id=$alarm['id'];
+            $url.="/".$alarm_id;
+            $client=(new RestfulClient("http_imc"))->get($url);
+            if(!$client->hasErrors())
+            {
+                $data = $client->getData();
+                if(isset($data['alarm']))
+                {
+                    $_data=$data['alarm'];
+                    if($this->importDeviceAlarm($_data,'device_alarm'))
+                    {
+                        sleep(0.5);
+                        echo $_data['deviceIp']." import ok\n";
+                    }
+
+                    else
+                    {
+                        echo $_data['deviceIp']." import fail\n";
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                var_dump($client->getError());
+                Yii::error($client->getError(),'console/actionDeviceAlarm');
+            }
+        }
+    }
     ///////////////////私有函数////////////////////////
     /**
      * 导入无线设备数据
@@ -905,23 +953,22 @@ class ApiController extends Controller
 
     /**
      * 导入设备告警
-     * @param $_data
+     * @param $param
      * @param string $tableName
      */
     private function importDeviceAlarm($param,$tableName='wireless_device_alarm')
     {
         try
         {
-            $sql="insert into ".$tableName." (id,,`OID`,originalTypeDesc,deviceId,deviceIp,deviceName,alarmLevel,alarmCategory,alarmCategoryDesc,";
+            $sql="replace into ".$tableName." (id,`OID`,originalTypeDesc,deviceId,deviceIp,deviceName,alarmLevel,alarmLevelDesc,alarmCategory,alarmCategoryDesc,";
             $sql.="faultTime,faultTimeDesc,recTime,recTimeDesc,recStatus,recStatusDesc,ackUserName,alarmDesc,somState,remark,eventName,";
             $sql.="reason,defineType,customAlarmLevel,specificId,originalType";
-            $sql.=" values(".$param['taskId'].",'".$param['taskName']."',".$param['devId'].",".$param['instId'].",'".$param['objIndex']."',";
-            $sql.="'".$param['objIndexDesc']."','".$param['averageValue']."','".$param['maximumValue']."','".$param['minimumValue']."',";
-            $sql.="'".$param['currentValue']."','".$param['summaryValue']."'";
-            $sql.=") on duplicate key update ";
-            $sql.="instId=".$param['instId'].",objIndex='".$param['objIndex']."',objIndexDesc='".$param['objIndexDesc']."',";
-            $sql.="averageValue='".$param['averageValue']."',maximumValue='".$param['maximumValue']."',";
-            $sql.="minimumValue='".$param['minimumValue']."',currentValue='".$param['currentValue']."',summaryValue='".$param['summaryValue']."'";
+            $sql.=" values(".$param['id'].",'".$param['OID']."','".$param['originalTypeDesc']."',".$param['deviceId'].",'".$param['deviceIp']."',";
+            $sql.="'".$param['deviceName']."',".$param['alarmLevel'].",'".$param['alarmLevelDesc']."',".$param['alarmCategory'].",";
+            $sql.="'".$param['alarmCategoryDesc']."',".$param['faultTime'].",'".$param['faultTimeDesc']."',".$param['recTime'].",";
+            $sql.="'".$param['recTimeDesc']."',".$param['recStatus'].",'".$param['recStatusDesc']."','".$param['ackUserName']."',";
+            $sql.="'".$param['alarmDesc']."',".$param['somState'].",'".$param['remark']."','".$param['eventName']."','".$param['reason']."',";
+            $sql.=$param['defineType'].",".$param['customAlarmLevel'].",".$param['specificId'].",".$param['originalType'].")";
             $cmd = Yii::$app->db->createCommand($sql);
             $cmd->execute();
             return true;
@@ -929,7 +976,7 @@ class ApiController extends Controller
         catch(Exception $e)
         {
             var_dump($e->getMessage());
-            Yii::error($e->getMessage(),'console/importTask');
+            Yii::error($e->getMessage(),'console/importDeviceAlarm');
             return false;
         }
     }
