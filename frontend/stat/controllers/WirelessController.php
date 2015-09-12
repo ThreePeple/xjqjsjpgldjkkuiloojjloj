@@ -10,6 +10,8 @@ use app\models\WirelessDeviceAp;
 use app\models\WirelessDeviceInterface;
 use app\models\WirelessDeviceLink;
 use app\models\WirelessDeviceTask;
+use frontend\models\WirelessDeviceTaskSummary;
+use frontend\models\WirelessDeviceTaskSummarySearch;
 use Yii;
 use frontend\models\WirelessDeviceInfo;
 use frontend\models\WirelessSearch;
@@ -171,7 +173,7 @@ class WirelessController extends Controller
     public function actionDetail($id){
         $this->layout = '//main';
         $model = $this->findModel($id);
-        $lists = WirelessDeviceTask::getPrefList($id);
+        $lists = (new WirelessDeviceTaskSummarySearch(['devId'=>$id]))->search(Yii::$app->request->queryParams);
         $query = WirelessDeviceAlarm::find();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -271,9 +273,8 @@ class WirelessController extends Controller
         $device = WirelessDeviceInfo::find()->with(["type","model"])->where(["id"=>$id])->one();
         $deviceConfig =ArrayHelper::map(InfoConfig::getTipConfig(1),"key","value");
         $perfConfig = ArrayHelper::map(InfoConfig::getTipConfig(2),"key","value");
-        $perfData = WirelessDeviceTask::find()->where(["taskId"=>array_values($perfConfig),"devId"=>$id])
-            ->select(["taskId","dataVal"])
-            ->orderBy("update_time desc")
+        $perfData = WirelessDeviceTaskSummary::find()->where(["taskId"=>array_values($perfConfig),"devId"=>$id])
+            ->select(["taskId","currentValue"])
             ->groupBy("taskId")
             ->asArray()
             ->all();

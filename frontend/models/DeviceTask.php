@@ -88,6 +88,10 @@ class DeviceTask extends \yii\db\ActiveRecord
         return ArrayHelper::map($rows,"taskDesc","dataVal");
     }
 
+    /**
+     * 大屏滚动性能指标信息
+     * @return string
+     */
     public static function getLastPreDatas(){
         $ips = DeviceIpfilter::getIdsByType(ViewTemplate::TYPE_BUILD);
 

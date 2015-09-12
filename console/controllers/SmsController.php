@@ -64,10 +64,18 @@ class SmsController extends Controller{
         $lists = SmsList::find()->where(["status"=>0])->all();
         $wsdl = Yii::$app->params["sms_soap"];
         $soapClient = new \SoapClient($wsdl);
+        $soapClient->soap_defencoding = 'utf-8';
+        $soapClient->decode_utf8 = false;
+        $soapClient->xml_encoding = 'utf-8';
         foreach($lists as $sms){
-            $r = $soapClient->sendSMS($sms->receivers,$sms->content);
+            $r = $soapClient->__soapCall('SendSMS',[
+                'SendSMS' =>[
+                    'telList' => $sms->receivers,
+                    'content' => $sms->content
+                ]
+            ]);
             $sms->send_times = $sms->send_times+1;
-            $sms->status = $r;
+            $sms->status = (int)$r->SendSMSResult;
             if($sms->send_times>5 && $sms->status==0){
                 //发送超过5次 失败的设置为失败状态 不在尝试发送
                 $sms->status= 2;

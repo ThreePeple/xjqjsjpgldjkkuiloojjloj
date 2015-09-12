@@ -6,6 +6,8 @@ use app\models\DeviceInterface;
 use frontend\models\DeviceIpfilter;
 use app\models\InfoConfig;
 use app\models\TopologyConfig;
+use frontend\models\DeviceTaskSummary;
+use frontend\models\DeviceTaskSummarySearch;
 use Yii;
 use frontend\models\DeviceInfo;
 use frontend\models\DeviceInfoSearch;
@@ -158,7 +160,9 @@ class DeviceController extends Controller
     public function actionDetail($id){
         $this->layout = '//main';
         $model = $this->findModel($id);
-        $lists = DeviceTask::getPrefList($id);
+        //$lists = DeviceTask::getPrefList($id);
+        $lists = (new DeviceTaskSummarySearch(['devId'=>$id]))->search(Yii::$app->request->queryParams);
+
         $query = DeviceAlarm::find();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -254,13 +258,12 @@ class DeviceController extends Controller
 
         $deviceConfig =ArrayHelper::map(InfoConfig::getTipConfig(1),"key","value");
         $perfConfig = ArrayHelper::map(InfoConfig::getTipConfig(2),"key","value");
-        $perfData = DeviceTask::find()->where(["taskId"=>array_values($perfConfig),"devId"=>$deviceId])
-            ->select(["taskId","dataVal"])
-            ->orderBy("update_time desc")
+        $perfData = DeviceTaskSummary::find()->where(["taskId"=>array_values($perfConfig),"devId"=>$deviceId])
+            ->select(["taskId","currentValue"])
             ->groupBy("taskId")
             ->asArray()
             ->all();
-        $perfData = ArrayHelper::map($perfData,"taskId","dataVal");
+        $perfData = ArrayHelper::map($perfData,"taskId","currentValue");
         return $this->render("tip",[
             "model"=>$device,
             "deviceConfig"=>$deviceConfig,

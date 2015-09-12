@@ -7,6 +7,7 @@ use frontend\models\DeviceIpfilter;
 use app\models\DeviceTask;
 use app\models\TopologyConfig;
 use app\models\WirelessDeviceAp;
+use frontend\models\DeviceTaskSummary;
 use frontend\models\WirelessDeviceInfo;
 use app\models\WirelessDeviceLink;
 use yii\base\View;
@@ -403,6 +404,6 @@ abc;
      * 大厦滚动性能信息
      */
     public function actionGetMarqueeData(){
-        return DeviceTask::getLastPreDatas();
+        return DeviceTaskSummary::getLastPreDatas();
     }
 }
