@@ -81,14 +81,12 @@ class DeviceLink extends \yii\db\ActiveRecord
         $polymers = [];
 
         $models = DeviceInfo::find()->where(["id"=>[$id1,$id2]])->all();
-        $n =1 ;
         foreach($models as $model){
             $polymers[$model->id] = [
-                'id' => 'p'.$n,
+                'id' => 'p'.$model->id,
                 'label' => $model->label,
                 "children" => []
             ];
-            $n++;
         }
 
         $filterIds = DeviceIpfilter::find()->where(["type_id"=>DeviceIpfilter::TYPE_POLYMER])->select("ip")->column();

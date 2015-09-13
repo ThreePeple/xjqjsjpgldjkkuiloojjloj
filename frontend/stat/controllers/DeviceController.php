@@ -218,9 +218,33 @@ class DeviceController extends Controller
      * 设备TIP
      * @return string
      */
-    public function actionAjaxDeviceTip(){
+   /* public function actionAjaxDeviceTip(){
         $id = Yii::$app->request->get("id");
         return $this->getTip($id);
+    }*/
+
+    public function actionAjaxDeviceTip(){
+        $this->layout = false;
+        $id = Yii::$app->request->get("id");
+        $fromWhere = Yii::$app->request->get("fromWhere");
+        if($fromWhere=='path'){
+            $id1 = trim(Yii::$app->request->get("from"),'pid');
+            $id2 = trim(Yii::$app->request->get("to"),'pid');
+            return $this->getLinkTip($id1,$id2);
+        }else{
+            return $this->getTip($id);
+        }
+    }
+
+    private function pathDetail($from,$to){
+        $model = WirelessDeviceLink::find()->where(["or",["leftDevice"=>$from,"rightDevice"=>$to],["leftDevice"=>$to,
+            "rightDevice"=>$from]])->one();
+        if(!$model){
+            return '';
+        }
+        return $this->render("link-detail",[
+            "model"=>$model
+        ]);
     }
 
     /**
