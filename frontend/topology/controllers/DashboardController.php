@@ -278,7 +278,7 @@ abc;
         $area = Yii::$app->request->post("area");
         $polymers = [
             [
-                "id" => "p1",
+                "id" => "p2856",
                 "label" => 'WLAN_AC_A',
                 "children" =>[]
             ]
@@ -304,7 +304,7 @@ abc;
             $polymers[0]["children"][] = $group.':'.$one["id"];
             $links[] = [
                 "from"=> $one["id"],
-                "to" => 'p1',
+                "to" => 'p2856',
                 "status" => 1
             ];
             $groups[$group][] = $one;

@@ -301,46 +301,18 @@ class WirelessController extends Controller
     public function actionAjaxApTip(){
         $this->layout = false;
         $id = Yii::$app->request->get("id");
+        $fromWhere = Yii::$app->request->get("fromWhere");
+        if($fromWhere=='path'){
+            $id1 = trim(Yii::$app->request->get("from"),'pid');
+            $id2 = trim(Yii::$app->request->get("to"),'pid');
+            return $this->pathDetail($id1,$id2);
+        }
         $ap = WirelessDeviceAp::findOne($id);
         if(!$ap){
             return '';
         }
         return $this->render("ap-tip",[
             "model" => $ap
-        ]);
-    }
-
-    /**
-     * 无线区域点击链路展示TIP 信息
-     */
-    public function actionAjaxLinkTip(){
-        $this->layout= false;
-        $where = Yii::$app->request->get("where");
-        switch($where){
-            case 'r':
-                $areaId =1;
-                break;
-            case 'g':
-                $areaId = 2;
-                break;
-            case "b":
-                $areaId = 3;
-                break;
-            default:
-                $areaId = 0;
-        }
-        //$data= WirelessDeviceLink::getLinks($areaId);
-        $ids = ViewTemplate::find()->where(["type"=>ViewTemplate::TYPE_WIFI,"areaId"=>$areaId])->select("device_id")->column();
-        //var_dump($ids);
-        $query = WirelessDeviceLink::find()->with(["left","right"]);
-        $query->where(["or",["leftDevice"=>$ids],["rightDevice"=>$ids]]);
-        $dataProvider = new ActiveDataProvider([
-            "query" => $query,
-            "pagination" => false
-        ]);
-       // var_dump($dataProvider->getModels());
-        return $this->render("link-tip",[
-            "dataProvider" => $dataProvider,
         ]);
     }
 }
