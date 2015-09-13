@@ -62,7 +62,9 @@ use yii\helpers\Url;
                 'learnMac',
                 [
                     "label" => "是否被管理",
-                    "value" => "status"
+                    "value" => function($model){
+                        return $model->status==0? '未管理' : '已管理';
+                    }
                 ],
                 [
                     "class" => '\kartik\grid\ActionColumn',
