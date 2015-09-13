@@ -45,7 +45,7 @@ svg{
 	stroke: red;
 }
 .ZSYPolymerChart .node text{
-	fill: #cdcdcd;
+	fill: #f1f1f1;
 	font-size: 15px;
 }
 .ZSYPolymerChart .node circle{
@@ -57,12 +57,17 @@ svg{
 	stroke-width: 2px;
 	stroke-linecap: round;
 }
+
+.ZSYPolymerChart .link-path:hover{
+	stroke-width: 3px;
+}
+
 .ZSYPolymerChart .link-path[data-status="2"]{
 	stroke: red;
 }
 
 .ZSYPolymerChart .node.hover text{
-	fill: #fff;
+	fill: #ffb;
 }
 .ZSYPolymerChart .node.hover circle{
 	fill: rgb(30, 255, 30);
