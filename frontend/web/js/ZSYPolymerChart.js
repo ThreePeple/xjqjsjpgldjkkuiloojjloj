@@ -229,7 +229,9 @@
                 source: source,
                 target: target,
                 groupCenter: groupCenterXY[link.group],
-                linkPath: link.from + "_" + link.to
+                linkPath: link.from + "_" + link.to,
+                linkFrom: link.from,
+                linkTo: link.to
             };
         });
         _renderPath(links, linkParent);
@@ -249,6 +251,8 @@
             .data(links)
             .enter()
             .append("path")
+            .attr("data-from", function(d){return d.linkFrom;})
+            .attr("data-to", function(d){return d.linkTo;})
             .attr("class", "link-path")
             .attr("id", function(d) {
                 return d.linkPath;
