@@ -71,11 +71,11 @@ use yii\helpers\Url;
                     'width' => '40px',
                     'buttons' => [
                         'bind' => function($url,$model,$key){
-                            return $model->status == 1? Html::a('绑定',Url::toRoute(['/input/config-set/bind',
+                            return $model->status == 0? Html::a('绑定',Url::toRoute(['/input/config-set/bind',
                                 'ip'=>$model->learnIp,'mac'=>$model->learnMac,'id'=>$model->id])) : '';
                         },
                         'unbind' => function($url,$model,$key){
-                            return $model->status == 0? Html::a('释放',Url::toRoute(['/input/config-set/unbind',
+                            return $model->status == 1? Html::a('释放',Url::toRoute(['/input/config-set/unbind',
                                 'id'=>$model->id])) : '';
                         }
                     ]
