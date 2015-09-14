@@ -22,8 +22,10 @@ class RestfulClient {
 
     private $config_key;
 
-    public function __construct($auth_key){
-        $this->config_key = $auth_key;
+    public function __construct($auth_key=null){
+        if($auth_key){
+            $this->config_key = $auth_key;
+        }
     }
 
 
