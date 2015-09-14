@@ -59,7 +59,7 @@ class ConfigSetController extends \yii\web\Controller
             echo '<script>alert("操作失败")</script>';
             \Yii::$app->end();
         }else{
-            $this->redirect('index');
+            $this->redirect(Yii::$app->request->referrer);
         }
     }
     public function actionBatchBind(){
@@ -70,7 +70,7 @@ class ConfigSetController extends \yii\web\Controller
         foreach($rows as $row){
             $this->bind($row["ip"],$row["mac"],$row['id']);
         }
-        $this->redirect('index');
+        $this->redirect(Yii::$app->request->referrer);
     }
 
     public function actionUnbind(){
@@ -79,7 +79,7 @@ class ConfigSetController extends \yii\web\Controller
             echo '<script>alert("操作失败")</script>';
             \Yii::$app->end();
         }else{
-            $this->redirect('index');
+            $this->redirect(Yii::$app->request->referrer);
         }
     }
 
@@ -89,7 +89,7 @@ class ConfigSetController extends \yii\web\Controller
         foreach($ids as $id){
             $this->unBind($id);
         }
-        $this->redirect('index');
+        $this->redirect(Yii::$app->request->referrer);
     }
 
     /**
