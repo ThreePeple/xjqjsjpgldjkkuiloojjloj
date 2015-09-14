@@ -105,7 +105,8 @@ class ConfigSetController extends \yii\web\Controller
         $result = !$client->hasErrors();
 
         if($result){
-            $bindId = 0; //获取绑定ID TODO
+            $location = $client->getHeader('Location');
+            $bindId = array_pop(explode('/',$location));
             //下入绑定ID 更新状态
             AccessDeviceInfo::updateAll(['status'=>1,"bindId"=>$bindId],["id"=>$id]);
         }

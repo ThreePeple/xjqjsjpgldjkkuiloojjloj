@@ -30,9 +30,19 @@ class RestfulClient {
         'Content-Type'=>'application/json; charset=UTF-8'
     ];
 
+    private $response_headers = [];
+
     public function __construct($auth_key=null){
         if($auth_key){
             $this->config_key = $auth_key;
+        }
+    }
+
+    public function getHeader($k=null){
+        if($k){
+            return $this->response_headers[$k];
+        }else{
+            return $this->response_headers;
         }
     }
 
@@ -101,9 +111,9 @@ class RestfulClient {
             CURLOPT_USERAGENT       => 'cnpc_' . __CLASS__,
             CURLOPT_TIMEOUT         => 10,
             CURLOPT_RETURNTRANSFER  => 1,
+            CURLOPT_HEADERFUNCTION => 'handlerHeaders',
         ];
         curl_setopt_array($this->ch,$options);
-
         $method = strtoupper($method);
 
         $this->setHeaders($method);
@@ -137,6 +147,10 @@ class RestfulClient {
                     $this->error_code = $this->http_code;
                     $this->error = 'Bad Request';
                     break;
+                case 409:
+                    $this->error = $this->getHeader('ErrorMessage');
+                    $this->error_code = $this->http_code;
+                    break;
             }
         }
         Yii::trace($this->data,'curl/return');
@@ -144,6 +158,15 @@ class RestfulClient {
 
         $this->parseResult();
         return $this;
+    }
+
+    public function handlerHeaders($ch,$strHeader){
+        $h = explode(':',$strHeader);
+        if(count($h)==2){
+            $this->response_headers[$h[0]] = $h[1];
+        }else{
+            $this->response_headers[] = $strHeader;
+        }
     }
 
     public function parseResult(){
