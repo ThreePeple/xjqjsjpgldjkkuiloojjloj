@@ -55,7 +55,7 @@ class ConfigSetController extends \yii\web\Controller
     public function actionBind(){
         $result = $this->bind(Yii::$app->request->get('ip'),Yii::$app->request->get("mac"),Yii::$app->request->get
         ('id'));
-        if($result){
+        if(!$result){
             echo '<script>alert("操作失败")</script>';
             \Yii::$app->end();
         }else{
@@ -75,7 +75,7 @@ class ConfigSetController extends \yii\web\Controller
 
     public function actionUnbind(){
         $result = $this->unBind(Yii::$app->request->get('id'));
-        if($result){
+        if(!$result){
             echo '<script>alert("操作失败")</script>';
             \Yii::$app->end();
         }else{

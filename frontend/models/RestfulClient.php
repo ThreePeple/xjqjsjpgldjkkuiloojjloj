@@ -22,6 +22,8 @@ class RestfulClient {
 
     private $config_key;
 
+    private $http_code = 500;
+
     public function __construct($auth_key=null){
         if($auth_key){
             $this->config_key = $auth_key;
@@ -38,6 +40,10 @@ class RestfulClient {
         $this->error_code = 0;
         $this->error_msg='';
         $this->data = null;
+    }
+
+    public function getHttpCode(){
+        return $this->http_code;
     }
 
     /**
@@ -109,6 +115,15 @@ class RestfulClient {
         if($error_code != 0) {
             $this->error_code = $error_code;
             $this->error      = curl_error($this->ch);
+        }else{
+            $this->http_code = curl_getinfo($this->ch,CURLINFO_HTTP_CODE);
+            switch($this->http_code){
+                case 401:
+                case 403:
+                    $this->error_code = $this->http_code;
+                    $this->error = '用户验证失败';
+                    break;
+            }
         }
         Yii::trace($this->data,'curl/return');
         curl_close($this->ch);
