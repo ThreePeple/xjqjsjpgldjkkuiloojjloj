@@ -56,7 +56,7 @@ class ConfigSetController extends \yii\web\Controller
         $result = $this->bind(Yii::$app->request->get('ip'),Yii::$app->request->get("mac"),Yii::$app->request->get
         ('id'));
         if(!$result){
-            echo '<script>alert("操作失败")</script>';
+            echo '<script>alert("操作失败");window.location="'.Yii::$app->request->referrer.'"</script>';
             \Yii::$app->end();
         }else{
             $this->redirect(Yii::$app->request->referrer);
@@ -76,7 +76,7 @@ class ConfigSetController extends \yii\web\Controller
     public function actionUnbind(){
         $result = $this->unBind(Yii::$app->request->get('id'));
         if(!$result){
-            echo '<script>alert("操作失败")</script>';
+            echo '<script>alert("操作失败");window.location="'.Yii::$app->request->referrer.'"</script>';
             \Yii::$app->end();
         }else{
             $this->redirect(Yii::$app->request->referrer);
@@ -100,7 +100,7 @@ class ConfigSetController extends \yii\web\Controller
     private function bind($ip,$mac,$id){
         $url = $this->getApiUrl('/res/access/ipMacBind');
 
-        $client = (new RestfulClient('http_imc'))->withHeaders(['Content-Type'=>'application/json; charset=UTF-8'])->post($url,'<ipBindMac><ip>'.$ip.'</ip><mac>'.$mac.'</mac></ipBindMac>');
+        $client = (new RestfulClient('http_imc'))->withHeaders(['Content-Type'=>'application/xml; charset=UTF-8'])->post($url,'<ipMacBind><ip>'.$ip.'</ip><mac>'.$mac.'</mac></ipMacBind>');
 
         $result = $client->getHttpCode() == 201;
 

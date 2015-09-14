@@ -111,7 +111,7 @@ class RestfulClient {
             CURLOPT_USERAGENT       => 'cnpc_' . __CLASS__,
             CURLOPT_TIMEOUT         => 10,
             CURLOPT_RETURNTRANSFER  => 1,
-            CURLOPT_HEADERFUNCTION => 'handlerHeaders',
+            CURLOPT_HEADERFUNCTION => [$this,'handlerHeaders'],
         ];
         curl_setopt_array($this->ch,$options);
         $method = strtoupper($method);
