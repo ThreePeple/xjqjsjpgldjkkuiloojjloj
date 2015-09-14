@@ -40,7 +40,7 @@ class ConfigSetController extends \yii\web\Controller
         $id = \Yii::$app->request->get("id");
         $url = $this->getApiUrl('/res/access/ipMacBind/'.$id);
 
-        $client = (new RestfulClient())->request('DELETE',$url);
+        $client = (new RestfulClient('http_imc'))->request('DELETE',$url);
 
         if($client->hasErrors()){
             echo '<script>alert("操作失败")</script>';
@@ -100,7 +100,7 @@ class ConfigSetController extends \yii\web\Controller
     private function bind($ip,$mac,$id){
         $url = $this->getApiUrl('/res/access/ipMacBind');
 
-        $client = (new RestfulClient())->post($url,\Yii::$app->request->get());
+        $client = (new RestfulClient('http_imc'))->post($url,\Yii::$app->request->get());
 
         $result = !$client->hasErrors();
 
@@ -118,7 +118,7 @@ class ConfigSetController extends \yii\web\Controller
 
         $url .= '/'.$id;
 
-        $client = (new RestfulClient())->request('DELETE',$url);
+        $client = (new RestfulClient('http_imc'))->request('DELETE',$url);
 
         return !$client->hasErrors();
 
