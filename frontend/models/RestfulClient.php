@@ -148,7 +148,7 @@ class RestfulClient {
                     $this->error = 'Bad Request';
                     break;
                 case 409:
-                    $this->error = $this->getHeader('ErrorMessage');
+                    $this->error = $this->getHeader('Error-Message');
                     $this->error_code = $this->http_code;
                     break;
             }
@@ -161,12 +161,13 @@ class RestfulClient {
     }
 
     public function handlerHeaders($ch,$strHeader){
-        $h = explode(':',$strHeader);
+        $h = explode(':',$strHeader,2);
         if(count($h)==2){
             $this->response_headers[$h[0]] = $h[1];
         }else{
             $this->response_headers[] = $strHeader;
         }
+        return strlen($strHeader);
     }
 
     public function parseResult(){

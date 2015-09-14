@@ -102,7 +102,7 @@ class ConfigSetController extends \yii\web\Controller
 
         $client = (new RestfulClient('http_imc'))->withHeaders(['Content-Type'=>'application/json; charset=UTF-8'])->post($url,'<ipBindMac><ip>'.$ip.'</ip><mac>'.$mac.'</mac></ipBindMac>');
 
-        $result = !$client->hasErrors();
+        $result = $client->getHttpCode() == 201;
 
         if($result){
             $location = $client->getHeader('Location');
@@ -115,13 +115,20 @@ class ConfigSetController extends \yii\web\Controller
     }
 
     private function unBind($id){
+        $model = AccessDeviceInfo::findOne($id);
+        if(!$model){
+            return false;
+        }
+        $bindId = $model->bindId;
         $url = $this->getApiUrl('/res/access/ipMacBind');
 
-        $url .= '/'.$id;
+        $url .= '/'.$bindId;
 
         $client = (new RestfulClient('http_imc'))->request('DELETE',$url);
-
-        return !$client->hasErrors();
+        if($client->getHttpCode() == 204){
+            AccessDeviceInfo::updateAll(['status'=>0,"bindId"=>0],["id"=>$id]);
+        }
+        return $client->getHttpCode() == 204;
 
     }
 
