@@ -100,7 +100,7 @@ class ConfigSetController extends \yii\web\Controller
     private function bind($ip,$mac,$id){
         $url = $this->getApiUrl('/res/access/ipMacBind');
 
-        $client = (new RestfulClient('http_imc'))->post($url,\Yii::$app->request->get());
+        $client = (new RestfulClient('http_imc'))->withHeaders(['Content-Type'=>'application/json; charset=UTF-8'])->post($url,'<ipBindMac><ip>'.$ip.'</ip><mac>'.$mac.'</mac></ipBindMac>');
 
         $result = !$client->hasErrors();
 

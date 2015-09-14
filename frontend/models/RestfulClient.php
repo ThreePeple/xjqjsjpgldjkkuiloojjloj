@@ -24,12 +24,22 @@ class RestfulClient {
 
     private $http_code = 500;
 
+    private $request_headers = [
+        'Accept' => 'application/json',
+        'X-HTTP-Method-Override' => 'GET',
+        'Content-Type'=>'application/json; charset=UTF-8'
+    ];
+
     public function __construct($auth_key=null){
         if($auth_key){
             $this->config_key = $auth_key;
         }
     }
 
+    public function withHeaders($headers){
+        $this->request_headers = array_merge($this->request_headers,$headers);
+        return $this;
+    }
 
     public function withConfig($key){
         $this->config_key=$key;
@@ -123,6 +133,10 @@ class RestfulClient {
                     $this->error_code = $this->http_code;
                     $this->error = '用户验证失败';
                     break;
+                case 400:
+                    $this->error_code = $this->http_code;
+                    $this->error = 'Bad Request';
+                    break;
             }
         }
         Yii::trace($this->data,'curl/return');
@@ -138,11 +152,16 @@ class RestfulClient {
 
     public function setHeaders($method){
         curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, $method); //设置请求方式
-        curl_setopt($this->ch,CURLOPT_HTTPHEADER,[
-            "X-HTTP-Method-Override: $method",
-            "Accept: application/json",
-            "Content-Type: application/json; charset=UTF-8",
-        ]);//设置HTTP头信息
+        $this->request_headers['X-HTTP-Method-Override'] = $method;
+        $headers = [];
+        foreach($this->request_headers as $k=>$h){
+            if(is_int($k)){
+                $headers[] = $h;
+            }else{
+                $headers[] = $k.':'.$h;
+            }
+        }
+        curl_setopt($this->ch,CURLOPT_HTTPHEADER,$headers);//设置HTTP头信息
     }
 
     public function setAuth(){
