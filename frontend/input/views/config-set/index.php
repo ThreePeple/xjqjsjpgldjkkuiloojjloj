@@ -78,7 +78,7 @@ use yii\helpers\Url;
                         },
                         'unbind' => function($url,$model,$key){
                             return $model->status == 1? Html::a('释放',Url::toRoute(['/input/config-set/unbind',
-                                'id'=>$model->bindId])) : '';
+                                'id'=>$model->id])) : '';
                         }
                     ]
                 ]
