@@ -11,6 +11,7 @@ use frontend\models\DeviceTaskSummarySearch;
 use Yii;
 use frontend\models\DeviceInfo;
 use frontend\models\DeviceInfoSearch;
+use yii\db\Query;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -306,8 +307,17 @@ class DeviceController extends Controller
         if(!$model){
             return '';
         }
+        $alarmDatas = [];
+        if($model->status > 1){
+            $alarmDatas = (new Query())
+                ->from('device_info a')
+                ->innerJoin('device_alarm b',"a.id=b.deviceId")
+                ->where(["and",["a.id"=>[$d1,$d2]],"a.status>0"])
+                ->all();
+        }
         return $this->render('link-detail',[
-        "model" => $model
+            "model" => $model,
+            "alarmDatas" => $alarmDatas
         ]);
     }
     /**

@@ -30,3 +30,15 @@
         ]
     ])?>
 </div>
+<div>
+<?php
+    if(!empty($alarmDatas)){
+        echo '<h4>告警信息</h4>';
+        echo '<table class="table table-bordered detail-view">';
+        foreach($alarmDatas as $data){
+            echo '<tr><th>'.$data['deviceIp'].'</th><td>'.$data['alarmDesc'].'</td></tr>';
+        }
+        echo '</table>';
+    }
+?>
+    </div>

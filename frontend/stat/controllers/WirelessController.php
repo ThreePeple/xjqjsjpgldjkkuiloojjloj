@@ -17,6 +17,7 @@ use frontend\models\WirelessDeviceInfo;
 use frontend\models\WirelessSearch;
 use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
+use yii\db\Query;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
@@ -293,8 +294,19 @@ class WirelessController extends Controller
         if(!$model){
             return '';
         }
+        $alarmDatas = [];
+        if($model->status !=1){
+            $alarmDatas = (new Query())
+                ->from('wireless_device_info a')
+                ->innerJoin('wireless_device_alarm b',"a.id=b.deviceId")
+                ->where(["and",["a.id"=>[$from,$to]],"a.status>0"])
+                ->orderBy('b.id desc')
+                ->groupBy('b.deviceId')
+                ->all();
+        }
         return $this->render("link-detail",[
-            "model"=>$model
+            "model"=>$model,
+            "alarmDatas" => $alarmDatas
         ]);
     }
 

@@ -7,7 +7,8 @@
  * Time: 15:02
  */
 ?>
-
+<div class="device-info-view view">
+    <h4>链路信息</h4>
 <?= \yii\widgets\DetailView::widget([
     'model' => $model,
     "options" => [
@@ -40,3 +41,16 @@
         ],
     ],
 ]) ?>
+</div>
+<div>
+    <?php
+    if(!empty($alarmDatas)){
+        echo '<h4>告警信息</h4>';
+        echo '<table class="table table-bordered detail-view">';
+        foreach($alarmDatas as $data){
+            echo '<tr><th>'.$data['deviceIp'].'</th><td>'.$data['alarmDesc'].'</td></tr>';
+        }
+        echo '</table>';
+    }
+    ?>
+</div>

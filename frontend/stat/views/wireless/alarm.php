@@ -23,7 +23,8 @@ use kartik\grid\GridView;
                 "alarmLevelDesc",
                 "alarmCategoryDesc",
                 "faultTimeDesc",
-                "recTimeDesc"
+                "recTimeDesc",
+                "alarmDesc"
             ],
             "export"=>false
         ]);

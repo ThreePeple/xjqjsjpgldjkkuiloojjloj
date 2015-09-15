@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'ackStatus',
             // 'ackStatusDesc',
             // 'ackUserName',
-            // 'alarmDesc',
+            'alarmDesc',
             // 'somState',
             // 'remark',
             // 'eventName',

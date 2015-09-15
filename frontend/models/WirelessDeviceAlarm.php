@@ -93,7 +93,7 @@ class WirelessDeviceAlarm extends \yii\db\ActiveRecord
             'ackStatus' => Yii::t('app', 'Ack Status'),
             'ackStatusDesc' => Yii::t('app', '告警确认状态'),
             'ackUserName' => Yii::t('app', '告警确认人'),
-            'alarmDesc' => Yii::t('app', '告警描述'),
+            'alarmDesc' => Yii::t('app', '告警信息'),
             'somState' => Yii::t('app', '告警分发状态'),
             'remark' => Yii::t('app', '告警备注'),
             'eventName' => Yii::t('app', '告警事件名称'),
