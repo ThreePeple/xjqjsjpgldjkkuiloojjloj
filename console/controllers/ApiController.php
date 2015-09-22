@@ -23,13 +23,13 @@ class ApiController extends Controller
     }
 
     /**
-     * 无线设备相关资源任务
-     */
+ * 无线设备相关资源任务
+ */
     public function actionWirelessDeviceSourceTask()
     {
-       $host=Yii::$app->params['wireless_api_host'];
+        $host=Yii::$app->params['wireless_api_host'];
         //无线设备数据
-       $api_path=Constants::DEVICE;
+        $api_path=Constants::DEVICE;
         $query=[
             'resPrivilegeFilter'=>false,
             'start'=>0,
@@ -44,12 +44,12 @@ class ApiController extends Controller
         if(!$client->hasErrors())
         {
             $data = $client->getData();
-           // var_dump($data['device']);die;
+            // var_dump($data['device']);die;
             if(isset($data['device']))
             {
                 foreach($data['device'] as $_data)
                 {
-                   if($this->importWirelessDevice($_data))
+                    if($this->importWirelessDevice($_data))
                         echo $_data['ip']." import ok\n";
                     else
                     {
@@ -66,8 +66,51 @@ class ApiController extends Controller
         }
     }
     /**
-     * 有线设备相关资源任务
+     * 无线设备更新状态
      */
+    public function actionWirelessDeviceStatusTask()
+    {
+        $host=Yii::$app->params['wireless_api_host'];
+        //无线设备数据
+        $api_path=Constants::DEVICE;
+        $query=[
+            'resPrivilegeFilter'=>false,
+            'start'=>0,
+            'orderBy'=>'id',
+            'desc'=>false,
+            'size'=>500,
+            'total'=>false,
+        ];
+        //设备信息列表
+        $url=$host.$api_path;
+        $client=(new RestfulClient("http_basic"))->get($url,$query);
+        if(!$client->hasErrors())
+        {
+            $data = $client->getData();
+            // var_dump($data['device']);die;
+            if(isset($data['device']))
+            {
+                foreach($data['device'] as $_data)
+                {
+                    if($this->updateDeviceStatus($_data))
+                        echo $_data['ip']." update status ok\n";
+                    else
+                    {
+                        echo $_data['ip']." update status fail\n";
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            var_dump($client->getError());
+            Yii::error($client->getError(),'console/actionWirelessDeviceStatusTask');
+        }
+    }
+    /**
+ * 有线设备相关资源任务
+ */
     public function actionDeviceSourceTask()
     {
         $host=Yii::$app->params['api_host'];
@@ -106,6 +149,49 @@ class ApiController extends Controller
         {
             var_dump($client->getError());
             Yii::error($client->getError(),'console/actionWirelessDeviceSourceTask');
+        }
+    }
+    /**
+     * 有线设备更新状态
+     */
+    public function actionDeviceStatusTask()
+    {
+        $host=Yii::$app->params['api_host'];
+        //无线设备数据
+        $api_path=Constants::DEVICE;
+        $query=[
+            'resPrivilegeFilter'=>false,
+            'start'=>0,
+            'orderBy'=>'id',
+            'desc'=>false,
+            'size'=>500,
+            'total'=>false,
+        ];
+        //设备信息列表
+        $url=$host.$api_path;
+        $client=(new RestfulClient("http_imc"))->get($url,$query);
+        if(!$client->hasErrors())
+        {
+            $data = $client->getData();
+            // var_dump($data['device']);
+            if(isset($data['device']))
+            {
+                foreach($data['device'] as $_data)
+                {
+                    if($this->updateDeviceStatus($_data,"device_info"))
+                        echo $_data['ip']." update status ok\n";
+                    else
+                    {
+                        echo $_data['ip']."update status fail\n";
+                        break;
+                    }
+                }
+            }
+        }
+        else
+        {
+            var_dump($client->getError());
+            Yii::error($client->getError(),'console/actionDeviceStatusTask');
         }
     }
     /**
@@ -555,7 +641,7 @@ class ApiController extends Controller
     /**
      * 导入设备数据
      */
-    private function importDevice($_data)
+    private function importDevice($_data,$tableName='wireless_device_info')
     {
         $param=$_data;
         try
@@ -611,6 +697,30 @@ class ApiController extends Controller
         {
             var_dump($e->getMessage());
             Yii::error($e->getMessage(),'console/importWirelessDevice');
+            return false;
+        }
+
+    }
+    /**
+     * 更新设备状态
+     */
+    private function updateDeviceStatus($param,$tableName='wireless_device_info')
+    {
+        if(empty($param))
+        {
+            return true;
+        }
+        try
+        {
+            $sql=" update `".$tableName."` set status=".$param['status']." where ip='".$param['ip']."'";
+            $cmd = Yii::$app->db->createCommand($sql);
+            $cmd->execute();
+            return true;
+        }
+        catch(Exception $e)
+        {
+            var_dump($e->getMessage());
+            Yii::error($e->getMessage(),'console/updateDeviceStatus');
             return false;
         }
 
