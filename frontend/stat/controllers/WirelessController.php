@@ -292,7 +292,7 @@ class WirelessController extends Controller
         $model = WirelessDeviceLink::find()->where(["or",["leftDevice"=>$from,"rightDevice"=>$to],["leftDevice"=>$to,
             "rightDevice"=>$from]])->one();
         if(!$model){
-            return '';
+            return '链路不存在';
         }
         $alarmDatas = [];
         if($model->status !=1){
@@ -321,7 +321,7 @@ class WirelessController extends Controller
         }
         $ap = WirelessDeviceAp::findOne($id);
         if(!$ap){
-            return '';
+            return 'AP 不存在';
         }
         return $this->render("ap-tip",[
             "model" => $ap

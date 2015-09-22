@@ -241,7 +241,7 @@ class DeviceController extends Controller
         $model = WirelessDeviceLink::find()->where(["or",["leftDevice"=>$from,"rightDevice"=>$to],["leftDevice"=>$to,
             "rightDevice"=>$from]])->one();
         if(!$model){
-            return '';
+            return '链路不存在';
         }
         return $this->render("link-detail",[
             "model"=>$model
@@ -264,7 +264,7 @@ class DeviceController extends Controller
                     return $this->getLinkTip($ids[0],$ids[1]);
                 }
             default:
-                return '';
+                return '参数错误';
         }
     }
 
@@ -305,7 +305,7 @@ class DeviceController extends Controller
             ->where(["or",["and",["leftDevice"=>$d1,"rightDevice"=>$d2]],["and",["leftDevice"=>$d2,"rightDevice"=>$d1]]])
             ->one();
         if(!$model){
-            return '';
+            return '链路不存在';
         }
         $alarmDatas = [];
         if($model->status > 1){
