@@ -638,9 +638,9 @@ class ApiController extends Controller
         {
             $sql="insert into `device_model`(id,`name`,description,sysOid,series_id,category_id,deviceVersion)";
             $sql.=" values(".$param['id'].",'".$param['name']."','".$param['description']."','".$param['sysOid']."',".$param['seriesId'].",".$param['categoryId'].",";
-            $sql.="'".$param['virtualDeviceName']."','".$param['applicationName']."') on duplicate key update " ;
-            $sql.="`name``='".$param['name']."',description='".$param['description']."',sysOid='".$param['sysOid']."',series_id=".$param['seriesId'].",";
-            $sql.="categoryId=".$param['categoryId'].",deviceVersion='".$param['deviceVersion'];
+            $sql.="'".$param['deviceVersion']."') on duplicate key update " ;
+            $sql.="`name`='".$param['name']."',description='".$param['description']."',sysOid='".$param['sysOid']."',series_id=".$param['seriesId'].",";
+            $sql.="category_id=".$param['categoryId'].",deviceVersion='".$param['deviceVersion']."''";
             $cmd = Yii::$app->db->createCommand($sql);
             $cmd->execute();
             return true;
