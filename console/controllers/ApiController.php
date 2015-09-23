@@ -23,6 +23,55 @@ class ApiController extends Controller
     }
 
     /**
+     * 设备型号
+     */
+    public function actionDeviceModel()
+    {
+        $host=Yii::$app->params['wireless_api_host'];
+        //无线设备数据
+        $api_path=Constants::DEVICE_MODEL;
+        $url=$host.$api_path;
+        for($i=0;$i<20;$i++)
+        {
+            $start=0;
+            $query=[
+                'start'=>$start,
+                'size'=>500,
+                'orderBy'=>'id',
+                'desc'=>false,
+                'total'=>false,
+            ];
+            $client=(new RestfulClient("http_imc"))->get($url,$query);
+            if(!$client->hasErrors())
+            {
+                $data = $client->getData();
+                if(empty($data['deviceModel']))
+                {
+                    break;
+                }
+                foreach($data['deviceModel'] as $_data)
+                {
+                    if($this->importDeviceModel($_data))
+                    {
+                        echo $_data['id']." import ok\n";
+                    }
+                    else
+                    {
+                        echo $_data['id']." import fail\n";
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                var_dump($client->getError());
+                Yii::error($client->getError(),'console/actionDeviceModel');
+                break;
+            }
+            $start+=500;
+        }
+    }
+    /**
  * 无线设备相关资源任务
  */
     public function actionWirelessDeviceSourceTask()
@@ -396,19 +445,20 @@ class ApiController extends Controller
                 if(!$client->hasErrors())
                 {
                     $data = $client->getData();
-                    if(isset($data['perfSummaryData']) && isset($data['perfSummaryData']['taskId']))
+                    if(isset($data['perfSummaryData']))
                     {
-                        $_data=$data['perfSummaryData'];
-                        if($this->importDeviceTask($_data))
-                        {
-                            sleep(0.5);
-                            echo $_data['devId']."&".$_data['taskId']." import ok\n";
-                        }
-
-                        else
-                        {
-                            echo $_data['devId']."&".$_data['taskId']." import fail\n";
-                            break;
+                        $_data=isset($data['perfSummaryData'][0])?$data['perfSummaryData'][0]:[$data['perfSummaryData']];
+                        foreach ($_data as $_param ) {
+                            if($this->importDeviceTask($_data))
+                            {
+                                sleep(0.5);
+                                echo $_param['devId']."&".$_param['taskId']." import ok\n";
+                            }
+                            else
+                            {
+                                echo $_param['devId']."&".$_param['taskId']." import fail\n";
+                                break;
+                            }
                         }
                     }
                 }
@@ -456,18 +506,21 @@ class ApiController extends Controller
                     $data = $client->getData();
                     if(isset($data['perfSummaryData']))
                     {
-                        $_data=isset($data['perfSummaryData'][0])?$data['perfSummaryData'][0]:$data['perfSummaryData'];
-                        if($this->importDeviceTask($_data,'device_task_summary'))
+                        $_data=isset($data['perfSummaryData'][0])?$data['perfSummaryData']:[$data['perfSummaryData']];
+                        foreach($_data as $_param)
                         {
-                            sleep(0.5);
-                            echo $_data['devId']."&".$_data['taskId']." import ok\n";
+                            if($this->importDeviceTask($_param,'device_task_summary'))
+                            {
+                                sleep(0.5);
+                                echo $_param['devId']."&".$_param['taskId']." import ok\n";
+                            }
+                            else
+                            {
+                                echo $_param['devId']."&".$_param['taskId']." import fail\n";
+                                break;
+                            }
                         }
 
-                        else
-                        {
-                            echo $_data['devId']."&".$_data['taskId']." import fail\n";
-                            break;
-                        }
                     }
                 }
                 else
@@ -574,6 +627,31 @@ class ApiController extends Controller
         }
     }
     ///////////////////私有函数////////////////////////
+    /**
+     * 导入设备型号
+     * @param $param
+     * @return bool
+     */
+    private function importDeviceModel($param)
+    {
+        try
+        {
+            $sql="insert into `device_model`(id,`name`,description,sysOid,series_id,category_id,deviceVersion)";
+            $sql.=" values(".$param['id'].",'".$param['name']."','".$param['description']."','".$param['sysOid']."',".$param['seriesId'].",".$param['categoryId'].",";
+            $sql.="'".$param['virtualDeviceName']."','".$param['applicationName']."') on duplicate key update " ;
+            $sql.="`name``='".$param['name']."',description='".$param['description']."',sysOid='".$param['sysOid']."',series_id=".$param['seriesId'].",";
+            $sql.="categoryId=".$param['categoryId'].",deviceVersion='".$param['deviceVersion'];
+            $cmd = Yii::$app->db->createCommand($sql);
+            $cmd->execute();
+            return true;
+        }
+        catch(Exception $e)
+        {
+            var_dump($e->getMessage());
+            Yii::error($e->getMessage(),'console/importDeviceModel');
+            return false;
+        }
+    }
     /**
      * 获取设备明细数据
      * @param $device_id
