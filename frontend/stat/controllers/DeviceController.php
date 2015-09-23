@@ -162,11 +162,16 @@ class DeviceController extends Controller
         $this->layout = '//main';
         $model = $this->findModel($id);
         //$lists = DeviceTask::getPrefList($id);
-        $lists = (new DeviceTaskSummarySearch(['devId'=>$id]))->search(Yii::$app->request->queryParams);
-        $lists = DeviceTaskSummary::find()
-            ->where(["and",["devId"=>$id],["note",["taskId"=>[1,5]]]])
+        $perfQuery = DeviceTaskSummary::find()
+            ->where(["and",["devId"=>$id],["not",["taskId"=>[1,5]]]])
             ->orderBy("instId desc")
             ->groupBy('taskId');
+        $lists = new ActiveDataProvider([
+            'query' => $perfQuery,
+            'pagination' => [
+                "pageSize"  => 10
+            ]
+        ]);
 
         $query = DeviceAlarm::find();
         $dataProvider = new ActiveDataProvider([
@@ -177,11 +182,16 @@ class DeviceController extends Controller
         ]);
         $query->where(["deviceId"=>$id])->orderBy("faultTime desc")->limit(5);
 
-        $interfaceProvider = DeviceTaskSummary::find()
+        $interQuery = DeviceTaskSummary::find()
             ->where(['devId'=>$id,"taskId"=>[1,5]])
             ->orderBy("instId desc")
             ->groupBy('taskId,objIndex');
-
+        $interfaceProvider = new ActiveDataProvider([
+            'query' => $interQuery,
+            'pagination' => [
+                "pageSize"  => 10
+            ]
+        ]);
 
         return $this->render("detail",[
             'id'=>$id,
