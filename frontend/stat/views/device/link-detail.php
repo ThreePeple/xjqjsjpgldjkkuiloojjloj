@@ -26,7 +26,7 @@
             ["label" => "右接口","attribute"=>"right.label"],
             ["label" => "右接口描述","attribute"=>"rightIfDesc"],
             //["label" => "右接口别名","attribute"=>"id"],
-            ["label" => "接收速率","attribute"=>"linkspeed"],
+            //["label" => "接收速率","attribute"=>"linkspeed"],
         ]
     ])?>
 </div>

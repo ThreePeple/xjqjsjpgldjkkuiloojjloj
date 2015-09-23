@@ -174,7 +174,12 @@ class WirelessController extends Controller
     public function actionDetail($id){
         $this->layout = '//main';
         $model = $this->findModel($id);
-        $lists = (new WirelessDeviceTaskSummarySearch(['devId'=>$id]))->search(Yii::$app->request->queryParams);
+
+        $lists = WirelessDeviceTaskSummary::find()
+            ->where(["and",["devId"=>$id],["note",["taskId"=>[1,5]]]])
+            ->orderBy("instId desc")
+            ->groupBy('taskId');
+
         $query = WirelessDeviceAlarm::find();
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -191,22 +196,7 @@ class WirelessController extends Controller
         ];
         $apProvider = null;
         if($model->categoryId == 1003){
-            /*
-            //控制器
-            $aps = WirelessDeviceAp::find()->where(["acDevId"=>$id])->all();
-            foreach($aps as $ap){
 
-                $nodes[] = [
-                    "name" => $ap->ipAddress,
-                    "id" => $ap->id
-                ];
-                $links[] = [
-                    "source" =>  $model->ip,
-                    "target" =>  $ap->ipAddress,
-                    "weight" => 1
-                ];
-            }
-            */
             $query = WirelessDeviceAp::find()->where(["acDevId"=>$id]);
             $apProvider = new ActiveDataProvider([
                 "query" => $query,
@@ -240,6 +230,10 @@ class WirelessController extends Controller
             }
         }
 
+        $interfaceProvider = WirelessDeviceTaskSummary::find()
+            ->where(["devId"=>$id,"taskId"=>[1,5]])
+            ->orderBy("update_time desc")
+            ->groupBy("taskId,objIndex");
 
         return $this->render("detail_wlan",[
             'id'=>$id,
@@ -248,7 +242,8 @@ class WirelessController extends Controller
             "alarmProvider" =>$dataProvider,
             "nodes" =>$nodes,
             "links" => $links,
-            "apProvider" => $apProvider
+            "apProvider" => $apProvider,
+            "ifProvider" => $interfaceProvider
         ]);
     }
     /**

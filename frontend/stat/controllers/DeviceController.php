@@ -163,6 +163,10 @@ class DeviceController extends Controller
         $model = $this->findModel($id);
         //$lists = DeviceTask::getPrefList($id);
         $lists = (new DeviceTaskSummarySearch(['devId'=>$id]))->search(Yii::$app->request->queryParams);
+        $lists = DeviceTaskSummary::find()
+            ->where(["and",["devId"=>$id],["note",["taskId"=>[1,5]]]])
+            ->orderBy("instId desc")
+            ->groupBy('taskId');
 
         $query = DeviceAlarm::find();
         $dataProvider = new ActiveDataProvider([
@@ -172,13 +176,22 @@ class DeviceController extends Controller
             ]
         ]);
         $query->where(["deviceId"=>$id])->orderBy("faultTime desc")->limit(5);
+
+        $interfaceProvider = DeviceTaskSummary::find()
+            ->where(['devId'=>$id,"taskId"=>[1,5]])
+            ->orderBy("instId desc")
+            ->groupBy('taskId,objIndex');
+
+
         return $this->render("detail",[
             'id'=>$id,
             "model"=>$model,
             "perflists" => $lists,
-            "alarmProvider" =>$dataProvider
+            "alarmProvider" =>$dataProvider,
+            "interfaceProvider" => $interfaceProvider
         ]);
     }
+    /*
     public function actionWlanDetail($id){
         $this->layout = '//main';
         $model = $this->findModel($id);
@@ -201,8 +214,9 @@ class DeviceController extends Controller
             "perflists" => $lists,
             "alarmProvider" =>$dataProvider,
             "links" =>$linkProvider,
+            ''
         ]);
-    }
+    }*/
     /**
      * 设备性能指标
      */

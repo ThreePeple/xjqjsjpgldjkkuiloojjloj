@@ -31,10 +31,10 @@
             "label" =>"链路右接口描述",
             "value" => $model->rightIfDesc
         ],
-        [
+        /*[
             "label" => "接收速率",
             "value" => $model->linkspeed
-        ],
+        ],*/
         [
             "label" => "带宽",
             "value" => $model->bandWidth

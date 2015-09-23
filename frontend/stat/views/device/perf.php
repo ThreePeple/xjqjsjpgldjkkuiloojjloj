@@ -17,7 +17,8 @@ use yii\grid\GridView;
             'averageValue',
             'maximumValue',
             'minimumValue',
-            'currentValue'
+            'currentValue',
+            //'update_time'
         ],
     ])?>
 </div>
