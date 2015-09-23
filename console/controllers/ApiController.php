@@ -49,7 +49,8 @@ class ApiController extends Controller
             {
                 foreach($data['device'] as $_data)
                 {
-                    if($this->importWirelessDevice($_data))
+                    $_param=$this->getDeviceDetail($_data['id'],$host);
+                    if($this->importWirelessDevice($_param))
                         echo $_data['ip']." import ok\n";
                     else
                     {
@@ -114,7 +115,7 @@ class ApiController extends Controller
     public function actionDeviceSourceTask()
     {
         $host=Yii::$app->params['api_host'];
-        //无线设备数据
+        //有线设备数据
         $api_path=Constants::DEVICE;
         $query=[
             'resPrivilegeFilter'=>false,
@@ -135,7 +136,8 @@ class ApiController extends Controller
             {
                 foreach($data['device'] as $_data)
                 {
-                    if($this->importDevice($_data,"device_info"))
+                    $_param=$this->getDeviceDetail($_data['id'],$host);
+                    if($this->importDevice($_param,"device_info"))
                         echo $_data['ip']." import ok\n";
                     else
                     {
@@ -446,15 +448,15 @@ class ApiController extends Controller
                 $query=[
                     'taskId'=>$task_id,
                     'devId'=>$device_id,
-                    'dataGranularity'=>0
+                    'dataGranularity'=>1
                 ];
                 $client=(new RestfulClient("http_imc"))->get($url,$query);
                 if(!$client->hasErrors())
                 {
                     $data = $client->getData();
-                    if(isset($data['perfSummaryData']) && isset($data['perfSummaryData']['taskId']))
+                    if(isset($data['perfSummaryData']))
                     {
-                        $_data=$data['perfSummaryData'];
+                        $_data=isset($data['perfSummaryData'][0])?$data['perfSummaryData'][0]:$data['perfSummaryData'];
                         if($this->importDeviceTask($_data,'device_task_summary'))
                         {
                             sleep(0.5);
@@ -573,6 +575,28 @@ class ApiController extends Controller
         }
     }
     ///////////////////私有函数////////////////////////
+    /**
+     * 获取设备明细数据
+     * @param $device_id
+     * @param string $host
+     * @return array
+     */
+    private function getDeviceDetail($device_id,$host='wireless_api_host')
+    {
+        if(empty($device_id))
+        {
+            return [];
+        }
+        $data=[];
+        $api_path=Constants::DEVICE;
+        $url=$host.$api_path."/".$device_id;
+        $client=(new RestfulClient("http_imc"))->get($url);
+        if(!$client->hasErrors())
+        {
+            $data = $client->getData();
+        }
+        return $data;
+    }
     /**
      * 导入无线设备数据
      */
