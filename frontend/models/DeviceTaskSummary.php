@@ -77,6 +77,7 @@ class DeviceTaskSummary extends \yii\db\ActiveRecord
             'minimumValue' => '最小值',
             'currentValue' => '当前值',
             'summaryValue' => '总计',
+            'update_time' => '更新时间'
         ];
     }
     public static function getPrefList($deviceId){

@@ -175,10 +175,16 @@ class WirelessController extends Controller
         $this->layout = '//main';
         $model = $this->findModel($id);
 
-        $lists = WirelessDeviceTaskSummary::find()
-            ->where(["and",["devId"=>$id],["note",["taskId"=>[1,5]]]])
+        $perQuery = WirelessDeviceTaskSummary::find()
+            ->where(["and",["devId"=>$id],["not",["taskId"=>[1,5]]]])
             ->orderBy("instId desc")
             ->groupBy('taskId');
+        $lists = new ActiveDataProvider([
+            'query' => $perQuery,
+            'pagination' => [
+                "pageSize"  => 10
+            ]
+        ]);
 
         $query = WirelessDeviceAlarm::find();
         $dataProvider = new ActiveDataProvider([
@@ -230,10 +236,16 @@ class WirelessController extends Controller
             }
         }
 
-        $interfaceProvider = WirelessDeviceTaskSummary::find()
+        $interfaceQuery = WirelessDeviceTaskSummary::find()
             ->where(["devId"=>$id,"taskId"=>[1,5]])
             ->orderBy("update_time desc")
             ->groupBy("taskId,objIndex");
+        $interfaceProvider = new ActiveDataProvider([
+            'query' => $interfaceQuery,
+            'pagination' => [
+                "pageSize"  => 10
+            ]
+        ]);
 
         return $this->render("detail_wlan",[
             'id'=>$id,
