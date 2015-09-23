@@ -510,7 +510,6 @@ class ApiController extends Controller
                         sleep(0.5);
                         echo $_data['deviceIp']." import ok\n";
                     }
-
                     else
                     {
                         echo $_data['deviceIp']." import fail\n";
@@ -706,13 +705,15 @@ class ApiController extends Controller
             $param['mac']=isset($param['mac'])?$param['mac']:'';
 
             $sql="insert into `device_info`(id,`label`,ip,mask,status,sysName,location,sysOid,categoryId";
-            $sql.=",typeName,symbolType,symbolDesc,mac,statusDesc)";
+            $sql.=",typeName,symbolType,symbolDesc,mac,statusDesc,series_id,series_name,model_id,model_name)";
             $sql.=" values(".$param['id'].",'".$param['label']."','".$param['ip']."','".$param['mask']."',".$param['status'].",'".$param['sysName']."',";
             $sql.="'".$param['location']."','".$param['sysOid']."',".$param['categoryId'].",'".$param['typeName']."',".$param['symbolType'];
-            $sql.=",'".$param['symbolDesc']."','".$param['mac']."','".$param['statusDesc']."') on duplicate key update ";
+            $sql.=",'".$param['symbolDesc']."','".$param['mac']."','".$param['statusDesc']."',".$param['series_id'].",'".$param['series_name']."',".$param['model_id'].",'".$param['model_name']."'";
+            $sql.=") on duplicate key update ";
             $sql.="id=".$param['id'].",label='".$param['label']."',mask='".$param['mask']."',status=".$param['status'].",sysName='".$param['sysName']."',";
             $sql.="location='".$param['location']."',sysOid='".$param['sysOid']."',categoryId=".$param['categoryId'];
             $sql.=",symbolType=".$param['symbolType'].",symbolDesc='".$param['symbolDesc']."',mac='".$param['mac']."',statusDesc='".$param['statusDesc']."'";
+            $sql.=",model_id=".$param['model_id'].",model_name='".$param['model_name']."',series_id=".$param['series_id'].",series_name='".$param['series_name']."'";
             $cmd = Yii::$app->db->createCommand($sql);
             $cmd->execute();
             return true;
