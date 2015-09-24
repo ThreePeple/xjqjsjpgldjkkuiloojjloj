@@ -31,9 +31,9 @@ class ApiController extends Controller
         //无线设备数据
         $api_path=Constants::DEVICE_MODEL;
         $url=$host.$api_path;
+        $start=0;
         for($i=0;$i<20;$i++)
         {
-            $start=0;
             $query=[
                 'start'=>$start,
                 'size'=>500,
@@ -111,6 +111,7 @@ class ApiController extends Controller
         }
         else
         {
+            var_dump($client->getErrorCode());
             var_dump($client->getError());
             Yii::error($client->getError(),'console/actionWirelessDeviceSourceTask');
         }
@@ -439,7 +440,7 @@ class ApiController extends Controller
                 $query=[
                     'taskId'=>$task_id,
                     'devId'=>$device_id,
-                    'dataGranularity'=>0
+                    'dataGranularity'=>1
                 ];
                 $client=(new RestfulClient("http_basic"))->get($url,$query);
                 if(!$client->hasErrors())
