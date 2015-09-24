@@ -31,9 +31,9 @@ class ApiController extends Controller
         //无线设备数据
         $api_path=Constants::DEVICE_MODEL;
         $url=$host.$api_path;
+        $start=0;
         for($i=0;$i<20;$i++)
         {
-            $start=0;
             $query=[
                 'start'=>$start,
                 'size'=>500,
@@ -98,7 +98,8 @@ class ApiController extends Controller
             {
                 foreach($data['device'] as $_data)
                 {
-                    $_param=$this->getDeviceDetail($_data['id'],$host);
+                    $_param=$this->getDeviceDetail($_data['id']);
+                   // var_dump($_param);die;
                     if($this->importWirelessDevice($_param))
                         echo $_data['ip']." import ok\n";
                     else
@@ -111,6 +112,7 @@ class ApiController extends Controller
         }
         else
         {
+            var_dump($client->getErrorCode());
             var_dump($client->getError());
             Yii::error($client->getError(),'console/actionWirelessDeviceSourceTask');
         }
@@ -185,7 +187,7 @@ class ApiController extends Controller
             {
                 foreach($data['device'] as $_data)
                 {
-                    $_param=$this->getDeviceDetail($_data['id'],$host);
+                    $_param=$this->getDeviceDetail($_data['id'],'api_host');
                     if($this->importDevice($_param,"device_info"))
                         echo $_data['ip']." import ok\n";
                     else
@@ -417,7 +419,7 @@ class ApiController extends Controller
     public function actionWirelessDeviceTask()
     {
         //获取无线设备
-        $devices=$this->getWirelessDevices();
+            $devices=$this->getWirelessDevices();
         //指标配置项
         $task_ids=Constants::$TASKS;
         $host=Yii::$app->params['wireless_api_host'];
@@ -439,7 +441,7 @@ class ApiController extends Controller
                 $query=[
                     'taskId'=>$task_id,
                     'devId'=>$device_id,
-                    'dataGranularity'=>0
+                    'dataGranularity'=>1
                 ];
                 $client=(new RestfulClient("http_basic"))->get($url,$query);
                 if(!$client->hasErrors())
@@ -447,19 +449,38 @@ class ApiController extends Controller
                     $data = $client->getData();
                     if(isset($data['perfSummaryData']))
                     {
-                        $_data=isset($data['perfSummaryData'][0])?$data['perfSummaryData'][0]:[$data['perfSummaryData']];
-                        foreach ($_data as $_param ) {
+                        $_data=$data['perfSummaryData'];
+                        if(isset($data['perfSummaryData'][0]))
+                        {
+
+                            foreach ($_data as $_param ) {
+                                if($this->importDeviceTask($_param))
+                                {
+                                    sleep(0.5);
+                                    echo $_param['devId']."&".$_param['taskId']." import ok\n";
+                                }
+                                else
+                                {
+                                    echo $_param['devId']."&".$_param['taskId']." import fail\n";
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
                             if($this->importDeviceTask($_data))
                             {
                                 sleep(0.5);
-                                echo $_param['devId']."&".$_param['taskId']." import ok\n";
+                                echo $_data['devId']."&".$_data['taskId']." import ok\n";
                             }
                             else
                             {
-                                echo $_param['devId']."&".$_param['taskId']." import fail\n";
+                                echo $_data['devId']."&".$_data['taskId']." import fail\n";
                                 break;
                             }
                         }
+                        //$_data=isset($data['perfSummaryData'][0])?$data['perfSummaryData'][0]:[0=>$data['perfSummaryData']];
+
                     }
                 }
                 else
@@ -506,20 +527,37 @@ class ApiController extends Controller
                     $data = $client->getData();
                     if(isset($data['perfSummaryData']))
                     {
-                        $_data=isset($data['perfSummaryData'][0])?$data['perfSummaryData']:[$data['perfSummaryData']];
-                        foreach($_data as $_param)
+                        $_data=$data['perfSummaryData'];
+                        if(isset($data['perfSummaryData'][0]))
                         {
-                            if($this->importDeviceTask($_param,'device_task_summary'))
+
+                            foreach ($_data as $_param ) {
+                                if($this->importDeviceTask($_param))
+                                {
+                                    sleep(0.5);
+                                    echo $_param['devId']."&".$_param['taskId']." import ok\n";
+                                }
+                                else
+                                {
+                                    echo $_param['devId']."&".$_param['taskId']." import fail\n";
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if($this->importDeviceTask($_data))
                             {
                                 sleep(0.5);
-                                echo $_param['devId']."&".$_param['taskId']." import ok\n";
+                                echo $_data['devId']."&".$_data['taskId']." import ok\n";
                             }
                             else
                             {
-                                echo $_param['devId']."&".$_param['taskId']." import fail\n";
+                                echo $_data['devId']."&".$_data['taskId']." import fail\n";
                                 break;
                             }
                         }
+                        //$_data=isset($data['perfSummaryData'][0])?$data['perfSummaryData'][0]:[0=>$data['perfSummaryData']];
 
                     }
                 }
@@ -658,19 +696,26 @@ class ApiController extends Controller
      * @param string $host
      * @return array
      */
-    private function getDeviceDetail($device_id,$host='wireless_api_host')
+    private function getDeviceDetail($device_id,$host_flag='wireless_api_host')
     {
         if(empty($device_id))
         {
             return [];
         }
+        $host=Yii::$app->params[$host_flag];
         $data=[];
         $api_path=Constants::DEVICE;
         $url=$host.$api_path."/".$device_id;
-        $client=(new RestfulClient("http_imc"))->get($url);
+        $param_config=$host_flag=='wireless_api_host'?'http_basic':'http_imc';
+        $client=(new RestfulClient($param_config))->get($url);
         if(!$client->hasErrors())
         {
             $data = $client->getData();
+        }
+        else
+        {
+            var_dump($client->getErrorCode());
+            return [];
         }
         return $data;
     }

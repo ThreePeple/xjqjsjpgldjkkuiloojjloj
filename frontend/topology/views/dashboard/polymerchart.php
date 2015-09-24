@@ -161,7 +161,7 @@ $this->registerJs($js);
 
         </div>
         <div class="group">
-            <?= \yii\helpers\Html::button('C/D区',["class"=>"btn btn-primary","style"=>"margin:5px;","id"=>766,"group"=>2,"onclick"=>"changeCore(2,766,731)"]);?>
+            <?= \yii\helpers\Html::button('C/D区',["class"=>"btn btn-primary","style"=>"margin:5px;","id"=>766,"group"=>2,"onclick"=>"changeCore(2,775,766)"]);?>
 
         </div>
         <?php
