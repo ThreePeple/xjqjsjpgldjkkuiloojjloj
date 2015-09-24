@@ -13,6 +13,7 @@ class Constants {
     const TASK='perf/task';//性能指标
     const DEVICE_TASK='perf/summaryData';//设备性能指标
     const DEVICE_ALARM='fault/alarm';//设备告警信息
+    const DEVICE_MODEL='plat/res/model';//设备型号
     public static $TASKS=[1,2,4,5,6,8];//设备性能指标配置项
 
 }
