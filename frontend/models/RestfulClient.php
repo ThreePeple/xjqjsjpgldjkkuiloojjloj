@@ -109,7 +109,7 @@ class RestfulClient {
         $this->ch = curl_init();
         $options = [
             CURLOPT_USERAGENT       => 'cnpc_' . __CLASS__,
-            CURLOPT_TIMEOUT         => 10,
+            CURLOPT_TIMEOUT         => 20,
             CURLOPT_RETURNTRANSFER  => 1,
             CURLOPT_HEADERFUNCTION => [$this,'handlerHeaders'],
         ];

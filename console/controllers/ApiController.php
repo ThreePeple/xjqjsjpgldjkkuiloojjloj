@@ -99,6 +99,7 @@ class ApiController extends Controller
                 foreach($data['device'] as $_data)
                 {
                     $_param=$this->getDeviceDetail($_data['id'],$host);
+                   // var_dump($_param);die;
                     if($this->importWirelessDevice($_param))
                         echo $_data['ip']." import ok\n";
                     else
@@ -418,7 +419,7 @@ class ApiController extends Controller
     public function actionWirelessDeviceTask()
     {
         //获取无线设备
-        $devices=$this->getWirelessDevices();
+            $devices=$this->getWirelessDevices();
         //指标配置项
         $task_ids=Constants::$TASKS;
         $host=Yii::$app->params['wireless_api_host'];
@@ -521,7 +522,6 @@ class ApiController extends Controller
                                 break;
                             }
                         }
-
                     }
                 }
                 else
