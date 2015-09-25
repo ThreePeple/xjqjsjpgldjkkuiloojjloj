@@ -33,6 +33,13 @@ return [
                     'categories' => ['console/*'],
                     'logFile' => '@app/runtime/logs/console.log',
                 ],
+                'console_track' => [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['trace','info','error', 'warning'],
+                    'logVars' =>[],
+                    'categories' => ['console/*'],
+                    'logFile' => '@app/runtime/logs/console_track.log',
+                ],
             ],
         ],
 
