@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use frontend\models\AlarmLevelBlacklist;
+use frontend\models\DeviceAlarm;
 use frontend\models\WirelessDeviceInfo;
 use Yii;
 use frontend\models\DeviceInfo;
@@ -127,6 +129,7 @@ class ViewTemplate extends \yii\db\ActiveRecord
     }
 
     public static function getTempateSet($type){
+        $bl = AlarmLevelBlacklist::find()->select('level')->column();
         if($type == 3){
             //无线设备
             $rows = self::find()->with([
@@ -138,6 +141,12 @@ class ViewTemplate extends \yii\db\ActiveRecord
             foreach($rows as $row){
                 if(!$row["wireless"])
                     continue;
+                $alarm = WirelessDeviceAlarm::find()->where(["deviceId"=>$row['device_id']])->orderBy('update_time
+                desc')->one();
+                if($row['wireless']['status'] !=1 && $alarm && in_array($alarm["alarmLevel"],$bl)){
+                    $row['wireless']['status'] = 1;
+                }
+
                 $d = array_merge($row["wireless"],["areaId"=>$row["areaId"]]);
                 $data->{$row["id"]} = [
                     "data" => $d,
@@ -155,6 +164,12 @@ class ViewTemplate extends \yii\db\ActiveRecord
             foreach($rows as $row){
                 if(!$row["device"])
                     continue;
+                $alarm = DeviceAlarm::find()->where(["deviceId"=>$row['device_id']])->orderBy('update_time desc')
+                    ->one();
+                if($row['device']['status'] !=1 && $alarm && in_array($alarm["alarmLevel"],$bl)){
+                    $row['device']['status'] = 1;
+                }
+
                 $d = array_merge($row["device"],["areaId"=>$row["areaId"]]);
                 $data->{$row["id"]} = [
                     "data" => $d,
