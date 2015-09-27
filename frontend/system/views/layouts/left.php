@@ -97,6 +97,10 @@ use yii\helpers\Url;
                             "label" => '<span class="fa fa-circle-o"></span> 消息模版</a> ',
                             "url" => ["/system/sms-template/index"]
                         ],
+                        [
+                            "label" => '<span class="fa fa-circle-o"></span> 告警级别黑名单</a> ',
+                            "url" => ["/system/device-alarm/level-blacklist"]
+                        ],
                     ]
                 ])
                 ?>
