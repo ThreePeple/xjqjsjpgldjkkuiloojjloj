@@ -53,18 +53,22 @@ class ApiController extends Controller
                 {
                     if($this->importDeviceModel($_data))
                     {
-                        echo $_data['id']." import ok\n";
+                        $info=date('y-m-dh:i:s',time()).":".$_data['id']." import ok\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionDeviceModel');
                     }
                     else
                     {
-                        echo $_data['id']." import fail\n";
+                        $info=date('y-m-dh:i:s',time()).":".$_data['id']." import fail\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionDeviceModel');
                         break;
                     }
                 }
             }
             else
             {
-                var_dump($client->getError());
+                var_dump($client->getErrorCode());
                 Yii::error($client->getError(),'console/actionDeviceModel');
                 break;
             }
@@ -101,10 +105,16 @@ class ApiController extends Controller
                     $_param=$this->getDeviceDetail($_data['id']);
                    // var_dump($_param);die;
                     if($this->importWirelessDevice($_param))
-                        echo $_data['ip']." import ok\n";
+                    {
+                        $info=date('y-m-dh:i:s',time()).":".$_data['ip']." import ok\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionWirelessDeviceSourceTask');
+                    }
                     else
                     {
-                        echo $_data['ip']." import fail\n";
+                        $info=date('y-m-dh:i:s',time()).":".$_data['ip']." import fail\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionWirelessDeviceSourceTask');
                         break;
                     }
                 }
@@ -113,7 +123,7 @@ class ApiController extends Controller
         else
         {
             var_dump($client->getErrorCode());
-            var_dump($client->getError());
+           // var_dump($client->getError());
             Yii::error($client->getError(),'console/actionWirelessDeviceSourceTask');
         }
     }
@@ -145,10 +155,16 @@ class ApiController extends Controller
                 foreach($data['device'] as $_data)
                 {
                     if($this->updateDeviceStatus($_data))
-                        echo $_data['ip']." update status ok\n";
+                    {
+                        $info=date('y-m-dh:i:s',time()).":".$_data['ip']." update status ok\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionWirelessDeviceStatusTask');
+                    }
                     else
                     {
-                        echo $_data['ip']." update status fail\n";
+                        $info=date('y-m-dh:i:s',time()).":".$_data['ip']." update status fail\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionWirelessDeviceStatusTask');
                         break;
                     }
                 }
@@ -156,7 +172,7 @@ class ApiController extends Controller
         }
         else
         {
-            var_dump($client->getError());
+            var_dump($client->getErrorCode());
             Yii::error($client->getError(),'console/actionWirelessDeviceStatusTask');
         }
     }
@@ -189,10 +205,16 @@ class ApiController extends Controller
                 {
                     $_param=$this->getDeviceDetail($_data['id'],'api_host');
                     if($this->importDevice($_param,"device_info"))
-                        echo $_data['ip']." import ok\n";
+                    {
+                        $info=date('y-m-dh:i:s',time()).":".$_data['ip']." import ok\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionDeviceSourceTask');
+                    }
                     else
                     {
-                        echo $_data['ip']." import fail\n";
+                        $info=date('y-m-dh:i:s',time()).":".$_data['ip']." import fail\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionDeviceSourceTask');
                         break;
                     }
                 }
@@ -200,8 +222,8 @@ class ApiController extends Controller
         }
         else
         {
-            var_dump($client->getError());
-            Yii::error($client->getError(),'console/actionWirelessDeviceSourceTask');
+            var_dump($client->getErrorCode());
+            Yii::error($client->getError(),'console/actionDeviceSourceTask');
         }
     }
     /**
@@ -232,10 +254,16 @@ class ApiController extends Controller
                 foreach($data['device'] as $_data)
                 {
                     if($this->updateDeviceStatus($_data,"device_info"))
-                        echo $_data['ip']." update status ok\n";
+                    {
+                        $info=date('y-m-dh:i:s',time()).":".$_data['ip']." update status ok\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionDeviceStatusTask');
+                    }
                     else
                     {
-                        echo $_data['ip']."update status fail\n";
+                        $info=date('y-m-dh:i:s',time()).":".$_data['ip']." update status fail\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionDeviceStatusTask');
                         break;
                     }
                 }
@@ -243,8 +271,8 @@ class ApiController extends Controller
         }
         else
         {
-            var_dump($client->getError());
-            Yii::error($client->getError(),'console/actionDeviceStatusTask');
+            var_dump($client->getErrorCode());
+            Yii::error($client->getErrorCode(),'console/actionDeviceStatusTask');
         }
     }
     /**
@@ -275,16 +303,22 @@ class ApiController extends Controller
             if(!$client->hasErrors())
             {
                 $data = $client->getData();
-                 var_dump($data);
+                // var_dump($data);
                 if(isset($data['ipMacLearnResult']))
                 {
                     foreach($data['ipMacLearnResult'] as $_data)
                     {
                         if($this->importIpMacLearn($_data))
-                            echo $_data['learnIp']." import ok\n";
+                        {
+                            $info=date('y-m-dh:i:s',time()).":".$_data['learnIp']." import ok\n";
+                            echo $info;
+                            Yii::info($info,'console_track/actionIpmaclearn');
+                        }
                         else
                         {
-                            echo $_data['learnIp']." import fail\n";
+                            $info=date('y-m-dh:i:s',time()).":".$_data['learnIp']." import fail\n";
+                            echo $info;
+                            Yii::info($info,'console_track/actionIpmaclearn');
                             break;
                         }
                     }
@@ -292,8 +326,8 @@ class ApiController extends Controller
             }
             else
             {
-                var_dump($client->getError());
-                Yii::error($client->getError(),'console/actionIpmaclearn');
+                var_dump($client->getErrorCode());
+                Yii::error($client->getErrorCode(),'console/actionIpmaclearn');
             }
         }
     }
@@ -321,10 +355,16 @@ class ApiController extends Controller
                 foreach($data['deviceLink'] as $_data)
                 {
                     if($this->importDeviceLink($_data))
-                        echo $_data['id']." import ok\n";
+                    {
+                        $info=date('y-m-dh:i:s',time()).":".$_data['id']." import ok\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionWirelessDeviceLink');
+                    }
                     else
                     {
-                        echo $_data['id']." import fail\n";
+                        $info=date('y-m-dh:i:s',time()).":".$_data['id']." import fail\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionWirelessDeviceLink');
                         break;
                     }
                 }
@@ -332,8 +372,8 @@ class ApiController extends Controller
         }
         else
         {
-            var_dump($client->getError());
-            Yii::error($client->getError(),'console/actionWirelessDeviceLink');
+            var_dump($client->getErrorCode());
+            Yii::error($client->getErrorCode(),'console/actionWirelessDeviceLink');
         }
     }
     /**
@@ -360,10 +400,16 @@ class ApiController extends Controller
                 foreach($data['deviceLink'] as $_data)
                 {
                     if($this->importDeviceLink($_data,"device_link"))
-                        echo $_data['id']." import ok\n";
+                    {
+                        $info=date('y-m-dh:i:s',time()).":".$_data['id']." import ok\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionDeviceLink');
+                    }
                     else
                     {
-                        echo $_data['id']." import fail\n";
+                        $info=date('y-m-dh:i:s',time()).":".$_data['id']." import fail\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionDeviceLink');
                         break;
                     }
                 }
@@ -371,8 +417,8 @@ class ApiController extends Controller
         }
         else
         {
-            var_dump($client->getError());
-            Yii::error($client->getError(),'console/actionDeviceLink');
+            var_dump($client->getErrorCode());
+            Yii::error($client->getErrorCode(),'console/actionDeviceLink');
         }
     }
 
@@ -398,10 +444,16 @@ class ApiController extends Controller
                 foreach($data['task'] as $_data)
                 {
                     if($this->importTask($_data))
-                        echo $_data['taskId']." import ok\n";
+                    {
+                        $info=date('y-m-dh:i:s',time()).":".$_data['taskId']." import ok\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionTask');
+                    }
                     else
                     {
-                        echo $_data['taskId']." import fail\n";
+                        $info=date('y-m-dh:i:s',time()).":".$_data['taskId']." import fail\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionTask');
                         break;
                     }
                 }
@@ -409,8 +461,8 @@ class ApiController extends Controller
         }
         else
         {
-            var_dump($client->getError());
-            Yii::error($client->getError(),'console/actionTask');
+            var_dump($client->getErrorCode());
+            Yii::error($client->getErrorCode(),'console/actionTask');
         }
     }
     /**
@@ -419,7 +471,7 @@ class ApiController extends Controller
     public function actionWirelessDeviceTask()
     {
         //获取无线设备
-            $devices=$this->getWirelessDevices();
+        $devices=$this->getWirelessDevices();
         //指标配置项
         $task_ids=Constants::$TASKS;
         $host=Yii::$app->params['wireless_api_host'];
@@ -456,12 +508,16 @@ class ApiController extends Controller
                             foreach ($_data as $_param ) {
                                 if($this->importDeviceTask($_param))
                                 {
-                                    sleep(0.5);
-                                    echo $_param['devId']."&".$_param['taskId']." import ok\n";
+                                    //sleep(0.5);
+                                    $info=date('y-m-dh:i:s',time()).":".$_param['devId']."&".$_param['taskId']." import ok\n";
+                                    echo $info;
+                                    Yii::info($info,'console_track/actionWirelessDeviceTask');
                                 }
                                 else
                                 {
-                                    echo $_param['devId']."&".$_param['taskId']." import fail\n";
+                                    $info=date('y-m-dh:i:s',time()).":".$_param['devId']."&".$_param['taskId']." import fail\n";
+                                    echo $info;
+                                    Yii::info($info,'console_track/actionWirelessDeviceTask');
                                     break;
                                 }
                             }
@@ -470,23 +526,25 @@ class ApiController extends Controller
                         {
                             if($this->importDeviceTask($_data))
                             {
-                                sleep(0.5);
-                                echo $_data['devId']."&".$_data['taskId']." import ok\n";
+                                //sleep(0.5);
+                                $info=date('y-m-dh:i:s',time()).":".$_data['devId']."&".$_data['taskId']." import ok\n";
+                                echo $info;
+                                Yii::info($info,'console_track/actionWirelessDeviceTask');
                             }
                             else
                             {
-                                echo $_data['devId']."&".$_data['taskId']." import fail\n";
+                                $info=date('y-m-dh:i:s',time()).":".$_data['devId']."&".$_data['taskId']." import fail\n";
+                                echo $info;
+                                Yii::info($info,'console_track/actionWirelessDeviceTask');
                                 break;
                             }
                         }
-                        //$_data=isset($data['perfSummaryData'][0])?$data['perfSummaryData'][0]:[0=>$data['perfSummaryData']];
-
                     }
                 }
                 else
                 {
-                    var_dump($client->getError());
-                    Yii::error($client->getError(),'console/actionTask');
+                    var_dump($client->getErrorCode());
+                    Yii::error($client->getErrorCode(),'console/actionWirelessDeviceTask');
                 }
             }
         }
@@ -515,7 +573,6 @@ class ApiController extends Controller
             $device_id=$device['id'];
             foreach($task_ids as $task_id)
             {
-
                 $query=[
                     'taskId'=>$task_id,
                     'devId'=>$device_id,
@@ -534,12 +591,15 @@ class ApiController extends Controller
                             foreach ($_data as $_param ) {
                                 if($this->importDeviceTask($_param))
                                 {
-                                    sleep(0.5);
-                                    echo $_param['devId']."&".$_param['taskId']." import ok\n";
+                                    $info=date('y-m-dh:i:s',time()).":". $_param['devId']."&".$_param['taskId']." import ok\n";
+                                    echo $info;
+                                    Yii::info($info,'console_track/actionDeviceTask');
                                 }
                                 else
                                 {
-                                    echo $_param['devId']."&".$_param['taskId']." import fail\n";
+                                    $info=date('y-m-dh:i:s',time()).":". $_param['devId']."&".$_param['taskId']." import fail\n";
+                                    echo $info;
+                                    Yii::info($info,'console_track/actionDeviceTask');
                                     break;
                                 }
                             }
@@ -548,12 +608,15 @@ class ApiController extends Controller
                         {
                             if($this->importDeviceTask($_data))
                             {
-                                sleep(0.5);
-                                echo $_data['devId']."&".$_data['taskId']." import ok\n";
+                                $info=date('y-m-dh:i:s',time()).":". $_param['devId']."&".$_param['taskId']." import ok\n";
+                                echo $info;
+                                Yii::info($info,'console_track/actionDeviceTask');
                             }
                             else
                             {
-                                echo $_data['devId']."&".$_data['taskId']." import fail\n";
+                                $info=date('y-m-dh:i:s',time()).":". $_param['devId']."&".$_param['taskId']." import fail\n";
+                                echo $info;
+                                Yii::info($info,'console_track/actionDeviceTask');
                                 break;
                             }
                         }
@@ -563,8 +626,8 @@ class ApiController extends Controller
                 }
                 else
                 {
-                    var_dump($client->getError());
-                    Yii::error($client->getError(),'console/actionTask');
+                    var_dump($client->getErrorCode());
+                    Yii::error($client->getErrorCode(),'console/actionDeviceTask');
                 }
             }
         }
@@ -598,20 +661,23 @@ class ApiController extends Controller
                     $_data=$data;
                     if($this->importDeviceAlarm($_data))
                     {
-                        sleep(0.5);
-                        echo $_data['deviceIp']." import ok\n";
+                        $info=date('y-m-dh:i:s',time()).":".$_data['deviceIp']." import ok\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionWirelessDeviceAlarm');
                     }
                     else
                     {
-                        echo $_data['deviceIp']." import fail\n";
+                        $info=date('y-m-dh:i:s',time()).":".$_data['deviceIp']." import fail\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionWirelessDeviceAlarm');
                         break;
                     }
                 }
             }
             else
             {
-                var_dump($client->getError());
-                Yii::error($client->getError(),'console/actionWirelessDeviceAlarm');
+                var_dump($client->getErrorCode());
+                Yii::error($client->getErrorCode(),'console/actionWirelessDeviceAlarm');
             }
         }
     }
@@ -646,21 +712,24 @@ class ApiController extends Controller
                     $_data=$data;
                     if($this->importDeviceAlarm($_data,'device_alarm'))
                     {
-                        sleep(0.5);
-                        echo $_data['deviceIp']." import ok\n";
+                        $info=date('y-m-dh:i:s',time()).":".$_data['deviceIp']." import ok\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionDeviceAlarm');
                     }
 
                     else
                     {
-                        echo $_data['deviceIp']." import fail\n";
+                        $info=date('y-m-dh:i:s',time()).":".$_data['deviceIp']." import fail\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionDeviceAlarm');
                         break;
                     }
                 }
             }
             else
             {
-                var_dump($client->getError());
-                Yii::error($client->getError(),'console/actionDeviceAlarm');
+                var_dump($client->getErrorCode());
+                Yii::error($client->getErrorCode(),'console/actionDeviceAlarm');
             }
         }
     }
@@ -730,6 +799,11 @@ class ApiController extends Controller
             //初始化
             $param=$this->initParams($param);
             //对原始数据进行特殊处理
+            if(empty($param['ip']))
+            {
+                echo "can not get ip";
+                return false;
+            }
             //类型映射
             $map_id=$this->getDeviceMapCategoryID($param['ip']);
             $param['categoryId']=empty($map_id)?$param['categoryId']:$map_id;
@@ -795,6 +869,11 @@ class ApiController extends Controller
             //初始化
             $param=$this->initParams($param);
             //对原始数据进行特殊处理
+            if(empty($param['ip']))
+            {
+                echo "can not get ip";
+                return false;
+            }
             //类型映射
             $map_id=$this->getDeviceMapCategoryID($param['ip']);
             $param['categoryId']=empty($map_id)?$param['categoryId']:$map_id;
@@ -844,7 +923,7 @@ class ApiController extends Controller
         catch(Exception $e)
         {
             var_dump($e->getMessage());
-            Yii::error($e->getMessage(),'console/importWirelessDevice');
+            Yii::error($e->getMessage(),'console/importDevice');
             return false;
         }
 
