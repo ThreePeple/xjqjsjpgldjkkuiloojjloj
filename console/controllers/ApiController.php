@@ -14,6 +14,7 @@ use yii\base\Exception;
 use Yii;
 use yii\helpers\Json;
 use frontend\models\RestfulClient;
+use common\models\helpers;
 
 class ApiController extends Controller
 {
@@ -204,7 +205,7 @@ class ApiController extends Controller
                 foreach($data['device'] as $_data)
                 {
                     $_param=$this->getDeviceDetail($_data['id'],'api_host');
-                    if($this->importDevice($_param,"device_info"))
+                    if($this->importDevice($_param))
                     {
                         $info=date('y-m-dh:i:s',time()).":".$_data['ip']." import ok\n";
                         echo $info;
@@ -861,7 +862,7 @@ class ApiController extends Controller
     /**
      * 导入设备数据
      */
-    private function importDevice($_data,$tableName='wireless_device_info')
+    private function importDevice($_data)
     {
         $param=$_data;
         try
@@ -905,17 +906,19 @@ class ApiController extends Controller
                 $param['model_name']='';
             }
             $param['mac']=isset($param['mac'])?$param['mac']:'';
+            //根据IP规则转换区域
+            $param['area']=helpers::getAreaByIpRules($param['ip']);
 
             $sql="insert into `device_info`(id,`label`,ip,mask,status,sysName,location,sysOid,categoryId";
-            $sql.=",typeName,symbolType,symbolDesc,mac,statusDesc,series_id,series_name,model_id,model_name)";
+            $sql.=",typeName,symbolType,symbolDesc,mac,statusDesc,series_id,series_name,model_id,model_name,area)";
             $sql.=" values(".$param['id'].",'".$param['label']."','".$param['ip']."','".$param['mask']."',".$param['status'].",'".$param['sysName']."',";
             $sql.="'".$param['location']."','".$param['sysOid']."',".$param['categoryId'].",'".$param['typeName']."',".$param['symbolType'];
-            $sql.=",'".$param['symbolDesc']."','".$param['mac']."','".$param['statusDesc']."',".$param['series_id'].",'".$param['series_name']."',".$param['model_id'].",'".$param['model_name']."'";
+            $sql.=",'".$param['symbolDesc']."','".$param['mac']."','".$param['statusDesc']."',".$param['series_id'].",'".$param['series_name']."',".$param['model_id'].",'".$param['model_name']."','".$param['area']."'";
             $sql.=") on duplicate key update ";
             $sql.="id=".$param['id'].",label='".$param['label']."',mask='".$param['mask']."',status=".$param['status'].",sysName='".$param['sysName']."',";
             $sql.="location='".$param['location']."',sysOid='".$param['sysOid']."',categoryId=".$param['categoryId'];
             $sql.=",symbolType=".$param['symbolType'].",symbolDesc='".$param['symbolDesc']."',mac='".$param['mac']."',statusDesc='".$param['statusDesc']."'";
-            $sql.=",model_id=".$param['model_id'].",model_name='".$param['model_name']."',series_id=".$param['series_id'].",series_name='".$param['series_name']."'";
+            $sql.=",model_id=".$param['model_id'].",model_name='".$param['model_name']."',series_id=".$param['series_id'].",series_name='".$param['series_name']."',area='".$param['area']."'";
             $cmd = Yii::$app->db->createCommand($sql);
             $cmd->execute();
             return true;
