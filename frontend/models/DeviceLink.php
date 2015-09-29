@@ -79,6 +79,8 @@ class DeviceLink extends \yii\db\ActiveRecord
 
     public static function getPolymerData($id1,$id2){
         $polymers = [];
+        $links = [];
+        $group1 = $group2 = [];
 
         $models = DeviceInfo::find()->where(["id"=>[$id1,$id2]])->all();
         foreach($models as $model){
@@ -90,41 +92,47 @@ class DeviceLink extends \yii\db\ActiveRecord
         }
 
         $filterIds = DeviceIpfilter::find()->where(["type_id"=>DeviceIpfilter::TYPE_POLYMER])->select("ip")->column();
-        $links = [];
 
-        $group1 = (new Query())
+        $rows = (new Query())
             ->from("device_link a")
-            ->leftJoin("device_info b","a.leftDevice = b.id")
-            ->where(['and',["a.rightDevice"=>[$id1,$id2],"b.ip"=>$filterIds],["not",["a.leftDevice"=>[$id1,$id2]]]])
-            ->select(["label"=>"b.ip","id"=>"CONCAT('id',b.id)","group"=>"CONCAT('group1:',CONCAT('id',b.id))","status"=>"b.status",'polymer_id'=>"a.rightDevice","device_id"=>"b.id","linkStatus"=>"a.status"])
-            ->groupBy('a.leftDevice')
+            ->leftJoin("device_info b","a.leftDevice = b.id or a.rightDevice=b.id")
+            ->where(['and',['b.ip'=>$filterIds],"a.leftDevice in($id1,$id2) or a.rightDevice in($id1,$id2)"])
+            ->select(['label'=>"b.ip","b.id","b.status",'linkStatus'=>"a.status",'b.area',"a.leftDevice",
+                "a.rightDevice"])
+            ->groupBy('b.id')
             ->all();
-        foreach($group1 as $one){
-            $polymers[$one["polymer_id"]]["children"][] = $one["group"];
+        foreach($rows as $row){
+            if(in_array($row["id"],[$id1,$id2]))
+                continue;
+            if(in_array(strtoupper($row["area"]),["A","C"])){
+                $group="group1:id".$row["id"];
+                $group1[] = [
+                    "label" => $row["label"],
+                    "id" => 'id'.$row["id"],
+                    "group" => $group,
+                    "status" => $row["status"],
+                    "device_id" => $row["id"],
+                ];
+            }else{
+                $group = "group2:id".$row["id"];
+                $group2[] = [
+                    "label" => $row["label"],
+                    "id" => 'id'.$row["id"],
+                    "group" => $group,
+                    "status" => $row["status"],
+                    "device_id" => $row["id"],
+                ];
+            }
+            $polymer_id = ($row["leftDevice"] == $row["id"])? $row["rightDevice"] : $row["leftDevice"];
 
+            $polymers[$polymer_id]["children"][] = $group;
             $links[] = [
-                "from"=> $one["id"],
-                "to" => $polymers[$one["polymer_id"]]["id"],
-                "status" => $one["linkStatus"]
+                "from"=> $row["id"],
+                "to" => $polymers[$polymer_id]["id"],
+                "status" => $row["linkStatus"]
             ];
         }
-
-        $group2 = (new Query())
-            ->from("device_link a")
-            ->leftJoin("device_info b","a.rightDevice = b.id")
-            ->where(["and",["a.leftDevice"=>[$id1,$id2],"b.ip"=>$filterIds],["not",["a.rightDevice"=>[$id1,$id2]]]])
-            ->select(["label"=>"b.ip","id"=>"CONCAT('id',b.id)","group"=>"CONCAT('group2:',CONCAT('id',b.id))","status"=>"b.status","polymer_id"=>"a.leftDevice","device_id"=>"b.id","linkStatus"=>"a.status"])
-            ->groupBy('a.rightDevice')
-            ->all();
-        foreach($group2 as $one){
-            $polymers[$one["polymer_id"]]["children"][] = $one["group"];
-            $links[] = [
-                "from"=> $one["id"],
-                "to" => $polymers[$one["polymer_id"]]["id"],
-                "status" => $one["linkStatus"]
-            ];
-        }
-
+        
         return [
                 "groups" => ["group1"=>$group1,"group2"=>$group2],
                 "polymers" => array_values($polymers),

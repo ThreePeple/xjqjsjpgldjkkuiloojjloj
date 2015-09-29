@@ -183,34 +183,7 @@ abc;
      * 有线网络2   交换机组网
      */
     public function actionHubCompose(){
-       /* 页面写死IP 不需要获取数据了
-        $rows = DeviceInfo::find()->where(["categoryId"=>12])->select(["id","label"])->asArray()->all();
-        $first = 0;
-        if(!empty($rows)){
-            $first = $rows[0]["id"];
-        }
-        $ips = ["10.253.1.11","10.253.1.12","10.253.1.13","10.253.1.14"];
-        $rows = (new Query())
-            ->from("device_ipfilter a")
-            ->leftJoin("device_info b","a.ip = b.ip")
-            ->where(["a.ip"=>$ips])
-            ->select(["b.id","b.label","b.ip","group"=>"IF(b.ip='10.253.1.11' or b.ip='10.253.1.12',1,2)"])
-            ->orderBy("group asc")
-            ->all();
-        //$rows = DeviceIpfilter::find()->where(["ip"=>$ips])->select(["ip","label","group"=>"IF(ip='10.253.1.11' or ip='10.253.1.13',1,2)"])->asArray()->all();
-        $data = ArrayHelper::map($rows,"id",function($data){
-            return ["label"=>$data["label"],"group"=>$data["group"],"id"=>$data["id"]];
-        });
-        $groups = [];
-        foreach($data as $key=>$row){
-            $groups[$row["group"]][] = $row["id"];
-
-        }
-       */
-        return $this->render('polymerchart',[
-          //  "polymers" => $data,
-           // "groups" => $groups
-        ]);
+        return $this->render('polymerchart');
     }
 
     /**
@@ -223,12 +196,6 @@ abc;
         $id2 = Yii::$app->request->post("id2");
 
         $data = DeviceLink::getPolymerData($id1,$id2);
-/*
-        $data["links"] = array(
-                array( "from" => "id766", "to" => "p1", "status" => "1" ),
-                array( "from" => "id825", "to" => "p1", "status" => "2" ),
-
-            );*/
 
         return Json::encode([
             'status'=> 1,
