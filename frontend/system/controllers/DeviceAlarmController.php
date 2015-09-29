@@ -2,11 +2,15 @@
 
 namespace app\system\controllers;
 
+use app\models\AlarmLevel;
 use app\models\WirelessDeviceAlarm;
 use app\models\WirelessDeviceAlarmSearch;
+use frontend\models\AlarmLevelBlacklist;
 use Yii;
 use frontend\models\DeviceAlarm;
 use app\models\DeviceAlarmSearch;
+use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -16,6 +20,7 @@ use yii\filters\VerbFilter;
  */
 class DeviceAlarmController extends Controller
 {
+    public $enableCsrfValidation = false;
     public function behaviors()
     {
         return [
@@ -119,11 +124,45 @@ class DeviceAlarmController extends Controller
     }
 
     /**
-     * 消息设置 告警条件设置   发送人    发送设置
+     * 告警级别黑名单
      */
-    public function actionSmsConfig(){
+    public function actionLevelBlacklist(){
 
+        if(Yii::$app->request->isPost){
+            $level = Yii::$app->request->post('level');
+            $m = AlarmLevel::findOne(["id"=>$level]);
+            $exist = AlarmLevelBlacklist::find()->where(["level"=>$level])->count();
+            if($m && !$exist){
+                $model = new AlarmLevelBlacklist([
+                    'level' => $level,
+                    "level_name" => $m->desc
+                ]);
+                $model->save();
+                echo '<script>alert("操作成功")</script>';
 
+            }else{
+                echo '<script>alert("操作失败")</script>';
+            }
+        }
+        $model = AlarmLevelBlacklist::find();
+        $provider = new ActiveDataProvider([
+                'query' => $model
+            ]
+        );
+
+        $ids = AlarmLevelBlacklist::find()->select("level")->column();
+        $ids[] = 255;
+        $lists = AlarmLevel::find()->where(['not',['id'=>$ids]])->asArray()->all();
+        $lists = ArrayHelper::map($lists,'id','desc');
+        return $this->render('blacklist',[
+            'dataProvider' => $provider,
+            'lists' => $lists
+        ]);
+    }
+
+    public function actionDeleteBl($id){
+        AlarmLevelBlacklist::findOne($id)->delete();
+        return $this->redirect(['level-blacklist']);
     }
 
     /**
