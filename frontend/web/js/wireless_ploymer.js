@@ -221,7 +221,7 @@ function renderEChart(nodes, links) {
     var myChart = echarts.init(document.getElementById("wireless_hub"));
     var option = {
         title: {
-            text: '接入网络拓扑图',
+            text: '',
             x: 'center',
             y: 'top'
         },
