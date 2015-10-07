@@ -132,7 +132,7 @@ class DeviceLink extends \yii\db\ActiveRecord
                 "status" => $row["linkStatus"]
             ];
         }
-        
+
         return [
                 "groups" => ["group1"=>$group1,"group2"=>$group2],
                 "polymers" => array_values($polymers),

@@ -130,7 +130,7 @@
             calculable: false,
             grid: {
                 borderWidth: 0,
-                y: 5,
+                y: 22,
                 y2: 40,
                 x:10,
                 x2:10
@@ -147,7 +147,7 @@
                         textStyle: {
                             color:'#fff'
                         },
-                        rotate:45,
+                        rotate:45
                     }
                 }
             ],
