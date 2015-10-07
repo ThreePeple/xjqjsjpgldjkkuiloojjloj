@@ -28,7 +28,7 @@ class ApiController extends Controller
      */
     public function actionDeviceModel()
     {
-        $host=Yii::$app->params['wireless_api_host'];
+        $host=Yii::$app->params['api_host'];
         //无线设备数据
         $api_path=Constants::DEVICE_MODEL;
         $url=$host.$api_path;
@@ -748,7 +748,7 @@ class ApiController extends Controller
             $sql.=" values(".$param['id'].",'".$param['name']."','".$param['description']."','".$param['sysOid']."',".$param['seriesId'].",".$param['categoryId'].",";
             $sql.="'".$param['deviceVersion']."') on duplicate key update " ;
             $sql.="`name`='".$param['name']."',description='".$param['description']."',sysOid='".$param['sysOid']."',series_id=".$param['seriesId'].",";
-            $sql.="category_id=".$param['categoryId'].",deviceVersion='".$param['deviceVersion']."''";
+            $sql.="category_id=".$param['categoryId'].",deviceVersion='".$param['deviceVersion']."'";
             $cmd = Yii::$app->db->createCommand($sql);
             $cmd->execute();
             return true;
