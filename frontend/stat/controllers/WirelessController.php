@@ -286,7 +286,7 @@ class WirelessController extends Controller
             ->groupBy("taskId")
             ->asArray()
             ->all();
-        $perfData = ArrayHelper::map($perfData,"taskId","dataVal");
+        $perfData = ArrayHelper::map($perfData,"taskId","currentValue");
         return $this->render("tip",[
             "model"=>$device,
             "deviceConfig"=>$deviceConfig,
