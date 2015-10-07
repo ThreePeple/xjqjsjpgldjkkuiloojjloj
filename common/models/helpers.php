@@ -23,23 +23,23 @@ class helpers
         }
         $_area='';
         $_ips=explode('.',$ip);
-        if(!empty($_ip[2]))
+        if(!empty($_ips[2]))
         {
-           $_tmp=$_ip[2];
+           $_tmp=$_ips[2];
            //得到最后一位数字
-           $_tmp=substr($_tmp,-1);
+           //$_tmp=substr($_tmp,-1);
             switch($_tmp)
             {
-                case '1':
+                case '251':
                     $_area='A';
                     break;
-                case '2';
+                case '252';
                     $_area='B';
                     break;
-                case '3':
+                case '253':
                     $_area='C';
                     break;
-                case '4':
+                case '254':
                     $_area='D';
                     break;
             }

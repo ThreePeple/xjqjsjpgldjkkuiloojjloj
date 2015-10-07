@@ -652,8 +652,8 @@ class ApiController extends Controller
         foreach($alarms as $alarm)
         {
             $alarm_id=$alarm['id'];
-            $url.="/".$alarm_id;
-            $client=(new RestfulClient("http_basic"))->get($url);
+            $_url=$url."/".$alarm_id;
+            $client=(new RestfulClient("http_basic"))->get($_url);
             if(!$client->hasErrors())
             {
                 $data = $client->getData();
