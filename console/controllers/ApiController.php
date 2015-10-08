@@ -20,7 +20,9 @@ class ApiController extends Controller
 {
     public function actionIndex()
     {
-        echo '11';
+        $ip='10.6.253.52';
+        $area=helpers::getAreaByIpRules($ip);
+        echo $area;
     }
 
     /**
@@ -1327,4 +1329,14 @@ class ApiController extends Controller
             return false;
         }
     }
+
+    /**
+     * 获取本地所有设备IP集合
+     */
+    private function getLocalDeviceIps()
+    {
+        $query=DeviceInfo::find()->select('ip')->asArray()->all();
+        return $query;
+    }
+
 }

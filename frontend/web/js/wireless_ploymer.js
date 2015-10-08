@@ -200,7 +200,7 @@ function readyChartCallback(__data) {
             _showNodeDetail(data, d3.event, "");
         });
 
-    d3.selectAll(".ZSYPolymerChart path.link-path")
+   /* d3.selectAll(".ZSYPolymerChart path.link-path")
         .on("click", function(d) {
             PopupPanel.clearAll();
             var _d = {};
@@ -208,7 +208,7 @@ function readyChartCallback(__data) {
             _d["to"] = d["linkTo"]; 
             _showPathDetail(_d, d3.event);
         });  
-
+*/
        
     if (__data) {
         __updateStatus(__data);

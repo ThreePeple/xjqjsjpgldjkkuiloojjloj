@@ -22,6 +22,9 @@ $fieldOptions2 = [
 .login-page {
 	background-color:#252525;
 }
+.login-box{
+	width:400px;
+}
 .login-box-body{
 	border-radius: 10px; 
     box-shadow: 0 0 15px 0 #fff; 
