@@ -592,7 +592,7 @@ class ApiController extends Controller
                         {
 
                             foreach ($_data as $_param ) {
-                                if($this->importDeviceTask($_param))
+                                if($this->importDeviceTask($_param,'device_task_summary'))
                                 {
                                     $info=date('y-m-dh:i:s',time()).":". $_param['devId']."&".$_param['taskId']." import ok\n";
                                     echo $info;
@@ -609,7 +609,7 @@ class ApiController extends Controller
                         }
                         else
                         {
-                            if($this->importDeviceTask($_data))
+                            if($this->importDeviceTask($_data,'device_task_summary'))
                             {
                                 $info=date('y-m-dh:i:s',time()).":". $_param['devId']."&".$_param['taskId']." import ok\n";
                                 echo $info;
@@ -1246,6 +1246,7 @@ class ApiController extends Controller
             $param['minimumValue']=isset($param['minimumValue'])?$param['minimumValue']:'0';
             $param['currentValue']=isset($param['currentValue'])?$param['currentValue']:'0';
             $param['summaryValue']=isset($param['summaryValue'])?$param['summaryValue']:'0';
+            $param['update_time']=date('y-m-d h:i:s',time());
 
             $sql="insert into ".$tableName." (taskId,`taskName`,devId,instId,objIndex,objIndexDesc,averageValue,maximumValue,minimumValue,";
             $sql.="currentValue,summaryValue)";
@@ -1256,6 +1257,7 @@ class ApiController extends Controller
             $sql.="instId=".$param['instId'].",objIndex='".$param['objIndex']."',objIndexDesc='".$param['objIndexDesc']."',";
             $sql.="averageValue='".$param['averageValue']."',maximumValue='".$param['maximumValue']."',";
             $sql.="minimumValue='".$param['minimumValue']."',currentValue='".$param['currentValue']."',summaryValue='".$param['summaryValue']."'";
+            $sql.=",update_time='".$param['update_time']."'";
             $cmd = Yii::$app->db->createCommand($sql);
             $cmd->execute();
             return true;
