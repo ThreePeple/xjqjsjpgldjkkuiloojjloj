@@ -55,7 +55,6 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
-        var_dump(Yii::$app->user->can('admin'));
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
