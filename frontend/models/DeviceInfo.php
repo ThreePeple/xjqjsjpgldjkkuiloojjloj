@@ -259,9 +259,9 @@ class DeviceInfo extends \yii\db\ActiveRecord
     }
 
     public static function getDeviceCountStat(){
-        $ips = DeviceIpfilter::getIdsByType(DeviceIpfilter::TYPE_BUILD);
+       // $ips = DeviceIpfilter::getIdsByType(DeviceIpfilter::TYPE_BUILD);
         $rows = DeviceInfo::find()
-            ->where(["ip"=>$ips])
+            //->where(["ip"=>$ips])
             ->select(["status","count"=>"count(id)"])
             ->groupBy("status")
             ->asArray()

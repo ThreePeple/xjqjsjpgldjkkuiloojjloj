@@ -201,32 +201,7 @@ class DeviceController extends Controller
             "interfaceProvider" => $interfaceProvider
         ]);
     }
-    /*
-    public function actionWlanDetail($id){
-        $this->layout = '//main';
-        $model = $this->findModel($id);
-        $lists = DeviceTask::getPrefList($id);
-        $query = DeviceAlarm::find();
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-        $query->where(["deviceId"=>$id])->orderBy("faultTime desc")->limit(5);
 
-        $links = DeviceLink::find();
-        $links->where(["or",["leftDevice"=>$id],["rightDevice"=>$id]]);
-        $linkProvider = new ActiveDataProvider([
-            'query'=>$links
-        ]);
-
-        return $this->render("detail_wlan",[
-            'id'=>$id,
-            "model"=>$model,
-            "perflists" => $lists,
-            "alarmProvider" =>$dataProvider,
-            "links" =>$linkProvider,
-            ''
-        ]);
-    }*/
     /**
      * 设备性能指标
      */
@@ -243,11 +218,6 @@ class DeviceController extends Controller
      * 设备TIP
      * @return string
      */
-   /* public function actionAjaxDeviceTip(){
-        $id = Yii::$app->request->get("id");
-        return $this->getTip($id);
-    }*/
-
     public function actionAjaxDeviceTip(){
         $this->layout = false;
         $id = Yii::$app->request->get("id");

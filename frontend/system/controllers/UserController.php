@@ -5,7 +5,9 @@ namespace app\system\controllers;
 use Yii;
 use app\models\User;
 use app\models\UserSearch;
+use yii\db\Query;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -43,12 +45,6 @@ class UserController extends Controller
                         }
                     ],
                 ]
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
             ],
         ];
     }
@@ -89,16 +85,17 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
-
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model,['username']);
         }
         if(Yii::$app->request->isPost){
-            $model->load(Yii::$app->request->post());
+            $data = Yii::$app->request->post();
+            $model->load($data);
             $model->setPassword($model->password_set);
             $model->generateAuthKey();
             if( $model->save()){
+                $model->setRole($data['User']['role']);
                 return $this->redirect(Url::toRoute(['/system/user/index']));
             }
         }
@@ -177,4 +174,5 @@ class UserController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
 }

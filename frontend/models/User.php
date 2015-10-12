@@ -119,7 +119,7 @@ class User extends \common\models\User
 
     public function setRole($roleName){
         $auth = Yii::$app->authManager;
-        if(!$auth->getAssignment($roleName,$this->id)){
+        if($this->id && !$auth->getAssignment($roleName,$this->id)){
             $auth->revokeAll($this->id);
             $role = $auth->getRole($roleName);
             if(!$role){
