@@ -26,7 +26,6 @@ function renderHub(dataUrl, containerId, detailUrl) {
     }();
 
     var _showNodeDetail = function(d, e, contentHtmlTpl) {
-        console.log(d, e, contentHtmlTpl)
         var $tg = $(e.target);
         if (false == $tg.is("g.box")) {
             $tg = $tg.closest("g.box");
