@@ -127,7 +127,7 @@ class DeviceLink extends \yii\db\ActiveRecord
 
             $polymers[$polymer_id]["children"][] = $group;
             $links[] = [
-                "from"=> $row["id"],
+                "from"=> 'id'.$row["id"],
                 "to" => $polymers[$polymer_id]["id"],
                 "status" => $row["linkStatus"]
             ];

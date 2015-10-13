@@ -52,11 +52,11 @@ var __updateStatus = function(data) {
     })
 
     var from, to, status;
-
     links.forEach(function(link) {
         from = link["from"];
         to = link["to"];
         status = link["status"];
+        console.log([to, '_', from].join(''),status)
         d3.select('#' + [to, '_', from].join('')).attr("data-status", status);
     });
 };
