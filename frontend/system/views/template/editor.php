@@ -63,6 +63,15 @@ var ZSYFCEditorConfig = window.ZSYFCEditorConfig = {
 
 </script> 
 <style>
+    .buidling-editor-container {
+        overflow: hidden;
+    }
+    svg.ZSYFCEditor {
+        left: auto !important;
+        top: auto !important;
+        right: 0 !important;
+        bottom: 0 !important;
+    }
     section.content{
         overflow: auto;
     }

@@ -46,7 +46,7 @@ body{
     border: none;
     position: absolute;
     right: 0;
-    bottom: 0;
+    bottom: 90px;
 }
 .buidling-editor-container text.title {
     display: none;
@@ -132,7 +132,7 @@ JS;
 $this->registerJs($js);
 ?>
 <div class="row" style="margin-top:50px;min-height: 700px;position:relative;">
-    <div class="col-md-3" style="margin-top: 10px;position:relative; z-index:2">
+    <div class="col-md-3" style="margin-top: 10px;position:relative; z-index:2;padding-top: 60px;">
         <div class="col-md-12">
             <div class="box" style="background: none;">
                 <div class="box-header">
