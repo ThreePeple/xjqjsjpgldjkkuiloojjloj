@@ -46,7 +46,7 @@ body{
     border: none;
     position: absolute;
     right: 0;
-    bottom: 0;
+    bottom: 90px;
 }
 .buidling-editor-container text.title {
     display: none;
@@ -92,6 +92,10 @@ svg.ZSYFCEditor {
     font-size: 20px;
     background-color: #000000;
 }
+.marquee th,
+.marquee td{
+    padding: 3px 5px;
+}
 CSS;
 $this->registerCss($css);
 
@@ -132,7 +136,7 @@ JS;
 $this->registerJs($js);
 ?>
 <div class="row" style="margin-top:50px;min-height: 700px;position:relative;">
-    <div class="col-md-3" style="margin-top: 10px;position:relative; z-index:2">
+    <div class="col-md-3" style="margin-top: 10px;position:relative; z-index:2;padding-top: 60px;">
         <div class="col-md-12">
             <div class="box" style="background: none;">
                 <div class="box-header">
@@ -158,7 +162,7 @@ $this->registerJs($js);
                     <h3 class="box-title">设备性能指标</h3>
                 </div>
                 <div class="box-body" id="itemType" style="width:300px; height: 200px;">
-                    <ul class="marquee" id="marquee" style="width: 240px;height:100px;border:0;background-color:
+                    <ul class="marquee" id="marquee" style="width: 240px;height:200px;border:0;background-color:
                     transparent;">
                     </ul>
                 </div>
