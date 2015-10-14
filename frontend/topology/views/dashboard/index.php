@@ -92,6 +92,10 @@ svg.ZSYFCEditor {
     font-size: 20px;
     background-color: #000000;
 }
+.marquee th,
+.marquee td{
+    padding: 3px 5px;
+}
 CSS;
 $this->registerCss($css);
 
@@ -158,7 +162,7 @@ $this->registerJs($js);
                     <h3 class="box-title">设备性能指标</h3>
                 </div>
                 <div class="box-body" id="itemType" style="width:300px; height: 200px;">
-                    <ul class="marquee" id="marquee" style="width: 240px;height:100px;border:0;background-color:
+                    <ul class="marquee" id="marquee" style="width: 240px;height:200px;border:0;background-color:
                     transparent;">
                     </ul>
                 </div>
