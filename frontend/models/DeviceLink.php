@@ -4,6 +4,7 @@ namespace app\models;
 
 use frontend\models\DeviceInfo;
 use frontend\models\DeviceIpfilter;
+use frontend\models\DeviceTaskSummary;
 use Yii;
 use yii\db\Query;
 
@@ -144,19 +145,20 @@ class DeviceLink extends \yii\db\ActiveRecord
      * 获取链路接口介入速率
      */
     public function getLeftInSpeed(){
-        return DeviceTask::find()->where(["devId"=>$this->leftDevice,"taskId"=>1])->orderBy("instId desc")->select
-        ("dataVal")->asArray()->scalar();
+        return DeviceTaskSummary::find()->where(["devId"=>$this->leftDevice,"taskId"=>1])->orderBy("instId desc")
+            ->select
+        ("currentValue")->asArray()->scalar();
     }
     public function getLeftOutSpeed(){
-        return DeviceTask::find()->where(["devId"=>$this->leftDevice,"taskId"=>5])->orderBy("instId desc")->select
-        ("dataVal")->asArray()->scalar();
+        return DeviceTaskSummary::find()->where(["devId"=>$this->leftDevice,"taskId"=>5])->orderBy("instId desc")->select
+        ("currentValue")->asArray()->scalar();
     }
     public function getRightInSpeed(){
-        return DeviceTask::find()->where(["devId"=>$this->rightDevice,"taskId"=>1])->orderBy("instId desc")->select
-        ("dataVal")->asArray()->scalar();
+        return DeviceTaskSummary::find()->where(["devId"=>$this->rightDevice,"taskId"=>1])->orderBy("instId desc")->select
+        ("currentValue")->asArray()->scalar();
     }
     public function getRightOutSpeed(){
-        return DeviceTask::find()->where(["devId"=>$this->rightDevice,"taskId"=>5])->orderBy("instId desc")->select
-        ("dataVal")->asArray()->scalar();
+        return DeviceTaskSummary::find()->where(["devId"=>$this->rightDevice,"taskId"=>5])->orderBy("instId desc")->select
+        ("currentValue")->asArray()->scalar();
     }
 }

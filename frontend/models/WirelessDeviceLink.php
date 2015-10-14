@@ -4,6 +4,7 @@ namespace app\models;
 
 use frontend\models\DeviceIpfilter;
 use frontend\models\WirelessDeviceInfo;
+use frontend\models\WirelessDeviceTaskSummary;
 use Yii;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
@@ -159,20 +160,20 @@ class WirelessDeviceLink extends \yii\db\ActiveRecord
      * 获取链路接口介入速率
      */
     public function getLeftInSpeed(){
-        return WirelessDeviceTask::find()->where(["devId"=>$this->leftDevice,"taskId"=>1])->orderBy("instId desc")->select
-        ("dataVal")->asArray()->scalar();
+        return WirelessDeviceTaskSummary::find()->where(["devId"=>$this->leftDevice,"taskId"=>1])->orderBy("instId desc")->select
+        ("currentValue")->asArray()->scalar();
     }
     public function getLeftOutSpeed(){
-        return WirelessDeviceTask::find()->where(["devId"=>$this->leftDevice,"taskId"=>5])->orderBy("instId desc")->select
-        ("dataVal")->asArray()->scalar();
+        return WirelessDeviceTaskSummary::find()->where(["devId"=>$this->leftDevice,"taskId"=>5])->orderBy("instId desc")->select
+        ("currentValue")->asArray()->scalar();
     }
     public function getRightInSpeed(){
-        return WirelessDeviceTask::find()->where(["devId"=>$this->rightDevice,"taskId"=>1])->orderBy("instId desc")->select
-        ("dataVal")->asArray()->scalar();
+        return WirelessDeviceTaskSummary::find()->where(["devId"=>$this->rightDevice,"taskId"=>1])->orderBy("instId desc")->select
+        ("currentValue")->asArray()->scalar();
     }
     public function getRightOutSpeed(){
-        return WirelessDeviceTask::find()->where(["devId"=>$this->rightDevice,"taskId"=>5])->orderBy("instId desc")->select
-        ("dataVal")->asArray()->scalar();
+        return WirelessDeviceTaskSummary::find()->where(["devId"=>$this->rightDevice,"taskId"=>5])->orderBy("instId desc")->select
+        ("currentValue")->asArray()->scalar();
     }
     /**
      * 获取Echarts 和弦图数据
