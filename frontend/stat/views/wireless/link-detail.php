@@ -23,8 +23,8 @@
             "label" =>"左接口描述",
             "value" => $model->leftIfDesc
         ],
-        ["label" => "左接口接收速率","attribute"=>"leftInSpeed"],
-        ["label" => "左接口发送速率","attribute"=>"leftOutSpeed"],
+        ["label" => "左接口接收速率(bps)","attribute"=>"leftInSpeed"],
+        ["label" => "左接口发送速率(bps)","attribute"=>"leftOutSpeed"],
         [
             "label" => "右接口",
             "value" => ($model->right ? $model->right->label : ''),
@@ -33,8 +33,8 @@
             "label" =>"链路右接口描述",
             "value" => $model->rightIfDesc
         ],
-        ["label" => "右接口接收速率","attribute"=>"rightInSpeed"],
-        ["label" => "右接口发送速率","attribute"=>"rightOutSpeed"],
+        ["label" => "右接口接收速率(bps)","attribute"=>"rightInSpeed"],
+        ["label" => "右接口发送速率(bps)","attribute"=>"rightOutSpeed"],
         [
             "label" => "带宽",
             "value" => $model->bandWidth
