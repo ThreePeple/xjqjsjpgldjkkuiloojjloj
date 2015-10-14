@@ -21,12 +21,13 @@
             ["label" => "左接口","attribute"=>"left.label"],
             ["label" => "左接口描述","attribute"=>"leftIfDesc"],
             //["label" => "左接口别名","attribute"=>"id"],
-            //["label" => "左接口WLAN类型","attribute"=>"id"],
+            ["label" => "左接口接收速率","attribute"=>"leftInSpeed"],
+            ["label" => "左接口发送速率","attribute"=>"leftOutSpeed"],
             //["label" => "左接口Allowed VLAN","attribute"=>"id"],
             ["label" => "右接口","attribute"=>"right.label"],
             ["label" => "右接口描述","attribute"=>"rightIfDesc"],
-            //["label" => "右接口别名","attribute"=>"id"],
-            //["label" => "接收速率","attribute"=>"linkspeed"],
+            ["label" => "右接口接收速率","attribute"=>"rightInSpeed"],
+            ["label" => "右接口发送速率","attribute"=>"rightOutSpeed"],
         ]
     ])?>
 </div>
