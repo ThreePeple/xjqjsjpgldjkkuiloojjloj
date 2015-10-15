@@ -56,9 +56,9 @@ class DeviceController extends Controller
      */
     public function actionIndex()
     {
-        $ips = DeviceIpfilter::getIdsByType([DeviceIpfilter::TYPE_WLAN,DeviceIpfilter::TYPE_POLYMER]);
+       // $ips = DeviceIpfilter::getIdsByType([DeviceIpfilter::TYPE_WLAN,DeviceIpfilter::TYPE_POLYMER]);
         $searchModel = new DeviceInfoSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$ips);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

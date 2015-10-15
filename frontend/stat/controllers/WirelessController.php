@@ -57,9 +57,9 @@ class WirelessController extends Controller
      */
     public function actionIndex()
     {
-        $ips = DeviceIpfilter::getIdsByType(DeviceIpfilter::TYPE_WIRELESS);
+        //$ips = DeviceIpfilter::getIdsByType(DeviceIpfilter::TYPE_WIRELESS);
         $searchModel = new WirelessSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$ips);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
