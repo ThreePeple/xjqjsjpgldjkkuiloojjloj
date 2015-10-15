@@ -26,6 +26,34 @@ class SmsController extends Controller{
         $configs = SmsConfig::find()->all();
 
         foreach($configs as $config){
+            $phones =implode(',',array_filter($this->getPhoneNum($config->receivers)));
+            if(empty($phones))
+                continue;
+            $condition =$config->alarmCondition;
+            $time = strtotime('-1 hour');
+            $alarms = DeviceAlarm::find()
+                ->where(['and','faultTime>='.$time,'recStatus=0'])
+                ->andWhere($condition)
+                ->select(SmsTemplate::$template_fields)
+                ->asArray()
+                ->all();
+
+            $template = $this->getTemplate($config->smsTemplate_id);
+            foreach($alarms as $alarm){
+                $model = new SmsList();
+                $model->receivers = $phones;
+                $model->content = strtr($template,$alarm);
+                if(!$model->save()){
+                    Yii::error(print_r($model->getErrors(),true),'sms/find');
+                }
+            }
+        }
+    }
+
+    public function actionAlarmFindBak(){
+        $configs = SmsConfig::find()->all();
+
+        foreach($configs as $config){
             $LastId = Yii::$app->cache->get("config_last_id_".$config->id);
             if(!$LastId)
                 $LastId = 0;
