@@ -24,7 +24,6 @@ class SmsController extends Controller{
      */
     public function actionAlarmFind(){
         $configs = SmsConfig::find()->all();
-
         foreach($configs as $config){
             $phones =implode(',',array_filter($this->getPhoneNum($config->receivers)));
             if(empty($phones))
@@ -113,10 +112,14 @@ class SmsController extends Controller{
     }
 
     private function getPhoneNum($ids){
-        return User::find()->where(["id"=>explode(',',$ids)])
+        $data = User::find()->where(["id"=>explode(',',$ids)])
             ->select("phone")
             ->asArray()
             ->column();
+        array_walk($data,function(&$val){
+            $val = str_replace('-','',$val);
+        });
+        return $data;
     }
 
     private function getTemplate($template_id){
