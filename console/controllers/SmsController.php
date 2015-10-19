@@ -101,6 +101,7 @@ class SmsController extends Controller{
                     'content' => $sms->content
                 ]
             ]);
+            /*
             $sms->send_times = $sms->send_times+1;
             $sms->status = (int)$r->SendSMSResult;
             if($sms->send_times>5 && $sms->status==0){
@@ -108,6 +109,8 @@ class SmsController extends Controller{
                 $sms->status= 2;
             }
             $sms->save(false);
+            */
+            $sms->delete();
         }
     }
 

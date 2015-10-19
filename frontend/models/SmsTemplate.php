@@ -14,8 +14,8 @@ use Yii;
 class SmsTemplate extends \yii\db\ActiveRecord
 {
     static $template_fields = [
-        '__ALARM_LEVEL__' => 'alarmLevel',
-        '__ALARM_CATEGORY__' => 'alarmCategory',
+        '__ALARM_LEVEL__' => 'alarmLevelDesc',
+        '__ALARM_CATEGORY__' => 'alarmCategoryDesc',
         '__EVENT_NAME__' => 'eventName',
         '__ALARM_REASON__' => 'reason',
         '__ALARM_DESC__' => 'alarmDesc',
