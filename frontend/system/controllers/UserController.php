@@ -29,21 +29,9 @@ class UserController extends Controller
                 'rules' =>[
 
                     [
-                        'actions'=>['index'],
                         'allow' => true,
                         'roles' => ['@']
-                    ],
-                    [
-                        'allow'=>true,
-                        'roles' => ['admin']
-                    ],
-                    [
-                        'allow' => false,
-                        'roles'=>['operator'],
-                        'denyCallback' => function($rule,$action){
-                            return $this->redirect(['/site/login']);
-                        }
-                    ],
+                    ]
                 ]
             ],
         ];
@@ -55,8 +43,12 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
+        $query = Yii::$app->request->queryParams;
         $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if(!Yii::$app->user->can('admin')){
+            $searchModel->id = Yii::$app->user->identity->id;
+        }
+        $dataProvider = $searchModel->search($query);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

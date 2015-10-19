@@ -37,7 +37,6 @@ use yii\helpers\Html;
                 [
                     'class' => '\kartik\grid\ActionColumn',
                     'width' => '120px',
-                    'hidden' => !Yii::$app->user->can('admin'),
                     'header' => '',
                     'template' => '{reset} {update}  {delete}',
                     'buttons' =>[
