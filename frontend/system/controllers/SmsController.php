@@ -123,7 +123,7 @@ class SmsController extends Controller
     }
 
     private function getViewData(){
-        $levels =AlarmLevel::find()->select(["id","text"=>"desc"])->asArray()->all();
+        $levels =AlarmLevel::find()->where(['not',['id'=>255]])->select(["id","text"=>"desc"])->asArray()->all();
         $categorys =AlarmCategory::find()->select(["id","text"=>"subDesc"])->asArray()->all();
         $users = ArrayHelper::map(User::find()->select(["id","username"])->all(),'id','username');
 
