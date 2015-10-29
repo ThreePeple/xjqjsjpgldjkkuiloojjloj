@@ -101,7 +101,7 @@ $fieldOptions2 = [
 <div class="login-box">
     <div class="login-logo">
         <span class="logo"><img src="/images/logo_80.png" width="80" height="77" alt="石油大厦网关系统" title="石油大厦网关系统" /></span>
-		<i id="app_title" title="石油大厦网关系统">石油大厦网关系统</i>
+		<i id="app_title" title="石油大厦网关系统">石油大厦网管展示系统</i>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body"> 

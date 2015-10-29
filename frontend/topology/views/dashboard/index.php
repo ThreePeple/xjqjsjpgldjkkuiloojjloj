@@ -140,7 +140,7 @@ $this->registerJs($js);
         <div class="col-md-12">
             <div class="box" style="background: none;">
                 <div class="box-header">
-                    <h3 class="box-title">设备统计</h3>
+                    <h3 class="box-title">设备状态统计</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body" id="device_status" style="width:100%;height:200px;">
 
@@ -150,7 +150,7 @@ $this->registerJs($js);
         <div class="col-md-12">
             <div class="box"  style="background: none;">
                 <div class="box-header">
-                    <h3 class="box-title">告警级别</h3>
+                    <h3 class="box-title">告警统计</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body" id="events_levels" style="width:100%; height: 200px;">
                 </div><!-- /.box-body -->

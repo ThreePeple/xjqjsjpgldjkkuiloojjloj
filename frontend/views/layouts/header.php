@@ -36,7 +36,7 @@ $this->registerCss($css);
 
 <?php
 NavBar::begin([
-    'brandLabel' => '<span class=""><img src="/images/logo_33.png" style="margin-top: -6px;"/></span><i style="color: #fff;text-shadow: 0 0 30px yellow;font-style:normal;margin-left: 5px">石油大厦网关系统</i>',
+    'brandLabel' => '<span class=""><img src="/images/logo_33.png" style="margin-top: -6px;"/></span><i style="color: #fff;text-shadow: 0 0 30px yellow;font-style:normal;margin-left: 5px">石油大厦网管展示系统</i>',
     'brandUrl' => Yii::$app->homeUrl,
     'options' => [
         'class' => 'navbar-inverse navbar-fixed-top',
