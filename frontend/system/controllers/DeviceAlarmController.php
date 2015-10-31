@@ -45,7 +45,8 @@ class DeviceAlarmController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'title' => "设备告警列表"
+            'title' => "设备告警列表",
+            'action' => 'index'
         ]);
     }
 
@@ -56,7 +57,8 @@ class DeviceAlarmController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'title' => "无线设备告警列表"
+            'title' => "无线设备告警列表",
+            'action' => 'wireless-list'
         ]);
     }
 

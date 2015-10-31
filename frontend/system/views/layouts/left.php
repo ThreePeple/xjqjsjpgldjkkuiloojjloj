@@ -54,7 +54,7 @@ use yii\helpers\Url;
                             "url" => ['/system/template/wlan']
                         ],
                         [
-                            "label" => '<span class="fa fa-circle-o"></span> 局域网拓扑图模板</a> ',
+                            "label" => '<span class="fa fa-circle-o"></span> 核心区域拓扑图模板</a> ',
                             "url" => ['/system/template/wireless']
                         ],
                     ]

@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <h3 class="panel-title">筛选</h3>
                 </div>
                 <div class="panel-body">
-                    <?=$this->render("_search",["model"=>$searchModel]);?>
+                    <?=$this->render("_search",["model"=>$searchModel,'action'=>$action]);?>
                 </div>
             </div>
         </div>

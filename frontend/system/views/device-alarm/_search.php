@@ -23,7 +23,7 @@ use kartik\select2\Select2;
 <div class="device-alarm-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index'],
+        'action' => [$action],
         'method' => 'get',
         'options' =>[
             'class' => 'form-inline'
