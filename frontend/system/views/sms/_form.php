@@ -82,6 +82,16 @@ $form=ActiveForm::begin([
         </div>
     </div>
     <div class="panel panel-default">
+        <div class="panel-heading">选择设备</div>
+        <div class="panel-body">
+            <?=$form->field($model,"sms_device_type")->widget(Select2::className(),[
+                "data" => [0=>'有线设备',1=>'无线设备']
+            ])?>
+            <?=$form->field($model,'dev_ips',['skipFormLayout'=>true, 'inputOptions'=>['style'=>'width:1000px;'] ])?>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
         <div class="panel-heading">告警条件设置</div>
         <div class="panel-body" id="condition">
 

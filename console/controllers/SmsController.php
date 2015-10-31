@@ -9,6 +9,7 @@
 namespace console\controllers;
 
 
+use app\models\WirelessDeviceAlarm;
 use common\models\User;
 use frontend\models\DeviceAlarm;
 use frontend\models\SmsConfig;
@@ -30,9 +31,18 @@ class SmsController extends Controller{
                 continue;
             $condition =$config->alarmCondition;
             $time = strtotime('-1 hour');
-            $alarms = DeviceAlarm::find()
-                ->where(['and','faultTime>='.$time,'recStatus=0'])
+            $ips = null;
+            if($config->sms_device_type ==0){
+                $query = DeviceAlarm::find();
+            }else{
+                $query = WirelessDeviceAlarm::find();
+            }
+            if(!empty($config->dev_ips)){
+                $ips = explode(',',$config->dev_ips);
+            }
+            $alarms = $query->where(['and','faultTime>='.$time,'recStatus=0'])
                 ->andWhere($condition)
+                ->andFilterWhere(['deviceIp',$ips])
                 ->select(SmsTemplate::$template_fields)
                 ->asArray()
                 ->all();

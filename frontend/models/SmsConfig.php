@@ -54,8 +54,8 @@ class SmsConfig extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['alarmSet', 'alarmCondition'], 'string'],
-            [['smsTemplate_id'], 'integer'],
+            [['alarmSet', 'alarmCondition','dev_ips'], 'string'],
+            [['smsTemplate_id','sms_device_type'], 'integer'],
             [['create_time', 'update_time'], 'safe'],
             [['receiverSelect', 'smsTemplate_id'], 'required']
         ];
@@ -71,6 +71,7 @@ class SmsConfig extends \yii\db\ActiveRecord
             'alarmSet' => 'Alarm Set',
             'alarmCondition' => 'Alarm Condition',
             'smsTemplate_id' => 'Sms Template ID',
+            'dev_ips' => '设备IP,多个用逗号分割',
             'receivers' => 'Receivers',
             'create_time' => 'Create Time',
             'update_time' => 'Update Time',
