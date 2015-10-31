@@ -87,7 +87,7 @@ class DeviceAlarm extends \yii\db\ActiveRecord
             'faultTimeDesc' => Yii::t('app', '告警发生时间'),
             'recTime' => Yii::t('app', 'Rec Time'),
             'recTimeDesc' => Yii::t('app', '告警恢复时间'),
-            'recStatus' => Yii::t('app', 'Rec Status'),
+            'recStatus' => Yii::t('app', '告警恢复状态'),
             'recStatusDesc' => Yii::t('app', '告警恢复状态'),
             'recUserName' => Yii::t('app', '告警恢复人'),
             'ackTime' => Yii::t('app', 'Ack Time'),

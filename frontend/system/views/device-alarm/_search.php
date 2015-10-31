@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
+
 
 /* @var $this yii\web\View */
 /* @var $model app\models\DeviceAlarmSearch */
@@ -53,7 +55,18 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'recTimeDesc') ?>
 
-    <?php // echo $form->field($model, 'recStatus') ?>
+    <?php  echo $form->field($model, 'recStatus',['options'=>['class'=>'form-group']])->widget
+    (Select2::className(),[
+        "data" => [
+            '0' => '未恢复',
+            '1' => '已恢复',
+        ],
+        'hideSearch' => true,
+        'options' => ['placeholder' => '选择状态'],
+        'pluginOptions' => [
+            'allowClear' => true,
+            'width' => '150'
+        ]]) ?>
 
     <?php // echo $form->field($model, 'recStatusDesc') ?>
 

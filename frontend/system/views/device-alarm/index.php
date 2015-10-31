@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'recTime:datetime',
             'recTimeDesc',
             // 'recStatus',
-            // 'recStatusDesc',
+             'recStatusDesc',
             // 'recUserName',
             // 'ackTime:datetime',
             // 'ackTimeDesc',
