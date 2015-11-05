@@ -192,7 +192,7 @@ class ApiController extends Controller
             'start'=>0,
             'orderBy'=>'id',
             'desc'=>false,
-            'size'=>500,
+            'size'=>1000,
             'total'=>false,
         ];
         //设备信息列表
@@ -301,13 +301,13 @@ class ApiController extends Controller
         }
         foreach($devices as $device)
         {
-            $url=$url.$device['id'];
-            $client=(new RestfulClient("http_imc"))->get($url,$query);
+            $_url=$url.$device['id'];
+            $client=(new RestfulClient("http_imc"))->get($_url,$query);
             if(!$client->hasErrors())
             {
                 $data = $client->getData();
                 // var_dump($data);
-                if(isset($data['ipMacLearnResult']))
+                if(isset($data['ipMacLearnResult'][0]))
                 {
                     foreach($data['ipMacLearnResult'] as $_data)
                     {
@@ -326,12 +326,29 @@ class ApiController extends Controller
                         }
                     }
                 }
+                else if(isset($data['ipMacLearnResult']))
+                {
+                    $_data=$data['ipMacLearnResult'];
+                    if($this->importIpMacLearn($_data))
+                    {
+                        $info=date('y-m-dh:i:s',time()).":".$_data['learnIp']." import ok\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionIpmaclearn');
+                    }
+                    else
+                    {
+                        $info=date('y-m-dh:i:s',time()).":".$_data['learnIp']." import fail\n";
+                        echo $info;
+                        Yii::info($info,'console_track/actionIpmaclearn');
+                    }
+                }
             }
             else
             {
                 var_dump($client->getErrorCode());
                 Yii::error($client->getErrorCode(),'console/actionIpmaclearn');
             }
+
         }
     }
 
@@ -736,6 +753,7 @@ class ApiController extends Controller
             }
         }
     }
+
     ///////////////////私有函数////////////////////////
     /**
      * 导入设备型号
@@ -1102,7 +1120,7 @@ class ApiController extends Controller
             $sql="insert into `access_device_info`(deviceId,`deviceIp`,ifIndex,ifDesc,vlanId,learnIp,learnMac,status)";
             $sql.=" values(".$param['deviceId'].",'".$param['deviceIp']."',".$param['ifIndex'].",'".$param['ifDesc']."',".$param['vlanId'].",";
             $sql.="'".$param['learnIp']."','".$param['learnMac']."',0) on duplicate key update ";
-            $sql.="ifIndex=".$param['ifIndex'].",ifDesc='".$param['ifDesc']."',vlanId=".$param['vlanId'];
+            $sql.="ifIndex=".$param['ifIndex'].",ifDesc='".addslashes($param['ifDesc'])."',vlanId=".$param['vlanId'];
             $cmd = Yii::$app->db->createCommand($sql);
             $cmd->execute();
             return true;
@@ -1314,11 +1332,11 @@ class ApiController extends Controller
             $sql="replace into ".$tableName." (id,`OID`,originalTypeDesc,deviceId,deviceIp,deviceName,alarmLevel,alarmLevelDesc,alarmCategory,alarmCategoryDesc,";
             $sql.="faultTime,faultTimeDesc,recTime,recTimeDesc,recStatus,recStatusDesc,ackUserName,alarmDesc,somState,remark,eventName,";
             $sql.="reason,defineType,customAlarmLevel,specificId,originalType)";
-            $sql.=" values(".$param['id'].",'".$param['OID']."','".$param['originalTypeDesc']."',".$param['deviceId'].",'".$param['deviceIp']."',";
-            $sql.="'".$param['deviceName']."',".$param['alarmLevel'].",'".$param['alarmLevelDesc']."',".$param['alarmCategory'].",";
-            $sql.="'".$param['alarmCategoryDesc']."',".$param['faultTime'].",'".$param['faultTimeDesc']."',".$param['recTime'].",";
+            $sql.=" values(".$param['id'].",'".$param['OID']."','".addslashes($param['originalTypeDesc'])."',".$param['deviceId'].",'".$param['deviceIp']."',";
+            $sql.="'".$param['deviceName']."',".$param['alarmLevel'].",'".addslashes($param['alarmLevelDesc'])."',".$param['alarmCategory'].",";
+            $sql.="'".$param['alarmCategoryDesc']."',".$param['faultTime'].",'".addslashes($param['faultTimeDesc'])."',".$param['recTime'].",";
             $sql.="'".$param['recTimeDesc']."',".$param['recStatus'].",'".$param['recStatusDesc']."','".$param['ackUserName']."',";
-            $sql.="'".$param['alarmDesc']."',".$param['somState'].",'".$param['remark']."','".$param['eventName']."','".$param['reason']."',";
+            $sql.="'".addslashes($param['alarmDesc'])."',".$param['somState'].",'".addslashes($param['remark'])."','".$param['eventName']."','".addslashes($param['reason'])."',";
             $sql.=$param['defineType'].",".$param['customAlarmLevel'].",".$param['specificId'].",".$param['originalType'].")";
             $cmd = Yii::$app->db->createCommand($sql);
             $cmd->execute();
