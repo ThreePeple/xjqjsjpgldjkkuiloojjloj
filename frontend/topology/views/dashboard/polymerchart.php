@@ -148,6 +148,7 @@ $id2 = isset($group[1])?$group[1]:0;
 $js = <<<JS
 
     renderChart(681,731)
+    changeGroup();
 JS;
 $this->registerJs($js);
 ?>

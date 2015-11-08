@@ -145,6 +145,7 @@ $this->registerCss($css);
 $js = <<<JS
     renderChart('/topology/dashboard/ajax-ac-ap',{"area":1});
     setDetailUrl('/stat/wireless/ajax-ap-tip');
+    changeGroup();
 JS;
 $this->registerJs($js);
 ?>

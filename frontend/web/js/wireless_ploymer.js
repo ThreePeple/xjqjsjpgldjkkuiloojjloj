@@ -335,3 +335,18 @@ var showDetail = function(d, e, contentHtmlTpl) {
         }
     }).init().show(x, y);
 };
+
+//定时切换分组
+var curr_group=1;
+function changeGroup(){
+    var count = $('#areas').find('.group').length;
+    setTimeout(function(){
+        curr_group++;
+        if(curr_group >count){
+            curr_group = curr_group-count;
+        }
+
+        $('#areas').find('button[group="'+curr_group+'"]').trigger('click');
+        changeGroup();
+    },10000)
+}

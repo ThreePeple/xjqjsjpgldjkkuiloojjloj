@@ -17,7 +17,7 @@ function renderChart(id1, id2) {
         dataType: 'JSON',
         success: function(res) {
             if (res.status) {
-                console.log("refresh content.");
+                //console.log("refresh content.");
                 $("#ZSYPolymerChart").find(">*").filter(":not(defs)").remove();
                 __data = res.data;
                 ZSYPolymerChart.init({
@@ -56,7 +56,7 @@ var __updateStatus = function(data) {
         from = link["from"];
         to = link["to"];
         status = link["status"];
-        console.log([to, '_', from].join(''),status)
+       // console.log([to, '_', from].join(''),status)
         d3.select('#' + [to, '_', from].join('')).attr("data-status", status);
     });
 };
@@ -188,7 +188,7 @@ var _showNodeDetail = function(d, e, contentHtmlTpl) {
 
 
 function readyChartCallback(__data) {
-    console.log(__data)
+    //console.log(__data)
     d3.selectAll(".ZSYPolymerChart g.node text")
         .on("click", function(data) {
             PopupPanel.clearAll();
@@ -207,4 +207,19 @@ function readyChartCallback(__data) {
     if (__data) {
         __updateStatus(__data);
     }
+}
+
+//定时切换分组
+var curr_group=1;
+function changeGroup(){
+    var count = $('#events_type').find('.group').length;
+    setTimeout(function(){
+        curr_group++;
+        if(curr_group >count){
+            curr_group = curr_group-count;
+        }
+
+        $('#events_type').find('button[group="'+curr_group+'"]').trigger('click');
+        changeGroup();
+    },10000)
 }
