@@ -195,11 +195,12 @@ class WirelessController extends Controller
         ]);
         $query->where(["deviceId"=>$id])->orderBy("faultTime desc")->limit(5);
 
-        $links = $nodes = [];
+        $links = $nodes = $linkModels = [];
         $nodes[] = [
             "name" => $model->ip,
             "id" => $model->id
         ];
+
         $apProvider = null;
         if($model->categoryId == 1003){
 
@@ -211,8 +212,8 @@ class WirelessController extends Controller
                 ]
             ]);
         }else{
-            $links = WirelessDeviceLink::find()->where(["or",["leftDevice"=>$id],["rightDevice"=>$id]])->all();
-            foreach ($links as $link) {
+            $linkModels = WirelessDeviceLink::find()->where(["or",["leftDevice"=>$id],["rightDevice"=>$id]])->all();
+            foreach ($linkModels as $link) {
                 if($link->leftDevice == $id) {
                     $node = $link->right;
                 }else{
@@ -234,6 +235,7 @@ class WirelessController extends Controller
                     "weight" => 1,
                 ];
             }
+
         }
 
         $interfaceQuery = WirelessDeviceTaskSummary::find()
@@ -255,7 +257,8 @@ class WirelessController extends Controller
             "nodes" =>$nodes,
             "links" => $links,
             "apProvider" => $apProvider,
-            "ifProvider" => $interfaceProvider
+            "ifProvider" => $interfaceProvider,
+            'linkModels' => $linkModels
         ]);
     }
     /**

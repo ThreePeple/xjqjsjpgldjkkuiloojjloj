@@ -89,7 +89,8 @@ $this->title = "设备详情";
                             "nodes"=>json_encode($nodes),
                             "links" => json_encode($links),
                             "apProvider" =>$apProvider,
-                            "categoryId"=>$model->categoryId
+                            "categoryId"=>$model->categoryId,
+                            'linkModels' => $linkModels
                         ])?>
                     </div>
                 </li>

@@ -67,7 +67,7 @@ JS;
 
 ?>
 
-<div class="device-info-view" style="width:760px;height:600px;" id="wireless_link">
+<div class="device-info-view" style="width:760px;height:400px;" id="wireless_link">
 <?php
 if($categoryId == 1003){
  ?>
@@ -122,3 +122,44 @@ if($categoryId == 1003){
 }
 ?>
 </div>
+<?php
+if($categoryId != 1003){
+    foreach($linkModels as $model){
+        echo '<div class="view">';
+        echo '<h4>'. ($model->left ? $model->left->ip : '') .'~'.($model->right ? $model->right->ip : '').'</h4>';
+         echo \yii\widgets\DetailView::widget([
+            'model' => $model,
+            "options" => [
+                "class" => 'table table-bordered detail-view'
+            ],
+            'attributes' => [
+                [
+                    "label" => "左接口",
+                    "value" => ($model->left ? $model->left->label : ''),
+                ],
+                [
+                    "label" =>"左接口描述",
+                    "value" => $model->leftIfDesc
+                ],
+                ["label" => "左接口接收速率(bps)","attribute"=>"leftInSpeed"],
+                ["label" => "左接口发送速率(bps)","attribute"=>"leftOutSpeed"],
+                [
+                    "label" => "右接口",
+                    "value" => ($model->right ? $model->right->label : ''),
+                ],
+                [
+                    "label" =>"链路右接口描述",
+                    "value" => $model->rightIfDesc
+                ],
+                ["label" => "右接口接收速率(bps)","attribute"=>"rightInSpeed"],
+                ["label" => "右接口发送速率(bps)","attribute"=>"rightOutSpeed"],
+                [
+                    "label" => "带宽",
+                    "value" => $model->bandWidth
+                ],
+            ],
+        ]);
+        echo '</div>';
+    }
+}
+?>

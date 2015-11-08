@@ -42,7 +42,7 @@ class WirelessDeviceLink extends \yii\db\ActiveRecord
         return [
             [['id', 'leftIfDesc', 'rightIfDesc', 'bandWidth', 'leftDevice', 'rightDevice'], 'required'],
             [['id', 'type', 'leftSymbolId', 'rightSymbolId', 'status'], 'integer'],
-            [['update_time'], 'safe'],
+            [['update_time','label'], 'safe'],
             [['leftIfDesc', 'rightIfDesc', 'bandWidth', 'leftDevice', 'rightDevice'], 'string', 'max' => 255]
         ];
     }
@@ -54,6 +54,7 @@ class WirelessDeviceLink extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'label' => '链路标签',
             'type' => 'Type',
             'leftSymbolId' => 'Left Symbol ID',
             'leftIfDesc' => 'Left If Desc',
