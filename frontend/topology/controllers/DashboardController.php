@@ -373,4 +373,27 @@ abc;
     public function actionGetMarqueeData(){
         return DeviceTaskSummary::getLastPreDatas();
     }
+
+    /**
+     * 轮换视图
+     */
+    public function actionChangeView(){
+        $this->layout = false;
+        $uris = [
+            1 => [
+                '/topology/dashboard/wlan',
+                '/topology/dashboard/hub-compose'
+            ],
+            2 => [
+                "/topology/dashboard/wireless",
+                "/topology/dashboard/wireless-hub",
+                "/topology/dashboard/ac-ap"
+            ],
+        ];
+        $type = Yii::$app->request->get('type',2);
+
+        return $this->render('_changeView',[
+            'uris' => $uris[$type]
+        ]);
+    }
 }

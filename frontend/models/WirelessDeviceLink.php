@@ -179,7 +179,7 @@ class WirelessDeviceLink extends \yii\db\ActiveRecord
     /**
      * 获取Echarts 和弦图数据
      */
-    public function getEData($id1,$id2){
+    public static function getEData($id1,$id2){
         $links = [];
         $nodes = WirelessDeviceInfo::find()->where(["id"=>[$id1,$id2]])->select(["id","name"=>"label"])->asArray()
             ->all();

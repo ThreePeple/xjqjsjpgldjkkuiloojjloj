@@ -145,20 +145,36 @@ class DeviceLink extends \yii\db\ActiveRecord
      * 获取链路接口介入速率
      */
     public function getLeftInSpeed(){
-        return DeviceTaskSummary::find()->where(["devId"=>$this->leftDevice,"taskId"=>1])->orderBy("instId desc")
+        $data = DeviceTaskSummary::find()->where(["devId"=>$this->leftDevice,"taskId"=>1])->orderBy("instId desc")
             ->select
         ("currentValue")->asArray()->scalar();
+        return $this->bpsToMBps($data);
     }
     public function getLeftOutSpeed(){
-        return DeviceTaskSummary::find()->where(["devId"=>$this->leftDevice,"taskId"=>5])->orderBy("instId desc")->select
+        $data = DeviceTaskSummary::find()->where(["devId"=>$this->leftDevice,"taskId"=>5])->orderBy("instId desc")
+            ->select
         ("currentValue")->asArray()->scalar();
+        return $this->bpsToMBps($data);
     }
     public function getRightInSpeed(){
-        return DeviceTaskSummary::find()->where(["devId"=>$this->rightDevice,"taskId"=>1])->orderBy("instId desc")->select
+        $data = DeviceTaskSummary::find()->where(["devId"=>$this->rightDevice,"taskId"=>1])->orderBy("instId desc")
+            ->select
         ("currentValue")->asArray()->scalar();
+        return $this->bpsToMBps($data);
     }
     public function getRightOutSpeed(){
-        return DeviceTaskSummary::find()->where(["devId"=>$this->rightDevice,"taskId"=>5])->orderBy("instId desc")->select
+        $data = DeviceTaskSummary::find()->where(["devId"=>$this->rightDevice,"taskId"=>5])->orderBy("instId desc")
+            ->select
         ("currentValue")->asArray()->scalar();
+        return $this->bpsToMBps($data);
+    }
+
+    /**
+     *  bps 转化成MBps
+     * 1 MB = 1,024 KB= 1,048,576 Bytes
+     * 1Byte=8bit
+     */
+    public function bpsToMBps($bps){
+        return $bps/(8*1048576).'MB';
     }
 }
