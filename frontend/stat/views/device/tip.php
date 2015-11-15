@@ -43,6 +43,10 @@ if(!empty($perfConfig)){
         <?php
         foreach($perfConfig as $key=>$id){
             $value = isset($perfData[$id])?$perfData[$id]:'';
+            if(in_array($id,[1,5])){
+                $value = number_format($value/(8*1024),2).'KB';
+                $key = str_replace('(bps)','',$key);
+            }
             echo '<tr><th  class="title" style="text-align:left;padding:1px 8px 1px; width:180px">'.$key.'</th><td class="content" style="padding:1px 8px 1px;">'.$value.'</td></tr>';
         }
         ?>
