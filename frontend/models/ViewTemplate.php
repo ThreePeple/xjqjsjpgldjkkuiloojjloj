@@ -141,8 +141,8 @@ class ViewTemplate extends \yii\db\ActiveRecord
             foreach($rows as $row){
                 if(!$row["wireless"])
                     continue;
-                $alarm = WirelessDeviceAlarm::find()->where(["deviceId"=>$row['device_id']])->orderBy('update_time
-                desc')->one();
+                $alarm = Yii::$app->db->createCommand('select alarmLevel from wireless_device_alarm where deviceId="'
+                    .$row['device_id'].'" order by update_time desc limit 1')->queryOne();
                 if($row['wireless']['status'] !=1 && $alarm && in_array($alarm["alarmLevel"],$bl)){
                     $row['wireless']['status'] = 1;
                 }
@@ -164,8 +164,8 @@ class ViewTemplate extends \yii\db\ActiveRecord
             foreach($rows as $row){
                 if(!$row["device"])
                     continue;
-                $alarm = DeviceAlarm::find()->where(["deviceId"=>$row['device_id']])->orderBy('update_time desc')
-                    ->one();
+                $alarm = Yii::$app->db->createCommand('select alarmLevel from device_alarm where deviceId="'
+                    .$row['device_id'].'" order by update_time desc limit 1')->queryOne();
                 if($row['device']['status'] !=1 && $alarm && in_array($alarm["alarmLevel"],$bl)){
                     $row['device']['status'] = 1;
                 }

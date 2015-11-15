@@ -148,25 +148,25 @@ class DeviceLink extends \yii\db\ActiveRecord
         $data = DeviceTaskSummary::find()->where(["devId"=>$this->leftDevice,"taskId"=>1])->orderBy("instId desc")
             ->select
         ("currentValue")->asArray()->scalar();
-        return $data;
+        return $this->bpsToKBps($data);
     }
     public function getLeftOutSpeed(){
         $data = DeviceTaskSummary::find()->where(["devId"=>$this->leftDevice,"taskId"=>5])->orderBy("instId desc")
             ->select
         ("currentValue")->asArray()->scalar();
-        return $data;
+        return $this->bpsToKBps($data);
     }
     public function getRightInSpeed(){
         $data = DeviceTaskSummary::find()->where(["devId"=>$this->rightDevice,"taskId"=>1])->orderBy("instId desc")
             ->select
         ("currentValue")->asArray()->scalar();
-        return $data;
+        return $this->bpsToKBps($data);
     }
     public function getRightOutSpeed(){
         $data = DeviceTaskSummary::find()->where(["devId"=>$this->rightDevice,"taskId"=>5])->orderBy("instId desc")
             ->select
         ("currentValue")->asArray()->scalar();
-        return $data;
+        return $this->bpsToKBps($data);
     }
 
     /**
@@ -174,7 +174,8 @@ class DeviceLink extends \yii\db\ActiveRecord
      * 1 MB = 1,024 KB= 1,048,576 Bytes
      * 1Byte=8bit
      */
-    public function bpsToMBps($bps){
-        return $bps/(8*1048576).'MB';
+    public function bpsToKBps($bps){
+        return number_format($bps/(8*1024),2).'KB';
     }
+
 }

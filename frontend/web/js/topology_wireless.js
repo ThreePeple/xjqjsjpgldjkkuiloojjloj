@@ -349,8 +349,8 @@
                 success:function(res){
                     if(res.build){
                         ZSYFCEditor.updateData(res.build);
-                        _updateLinksStatus( res.links );
-                        _updateMainLinksStatus( res.mainLinks );
+                        //_updateLinksStatus( res.links );
+                        //_updateMainLinksStatus( res.mainLinks );
                     }
                     setTimeout(refreshData,30000);
                 }

@@ -26,8 +26,8 @@
             //["label" => "左接口Allowed VLAN","attribute"=>"id"],
             ["label" => "右接口","attribute"=>"right.label"],
             ["label" => "右接口描述","attribute"=>"rightIfDesc"],
-            ["label" => "右接口接收速率","attribute"=>"rightInSpeed"],
-            ["label" => "右接口发送速率","attribute"=>"rightOutSpeed"],
+            ["label" => "右接口接收速率","attribute"=>"leftOutSpeed"],
+            ["label" => "右接口发送速率","attribute"=>"leftInSpeed"],
         ]
     ])?>
 </div>
