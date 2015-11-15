@@ -754,6 +754,26 @@ class ApiController extends Controller
         }
     }
 
+    /**
+     * 清空本地设备
+     * @return bool
+     */
+    public function actionClearDevice()
+    {
+        try
+        {
+            $sql="TRUNCATE TABLE `device_info`;TRUNCATE TABLE `wireless_device_info`";
+            $cmd = Yii::$app->db->createCommand($sql);
+            $cmd->execute();
+            return true;
+        }
+        catch(Exception $e)
+        {
+            var_dump($e->getMessage());
+            Yii::error($e->getMessage(),'console/actionClearDevice');
+            return false;
+        }
+    }
     ///////////////////私有函数////////////////////////
     /**
      * 导入设备型号
