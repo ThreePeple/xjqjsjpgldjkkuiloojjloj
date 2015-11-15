@@ -148,25 +148,25 @@ class DeviceLink extends \yii\db\ActiveRecord
         $data = DeviceTaskSummary::find()->where(["devId"=>$this->leftDevice,"taskId"=>1])->orderBy("instId desc")
             ->select
         ("currentValue")->asArray()->scalar();
-        return $this->bpsToMBps($data);
+        return $data;
     }
     public function getLeftOutSpeed(){
         $data = DeviceTaskSummary::find()->where(["devId"=>$this->leftDevice,"taskId"=>5])->orderBy("instId desc")
             ->select
         ("currentValue")->asArray()->scalar();
-        return $this->bpsToMBps($data);
+        return $data;
     }
     public function getRightInSpeed(){
         $data = DeviceTaskSummary::find()->where(["devId"=>$this->rightDevice,"taskId"=>1])->orderBy("instId desc")
             ->select
         ("currentValue")->asArray()->scalar();
-        return $this->bpsToMBps($data);
+        return $data;
     }
     public function getRightOutSpeed(){
         $data = DeviceTaskSummary::find()->where(["devId"=>$this->rightDevice,"taskId"=>5])->orderBy("instId desc")
             ->select
         ("currentValue")->asArray()->scalar();
-        return $this->bpsToMBps($data);
+        return $data;
     }
 
     /**
