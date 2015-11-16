@@ -292,8 +292,8 @@
                 {
                     name:'数量',
                     type:'pie',
-                    radius : [20, '88%'],
-                    center : ['40%', '50%'],
+                    radius : [20, '75%'],
+                    center : ['35%', '50%'],
                     //roseType : 'radius',
                     itemStyle : {
                         normal : {
