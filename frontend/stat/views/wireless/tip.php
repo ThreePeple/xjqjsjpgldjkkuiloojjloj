@@ -24,6 +24,8 @@ if(!empty($deviceConfig)){
         foreach($deviceConfig as $key=>$attribute){
             if($attribute == 'vendor.name'){
                 $value = isset($model->model)?(isset($model->model->vendor)?$model->model->vendor->name:''):'';
+            }elseif($attribute == 'category.name'){
+                $value = isset($model->category)?$model->category->name:'';
             }else{
                 $value = $model->{$attribute};
             }
