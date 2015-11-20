@@ -27,9 +27,9 @@
             curr_url = 0;
         }
         document.getElementById("container").src = uris[curr_url];
-        setTimeout('changeUrl()',60000)
+        setTimeout('changeUrl()',10000)
     }
-    setTimeout('changeUrl()',60000)
+    setTimeout('changeUrl()',10000)
 </script>
 </body>
 </html>

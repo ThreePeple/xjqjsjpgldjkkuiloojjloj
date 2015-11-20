@@ -165,25 +165,25 @@ class WirelessDeviceLink extends \yii\db\ActiveRecord
         desc")
             ->select
         ("currentValue")->asArray()->scalar();
-        return $this->bpsToKBps($data);
+        return $this->bpsToKbps($data);
     }
     public function getLeftOutSpeed(){
         $data = WirelessDeviceTaskSummary::find()->where(["devId"=>$this->leftDevice,"taskId"=>5])->orderBy("instId
         desc")->select
         ("currentValue")->asArray()->scalar();
-        return $this->bpsToKBps($data);
+        return $this->bpsToKbps($data);
     }
     public function getRightInSpeed(){
         $data = WirelessDeviceTaskSummary::find()->where(["devId"=>$this->rightDevice,"taskId"=>1])->orderBy("instId
         desc")->select
         ("currentValue")->asArray()->scalar();
-        return $this->bpsToKBps($data);
+        return $this->bpsToKbps($data);
     }
     public function getRightOutSpeed(){
         $data = WirelessDeviceTaskSummary::find()->where(["devId"=>$this->rightDevice,"taskId"=>5])->orderBy("instId
         desc")->select
         ("currentValue")->asArray()->scalar();
-        return $this->bpsToKBps($data);
+        return $this->bpsToKbps($data);
     }
 
     /**
@@ -191,8 +191,11 @@ class WirelessDeviceLink extends \yii\db\ActiveRecord
      * 1 MB = 1,024 KB= 1,048,576 Bytes
      * 1Byte=8bit
      */
-    public function bpsToKBps($bps){
-        return number_format($bps/(8*1024),2).'KB';
+    public function bpsToKbps($bps){
+        if($bps >= 1048576){
+            return number_format($bps/1048576,2).'Mb';
+        }
+        return number_format($bps/1024,2).'Kb';
     }
 
     /**
