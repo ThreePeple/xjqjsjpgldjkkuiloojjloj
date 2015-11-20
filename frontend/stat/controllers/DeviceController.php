@@ -269,7 +269,6 @@ class DeviceController extends Controller
      */
     protected function getTip($deviceId){
         $this->layout = false;
-
         $device = DeviceInfo::find()->with(["type","model"])->where(["id"=>$deviceId])->one();
         if(!$device){
             return "设备未找到";

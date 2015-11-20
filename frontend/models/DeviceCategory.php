@@ -30,7 +30,7 @@ class DeviceCategory extends \yii\db\ActiveRecord
         return [
             [['id', 'name'], 'required'],
             [['id', 'preDefined'], 'integer'],
-            [['update_time'], 'safe'],
+            [['update_time','name'], 'safe'],
             [['name'], 'string', 'max' => 255]
         ];
     }
