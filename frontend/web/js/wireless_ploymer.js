@@ -21,6 +21,7 @@ function renderChart(url, params) {
                     svgWidth: 1250,
                     svgHeight: 946,
                     circleRadius: 260,
+                    groupsVPadding: 0.001,
                     from: Math.PI * 5 / 12,
                     to: Math.PI * 19 / 12,
                     polymerWidth: 100,

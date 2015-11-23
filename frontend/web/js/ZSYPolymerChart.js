@@ -103,8 +103,8 @@
         };
 
         polymer2CenterX = polymer1CenterX = svgWidth / 2;
-        polymer1CenterY = groupCenterXY["group1"]["y"] - polymerHeight / 2 - 10;
-        polymer2CenterY = groupCenterXY["group1"]["y"] + polymerHeight / 2 + 10;
+        polymer1CenterY = groupCenterXY["group1"]["y"] - groupsVPadding / 2 - 10;
+        polymer2CenterY = groupCenterXY["group1"]["y"] + groupsVPadding / 2 + 10;
 
         xyMap = {};
     };
