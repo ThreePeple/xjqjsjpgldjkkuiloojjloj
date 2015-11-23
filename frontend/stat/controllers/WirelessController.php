@@ -309,7 +309,7 @@ class WirelessController extends Controller
             $alarmDatas = (new Query())
                 ->from('wireless_device_info a')
                 ->innerJoin('wireless_device_alarm b',"a.id=b.deviceId")
-                ->where(["and",["a.id"=>[$from,$to]],"a.status>0"])
+                ->where(["and",["a.id"=>[$from,$to]],"a.status>0",['not like','b.alarmDesc','GigabitEthernet1/1/1']])
                 ->orderBy('b.id desc')
                 ->groupBy('b.deviceId')
                 ->all();

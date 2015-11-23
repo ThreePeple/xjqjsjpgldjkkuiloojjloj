@@ -305,7 +305,7 @@ class DeviceController extends Controller
             $alarmDatas = (new Query())
                 ->from('device_info a')
                 ->innerJoin('device_alarm b',"a.id=b.deviceId")
-                ->where(["and",["a.id"=>[$d1,$d2]],"a.status>0"])
+                ->where(["and",["a.id"=>[$d1,$d2]],"a.status>0",['not like','b.alarmDesc','GigabitEthernet1/1/1']])
                 ->all();
         }
         return $this->render('link-detail',[
