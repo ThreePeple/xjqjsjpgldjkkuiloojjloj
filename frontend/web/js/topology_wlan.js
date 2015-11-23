@@ -291,7 +291,7 @@
 
         var pathIdPrefix = "ZSYFCEditor_Path";
         var _updateLinksStatus = function(links) {
-            links.forEach(function(link) {
+            links && links.forEach(function(link) {
                 d3.select('#' + pathIdPrefix + link.from + "_" + link.to).classed("node_link_error", link.status != '1');
             });
         };
