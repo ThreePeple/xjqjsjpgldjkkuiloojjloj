@@ -104,7 +104,7 @@ $this->registerJsFile('/js/ZSYFCEditor.js',['depends'=>'frontend\assets\AppAsset
 </script>
 <div class="row">
     <h4 style="color:white">有线网络拓扑</h4>
-    <div class="wire-network wlan-editor-container" id="wireNetworkHolder">
+    <div class="wire-network wlan-plane-editor-container" id="wireNetworkHolder">
         <svg class="ZSYFCEditor" oncontextmenu="return false;" >
             <defs> 
             </defs>
