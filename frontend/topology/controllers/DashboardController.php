@@ -344,21 +344,36 @@ class DashboardController extends Controller
     public function actionChangeView(){
         $this->layout = false;
         $uris = [
-            1 => [
-                '/topology/dashboard/index',
-                '/topology/dashboard/wlan',
-                '/topology/dashboard/hub-compose'
+            1 => [ //45度视角
+                1 => [
+                    '/topology/dashboard/index',
+                    '/topology/dashboard/wlan',
+                    '/topology/dashboard/hub-compose'
+                ],
+                2 => [
+                    "/topology/dashboard/wireless",
+                    "/topology/dashboard/wireless-hub",
+                    "/topology/dashboard/ac-ap"
+                ],
             ],
-            2 => [
-                "/topology/dashboard/wireless",
-                "/topology/dashboard/wireless-hub",
-                "/topology/dashboard/ac-ap"
-            ],
+            2 => [      //平面视角
+                1 => [
+                    '/topology/dashboard/index',
+                    '/topology/dashboard/wlan-plane',
+                    '/topology/dashboard/hub-compose'
+                ],
+                2 => [
+                    "/topology/dashboard/wireless",
+                    "/topology/dashboard/wireless-hub",
+                    "/topology/dashboard/ac-ap"
+                ],
+            ]
         ];
         $type = Yii::$app->request->get('type',2);
+        $vp = Yii::$app->request->get('vp',1);
 
         return $this->render('_changeView',[
-            'uris' => $uris[$type]
+            'uris' => $uris[$vp][$type]
         ]);
     }
 }
