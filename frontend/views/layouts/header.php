@@ -64,9 +64,14 @@ $menuItems = [
                 "url" => "/topology/dashboard/wlan",
                 "items" => [
                     [
-                        "label"=>"数据中心网络拓扑图",
+                        "label"=>"数据中心网络拓扑图(45度)",
                         "url"=>["/topology/dashboard/wlan"],
                         "options" => ["class"=>($action == 'topology/dashboard/wlan'? 'active':'')]
+                    ],
+                    [
+                        "label"=>"数据中心网络拓扑图(平面)",
+                        "url"=>["/topology/dashboard/wlan-plane"],
+                        "options" => ["class"=>($action == 'topology/dashboard/wlan-plane'? 'active':'')]
                     ],
                     [
                         "label"=>"局域网拓扑图",

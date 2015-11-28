@@ -24,6 +24,7 @@ class ViewTemplate extends \yii\db\ActiveRecord
     const TYPE_BUILD =1;
     const TYPE_WLAN = 2;
     const TYPE_WIFI = 3;
+    const TYPE_WLAN_PLANE=4;
 
     /**
      * @var array 区域坐标

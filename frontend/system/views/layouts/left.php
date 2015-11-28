@@ -50,8 +50,12 @@ use yii\helpers\Url;
                             "url" => ['/system/template/building']
                         ],
                         [
-                            "label" => '<span class="fa fa-circle-o"></span> 数据中心网络拓扑图模板</a> ',
+                            "label" => '<span class="fa fa-circle-o"></span> 数据中心网络拓扑图模板(45度)</a> ',
                             "url" => ['/system/template/wlan']
+                        ],
+                        [
+                            "label" => '<span class="fa fa-circle-o"></span> 数据中心网络拓扑图模板(平面)</a> ',
+                            "url" => ['/system/template/wlan-plane']
                         ],
                         [
                             "label" => '<span class="fa fa-circle-o"></span> 核心区域拓扑图模板</a> ',

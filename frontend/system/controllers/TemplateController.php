@@ -104,7 +104,21 @@ class TemplateController extends \yii\web\Controller
             "categorys" => $categorys
         ]);
     }
+    /**
+     * 有限网络(plane)
+     */
+    public function actionWlanPlane(){
+        $lists = DeviceInfo::getDeviceList(ViewTemplate::TYPE_WLAN_PLANE);
+        $selected = ViewTemplate::getTempateSet(ViewTemplate::TYPE_WLAN_PLANE);
+        $categorys = ArrayHelper::map(DeviceCategory::find()->all(),"node_group","name");
 
+        return $this->render('editorWlanPlane',[
+            "deviceList"=>$lists,
+            "selected"=>Json::encode($selected),
+            "type"=>ViewTemplate::TYPE_WLAN_PLANE,
+            "categorys" => $categorys
+        ]);
+    }
     /**
      * 无线网络
      */

@@ -79,27 +79,6 @@ class DashboardController extends Controller
         $data = [];
         $selected = ViewTemplate::getTempateSet($type);
         $data["build"] = $selected;
-        /*
-        $data["links"] = array( 
-                            array( "from" => "2", "to" => "3", "status" => "2" ),
-                            array( "from" => "2", "to" => "4", "status" => "1" )
-                        );
-        */
-
-       /* $data["mainLinks"] = array(
-                                "r" => array( "status" => rand(1, 2) ),
-                                "g" => array( "status" => rand(1, 2) ),
-                                "b" => array( "status" => rand(1, 2) )
-                            );*/
-        /*
-        if($type == ViewTemplate::TYPE_WIFI){
-            $data["mainLinks"] = [
-                "r" => ["status"=> WirelessDeviceLink::getWirelessLinkStatus(1)],
-                "g" =>["status" => WirelessDeviceLink::getWirelessLinkStatus(2)] ,
-                "b" => ["status"=>WirelessDeviceLink::getWirelessLinkStatus(3)],
-            ];
-        }
-        */
 
         return Json::encode($data);
     }
@@ -116,29 +95,6 @@ class DashboardController extends Controller
 
         $data = array_merge($nodes,$links);
         return  json_encode($data);
-
-
- $rand1 = rand(1, 2);
- $rand2 = rand(1, 2);
-
-$jsonData = <<<abc
-{
-    "element_node_5": {
-        "status": $rand1
-    },
-    "element_node_32": {
-        "status": $rand2
-    },
-    "element_line_16":{
-        "status": $rand2 
-    },
-    "element_line_29":{
-        "status": $rand1 
-    }
-}
-abc;
-        return $jsonData;
-
     }
 
     public function actionImageBase64($fileName){
@@ -181,6 +137,10 @@ abc;
     public  function actionWlan(){
 
         return $this->render("wlan");
+    }
+
+    public function actionWlanPlane(){
+        return $this->render("wlan_plane");
     }
 
     /**
