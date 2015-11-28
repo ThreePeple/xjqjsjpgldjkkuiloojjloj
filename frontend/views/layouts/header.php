@@ -78,8 +78,8 @@ $menuItems = [
                         "url"=>"/topology/dashboard/hub-compose",
                         "options" => ["class"=>($action == 'topology/dashboard/hub-compose'? 'active':'')]
                     ],
-                    '<li><a href="/topology/dashboard/change-view?type=1&vp=1" target="_blank">演示(平面)</a></li>',
-                    '<li><a href="/topology/dashboard/change-view?type=1&vp=2" target="_blank">演示(45度)</a></li>',
+                    '<li><a href="/topology/dashboard/change-view?type=1&vp=1" target="_blank">演示(45度)</a></li>',
+                    '<li><a href="/topology/dashboard/change-view?type=1&vp=2" target="_blank">演示(平面)</a></li>',
                 ],
                 'active' => in_array($action,['topology/dashboard/wlan','topology/dashboard/hub-compose'])
             ],
@@ -104,7 +104,6 @@ $menuItems = [
                         "options" => ["class"=>($action == 'topology/dashboard/ac-ap'? 'active':'')]
                     ],
                     '<li><a href="/topology/dashboard/change-view?type=2&vp=1" target="_blank">演示</a></li>',
-                    //'<li><a href="/topology/dashboard/change-view?type=1&vp=2" target="_blank">演示(45度)</a></li>',
 
                 ],
                 'active' => in_array($action,['topology/dashboard/wireless','topology/dashboard/wireless-hub',
