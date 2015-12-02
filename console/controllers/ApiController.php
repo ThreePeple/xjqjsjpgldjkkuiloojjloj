@@ -91,7 +91,7 @@ class ApiController extends Controller
             'start'=>0,
             'orderBy'=>'id',
             'desc'=>false,
-            'size'=>500,
+            'size'=>800,
             'total'=>false,
         ];
         //设备信息列表
