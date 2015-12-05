@@ -6,8 +6,8 @@ return [
     "apiAuth" => [
         "type" => "http_basic",
         "http_basic" => [
-            "user" => 'huligen',
-            "pwd" => 'huligen',
+            "user" => 'wgzspt',
+            "pwd" => 'wgzspt',
         ],
         'http_imc' =>[
             "user" => 'admin',
