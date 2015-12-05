@@ -31,7 +31,7 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::button('Reset', ['class' => 'btn btn-default clear-form']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

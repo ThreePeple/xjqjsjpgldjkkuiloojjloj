@@ -41,7 +41,7 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group">
         <?= Html::submitButton('查询', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('重置', ['class' => 'btn btn-default']) ?>
+        <?= Html::button('重置', ['class' => 'btn btn-default clear-form']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
