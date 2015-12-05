@@ -149,6 +149,7 @@ $js = <<<JS
 JS;
 $this->registerJs($js);
 ?>
+<div class="pull-right" style="margin-top: 50px;"><button class="btn btn-link" id="changeBtn">定时切换(开)</button></div>
 
 <div class="box fixedbox">
     <div class="box-header" style="text-align: center">

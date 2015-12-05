@@ -338,16 +338,29 @@ var showDetail = function(d, e, contentHtmlTpl) {
 };
 
 //定时切换分组
+var changeFlag = true;
 var curr_group=1;
 function changeGroup(){
     var count = $('#areas').find('.group').length;
     setTimeout(function(){
-        curr_group++;
-        if(curr_group >count){
-            curr_group = curr_group-count;
-        }
+        if(changeFlag){
+            curr_group++;
+            if(curr_group >count){
+                curr_group = curr_group-count;
+            }
 
-        $('#areas').find('button[group="'+curr_group+'"]').trigger('click');
+            $('#areas').find('button[group="'+curr_group+'"]').trigger('click');
+        }
         changeGroup();
     },10000)
 }
+$(document).ready(function(){
+    $('#changeBtn').click(function(){
+        changeFlag = !changeFlag;
+        if(changeFlag){
+            $(this).text('定时切换(开)');
+        }else{
+            $(this).text('定时切换(关)');
+        }
+    });
+})
