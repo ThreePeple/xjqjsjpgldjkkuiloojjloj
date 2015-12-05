@@ -19,6 +19,7 @@ class AppAsset extends AdminLteAsset
 
     public function init(){
         $this->css[] = '/css/global.css';
+        $this->js[] = '/js/utils.js';
         parent::init();
     }
 }

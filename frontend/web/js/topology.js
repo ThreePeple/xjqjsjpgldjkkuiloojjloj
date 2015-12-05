@@ -123,6 +123,7 @@
                 text: '',
                 subtext: ''
             },
+
             tooltip: {
                 trigger: 'item'
             },
@@ -131,9 +132,9 @@
             grid: {
                 borderWidth: 0,
                 y: 22,
-                y2: 40,
+                y2: 50,
                 x:10,
-                x2:10
+                x2:15
             },
             xAxis: [
                 {
@@ -145,7 +146,8 @@
                     axisLine: {show :false},
                     axisLabel: {
                         textStyle: {
-                            color:'#fff'
+                            color:'#fff',
+                            fontSize: 14
                         },
                         rotate:45
                     }
@@ -175,7 +177,10 @@
                             label: {
                                 show: true,
                                 position: 'top',
-                                formatter: '{c}'
+                                formatter: '{c}',
+                                textStyle: {
+                                    fontSize: 14
+                                }
                             },
                             barBorderRadius: [5,5,5,5]
                         }
@@ -283,7 +288,8 @@
                 y : 'top',
                 data:categories,
                 textStyle:{
-                    color:"#fff"
+                    color:"#fff",
+                    fontSize: 14
                 }
             },
             toolbox: false,
@@ -298,7 +304,10 @@
                     itemStyle : {
                         normal : {
                             label : {
-                                show : false
+                                show : false,
+                                textStyle: {
+                                    fontSize: 14
+                                }
                             },
                             labelLine : {
                                 show : false
@@ -312,7 +321,10 @@
                         },
                         emphasis : {
                             label : {
-                                show : false
+                                show : false,
+                                textStyle: {
+                                    fontSize: 14
+                                }
                             },
                             labelLine : {
                                 show : false

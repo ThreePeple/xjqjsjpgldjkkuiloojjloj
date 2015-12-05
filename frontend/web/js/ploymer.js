@@ -210,16 +210,29 @@ function readyChartCallback(__data) {
 }
 
 //定时切换分组
+var changeFlag = true;
 var curr_group=1;
 function changeGroup(){
     var count = $('#events_type').find('.group').length;
     setTimeout(function(){
-        curr_group++;
-        if(curr_group >count){
-            curr_group = curr_group-count;
-        }
+        if(changeFlag){
+            curr_group++;
+            if(curr_group >count){
+                curr_group = curr_group-count;
+            }
 
-        $('#events_type').find('button[group="'+curr_group+'"]').trigger('click');
+            $('#events_type').find('button[group="'+curr_group+'"]').trigger('click');
+        }
         changeGroup();
     },10000)
 }
+$(document).ready(function(){
+    $('#changeBtn').click(function(){
+        changeFlag = !changeFlag;
+        if(changeFlag){
+            $(this).text('定时切换(开)');
+        }else{
+            $(this).text('定时切换(关)');
+        }
+    });
+})
