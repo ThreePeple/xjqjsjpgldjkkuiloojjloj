@@ -205,7 +205,7 @@ function readyChartCallback(__data) {
             });  
 
     if (__data) {
-        __updateStatus(__data);
+       // __updateStatus(__data);
     }
 }
 
