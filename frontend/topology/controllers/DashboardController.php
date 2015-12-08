@@ -346,9 +346,9 @@ class DashboardController extends Controller
         $uris = [
             1 => [ //45度视角
                 1 => [
-                    '/topology/dashboard/index',
                     '/topology/dashboard/wlan',
-                    '/topology/dashboard/hub-compose'
+                    '/topology/dashboard/hub-compose',
+                    '/topology/dashboard/index',
                 ],
                 2 => [
                     "/topology/dashboard/wireless",

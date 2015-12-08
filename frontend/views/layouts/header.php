@@ -54,12 +54,6 @@ $menuItems = [
         'label' => '拓扑展示',
         'items' =>[
             [
-                'label' => '大厦网络楼层分布图',
-                'url' => ['/topology/dashboard/index'],
-                'active' => ""
-            ],
-            '<li role="separator" class="divider"></li>',
-            [
                 "label" =>"有线网络",
                 "url" => "/topology/dashboard/wlan",
                 "items" => [
@@ -78,6 +72,11 @@ $menuItems = [
                         "url"=>"/topology/dashboard/hub-compose",
                         "options" => ["class"=>($action == 'topology/dashboard/hub-compose'? 'active':'')]
                     ],
+                    [
+                        'label' => '大厦网络楼层分布图',
+                        'url' => ['/topology/dashboard/index'],
+                        "options" => ["class"=>($action == 'topology/dashboard/index'? 'active':'')]
+                    ],
                     '<li><a href="/topology/dashboard/change-view?type=1&vp=1" target="_blank">演示(45度)</a></li>',
                     '<li><a href="/topology/dashboard/change-view?type=1&vp=2" target="_blank">演示(平面)</a></li>',
                 ],
@@ -89,7 +88,7 @@ $menuItems = [
                 'url' => ['/topology/dashboard/wireless'],
                 "items" => [
                     [
-                        "label"=>"核心区域拓扑图",
+                        "label"=>"核心区域拓扑图(平面)",
                         "url"=>["/topology/dashboard/wireless"],
                         "options" => ["class"=>($action == 'topology/dashboard/wireless'? 'active':'')]
                     ],
