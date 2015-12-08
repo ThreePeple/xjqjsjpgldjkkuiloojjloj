@@ -80,7 +80,7 @@ $menuItems = [
                     '<li><a href="/topology/dashboard/change-view?type=1&vp=1" target="_blank">演示(45度)</a></li>',
                     '<li><a href="/topology/dashboard/change-view?type=1&vp=2" target="_blank">演示(平面)</a></li>',
                 ],
-                'active' => in_array($action,['topology/dashboard/wlan','topology/dashboard/hub-compose'])
+                'active' => in_array($action,['topology/dashboard/wlan','topology/dashboard/hub-compose','topology/dashboard/index'])
             ],
             '<li role="separator" class="divider"></li>',
             [
