@@ -358,9 +358,9 @@ class DashboardController extends Controller
             ],
             2 => [      //平面视角
                 1 => [
-                    '/topology/dashboard/index',
                     '/topology/dashboard/wlan-plane',
-                    '/topology/dashboard/hub-compose'
+                    '/topology/dashboard/hub-compose',
+                    '/topology/dashboard/index'
                 ],
                 2 => [
                     "/topology/dashboard/wireless",
