@@ -42,7 +42,7 @@ class SmsController extends Controller{
             }
             $alarms = $query->where(['and','faultTime>='.$time,'recStatus=0'])
                 ->andWhere($condition)
-                ->andFilterWhere(['deviceIp',$ips])
+                ->andFilterWhere(['deviceIp'=>$ips])
                 ->select(SmsTemplate::$template_fields)
                 ->asArray()
                 ->all();
