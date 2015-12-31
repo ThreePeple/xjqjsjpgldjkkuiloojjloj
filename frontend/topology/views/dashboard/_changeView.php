@@ -12,9 +12,12 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <style>
+        html,body{ margin:0;padding:0; font-size: 12px;}
+    </style>
 </head>
-<body style="margin:0;border: 0">
-<iframe id="container" src="<?=$uris[0]?>" style="width: 100%; height: 1024px"  border="0" frameborder=0 marginheight=0 marginwidth=0 scrolling=no>
+<body>
+<iframe id="container" src="<?=$uris[0]?>" style="width: 100%; min-height: 1000px; height: 100%;"  frameborder=0 marginheight=0 marginwidth=0 scrolling=no>
 
 </iframe>
 <script>
