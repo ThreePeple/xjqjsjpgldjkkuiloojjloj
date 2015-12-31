@@ -14,7 +14,7 @@
     <title></title>
 </head>
 <body style="margin:0;border: 0">
-<iframe id="container" src="<?=$uris[0]?>" style="width: 100%; height: 1000px"  frameborder=0 marginheight=0 marginwidth=0 scrolling=no>
+<iframe id="container" src="<?=$uris[0]?>" style="width: 100%; height: 1024px"  frameborder=0 marginheight=0 marginwidth=0 scrolling=no>
 
 </iframe>
 <script>
