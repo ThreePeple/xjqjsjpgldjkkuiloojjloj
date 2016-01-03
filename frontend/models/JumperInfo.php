@@ -31,6 +31,7 @@ class JumperInfo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['ip','port','wire_frame','wire_position','point','tag'],'required','on'=>'create'],
             [['ip'], 'string', 'max' => 64],
             [['port', 'wire_frame', 'wire_position', 'point', 'insert_no','tag'], 'string', 'max' => 128],
             [['ip', 'port'], 'unique', 'targetAttribute' => ['ip', 'port'], 'message' => 'The combination of Ip and Port has already been taken.']

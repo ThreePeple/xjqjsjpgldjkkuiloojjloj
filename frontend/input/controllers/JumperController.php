@@ -51,7 +51,9 @@ class JumperController extends \yii\web\Controller
 
     public function actionCreate()
     {
-        $model = new JumperInfo();
+        $model = new JumperInfo([
+            'scenario'=>'create'
+        ]);
 
         if($model->load(Yii::$app->request->post()) && $model->save()){
             return $this->redirect(['index']);
