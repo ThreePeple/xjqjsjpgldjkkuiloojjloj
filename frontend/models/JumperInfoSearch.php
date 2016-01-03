@@ -70,6 +70,8 @@ class JumperInfoSearch extends JumperInfo
             ->andFilterWhere(['like', 'insert_no', $this->insert_no])
             ->andFilterWhere(['like', 'tag', $this->tag]);
 
+        $query->orderBy('id desc');
+
         return $dataProvider;
     }
 }

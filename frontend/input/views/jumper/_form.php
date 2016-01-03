@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use kartik\form\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\JumperInfo */
@@ -10,7 +10,11 @@ use yii\widgets\ActiveForm;
 
 <div class="jumper-info-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'user-form',
+        "type" => ActiveForm::TYPE_HORIZONTAL,
+        'enableClientScript'=> true,
+    ]); ?>
 
     <?= $form->field($model, 'ip')->textInput(['maxlength' => true]) ?>
 
@@ -22,10 +26,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'point')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'insert_no')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'tag')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <div class="col-lg-offset-1 col-lg-11">
+            <?= Html::submitButton('保存', ['class' => 'btn btn-info']) ?>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

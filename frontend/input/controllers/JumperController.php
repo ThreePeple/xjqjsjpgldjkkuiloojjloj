@@ -49,6 +49,19 @@ class JumperController extends \yii\web\Controller
         ]);
     }
 
+    public function actionCreate()
+    {
+        $model = new JumperInfo();
+
+        if($model->load(Yii::$app->request->post()) && $model->save()){
+            return $this->redirect(['index']);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+    }
+
     /**
      * Updates an existing JumperInfo model.
      * If update is successful, the browser will be redirected to the 'view' page.

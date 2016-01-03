@@ -3,6 +3,8 @@
 
 use kartik\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
+
 
 $uploadUrl = \yii\helpers\Url::toRoute(['/input/jumper/import']);
 
@@ -153,7 +155,8 @@ $this->registerJs($js);
             ],
             'toolbar' => [
                 [
-                    "content" => Html::button('<i class="glyphicon glyphicon-download-alt"></i> 删除选择项',[
+                    "content" => Html::a("新增记录",Url::toRoute(['/input/jumper/create']),
+            ['id'=>"create-btn",'class'=>"btn btn-primary"]).Html::button('<i class="glyphicon glyphicon-download-alt"></i> 删除选择项',[
                         'onclick' => 'deleteBatch()',
                         'class' => "btn btn-primary"
                     ])
