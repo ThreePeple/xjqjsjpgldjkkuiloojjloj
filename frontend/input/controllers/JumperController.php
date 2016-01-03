@@ -118,6 +118,51 @@ class JumperController extends \yii\web\Controller
         return 1;
     }
 
+    public function actionDelete($id){
+        $this->findModel($id)->delete();
+
+        return $this->redirect(['index']);
+    }
+
+    public function actionDeleteBatch(){
+        $ids = Yii::$app->request->post("ids");
+        $result = JumperInfo::deleteAll(["id"=>$ids]);
+        return json_encode(["status"=>$result]);
+    }
+
+    public function actionExport()
+    {
+        $data = JumperInfo::find()
+            ->select(['ip','port','wire_frame','wire_position','point','tag'])
+            ->asArray()
+            ->all();
+        $excel_arr = [];
+        $excel_arr[] = ['交换机IP','设备端口','线架号','线架位置','线架端口','点位标签'];
+        $excel_arr = array_merge($excel_arr,$data);
+        ob_start();
+        $this->saveExcel($excel_arr,'跳线管理');
+        $content = ob_get_contents();
+        ob_end_clean();
+        $file_name = 'jumper.xlsx';
+        Yii::$app->response->sendContentAsFile($content, $file_name);
+    }
+
+    private function saveExcel($data,$title,$out='php://output'){
+        $objPHPExcel = new \PHPExcel();
+        $objPHPExcel->getProperties()->setCreator("cnpc")
+            ->setTitle($title);
+
+        $activeSheet = $objPHPExcel->getActiveSheet();
+        $start='A';
+        while($start<'G'){
+            $activeSheet->getColumnDimension($start)->setWidth(30);
+            $start++;
+        }
+        $activeSheet->fromArray($data,"0","A1",true);
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save($out);
+    }
+
     private function getExcelData($file){
         $reader = new \PHPExcel_Reader_Excel2007();
         if(!$reader->canRead($file)){
@@ -177,18 +222,6 @@ class JumperController extends \yii\web\Controller
         }
         $area = chr(ord('A')+ $area-1);
         return implode('-',[$area,$floor,$no]);
-    }
-
-    public function actionDelete($id){
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    public function actionDeleteBatch(){
-        $ids = Yii::$app->request->post("ids");
-        $result = JumperInfo::deleteAll(["id"=>$ids]);
-        return json_encode(["status"=>$result]);
     }
 
     /**

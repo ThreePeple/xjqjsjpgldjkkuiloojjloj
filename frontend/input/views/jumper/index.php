@@ -27,6 +27,10 @@ $('#upload-file').uploadifive({
                     }
 				}
 			});
+
+$('#export-btn').click(function(){
+    $('#export-form').submit()
+})
 JS;
 $css = <<<CSS
  #uploadifive-upload-file.btn{
@@ -155,40 +159,23 @@ $this->registerJs($js);
             ],
             'toolbar' => [
                 [
-                    "content" => Html::a("新增记录",Url::toRoute(['/input/jumper/create']),
-            ['id'=>"create-btn",'class'=>"btn btn-primary"]).Html::button('<i class="glyphicon glyphicon-download-alt"></i> 删除选择项',[
+                    'content' => Html::a("新增记录",Url::toRoute(['/input/jumper/create']),
+                            ['id'=>"create-btn",'class'=>"btn btn-primary"])
+                ],
+                [
+                    "content" => Html::button('<i class="glyphicon glyphicon-download-alt"></i> 删除选择项',[
                         'onclick' => 'deleteBatch()',
                         'class' => "btn btn-primary"
                     ])
                 ],
-                '{export}',
+                [
+                    'content' => '<button id="export-btn" class="btn btn-default" title="导出"><i class="glyphicon glyphicon-export"></i> 导出数据 </button>'
+                ],
                 '{toggleData}'
             ],
-            "export" => [
-                'label' => "导出数据",
-                'showConfirmAlert'=>false,
-                'target' => GridView::TARGET_SELF
-            ],
-            "exportConfig" => [
-                GridView::EXCEL => [
-                    'label' => 'Excel',
-                    'icon' => 'floppy-open',
-                    'iconOptions' => ['class' => 'text-success'],
-                    'showHeader' => true,
-                    'showPageSummary' => true,
-                    'showFooter' => true,
-                    'showCaption' => true,
-                    'filename' => 'jumper',
-                    'alertMsg' => 'The EXCEL export file will be generated for download.',
-                    'options' => ['title' =>  'Microsoft Excel 95+'],
-                    'mime' => 'application/vnd.ms-excel',
-                    'config' => [
-                        'worksheet' => 'jumper',
-                        'cssFile' => ''
-                    ]
-                ]
-            ],
+            'export' => false
         ]);
         ?>
     </div>
 </div>
+<form id="export-form" action="/input/jumper/export" style="display: none;"></form>
